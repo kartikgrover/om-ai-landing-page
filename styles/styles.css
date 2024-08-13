@@ -1,0 +1,128 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    background-color: #007BFF;
+    border-color: #007BFF;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Video Container */
+.video-container {
+    margin-top: 30px;
+    text-align: center; /* Ensure the video is centered */
+}
+
+.video-container p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.video-container video {
+    max-width: 100%; /* Ensures the video never exceeds the container width */
+    width: 60%; /* Reduce the relative size of the video */
+    max-width: 400px; /* Reduce the maximum width for larger screens */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px;
+}
+
+
+
+
+/* Feature Cards */
+.feature {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Testimonial Cards */
+.testimonial p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.testimonial h4 {
+    font-size: 1rem;
+    color: #00796b;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+footer nav a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+    color: #81c784;
+}
+
+/* Screenshots Section */
+#screenshots {
+    background-color: #f8f9fa;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+#screenshots h2 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+#screenshots img {
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+#screenshots img:hover {
+    transform: scale(1.05);
+}
