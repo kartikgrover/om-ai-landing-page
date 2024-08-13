@@ -18,7 +18,7 @@
         <div class="container">
             <h1 class="display-4 fw-bold">Get Advice from Scriptures Like Never Before</h1>
             <p class="lead">Your direct connection to the wisdom of Hindu scriptures, free from intermediaries.</p>
-            <a href="#waitlist" class="btn btn-primary btn-lg">Join Waitlist</a>
+            <a href="#waitlist" class="btn btn-primary btn-lg" aria-label="Join Waitlist">Join Waitlist</a>
             <div class="video-container mt-4">
                 <p>See Om.AI in Action</p>
                 <video class="img-fluid rounded" src="assets/tutorial.mp4" controls></video>
@@ -33,21 +33,21 @@
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div class="feature p-4 shadow-sm rounded bg-white">
-                        <i class="fas fa-check-circle fa-3x text-primary mb-3"></i>
+                        <i class="fas fa-check-circle fa-3x text-primary mb-3" aria-hidden="true"></i>
                         <h3>Accurate Answers</h3>
                         <p>Get precise, scholarly responses directly from Hindu scriptures.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="feature p-4 shadow-sm rounded bg-white">
-                        <i class="fas fa-user-friends fa-3x text-primary mb-3"></i>
+                        <i class="fas fa-user-friends fa-3x text-primary mb-3" aria-hidden="true"></i>
                         <h3>User-Friendly Interface</h3>
                         <p>Interact with a simple, intuitive chatbot designed for easy use.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="feature p-4 shadow-sm rounded bg-white">
-                        <i class="fas fa-mobile-alt fa-3x text-primary mb-3"></i>
+                        <i class="fas fa-mobile-alt fa-3x text-primary mb-3" aria-hidden="true"></i>
                         <h3>Accessible Anywhere</h3>
                         <p>Connect with spiritual wisdom anytime, from any device.</p>
                     </div>
@@ -110,9 +110,9 @@
     <section id="waitlist" class="py-5 bg-dark text-white">
         <div class="container text-center">
             <h2 class="mb-4">Ready to Connect with the Scriptures?</h2>
-            <p id="waitlist-count" class="lead">Join others who are already on the waitlist!</p>
+            <p id="waitlist-count" class="lead">Join others already on the waitlist!</p>
             <form id="waitlist-form" method="POST" class="d-flex flex-column align-items-center">
-                <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-control mb-3" style="max-width: 400px;">
+                <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-control mb-3" style="max-width: 400px;" aria-label="Enter your email">
                 <button type="submit" class="btn btn-primary btn-lg">Join Waitlist</button>
             </form>
             <p id="form-message" class="mt-3" style="display: none;"></p>
@@ -120,13 +120,13 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-3 bg-dark text-white text-center">
+    <footer class="py-4 bg-dark text-white text-center">
         <div class="container">
             <p>© 2024 Om.AI. All rights reserved.</p>
             <nav class="d-flex justify-content-center">
-                <a href="#" class="text-white mx-3">Privacy Policy</a>
-                <a href="#" class="text-white mx-3">Terms of Service</a>
-                <a href="#" class="text-white mx-3">Contact Us</a>
+                <a href="#" class="text-white mx-3" aria-label="Privacy Policy">Privacy Policy</a>
+                <a href="#" class="text-white mx-3" aria-label="Terms of Service">Terms of Service</a>
+                <a href="#" class="text-white mx-3" aria-label="Contact Us">Contact Us</a>
             </nav>
         </div>
     </footer>
@@ -151,6 +151,14 @@
             const email = document.getElementById('email').value;
             const formMessage = document.getElementById('form-message');
 
+            // Simple client-side validation
+            if (!validateEmail(email)) {
+                formMessage.style.display = 'block';
+                formMessage.textContent = 'Please enter a valid email address.';
+                formMessage.style.color = 'red';
+                return;
+            }
+
             fetch('https://script.google.com/macros/s/AKfycbz6wIxJA-8wqFbznnQF9HutoSuNUKmZkzMphDXTR2VEFwi7oUkoa8O2-x6DF8g9vg3i0w/exec', {
                 method: 'POST',
                 headers: {
@@ -167,6 +175,11 @@
                 formMessage.style.color = 'red';
             });
         });
+
+        function validateEmail(email) {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(String(email).toLowerCase());
+        }
     </script>
 </body>
 </html>
