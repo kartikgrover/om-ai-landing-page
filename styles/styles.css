@@ -53,6 +53,7 @@ p {
     outline: none;
     box-shadow: 0 0 0 3px var(--focus-color);
 }
+
 /* Hero Section */
 #hero {
     display: flex;
@@ -64,31 +65,45 @@ p {
 }
 
 #hero h1 {
-    font-size: 3.5rem;
+    font-size: 4rem; /* Increased font size */
     font-weight: 700;
     margin-bottom: 20px;
 }
 
 #hero .lead {
-    font-size: 1.5rem;
+    font-size: 1.75rem; /* Increased font size */
     margin-bottom: 40px;
 }
 
 #hero .btn {
-    font-size: 1.25rem;
-    padding: 10px 30px;
+    font-size: 1.5rem; /* Increased button size */
+    padding: 15px 40px;
 }
 
 #hero .screenshot-item img {
-    width: 100%;
+    max-width: 90%; /* Ensure images and video are consistent */
     height: auto;
+    display: block;
+    margin: 0 auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
 }
 
-#hero .screenshot-item img:hover {
-    transform: scale(1.05);
+#hero .video-container video {
+    max-width: 90%; /* Ensure video doesn't exceed image width */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjustments for larger screens */
+@media (min-width: 992px) {
+    #hero .col-lg-5 {
+        flex: 0 0 50%; /* Make each item take up 50% of the row on large screens */
+        max-width: 50%;
+    }
 }
 
 /* Adjustments for smaller screens in hero section */
@@ -97,11 +112,12 @@ p {
         font-size: 2.5rem;
     }
 
-    .screenshot-item,
-    .video-container {
-        margin-bottom: 2rem;
+    .screenshot-item img,
+    .video-container video {
+        width: 100%;
     }
 }
+
 /* Screenshots Section */
 #screenshots {
     background-color: #f8f9fa;
@@ -114,21 +130,8 @@ p {
     margin-bottom: 2rem;
 }
 
-.scroll-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-}
-
-.screenshot-item {
-    flex: 1 1 calc(50% - 40px);
-    margin-bottom: 20px;
-    width: 90%;
-}
-
 .screenshot-item img {
-    width: 70%;
+    width: 100%;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -137,4 +140,16 @@ p {
 
 .screenshot-item img:hover {
     transform: scale(1.05);
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .screenshot-item img {
+        width: 80%;
+    }
+
+    .col-md-6 {
+        max-width: 100%;
+        margin: 0 auto;
+    }
 }
