@@ -156,15 +156,20 @@
         document.addEventListener('DOMContentLoaded', function () {
             const waitlistCountElement = document.getElementById('waitlist-count');
     
-            // Fetch waitlist count
-            fetch('https://script.google.com/macros/s/AKfycbz6wIxJA-8wqFbznnQF9HutoSuNUKmZkzMphDXTR2VEFwi7oUkoa8O2-x6DF8g9vg3i0w/exec')
-                .then(response => response.json())
-                .then(data => {
-                    waitlistCountElement.textContent = `Join ${data.waitlistCount} others already on the waitlist!`;
-                })
-                .catch(error => {
-                    console.error('Error fetching waitlist count:', error);
-                });
+            // Function to update the waitlist count
+            function updateWaitlistCount() {
+                fetch('https://script.google.com/macros/s/AKfycbz6wIxJA-8wqFbznnQF9HutoSuNUKmZkzMphDXTR2VEFwi7oUkoa8O2-x6DF8g9vg3i0w/exec')
+                    .then(response => response.json())
+                    .then(data => {
+                        waitlistCountElement.textContent = `Join ${data.waitlistCount} others already on the waitlist!`;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching waitlist count:', error);
+                    });
+            }
+    
+            // Initial update on page load
+            updateWaitlistCount();
     
             // Form submission event
             document.getElementById('waitlist-form').addEventListener('submit', function (e) {
@@ -198,6 +203,9 @@
                     formMessage.style.display = 'block';
                     formMessage.textContent = 'Thank you for joining the waitlist!';
                     formMessage.style.color = 'green';
+    
+                    // Update the waitlist count after successful submission
+                    updateWaitlistCount();
                 }).catch(error => {
                     formMessage.style.display = 'block';
                     formMessage.textContent = 'There was an error. Please try again.';
@@ -211,6 +219,7 @@
             }
         });
     </script>
+    
 </body>
 
 </html>
