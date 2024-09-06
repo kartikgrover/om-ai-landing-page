@@ -160,7 +160,7 @@
                 fetch('https://script.google.com/macros/s/AKfycbz9DHOUmBDw-EcUMwlqpsY--VEQdYJ_Zy_a-HVbPflcM-PKWyLkYoui7gECRVp3JOb-lw/exec')
                     .then(response => response.json())
                     .then(data => {
-                        waitlistCountElement.textContent = `Join ${data.waitlistCount} already on the waitlist!`;
+                        waitlistCountElement.textContent = `Join ${data.waitlistCount} others already on the waitlist!`;
                     })
                     .catch(error => {
                         console.error('Error fetching waitlist count:', error);
