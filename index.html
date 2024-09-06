@@ -157,7 +157,7 @@
 
             // Function to update the waitlist count
             function updateWaitlistCount() {
-                fetch('https://script.google.com/macros/s/AKfycbz6wIxJA-8wqFbznnQF9HutoSuNUKmZkzMphDXTR2VEFwi7oUkoa8O2-x6DF8g9vg3i0w/exec')
+                fetch('https://script.google.com/macros/s/AKfycbwCIHC0qRPbRoTndrEOrbMjwL1KTIO8R2RXkXBOpmrgy_8CyecHyngq1_fbmM9c1rhI3g/exec')
                     .then(response => response.json())
                     .then(data => {
                         waitlistCountElement.textContent = `Join ${data.waitlistCount} others already on the waitlist!`;
