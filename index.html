@@ -22,6 +22,24 @@
         gtag('config', 'G-EPT0NFE087');
     </script>
     <!-- End Google Analytics -->
+     <!-- Meta Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '206813095187871');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=206813095187871&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
 </head>
 
 <body>
@@ -190,6 +208,8 @@
                     'event_label': 'Join Waitlist Form',
                     'value': email
                 });
+
+                fbq('track', 'SubmitWaitlist');  
 
                 // Proceed with form submission
                 fetch('https://script.google.com/macros/s/AKfycbz9DHOUmBDw-EcUMwlqpsY--VEQdYJ_Zy_a-HVbPflcM-PKWyLkYoui7gECRVp3JOb-lw/exec', {
