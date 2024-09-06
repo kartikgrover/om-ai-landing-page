@@ -203,6 +203,9 @@
                     formMessage.textContent = 'Thank you for joining the waitlist!';
                     formMessage.style.color = 'green';
 
+                    // Clear the form input field
+                    document.getElementById('waitlist-form').reset();
+
                     // Update the waitlist count after successful submission
                     updateWaitlistCount();
                 }).catch(error => {
