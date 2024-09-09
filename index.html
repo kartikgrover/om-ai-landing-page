@@ -177,75 +177,78 @@
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const waitlistCountElement = document.getElementById('waitlist-count');
+    const totalSpots = 800; // Total spots available
+    const waitlistCountElement = document.getElementById('waitlist-count');
 
-            // Function to update the waitlist count
-            function updateWaitlistCount() {
-                fetch('https://script.google.com/macros/s/AKfycbz9DHOUmBDw-EcUMwlqpsY--VEQdYJ_Zy_a-HVbPflcM-PKWyLkYoui7gECRVp3JOb-lw/exec')
-                    .then(response => response.json())
-                    .then(data => {
-                        waitlistCountElement.textContent = `Join ${data.waitlistCount} others already on the waitlist!`;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching waitlist count:', error);
-                    });
-            }
-
-            // Initial update on page load
-            updateWaitlistCount();
-
-            // Form submission event
-            document.getElementById('waitlist-form').addEventListener('submit', function (e) {
-                e.preventDefault();
-                const email = document.getElementById('email').value;
-                const formMessage = document.getElementById('form-message');
-
-                // Simple client-side validation
-                if (!validateEmail(email)) {
-                    formMessage.style.display = 'block';
-                    formMessage.textContent = 'Please enter a valid email address.';
-                    formMessage.style.color = 'red';
-                    return;
-                }
-
-                // Send event to Google Analytics
-                gtag('event', 'join_waitlist', {
-                    'event_category': 'Waitlist',
-                    'event_label': 'Join Waitlist Form',
-                    'value': email
-                });
-
-                fbq('track', 'SubmitWaitlist');  
-
-                // Proceed with form submission
-                fetch('https://script.google.com/macros/s/AKfycbz9DHOUmBDw-EcUMwlqpsY--VEQdYJ_Zy_a-HVbPflcM-PKWyLkYoui7gECRVp3JOb-lw/exec', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `email=${encodeURIComponent(email)}`
-                }).then(response => {
-                    formMessage.style.display = 'block';
-                    formMessage.textContent = 'Thank you for joining the waitlist!';
-                    formMessage.style.color = 'green';
-
-                    // Clear the form input field
-                    document.getElementById('waitlist-form').reset();
-
-                    // Update the waitlist count after successful submission
-                    updateWaitlistCount();
-                }).catch(error => {
-                    formMessage.style.display = 'block';
-                    formMessage.textContent = 'There was an error. Please try again.';
-                    formMessage.style.color = 'red';
-                });
+    // Function to update the spots left
+    function updateSpotsLeft() {
+        fetch('https://script.google.com/macros/s/AKfycbz9DHOUmBDw-EcUMwlqpsY--VEQdYJ_Zy_a-HVbPflcM-PKWyLkYoui7gECRVp3JOb-lw/exec')
+            .then(response => response.json())
+            .then(data => {
+                const spotsLeft = totalSpots - data.waitlistCount; // Calculate remaining spots
+                waitlistCountElement.textContent = `Only ${spotsLeft} spots left!`; // Display remaining spots
+            })
+            .catch(error => {
+                console.error('Error fetching waitlist count:', error);
             });
+    }
 
-            function validateEmail(email) {
-                const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                return re.test(String(email).toLowerCase());
-            }
+    // Initial update on page load
+    updateSpotsLeft();
+
+    // Form submission event
+    document.getElementById('waitlist-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const formMessage = document.getElementById('form-message');
+
+        // Simple client-side validation
+        if (!validateEmail(email)) {
+            formMessage.style.display = 'block';
+            formMessage.textContent = 'Please enter a valid email address.';
+            formMessage.style.color = 'red';
+            return;
+        }
+
+        // Send event to Google Analytics
+        gtag('event', 'join_waitlist', {
+            'event_category': 'Waitlist',
+            'event_label': 'Join Waitlist Form',
+            'value': email
         });
+
+        fbq('track', 'SubmitWaitlist');
+
+        // Proceed with form submission
+        fetch('https://script.google.com/macros/s/AKfycbz9DHOUmBDw-EcUMwlqpsY--VEQdYJ_Zy_a-HVbPflcM-PKWyLkYoui7gECRVp3JOb-lw/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}`
+        }).then(response => {
+            formMessage.style.display = 'block';
+            formMessage.textContent = 'Thank you for joining the waitlist!';
+            formMessage.style.color = 'green';
+
+            // Clear the form input field
+            document.getElementById('waitlist-form').reset();
+
+            // Update the spots left after successful submission
+            updateSpotsLeft();
+        }).catch(error => {
+            formMessage.style.display = 'block';
+            formMessage.textContent = 'There was an error. Please try again.';
+            formMessage.style.color = 'red';
+        });
+    });
+
+    function validateEmail(email) {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(String(email).toLowerCase());
+    }
+});
+
     </script>
     
 </body>
