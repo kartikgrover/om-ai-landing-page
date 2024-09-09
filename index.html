@@ -52,12 +52,19 @@
                 <h2 class="text-center">Discover Om.AI</h2>
                 <div class="col-lg-5 col-md-6 col-12 mb-3 d-flex justify-content-center">
                     <div class="video-container text-center">
-                        <video class="img-fluid rounded" src="assets/tutorialSleepBetter.mp4" controls autoplay muted loop></video>
+                        <video id="stressVideo" class="img-fluid rounded" src="assets/stress.mp4" controls autoplay muted loop></video>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <script>
+        // Set playback speed to 1.5x after the video metadata has loaded
+        const video = document.getElementById('stressVideo');
+        video.onloadedmetadata = function() {
+            video.playbackRate = 1.8; // Change playback speed to 1.5x
+        };
+    </script>
 
     <!-- Features Section -->
     <section id="features" class="py-5 bg-light">
@@ -96,12 +103,12 @@
             <div class="row justify-content-center">
                 <div class="col-md-6 col-12 mb-3">
                     <div class="screenshot-item">
-                        <img src="assets/StoryLoyalty.png" alt="Om.AI Screenshot 2" class="img-fluid rounded shadow-sm" loading="lazy">
+                        <img src="assets/shani.png" alt="Om.AI Screenshot 2" class="img-fluid rounded shadow-sm" loading="lazy">
                     </div>
                 </div>
                 <div class="col-md-6 col-12 mb-3">
                     <div class="screenshot-item">
-                        <img src="assets/Ashwathama.png" alt="Om.AI Screenshot 4" class="img-fluid rounded shadow-sm" loading="lazy">
+                        <img src="assets/only1religion.png" alt="Om.AI Screenshot 4" class="img-fluid rounded shadow-sm" loading="lazy">
                     </div>
                 </div>
             </div>
