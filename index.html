@@ -46,7 +46,7 @@
         <div class="container">
             <h1 class="display-4 fw-bold">Unlock the Timeless Wisdom of Hindu Scriptures</h1>
             <p class="lead">Get early access to Om.AI and connect directly with the spiritual wisdom of Hindu scriptures, without any intermediaries.</p>
-            <a href="#waitlist" class="btn btn-primary btn-lg" aria-label="Join Waitlist">Join for Early Access</a>
+            <a href="#cta" class="btn btn-primary btn-lg" aria-label="Download Now">Download Now</a>
             <div class="row mt-4 align-items-center justify-content-center">
                 <h2 class="text-center">Discover Om.AI</h2>
                 <div class="col-lg-5 col-md-6 col-12 mb-3 d-flex justify-content-center">
@@ -149,18 +149,30 @@
         </div>
     </section>
 
-    <!-- Waitlist CTA Section -->
-    <section id="waitlist" class="py-5 bg-dark text-white">
-        <div class="container text-center">
-            <h2 class="mb-4">Join the Waitlist for Early Access</h2>
-            <p id="waitlist-count" class="lead">Join others already on the waitlist!</p>
+<!-- Waitlist and App Store CTA Section -->
+<section id="cta" class="py-5 bg-dark text-white">
+    <div class="container text-center">
+        <h2 class="mb-4">Get Early Access to Om.AI</h2>
+        <p id="cta-text" class="lead">Join the waitlist for Play Store access or download directly from the App Store.</p>
+        
+        <!-- Play Store Waitlist -->
+        <div id="playstore-waitlist" class="mb-4">
+            <h3>Join the Waitlist for Play Store</h3>
             <form id="waitlist-form" method="POST" class="d-flex flex-column align-items-center">
                 <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-control mb-3" style="max-width: 400px;" aria-label="Enter your email">
                 <button type="submit" class="btn btn-primary btn-lg">Join for Early Access</button>
             </form>
             <p id="form-message" class="mt-3" style="display: none;"></p>
         </div>
-    </section>
+
+        <!-- App Store Direct Link -->
+        <div id="appstore-link">
+            <h3>Download on the App Store</h3>
+            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" class="btn btn-secondary btn-lg" aria-label="Download from App Store">Download from App Store</a>
+        </div>
+    </div>
+</section>
+
 </form>
 <p id="form-message" class="mt-3" style="display: none;"></p>
 </div>
