@@ -20,6 +20,24 @@
         gtag('js', new Date());
 
         gtag('config', 'G-EPT0NFE087');
+
+        // Track download button click
+    function trackDownload(event) {
+        gtag('event', 'download_click', {
+            'event_category': 'App Downloads',
+            'event_label': event.target.id, // Use the ID of the button clicked
+            'value': 1
+        });
+    }
+
+    function trackWaitlistJoin(email) {
+    gtag('event', 'join_waitlist', {
+        'event_category': 'Waitlist',
+        'event_label': 'Join Waitlist Form',
+        'value': email
+    });
+}
+
     </script>
     <!-- End Google Analytics -->
     <!-- Meta Pixel Code -->
@@ -168,7 +186,7 @@
         <!-- App Store Direct Link -->
         <div id="appstore-link">
             <h3>iOS Users</h3>
-            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" class="btn btn-secondary btn-lg" aria-label="Download from App Store">Download from App Store</a>
+            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" class="btn btn-secondary btn-lg" aria-label="Download from App Store" id="appstore-button" onclick="trackDownload(event)">Download from App Store</a>
         </div>
     </div>
 </section>
@@ -196,77 +214,92 @@
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-const totalSpots = 824; // Total spots available
-const waitlistCountElement = document.getElementById('waitlist-count');
-
-// Function to update the spots left
-function updateSpotsLeft() {
-    fetch('https://script.google.com/macros/s/AKfycbz9ERvdOLY50BfGfj4F-BKlrK2GqSEypmVD-dvthqpkJ6SQA1KqTTt4h7tCEbsGCU5T1w/exec')
-        .then(response => response.json())
-        .then(data => {
-            const spotsLeft = totalSpots - data.waitlistCount; // Calculate remaining spots
-            waitlistCountElement.textContent = `Only ${spotsLeft} spots left!`; // Display remaining spots
-        })
-        .catch(error => {
-            console.error('Error fetching waitlist count:', error);
-        });
-}
-
-// Initial update on page load
-updateSpotsLeft();
-
-// Form submission event
-document.getElementById('waitlist-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
+    const totalSpots = 824; // Total spots available
+    const waitlistCountElement = document.getElementById('waitlist-count');
+    const form = document.getElementById('waitlist-form');
+    const submitButton = form.querySelector('button[type="submit"]');
     const formMessage = document.getElementById('form-message');
 
-    // Simple client-side validation
-    if (!validateEmail(email)) {
-        formMessage.style.display = 'block';
-        formMessage.textContent = 'Please enter a valid email address.';
-        formMessage.style.color = 'red';
-        return;
+    // Function to update the spots left
+    function updateSpotsLeft() {
+        fetch('https://script.google.com/macros/s/AKfycbz9ERvdOLY50BfGfj4F-BKlrK2GqSEypmVD-dvthqpkJ6SQA1KqTTt4h7tCEbsGCU5T1w/exec')
+            .then(response => response.json())
+            .then(data => {
+                const spotsLeft = totalSpots - data.waitlistCount; // Calculate remaining spots
+                if (waitlistCountElement) {
+                    waitlistCountElement.textContent = `Only ${spotsLeft} spots left!`; // Display remaining spots
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching waitlist count:', error);
+            });
     }
 
-    // Send event to Google Analytics
-    gtag('event', 'join_waitlist', {
-        'event_category': 'Waitlist',
-        'event_label': 'Join Waitlist Form',
-        'value': email
+    // Initial update on page load
+    updateSpotsLeft();
+
+    // Form submission event
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+
+        // Simple client-side validation
+        if (!validateEmail(email)) {
+            formMessage.style.display = 'block';
+            formMessage.textContent = 'Please enter a valid email address.';
+            formMessage.style.color = 'red';
+            return;
+        }
+
+        // Disable the button to prevent multiple submissions
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        // Send event to Facebook Pixel
+        fbq('track', 'SubmitWaitlist');
+
+        trackWaitlistJoin(email);
+
+
+        // Proceed with form submission
+        fetch('https://script.google.com/macros/s/AKfycbz9ERvdOLY50BfGfj4F-BKlrK2GqSEypmVD-dvthqpkJ6SQA1KqTTt4h7tCEbsGCU5T1w/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}`
+        }).then(response => {
+            formMessage.style.display = 'block';
+            formMessage.textContent = 'Thank you for joining the waitlist!';
+            formMessage.style.color = 'green';
+
+            // Clear the form input field
+            form.reset();
+
+            // Re-enable the button after submission
+            submitButton.disabled = false;
+            submitButton.textContent = 'Join for Early Access';
+
+            // Update the spots left after successful submission
+            updateSpotsLeft();
+        }).catch(error => {
+            formMessage.style.display = 'block';
+            formMessage.textContent = 'There was an error. Please try again.';
+            formMessage.style.color = 'red';
+
+            // Re-enable the button in case of error
+            submitButton.disabled = false;
+            submitButton.textContent = 'Join for Early Access';
+        });
     });
 
-    fbq('track', 'SubmitWaitlist');
-
-    // Proceed with form submission
-    fetch('https://script.google.com/macros/s/AKfycbz9ERvdOLY50BfGfj4F-BKlrK2GqSEypmVD-dvthqpkJ6SQA1KqTTt4h7tCEbsGCU5T1w/exec', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `email=${encodeURIComponent(email)}`
-    }).then(response => {
-        formMessage.style.display = 'block';
-        formMessage.textContent = 'Thank you for joining the waitlist!';
-        formMessage.style.color = 'green';
-
-        // Clear the form input field
-        document.getElementById('waitlist-form').reset();
-
-        // Update the spots left after successful submission
-        updateSpotsLeft();
-    }).catch(error => {
-        formMessage.style.display = 'block';
-        formMessage.textContent = 'There was an error. Please try again.';
-        formMessage.style.color = 'red';
-    });
+    // Email validation function
+    function validateEmail(email) {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(String(email).toLowerCase());
+    }
 });
 
-function validateEmail(email) {
-    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return re.test(String(email).toLowerCase());
-}
-});
 </script>
 </body>
 
