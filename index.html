@@ -178,6 +178,7 @@
             <h3>Android Users</h3>
             <form id="waitlist-form" method="POST" class="d-flex flex-column align-items-center">
                 <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-control mb-3" style="max-width: 400px;" aria-label="Enter your email">
+                <!-- Both buttons now have the 'btn-primary' class -->
                 <button type="submit" class="btn btn-primary btn-lg">Join for Early Access</button>
             </form>
             <p id="form-message" class="mt-3" style="display: none;"></p>
@@ -186,7 +187,8 @@
         <!-- App Store Direct Link -->
         <div id="appstore-link">
             <h3>iOS Users</h3>
-            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" class="btn btn-secondary btn-lg" aria-label="Download from App Store" id="appstore-button" onclick="trackDownload(event)">Download from App Store</a>
+            <!-- Change 'btn-secondary' to 'btn-primary' to match the Play Store button -->
+            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" class="btn btn-primary btn-lg" aria-label="Download from App Store" id="appstore-button" onclick="trackDownload(event)">Download from App Store</a>
         </div>
     </div>
 </section>
