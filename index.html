@@ -22,21 +22,25 @@
     <meta name="twitter:description" content="Om.AI provides direct and accurate advice from Hindu scriptures without intermediaries. Download the app today.">
     <meta name="twitter:image" content="https://yourwebsite.com/assets/twitter-image.png">
 
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourwebsite.com">
+
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles/styles.css">
-    
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-..." crossorigin="anonymous">
+
     <!-- Favicon -->
     <link rel="icon" href="/assets/favicon.png" type="image/png">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
@@ -45,16 +49,34 @@
         "name": "Om.AI",
         "description": "Om.AI provides direct and accurate advice from Hindu scriptures without intermediaries. Download the app today.",
         "applicationCategory": "Spiritual",
-        "operatingSystem": "ANDROID, IOS",
+        "operatingSystem": ["ANDROID", "IOS"],
         "url": "https://yourwebsite.com",
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.8",
             "reviewCount": "150"
-        }
+        },
+        "offers": [
+            {
+                "@type": "Offer",
+                "url": "https://play.google.com/store/apps/details?id=com.omai.app",
+                "price": "0",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "applicationPlatform": "ANDROID"
+            },
+            {
+                "@type": "Offer",
+                "url": "https://apps.apple.com/us/app/om-ai/id6630366988",
+                "price": "0",
+                "priceCurrency": "USD",
+                "availability": "https://schema.org/InStock",
+                "applicationPlatform": "IOS"
+            }
+        ]
     }
     </script>
-    
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
     <script>
@@ -74,7 +96,7 @@
         }
     </script>
     <!-- End Google Analytics -->
-    
+
     <!-- Meta Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s){
@@ -238,7 +260,7 @@
     <!-- Annotations Section -->
     <section id="annotations" class="py-5 bg-light" role="region" aria-labelledby="annotations-heading">
         <div class="container text-center">
-            <h2 id="annotations-heading" class="mb-5">Interactive Annotations</h2>
+            <h2 id="annotations-heading" class="mb-5">View Text Sources</h2>
             <p class="lead mb-4">
                 Enhance your understanding with detailed annotations directly from the scriptures. Dive deeper into each verse and gain comprehensive insights.
             </p>
@@ -246,10 +268,10 @@
                 <!-- Annotation 1 -->
                 <div class="col-md-4 col-12 mb-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="assets/GM.png" class="card-img-top" alt="Annotation 1 Main Image">
+                        <img src="assets/GM.png" class="card-img-top" alt="Annotation 1 Main Image" loading="lazy">
                         <div class="card-body d-flex flex-column">
                             <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#annotationModal1" aria-label="View Annotation 1">
-                                View Annotation
+                                View Source
                             </button>
                         </div>
                     </div>
@@ -257,10 +279,10 @@
                 <!-- Annotation 2 -->
                 <div class="col-md-4 col-12 mb-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="assets/Sleep.png" class="card-img-top" alt="Annotation 2 Main Image">
+                        <img src="assets/Sleep.png" class="card-img-top" alt="Annotation 2 Main Image" loading="lazy">
                         <div class="card-body d-flex flex-column">
                             <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#annotationModal2" aria-label="View Annotation 2">
-                                View Annotation
+                                View Source
                             </button>
                         </div>
                     </div>
@@ -268,10 +290,10 @@
                 <!-- Annotation 3 -->
                 <div class="col-md-4 col-12 mb-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="assets/Gita.png" class="card-img-top" alt="Annotation 3 Main Image">
+                        <img src="assets/Gita.png" class="card-img-top" alt="Annotation 3 Main Image" loading="lazy">
                         <div class="card-body d-flex flex-column">
                             <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#annotationModal3" aria-label="View Annotation 3">
-                                View Annotation
+                                View Source
                             </button>
                         </div>
                     </div>
@@ -279,7 +301,7 @@
             </div>
         </div>
 
-        <!-- Annotation Modal 1 -->
+        <!-- Annotation Modals -->
         <div class="modal fade" id="annotationModal1" tabindex="-1" aria-labelledby="annotationModalLabel1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -288,13 +310,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img src="assets/GMAnnotation.png" alt="Annotation 1 Text Image" class="img-fluid rounded">
+                        <img src="assets/GMAnnotation.png" alt="Annotation 1 Text Image" class="img-fluid rounded" loading="lazy">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Annotation Modal 2 -->
         <div class="modal fade" id="annotationModal2" tabindex="-1" aria-labelledby="annotationModalLabel2" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -303,13 +324,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img src="assets/SleepAnnotation.png" alt="Annotation 2 Text Image" class="img-fluid rounded">
+                        <img src="assets/SleepAnnotation.png" alt="Annotation 2 Text Image" class="img-fluid rounded" loading="lazy">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Annotation Modal 3 -->
         <div class="modal fade" id="annotationModal3" tabindex="-1" aria-labelledby="annotationModalLabel3" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -318,7 +338,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img src="assets/GitaAnnotation.png" alt="Annotation 3 Text Image" class="img-fluid rounded">
+                        <img src="assets/GitaAnnotation.png" alt="Annotation 3 Text Image" class="img-fluid rounded" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -360,36 +380,24 @@
             <h2 id="cta-heading" class="mb-4">Get Om.AI Now</h2>
             <p class="lead">Download the Om.AI app directly from the Play Store or App Store and start your spiritual journey today!</p>
             
-            <!-- Play Store Download -->
-            <div id="playstore-link" class="mb-4">
-                <h3>Android Users</h3>
+            <!-- Combined Play Store and App Store Download -->
+            <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
                 <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" 
-                   class="btn btn-primary btn-lg d-flex align-items-center justify-content-center" 
+                   class="btn btn-primary btn-lg d-flex align-items-center" 
                    aria-label="Download on Play Store" 
                    id="playstore-button" onclick="trackDownload(event)">
-                    <i class="fab fa-google-play me-2"></i> Download on Play Store
+                    <i class="fab fa-google-play me-2"></i> Play Store
                 </a>
-            </div>
-
-            <!-- App Store Download -->
-            <div id="appstore-link">
-                <h3>iOS Users</h3>
                 <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" 
-                   class="btn btn-primary btn-lg d-flex align-items-center justify-content-center" 
+                   class="btn btn-primary btn-lg d-flex align-items-center" 
                    aria-label="Download from App Store" 
                    id="appstore-button" onclick="trackDownload(event)">
-                    <i class="fab fa-apple me-2"></i> Download from App Store
+                    <i class="fab fa-apple me-2"></i> App Store
                 </a>
             </div>
         </div>
     </section>
     <!-- End App Download CTA Section -->
-
-    <!-- Back to Top Button -->
-    <button type="button" class="btn btn-primary btn-lg back-to-top" aria-label="Back to Top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-    <!-- End Back to Top Button -->
 
     <!-- Footer Section -->
     <footer class="bg-light text-center py-4" role="contentinfo">
@@ -415,7 +423,13 @@
     </footer>
     <!-- End Footer Section -->
 
-    <!-- Back to Top Script -->
+    <!-- Back to Top Button -->
+    <button type="button" class="btn btn-primary back-to-top" aria-label="Back to Top" style="position: fixed; bottom: 40px; right: 40px; display: none; z-index: 1000;">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    <!-- End Back to Top Button -->
+
+    <!-- JavaScript Enhancements -->
     <script>
         // Smooth scrolling for internal links
         document.querySelectorAll('a.nav-link').forEach(anchor => {
@@ -450,10 +464,10 @@
             });
         });
     </script>
-    <!-- End Back to Top Script -->
+    <!-- End JavaScript Enhancements -->
 
     <!-- Bootstrap JS Bundle (Includes Popper) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
     <!-- Video Playback Speed Control -->
     <script>
