@@ -183,18 +183,16 @@
 <section id="cta" class="py-5 bg-dark text-white">
     <div class="container text-center">
         <h2 class="mb-4">Get Early Access to Om.AI</h2>
-        <p id="cta-text" class="lead">Join the waitlist for Play Store access or download directly from the App Store.</p>
+        <p id="cta-text" class="lead">Sign up now for Play Store beta access or download the app directly from the App Store today!</p>
         
         <!-- Play Store Waitlist -->
-        <div id="playstore-waitlist" class="mb-4">
+        <div id="playstore-link" class="mb-4">
             <h3>Android Users</h3>
-            <form id="waitlist-form" method="POST" class="d-flex flex-column align-items-center">
-                <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-control mb-3" style="max-width: 400px;" aria-label="Enter your email">
-                <!-- Both buttons now have the 'btn-primary' class -->
-                <button type="submit" class="btn btn-primary btn-lg">Join for Early Access</button>
-            </form>
-            <p id="form-message" class="mt-3" style="display: none;"></p>
+            <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" class="btn btn-primary btn-lg">
+                Download on Play Store
+            </a>
         </div>
+
 
         <!-- App Store Direct Link -->
         <div id="appstore-link">
@@ -284,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body: `email=${encodeURIComponent(email)}`
         }).then(response => {
             formMessage.style.display = 'block';
-            formMessage.textContent = 'Thank you for joining the waitlist!';
+            formMessage.textContent = 'Thank you for joining! We’ll send you an email with exclusive beta access shortly. Stay tuned!';
             formMessage.style.color = 'green';
 
             // Clear the form input field
