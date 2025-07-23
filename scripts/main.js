@@ -131,25 +131,71 @@ function initializeMobileCarousel() {
                     });
                 });
                 
-                // Update dots indicator (if we add interactive dots later)
+                // Create and initialize dynamic dots
+                createCarouselDots(sectionId, row);
                 updateCarouselDots(sectionId, row);
             }
         });
     }
 }
 
+// Create dynamic carousel dots
+function createCarouselDots(sectionId, row) {
+    const section = document.querySelector(sectionId);
+    const cardCount = row.children.length;
+    
+    // Create dots container
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'carousel-dots';
+    dotsContainer.setAttribute('data-section', sectionId);
+    
+    // Create individual dots
+    for (let i = 0; i < cardCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot';
+        dot.setAttribute('data-index', i);
+        
+        // Add click handler to jump to card
+        dot.addEventListener('click', () => {
+            const cardWidth = row.children[0]?.offsetWidth || 0;
+            const targetScroll = i * (cardWidth + 20);
+            row.scrollTo({
+                left: targetScroll,
+                behavior: 'smooth'
+            });
+        });
+        
+        dotsContainer.appendChild(dot);
+    }
+    
+    // Set first dot as active initially
+    dotsContainer.children[0]?.classList.add('active');
+    
+    // Insert dots after the section
+    section.appendChild(dotsContainer);
+}
+
 // Update carousel dots based on current position
 function updateCarouselDots(sectionId, row) {
-    // This function can be enhanced later to show active dot
-    row.addEventListener('scroll', throttle(() => {
-        const cardWidth = row.children[0]?.offsetWidth || 0;
-        const scrollPosition = row.scrollLeft;
-        const activeIndex = Math.round(scrollPosition / (cardWidth + 20));
-        
-        // Could update active dot styling here
-        // For now, just log for debugging
-        // console.log(`${sectionId} active card: ${activeIndex}`);
-    }, 100));
+    const dotsContainer = document.querySelector(`.carousel-dots[data-section="${sectionId}"]`);
+    
+    if (dotsContainer) {
+        row.addEventListener('scroll', throttle(() => {
+            const cardWidth = row.children[0]?.offsetWidth || 0;
+            const scrollPosition = row.scrollLeft;
+            const activeIndex = Math.round(scrollPosition / (cardWidth + 20));
+            
+            // Update active dot
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }, 100));
+    }
 }
 
 function initializeExistingFeatures() {
