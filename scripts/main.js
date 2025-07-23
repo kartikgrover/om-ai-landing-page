@@ -530,8 +530,7 @@ document.addEventListener('mousedown', function() {
 // Preload critical resources
 function preloadCriticalResources() {
     const criticalImages = [
-        '/assets/logo.png',
-        '/assets/icon.png'
+        '/assets/logo.png'
     ];
     
     criticalImages.forEach(src => {
