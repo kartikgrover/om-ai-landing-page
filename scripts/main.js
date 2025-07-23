@@ -61,7 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Rest of the existing main.js functionality
     initializeExistingFeatures();
+    
+
 });
+
+
 
 function initializeExistingFeatures() {
     // Back to Top Button
