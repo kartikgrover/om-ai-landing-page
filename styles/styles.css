@@ -1636,6 +1636,9 @@ footer a:hover {
     -ms-overflow-style: none; /* IE and Edge */
     scroll-snap-type: x mandatory;
     padding: 0 20px;
+    /* Prevent bounce/overscroll */
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: auto;
   }
 
   /* Hide scrollbar for webkit browsers */

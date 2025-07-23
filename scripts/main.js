@@ -79,86 +79,100 @@ function initializeMobileCarousel() {
             const row = section?.querySelector('.row');
             
             if (row) {
-                // Add touch event listeners for better mobile interaction
-                let startX = 0;
-                let startY = 0;
-                let scrollLeft = 0;
-                let isHorizontalSwipe = false;
+                // Store original card count before cloning
+                const originalCards = Array.from(row.children);
+                const cardCount = originalCards.length;
                 
-                row.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].pageX - row.offsetLeft;
-                    startY = e.touches[0].pageY;
-                    scrollLeft = row.scrollLeft;
-                    isHorizontalSwipe = false;
-                });
+                // Clone first and last cards for infinite scroll
+                const firstCardClone = originalCards[0].cloneNode(true);
+                const lastCardClone = originalCards[cardCount - 1].cloneNode(true);
                 
-                row.addEventListener('touchmove', (e) => {
-                    if (!startX) return;
+                // Add aria-hidden to clones for accessibility
+                firstCardClone.setAttribute('aria-hidden', 'true');
+                lastCardClone.setAttribute('aria-hidden', 'true');
+                
+                // Add clones: last clone at beginning, first clone at end
+                row.insertBefore(lastCardClone, row.firstChild);
+                row.appendChild(firstCardClone);
+                
+                // Start at the real first card (index 1 now due to clone)
+                const cardWidth = originalCards[0].offsetWidth;
+                const cardSpacing = 20;
+                const cardWithSpacing = cardWidth + cardSpacing;
+                row.scrollLeft = cardWithSpacing; // Start at first real card
+                
+                let isUserInteracting = false;
+                let isTransitioning = false;
+                
+                row.addEventListener('touchstart', () => {
+                    isUserInteracting = true;
+                }, { passive: true });
+                
+                row.addEventListener('touchend', () => {
+                    // Small delay to let scroll snap finish
+                    setTimeout(() => {
+                        isUserInteracting = false;
+                    }, 100);
+                }, { passive: true });
+                
+                // Handle infinite scroll transitions
+                row.addEventListener('scrollend', () => {
+                    if (isUserInteracting || isTransitioning) return;
                     
-                    const x = e.touches[0].pageX - row.offsetLeft;
-                    const y = e.touches[0].pageY;
-                    const deltaX = Math.abs(x - startX);
-                    const deltaY = Math.abs(y - startY);
+                    const scrollPosition = row.scrollLeft;
+                    const currentIndex = Math.round(scrollPosition / cardWithSpacing);
+                    const totalCards = row.children.length; // includes clones
                     
-                    // Only handle horizontal swipes, allow vertical scrolling
-                    if (deltaX > deltaY && deltaX > 10) {
-                        isHorizontalSwipe = true;
-                        e.preventDefault();
-                        const walk = (x - startX) * 2;
-                        row.scrollLeft = scrollLeft - walk;
-                    } else if (!isHorizontalSwipe && deltaY > 10) {
-                        // Allow vertical scrolling by not preventing default
-                        return;
+                    // Check if we're at a clone and need to transition
+                    if (currentIndex === 0) {
+                        // At last card clone, jump to real last card
+                        isTransitioning = true;
+                        row.scrollTo({
+                            left: cardCount * cardWithSpacing, // Real last card position
+                            behavior: 'auto'
+                        });
+                        setTimeout(() => { isTransitioning = false; }, 50);
+                    } else if (currentIndex === totalCards - 1) {
+                        // At first card clone, jump to real first card
+                        isTransitioning = true;
+                        row.scrollTo({
+                            left: cardWithSpacing, // Real first card position
+                            behavior: 'auto'
+                        });
+                        setTimeout(() => { isTransitioning = false; }, 50);
                     }
                 });
                 
-                row.addEventListener('touchend', () => {
-                    startX = 0;
-                    startY = 0;
-                    isHorizontalSwipe = false;
-                });
-                
-                // Auto-snap to nearest card
-                row.addEventListener('scrollend', () => {
-                    const cardWidth = row.children[0]?.offsetWidth || 0;
-                    const scrollPosition = row.scrollLeft;
-                    const cardIndex = Math.round(scrollPosition / (cardWidth + 20));
-                    const targetScroll = cardIndex * (cardWidth + 20);
-                    
-                    row.scrollTo({
-                        left: targetScroll,
-                        behavior: 'smooth'
-                    });
-                });
-                
-                // Create and initialize dynamic dots
-                createCarouselDots(sectionId, row);
-                updateCarouselDots(sectionId, row);
+                // Create and initialize dynamic dots (only for original cards)
+                createCarouselDots(sectionId, row, cardCount);
+                updateCarouselDots(sectionId, row, cardCount);
             }
         });
     }
 }
 
 // Create dynamic carousel dots
-function createCarouselDots(sectionId, row) {
+function createCarouselDots(sectionId, row, originalCardCount) {
     const section = document.querySelector(sectionId);
-    const cardCount = row.children.length;
     
     // Create dots container
     const dotsContainer = document.createElement('div');
     dotsContainer.className = 'carousel-dots';
     dotsContainer.setAttribute('data-section', sectionId);
     
-    // Create individual dots
-    for (let i = 0; i < cardCount; i++) {
+    // Create individual dots (only for original cards, not clones)
+    for (let i = 0; i < originalCardCount; i++) {
         const dot = document.createElement('div');
         dot.className = 'carousel-dot';
         dot.setAttribute('data-index', i);
         
         // Add click handler to jump to card
         dot.addEventListener('click', () => {
-            const cardWidth = row.children[0]?.offsetWidth || 0;
-            const targetScroll = i * (cardWidth + 20);
+            const cardWidth = row.children[1]?.offsetWidth || 0; // Use real card for width
+            const cardSpacing = 20;
+            const cardWithSpacing = cardWidth + cardSpacing;
+            // Add 1 to account for the clone at the beginning
+            const targetScroll = (i + 1) * cardWithSpacing;
             row.scrollTo({
                 left: targetScroll,
                 behavior: 'smooth'
@@ -176,14 +190,29 @@ function createCarouselDots(sectionId, row) {
 }
 
 // Update carousel dots based on current position
-function updateCarouselDots(sectionId, row) {
+function updateCarouselDots(sectionId, row, originalCardCount) {
     const dotsContainer = document.querySelector(`.carousel-dots[data-section="${sectionId}"]`);
     
     if (dotsContainer) {
         row.addEventListener('scroll', throttle(() => {
-            const cardWidth = row.children[0]?.offsetWidth || 0;
+            const cardWidth = row.children[1]?.offsetWidth || 0; // Use real card for width
+            const cardSpacing = 20;
+            const cardWithSpacing = cardWidth + cardSpacing;
             const scrollPosition = row.scrollLeft;
-            const activeIndex = Math.round(scrollPosition / (cardWidth + 20));
+            
+            // Calculate active index based on scroll position
+            // Subtract 1 to account for the clone at the beginning
+            let activeIndex = Math.round(scrollPosition / cardWithSpacing) - 1;
+            
+            // Handle wrapping for infinite scroll
+            if (activeIndex < 0) {
+                activeIndex = originalCardCount - 1; // Show last dot when at last clone
+            } else if (activeIndex >= originalCardCount) {
+                activeIndex = 0; // Show first dot when at first clone
+            }
+            
+            // Ensure activeIndex is within bounds
+            activeIndex = Math.max(0, Math.min(activeIndex, originalCardCount - 1));
             
             // Update active dot
             const dots = dotsContainer.querySelectorAll('.carousel-dot');
@@ -194,7 +223,7 @@ function updateCarouselDots(sectionId, row) {
                     dot.classList.remove('active');
                 }
             });
-        }, 100));
+        }, 50));
     }
 }
 
