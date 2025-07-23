@@ -81,23 +81,41 @@ function initializeMobileCarousel() {
             if (row) {
                 // Add touch event listeners for better mobile interaction
                 let startX = 0;
+                let startY = 0;
                 let scrollLeft = 0;
+                let isHorizontalSwipe = false;
                 
                 row.addEventListener('touchstart', (e) => {
                     startX = e.touches[0].pageX - row.offsetLeft;
+                    startY = e.touches[0].pageY;
                     scrollLeft = row.scrollLeft;
+                    isHorizontalSwipe = false;
                 });
                 
                 row.addEventListener('touchmove', (e) => {
                     if (!startX) return;
-                    e.preventDefault();
+                    
                     const x = e.touches[0].pageX - row.offsetLeft;
-                    const walk = (x - startX) * 2;
-                    row.scrollLeft = scrollLeft - walk;
+                    const y = e.touches[0].pageY;
+                    const deltaX = Math.abs(x - startX);
+                    const deltaY = Math.abs(y - startY);
+                    
+                    // Only handle horizontal swipes, allow vertical scrolling
+                    if (deltaX > deltaY && deltaX > 10) {
+                        isHorizontalSwipe = true;
+                        e.preventDefault();
+                        const walk = (x - startX) * 2;
+                        row.scrollLeft = scrollLeft - walk;
+                    } else if (!isHorizontalSwipe && deltaY > 10) {
+                        // Allow vertical scrolling by not preventing default
+                        return;
+                    }
                 });
                 
                 row.addEventListener('touchend', () => {
                     startX = 0;
+                    startY = 0;
+                    isHorizontalSwipe = false;
                 });
                 
                 // Auto-snap to nearest card
