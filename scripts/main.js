@@ -62,10 +62,77 @@ document.addEventListener('DOMContentLoaded', function() {
     // Rest of the existing main.js functionality
     initializeExistingFeatures();
     
+    // Initialize mobile carousel
+    initializeMobileCarousel();
+    
 
 });
 
+// Mobile Carousel functionality
+function initializeMobileCarousel() {
+    // Only initialize on mobile devices
+    if (window.innerWidth <= 768) {
+        const carouselSections = ['#features', '#how-it-works', '#screenshots'];
+        
+        carouselSections.forEach(sectionId => {
+            const section = document.querySelector(sectionId);
+            const row = section?.querySelector('.row');
+            
+            if (row) {
+                // Add touch event listeners for better mobile interaction
+                let startX = 0;
+                let scrollLeft = 0;
+                
+                row.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].pageX - row.offsetLeft;
+                    scrollLeft = row.scrollLeft;
+                });
+                
+                row.addEventListener('touchmove', (e) => {
+                    if (!startX) return;
+                    e.preventDefault();
+                    const x = e.touches[0].pageX - row.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    row.scrollLeft = scrollLeft - walk;
+                });
+                
+                row.addEventListener('touchend', () => {
+                    startX = 0;
+                });
+                
+                // Auto-snap to nearest card
+                row.addEventListener('scrollend', () => {
+                    const cardWidth = row.children[0]?.offsetWidth || 0;
+                    const scrollPosition = row.scrollLeft;
+                    const cardIndex = Math.round(scrollPosition / (cardWidth + 20));
+                    const targetScroll = cardIndex * (cardWidth + 20);
+                    
+                    row.scrollTo({
+                        left: targetScroll,
+                        behavior: 'smooth'
+                    });
+                });
+                
+                // Update dots indicator (if we add interactive dots later)
+                updateCarouselDots(sectionId, row);
+            }
+        });
+    }
+}
 
+// Update carousel dots based on current position
+function updateCarouselDots(sectionId, row) {
+    // This function can be enhanced later to show active dot
+    row.addEventListener('scroll', throttle(() => {
+        const cardWidth = row.children[0]?.offsetWidth || 0;
+        const scrollPosition = row.scrollLeft;
+        const activeIndex = Math.round(scrollPosition / (cardWidth + 20));
+        
+        // Could update active dot styling here
+        // For now, just log for debugging
+        // console.log(`${sectionId} active card: ${activeIndex}`);
+    }, 100));
+}
 
 function initializeExistingFeatures() {
     // Back to Top Button
