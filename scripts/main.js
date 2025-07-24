@@ -52,6 +52,219 @@ class SolarSystemTracker {
     }
 }
 
+// Minimalist Elegant Section Animation System
+function initializeSectionAnimations() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (prefersReducedMotion) {
+        // Simple fade-in for accessibility
+        const simpleObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('fade-in');
+            simpleObserver.observe(section);
+        });
+        return;
+    }
+    
+    // Clean animation configurations - consistent slide-in animations
+    const sectionAnimations = [
+        { 
+            selector: '#hero .hero-content', 
+            animation: 'hero-animate', 
+            delay: 0.1
+        },
+        { 
+            selector: '#hero .hero-media', 
+            animation: 'slide-in-right', 
+            delay: 0.3
+        },
+        { 
+            selector: '#features', 
+            animation: 'slide-in-up', 
+            stagger: '.feature-card',
+            staggerType: 'sequential',
+            delay: 0.2
+        },
+        { 
+            selector: '#how-it-works', 
+            animation: 'slide-in-left', 
+            stagger: '.step-card',
+            staggerType: 'sequential',
+            delay: 0.3
+        },
+        { 
+            selector: '#screenshots', 
+            animation: 'slide-in-right', 
+            stagger: '.screenshot-card',
+            staggerType: 'sequential',
+            delay: 0.2
+        },
+        { 
+            selector: '#testimonials', 
+            animation: 'slide-in-left', 
+            stagger: '.testimonial-card',
+            staggerType: 'sequential'
+        },
+        { 
+            selector: '#download', 
+            animation: 'slide-in-up', 
+            delay: 0.1
+        }
+    ];
+    
+    // Precise intersection observer
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const section = entry.target;
+                
+                // Trigger elegant entrance
+                triggerElegantEntrance(section);
+                
+                // Unobserve after animation to improve performance
+                sectionObserver.unobserve(section);
+            }
+        });
+    }, observerOptions);
+    
+    // Apply clean animations to sections
+    sectionAnimations.forEach(config => {
+        const element = document.querySelector(config.selector);
+        if (element) {
+            element.classList.add(config.animation);
+            element.dataset.animation = config.animation;
+            element.dataset.delay = config.delay || 0;
+            element.dataset.staggerType = config.staggerType || 'sequential';
+            
+            if (config.stagger) {
+                element.dataset.stagger = config.stagger;
+            }
+            
+            sectionObserver.observe(element);
+        }
+    });
+    
+    // Initialize minimal features
+    initializeTitleAnimations();
+    initializeFeatureHighlights();
+}
+
+// Trigger elegant entrance with refined timing
+function triggerElegantEntrance(section) {
+    const delay = parseFloat(section.dataset.delay) || 0;
+    
+    // Main animation trigger with precise timing
+    setTimeout(() => {
+        section.classList.add('visible');
+        
+        // Handle staggered animations
+        if (section.dataset.stagger) {
+            handleElegantStaggeredAnimation(section, section.dataset.stagger);
+        }
+        
+    }, delay * 1000);
+}
+
+// Elegant sequential staggered animations
+function handleElegantStaggeredAnimation(container, childSelector) {
+    const children = container.querySelectorAll(childSelector);
+    
+    container.classList.add('stagger-children');
+    
+    children.forEach((child, index) => {
+        child.classList.add('animate-item');
+        
+        // Simple sequential delay calculation - let CSS override where needed
+        const delay = index * 0.08; // 80ms between each item
+        child.style.animationDelay = `${delay}s`;
+        
+        // Add subtle hover enhancement
+        addSubtleHoverEffect(child);
+    });
+    
+    // Trigger staggered animation with precise timing
+    setTimeout(() => {
+        container.classList.add('visible');
+    }, 150);
+}
+
+// Add subtle hover effect for refined interaction
+function addSubtleHoverEffect(element) {
+    element.addEventListener('mouseenter', () => {
+        element.style.transform = 'translateY(-2px)';
+        element.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0.13, 1)';
+    });
+    
+    element.addEventListener('mouseleave', () => {
+        element.style.transform = 'translateY(0)';
+        element.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0.13, 1)';
+    });
+}
+
+
+
+// Animate section titles and subtitles
+function initializeTitleAnimations() {
+    const titleObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                titleObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '0px 0px -50px 0px' });
+    
+    // Animate section titles
+    document.querySelectorAll('.section-title').forEach((title, index) => {
+        title.classList.add('slide-in-down');
+        title.style.transitionDelay = '0.1s';
+        titleObserver.observe(title);
+    });
+    
+    // Animate section subtitles
+    document.querySelectorAll('.section-subtitle').forEach((subtitle, index) => {
+        subtitle.classList.add('fade-in');
+        subtitle.style.transitionDelay = '0.3s';
+        titleObserver.observe(subtitle);
+    });
+}
+
+// Enhanced feature highlights with individual animations
+function initializeFeatureHighlights() {
+    const highlightObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const highlights = entry.target.querySelectorAll('.highlight');
+                highlights.forEach((highlight, index) => {
+                    highlight.classList.add('fade-in');
+                    highlight.style.transitionDelay = `${(index * 0.1) + 0.5}s`;
+                    setTimeout(() => {
+                        highlight.classList.add('visible');
+                    }, (index * 100) + 500);
+                });
+                highlightObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    document.querySelectorAll('.feature-highlights').forEach(container => {
+        highlightObserver.observe(container);
+    });
+}
+
 // Initialize continuous solar system on page load
 document.addEventListener('DOMContentLoaded', function() {
     // Only initialize if we have the solar system elements
@@ -274,24 +487,8 @@ function initializeExistingFeatures() {
         });
     });
 
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements for animations
-    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(element => {
-        observer.observe(element);
-    });
+    // Modern Section Animation System
+    initializeSectionAnimations();
 
     // Feature card hover effects
     document.querySelectorAll('.feature-card').forEach(card => {
@@ -360,60 +557,8 @@ function initializeNavigation() {
 
 // Advanced scroll effects and animations
 function initializeScrollEffects() {
-    // Multiple animation observers for different effects
-    const fadeInObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    
-    const slideInObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.2 });
-    
-    const scaleInObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    // Apply different animations to different sections
-    const fadeElements = document.querySelectorAll('.feature-card, .testimonial-card');
-    const slideLeftElements = document.querySelectorAll('.step-card:nth-child(odd)');
-    const slideRightElements = document.querySelectorAll('.step-card:nth-child(even)');
-    const scaleElements = document.querySelectorAll('.screenshot-card');
-    
-    fadeElements.forEach((el, index) => {
-        el.classList.add('fade-in');
-        el.style.animationDelay = `${index * 0.1}s`;
-        fadeInObserver.observe(el);
-    });
-    
-    slideLeftElements.forEach((el, index) => {
-        el.classList.add('slide-in-left');
-        el.style.animationDelay = `${index * 0.2}s`;
-        slideInObserver.observe(el);
-    });
-    
-    slideRightElements.forEach((el, index) => {
-        el.classList.add('slide-in-right');
-        el.style.animationDelay = `${index * 0.2}s`;
-        slideInObserver.observe(el);
-    });
-    
-    scaleElements.forEach((el, index) => {
-        el.classList.add('scale-in');
-        el.style.animationDelay = `${index * 0.15}s`;
-        scaleInObserver.observe(el);
-    });
+    // Enhanced animations are now handled by initializeSectionAnimations()
+    // This provides more comprehensive and performant section-by-section animations
     
     // Enhanced parallax effect for hero section
     const heroSection = document.querySelector('.hero-section');
