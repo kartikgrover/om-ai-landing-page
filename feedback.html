@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Om.AI</title>
+    <meta name="description" content="Share your feedback with Om.AI and help us improve your astrology experience.">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Feedback - Om.AI">
+    <meta property="og:description" content="Share your feedback with Om.AI and help us improve your astrology experience.">
+    <meta property="og:url" content="https://omai.app/feedback">
+    <meta property="og:type" content="website">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon/favicon-512x512.png" type="image/png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+    </script>
+
+    <style>
+        .feedback-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 80px 0 60px;
+        }
+
+        .feedback-form-container {
+            background: white;
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-medium);
+            padding: 40px;
+            margin: -80px 0 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(146, 70, 34, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .rating-star {
+            font-size: 24px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .rating-star.active,
+        .rating-star:hover {
+            color: var(--accent-gold);
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: var(--radius-medium);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h5 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 10px 10px 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="/assets/favicon/favicon-64x64.png" alt="Om.AI" width="32" height="32" class="me-2">
+                <span class="fw-bold" style="color: var(--primary-color); font-size: 1.5rem;">Om.AI</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="feedback.html">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="feedback-hero">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Share Your Feedback</h1>
+            <p class="lead mb-4">Help us improve Om.AI by sharing your thoughts and experiences</p>
+            <div class="feature-badge">
+                <i class="fas fa-gift me-2"></i>Get 10 free questions for your feedback!
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Form -->
+    <section class="py-5" style="background: var(--background-light);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="feedback-form-container">
+                        <form id="feedbackForm">
+                            <!-- Overall Rating -->
+                            <div class="form-section">
+                                <h5><i class="fas fa-star me-2"></i>Overall Rating</h5>
+                                <p class="text-muted mb-3">How would you rate your overall experience with Om.AI?</p>
+                                <div class="rating-stars" id="overallRating">
+                                    <i class="fas fa-star rating-star" data-rating="1"></i>
+                                    <i class="fas fa-star rating-star" data-rating="2"></i>
+                                    <i class="fas fa-star rating-star" data-rating="3"></i>
+                                    <i class="fas fa-star rating-star" data-rating="4"></i>
+                                    <i class="fas fa-star rating-star" data-rating="5"></i>
+                                </div>
+                                <input type="hidden" id="rating" name="rating" required>
+                            </div>
+
+                            <!-- Feature Feedback -->
+                            <div class="form-section">
+                                <h5><i class="fas fa-features me-2"></i>Feature Experience</h5>
+                                <p class="text-muted mb-3">Which features did you try? (Select all that apply)</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" name="features" value="birth_chart" id="birthChart">
+                                            <label class="form-check-label" for="birthChart">Birth Chart Analysis</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" name="features" value="compatibility" id="compatibility">
+                                            <label class="form-check-label" for="compatibility">Compatibility Reports</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" name="features" value="daily_horoscope" id="dailyHoroscope">
+                                            <label class="form-check-label" for="dailyHoroscope">Daily Horoscope</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" name="features" value="spiritual_guidance" id="spiritualGuidance">
+                                            <label class="form-check-label" for="spiritualGuidance">Spiritual Guidance</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" name="features" value="question_ai" id="questionAi">
+                                            <label class="form-check-label" for="questionAi">Ask AI Questions</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" name="features" value="other" id="otherFeatures">
+                                            <label class="form-check-label" for="otherFeatures">Other Features</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Detailed Feedback -->
+                            <div class="form-section">
+                                <h5><i class="fas fa-comment-alt me-2"></i>Your Feedback</h5>
+                                <div class="mb-3">
+                                    <label for="liked" class="form-label">What did you like most about Om.AI?</label>
+                                    <textarea class="form-control" id="liked" name="liked" rows="3" placeholder="Share what you enjoyed..."></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="improvements" class="form-label">What could we improve?</label>
+                                    <textarea class="form-control" id="improvements" name="improvements" rows="3" placeholder="Share your suggestions..."></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="additionalComments" class="form-label">Additional Comments</label>
+                                    <textarea class="form-control" id="additionalComments" name="additionalComments" rows="3" placeholder="Any other thoughts or feedback..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information -->
+                            <div class="form-section">
+                                <h5><i class="fas fa-user me-2"></i>Contact Information (Optional)</h5>
+                                <p class="text-muted mb-3">Leave your contact info if you'd like us to follow up with you</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <span class="normal-text">
+                                        <i class="fas fa-paper-plane me-2"></i>Submit Feedback & Get 10 Free Questions
+                                    </span>
+                                    <span class="loading">
+                                        <i class="fas fa-spinner fa-spin me-2"></i>Submitting...
+                                    </span>
+                                </button>
+                            </div>
+
+                            <!-- Success Message -->
+                            <div class="success-message" id="successMessage">
+                                <h4><i class="fas fa-check-circle me-2"></i>Thank You!</h4>
+                                <p class="mb-0">Your feedback has been submitted successfully. You've been credited with 10 free questions!</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="/assets/favicon/favicon-64x64.png" alt="Om.AI" width="32" height="32" class="me-2">
+                        <span class="fw-bold fs-4">Om.AI</span>
+                    </div>
+                    <p class="text-light-50">Your personal Vedic astrology and spiritual wisdom companion</p>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light-50 text-decoration-none">Home</a></li>
+                        <li><a href="support.html" class="text-light-50 text-decoration-none">Support</a></li>
+                        <li><a href="feedback.html" class="text-light-50 text-decoration-none">Feedback</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h6 class="fw-bold mb-3">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="privacy-policy.html" class="text-light-50 text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="text-light-50 text-decoration-none">Terms of Service</a></li>
+                        <li><a href="refund-policy.html" class="text-light-50 text-decoration-none">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h6 class="fw-bold mb-3">Contact</h6>
+                    <p class="text-light-50 mb-2">Email: support@omai.app</p>
+                    <p class="text-light-50">For support and inquiries</p>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-light-50">&copy; 2024 Om.AI. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Feedback Form JavaScript -->
+    <script>
+        // Rating functionality
+        const ratingStars = document.querySelectorAll('.rating-star');
+        const ratingInput = document.getElementById('rating');
+        let currentRating = 0;
+
+        ratingStars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.dataset.rating);
+                currentRating = rating;
+                ratingInput.value = rating;
+                updateStars(rating);
+
+                // Track rating selection
+                gtag('event', 'feedback_rating', {
+                    'event_category': 'Feedback',
+                    'event_label': `${rating} stars`,
+                    'value': rating
+                });
+            });
+
+            star.addEventListener('mouseover', function() {
+                const rating = parseInt(this.dataset.rating);
+                updateStars(rating);
+            });
+        });
+
+        document.getElementById('overallRating').addEventListener('mouseleave', function() {
+            updateStars(currentRating);
+        });
+
+        function updateStars(rating) {
+            ratingStars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Form submission
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Validate rating
+            if (!currentRating) {
+                alert('Please provide a rating before submitting.');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const normalText = submitBtn.querySelector('.normal-text');
+            const loadingText = submitBtn.querySelector('.loading');
+
+            normalText.style.display = 'none';
+            loadingText.style.display = 'inline';
+            submitBtn.disabled = true;
+
+            // Collect form data
+            const formData = new FormData(this);
+            const features = Array.from(document.querySelectorAll('input[name="features"]:checked')).map(cb => cb.value);
+
+            // Prepare data for Google Apps Script
+            const submitData = new FormData();
+            submitData.append('rating', currentRating);
+            submitData.append('features', features.join(', '));
+            submitData.append('liked', formData.get('liked') || '');
+            submitData.append('improvements', formData.get('improvements') || '');
+            submitData.append('additionalComments', formData.get('additionalComments') || '');
+            submitData.append('name', formData.get('name') || '');
+            submitData.append('email', formData.get('email') || '');
+            submitData.append('token', new URLSearchParams(window.location.search).get('token') || '');
+
+            // Track feedback submission
+            gtag('event', 'feedback_submit', {
+                'event_category': 'Feedback',
+                'event_label': 'Form Submission',
+                'value': currentRating
+            });
+
+            // Submit to Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbwA3bWbd-QYJqkp_J8pklnjhFNXv_245SncOkYfmpcHUkrMLhLVCSQa5L9-CAg-0o3iwA/exec', {
+                method: 'POST',
+                body: submitData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Show success message
+                    document.getElementById('successMessage').style.display = 'block';
+                    this.style.display = 'none';
+
+                    // Track successful submission
+                    gtag('event', 'feedback_success', {
+                        'event_category': 'Feedback',
+                        'event_label': 'Submission Success'
+                    });
+
+                    // Scroll to success message
+                    document.getElementById('successMessage').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting feedback:', error);
+
+                // Reset button state
+                normalText.style.display = 'inline';
+                loadingText.style.display = 'none';
+                submitBtn.disabled = false;
+
+                alert('There was an error submitting your feedback. Please try again.');
+
+                // Track error
+                gtag('event', 'feedback_error', {
+                    'event_category': 'Feedback',
+                    'event_label': 'Submission Error'
+                });
+            });
+        });
+
+        // Track page view
+        gtag('event', 'page_view', {
+            'page_title': 'Feedback Page',
+            'page_location': window.location.href
+        });
+    </script>
+</body>
+
+</html>
