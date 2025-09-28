@@ -40,8 +40,8 @@
 
     <style>
         .feedback-hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
+            background: var(--background-light);
+            color: var(--text-primary);
             padding: 80px 0 60px;
         }
 
@@ -132,8 +132,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="/assets/favicon/favicon-64x64.png" alt="Om.AI" width="32" height="32" class="me-2">
-                <span class="fw-bold" style="color: var(--primary-color); font-size: 1.5rem;">Om.AI</span>
+                <img src="/assets/logo-black.png" alt="Om.AI Logo" width="70" height="70">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -176,7 +175,7 @@
                         <form id="feedbackForm">
                             <!-- Overall Rating -->
                             <div class="form-section">
-                                <h5><i class="fas fa-star me-2"></i>Overall Rating</h5>
+                                <h5><i class="fas fa-star me-2"></i>Overall Rating <span class="text-danger">*</span></h5>
                                 <p class="text-muted mb-3">How would you rate your overall experience with Om.AI?</p>
                                 <div class="rating-stars" id="overallRating">
                                     <i class="fas fa-star rating-star" data-rating="1"></i>
@@ -196,11 +195,11 @@
                                     <div class="col-md-6">
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" name="features" value="birth_chart" id="birthChart">
-                                            <label class="form-check-label" for="birthChart">Birth Chart Analysis</label>
+                                            <label class="form-check-label" for="birthChart">Astrology Chat</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" name="features" value="compatibility" id="compatibility">
-                                            <label class="form-check-label" for="compatibility">Compatibility Reports</label>
+                                            <label class="form-check-label" for="compatibility">Compatibility Analysis</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" name="features" value="daily_horoscope" id="dailyHoroscope">
@@ -210,11 +209,11 @@
                                     <div class="col-md-6">
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" name="features" value="spiritual_guidance" id="spiritualGuidance">
-                                            <label class="form-check-label" for="spiritualGuidance">Spiritual Guidance</label>
+                                            <label class="form-check-label" for="spiritualGuidance">Scripture Chat</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" name="features" value="question_ai" id="questionAi">
-                                            <label class="form-check-label" for="questionAi">Ask AI Questions</label>
+                                            <label class="form-check-label" for="questionAi">Daily Gita Verse</label>
                                         </div>
                                         <div class="form-check mb-2">
                                             <input class="form-check-input" type="checkbox" name="features" value="other" id="otherFeatures">
@@ -228,12 +227,12 @@
                             <div class="form-section">
                                 <h5><i class="fas fa-comment-alt me-2"></i>Your Feedback</h5>
                                 <div class="mb-3">
-                                    <label for="liked" class="form-label">What did you like most about Om.AI?</label>
-                                    <textarea class="form-control" id="liked" name="liked" rows="3" placeholder="Share what you enjoyed..."></textarea>
+                                    <label for="liked" class="form-label">What did you like most about Om.AI? <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="liked" name="liked" rows="3" placeholder="Share what you enjoyed..." required></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="improvements" class="form-label">What could we improve?</label>
-                                    <textarea class="form-control" id="improvements" name="improvements" rows="3" placeholder="Share your suggestions..."></textarea>
+                                    <label for="improvements" class="form-label">What could we improve? <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="improvements" name="improvements" rows="3" placeholder="Share your suggestions..." required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="additionalComments" class="form-label">Additional Comments</label>
@@ -243,19 +242,19 @@
 
                             <!-- Contact Information -->
                             <div class="form-section">
-                                <h5><i class="fas fa-user me-2"></i>Contact Information (Optional)</h5>
-                                <p class="text-muted mb-3">Leave your contact info if you'd like us to follow up with you</p>
+                                <h5><i class="fas fa-user me-2"></i>Contact Information</h5>
+                                <p class="text-muted mb-3">Required to credit your 10 free questions</p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+                                            <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com">
+                                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="your.email@example.com" required>
                                         </div>
                                     </div>
                                 </div>
@@ -273,12 +272,29 @@
                                 </button>
                             </div>
 
-                            <!-- Success Message -->
-                            <div class="success-message" id="successMessage">
-                                <h4><i class="fas fa-check-circle me-2"></i>Thank You!</h4>
-                                <p class="mb-0">Your feedback has been submitted successfully. You've been credited with 10 free questions!</p>
-                            </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="success-message" id="successMessage" style="background: white; color: var(--text-primary); padding: 40px; border-radius: var(--radius-large); text-align: center; margin-top: 20px; box-shadow: var(--shadow-medium); border: 2px solid var(--accent-light);">
+                        <div style="background: var(--accent-light); color: var(--primary-color); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-check-circle" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px;">Thank You!</h4>
+                        <p class="mb-3" style="color: var(--text-secondary);">Your feedback has been submitted successfully. You will receive 10 credits soon!</p>
+                        <p class="mb-4" style="color: var(--text-secondary);">If you have a minute, please consider leaving us a review on the App Store or Play Store. Your reviews help us reach more people who can benefit from Om.AI!</p>
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" class="btn" style="background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; border-radius: var(--radius-small);" target="_blank">
+                                <i class="fab fa-apple me-2"></i>Review on App Store
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=com.omai.app" class="btn" style="background-color: var(--secondary-color); color: white; border: none; padding: 12px 24px; border-radius: var(--radius-small);" target="_blank">
+                                <i class="fab fa-google-play me-2"></i>Review on Play Store
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -414,7 +430,7 @@
             });
 
             // Submit to Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbwA3bWbd-QYJqkp_J8pklnjhFNXv_245SncOkYfmpcHUkrMLhLVCSQa5L9-CAg-0o3iwA/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbyLwVvhP3HHWz_nG21ADv9XQ2f3xqQ7VZJAwx3qnplgDfFDXiI1EVMIyvKEnY7C7XOiOg/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 body: submitData
@@ -425,9 +441,12 @@
             })
             .then(data => {
                 if (data.status === 'success') {
+                    // Hide hero section and form
+                    document.querySelector('.feedback-hero').style.display = 'none';
+                    document.querySelector('.feedback-form-container').style.display = 'none';
+
                     // Show success message
                     document.getElementById('successMessage').style.display = 'block';
-                    this.style.display = 'none';
 
                     // Track successful submission
                     gtag('event', 'feedback_success', {
