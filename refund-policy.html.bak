@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Account - Om.AI</title>
-    <meta name="description" content="Request to delete your Om.AI account and associated data. Learn about our account deletion process and data retention policy.">
-    <meta name="keywords" content="Delete Account, Om.AI, data deletion, account removal">
+    <meta name="description" content="Om.AI Refund Policy. Learn about our refund and cancellation policies for Scripture Premium subscription.">
+    <title>Om.AI - Refund Policy</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles/styles.css?v=8">
+    <link rel="stylesheet" href="styles/styles.css">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body data-page="delete">
+<body data-page="refund">
     <!-- Starfield Background -->
     <div class="starfield">
         <div class="star star-1"></div>
@@ -238,175 +237,146 @@
     <!-- Header Section -->
     <section class="page-header">
         <div class="container text-center">
-            <h1 class="display-4 mb-3">Delete Your Om.AI Account</h1>
-            <p class="lead">Request the deletion of your account and associated data. We're here to help you through this process.</p>
+            <h1 class="display-4 mb-3">Refund Policy</h1>
+            <p class="lead">Our approach to refunds and cancellations for Om.AI services.</p>
         </div>
     </section>
 
-    <!-- Deletion Steps Section -->
+    <!-- Refund Content Section -->
     <section class="py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="content-card">
-                        <div class="warning-banner p-4 mb-4">
+                        <h2>Our Commitment to Fair Refunds</h2>
+                        <p>At Om.AI, we strive to provide the best spiritual and astrological guidance possible. This policy outlines our approach to refunds and cancellations for our Scripture Premium subscription and services.</p>
+
+                        <div class="policy-highlight p-4 mb-4">
                             <div class="d-flex align-items-start">
-                                <i class="fas fa-exclamation-triangle text-warning me-3 mt-1" style="font-size: 1.5rem;"></i>
+                                <i class="fas fa-info text-primary me-3 mt-1" style="font-size: 1.5rem;"></i>
                                 <div>
-                                    <h5 class="text-warning mb-2">Important Notice</h5>
-                                    <p class="mb-0">Deleting your account is permanent and cannot be undone. All your data, including birth charts, compatibility reports, and preferences will be permanently removed.</p>
+                                    <h5 class="text-primary mb-2">Quick Refund Summary</h5>
+                                    <p class="mb-0">You can request a full refund within <strong>24 hours</strong> of your initial purchase through Google Play Store. After 24 hours, refunds are subject to Google Play Store's standard refund policy.</p>
                                 </div>
                             </div>
                         </div>
 
-                        <h2>How to Delete Your Account</h2>
-                        <p>You can delete your Om.AI account directly from within the app. Follow these simple steps:</p>
-                        
-                        <div class="deletion-steps">
-                            <div class="step-item p-4 mb-3">
+                        <h2>Scripture Premium Subscription</h2>
+                        <p>Our Scripture Premium subscription (₹99/month) provides unlimited access to detailed astrological analysis, compatibility reports, and personalized spiritual guidance.</p>
+
+                        <h2>Refund Eligibility</h2>
+                        <p>Refunds may be considered in the following circumstances:</p>
+                        <ul>
+                            <li><strong>Technical issues:</strong> Preventing access to premium features</li>
+                            <li><strong>Service unavailability:</strong> Extended downtime or service disruptions</li>
+                            <li><strong>Billing errors:</strong> Incorrect charges or pricing issues</li>
+                            <li><strong>Duplicate charges:</strong> Accidental multiple subscriptions</li>
+                            <li><strong>Initial trial:</strong> Within 24 hours of first subscription</li>
+                        </ul>
+
+                        <h2>Non-Refundable Items</h2>
+                        <p>The following are generally not eligible for refunds:</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>Completed astrological consultations</li>
+                                    <li>Generated birth charts and reports</li>
+                                    <li>Used premium features</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>Partial subscription periods</li>
+                                    <li>Compatibility reports already accessed</li>
+                                    <li>Scriptural guidance already received</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h2>How to Cancel Your Subscription</h2>
+                        <div class="cancellation-steps">
+                            <div class="step-item p-3 mb-3">
                                 <div class="d-flex align-items-start">
                                     <div class="step-number me-3">1</div>
                                     <div>
-                                        <h6>Open Om.AI App</h6>
-                                        <p class="mb-0">Launch the Om.AI app on your device and ensure you're logged into your account.</p>
+                                        <h6>Open Google Play Store</h6>
+                                        <p class="mb-0">Go to your Google Play Store app or visit <a href="https://play.google.com/store/account/subscriptions" target="_blank" class="text-primary">play.google.com/store/account/subscriptions</a></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="step-item p-4 mb-3">
+                            <div class="step-item p-3 mb-3">
                                 <div class="d-flex align-items-start">
                                     <div class="step-number me-3">2</div>
                                     <div>
-                                        <h6>Navigate to Profile</h6>
-                                        <p class="mb-0">Go to your profile section by tapping the profile icon in the bottom navigation bar.</p>
+                                        <h6>Find Your Subscription</h6>
+                                        <p class="mb-0">Look for "Om.AI Scripture Premium" in your active subscriptions list</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="step-item p-4 mb-3">
+                            <div class="step-item p-3 mb-3">
                                 <div class="d-flex align-items-start">
                                     <div class="step-number me-3">3</div>
                                     <div>
-                                        <h6>Find Delete Account Option</h6>
-                                        <p class="mb-0">Scroll down to the bottom of your profile screen to find the "Delete Account" button.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step-item p-4 mb-3">
-                                <div class="d-flex align-items-start">
-                                    <div class="step-number me-3">4</div>
-                                    <div>
-                                        <h6>Confirm Deletion</h6>
-                                        <p class="mb-0">Enter your password and tap "Confirm Delete" to permanently remove your account and all associated data.</p>
+                                        <h6>Cancel Subscription</h6>
+                                        <p class="mb-0">Tap "Cancel subscription" and follow the prompts to confirm cancellation</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <h2>Alternative Method</h2>
-                        <p>If you're unable to access the app or encounter any issues with the in-app deletion process, you can contact our support team directly:</p>
-                        
-                        <div class="contact-method p-4 mb-4">
-                            <div class="d-flex align-items-start">
-                                <i class="fas fa-envelope text-primary me-3 mt-1" style="font-size: 1.5rem;"></i>
-                                <div>
-                                    <h6>Email Support</h6>
-                                    <p class="mb-1">Send your account deletion request to:</p>
-                                    <a href="mailto:support@omai.app" class="text-primary fw-bold">support@omai.app</a>
-                                    <small class="d-block text-muted mt-1">Include "Account Deletion Request" in the subject line and provide your registered email address</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h2>What Gets Deleted</h2>
-                        <p>When you delete your account, the following information will be permanently removed:</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul class="deletion-list">
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>Personal profile information</li>
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>Birth chart data and calculations</li>
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>Compatibility reports and analysis</li>
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>Chat history and interactions</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <ul class="deletion-list">
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>Subscription and payment history</li>
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>App preferences and settings</li>
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>Saved spiritual guidance content</li>
-                                    <li><i class="fas fa-check text-danger me-2" style="font-size: 1rem;"></i>Account credentials and login information</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Data Retention Section -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="content-card">
-                        <h2>Data Retention Policy</h2>
-                        <p>We are committed to protecting your privacy and ensuring complete data removal when you delete your account.</p>
-
-                        <div class="retention-timeline">
-                            <div class="timeline-item p-4 mb-3">
+                        <h2>How to Request a Refund</h2>
+                        <div class="refund-process">
+                            <div class="process-item p-3 mb-3">
                                 <div class="d-flex align-items-start">
-                                    <div class="timeline-icon me-3">
-                                        <i class="fas fa-clock" style="font-size: 1.5rem;"></i>
-                                    </div>
+                                    <i class="fas fa-envelope text-primary me-3 mt-1" style="font-size: 1.5rem;"></i>
                                     <div>
-                                        <h6>Immediate Deletion (0-24 hours)</h6>
-                                        <p class="mb-0">Your account becomes immediately inaccessible and personal data is marked for deletion from our active systems.</p>
+                                        <h6>Contact Support</h6>
+                                        <p class="mb-0">Email us at <a href="mailto:support@omai.app" class="text-primary">support@omai.app</a> with your refund request</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="timeline-item p-4 mb-3">
+                            <div class="process-item p-3 mb-3">
                                 <div class="d-flex align-items-start">
-                                    <div class="timeline-icon me-3">
-                                        <i class="fas fa-database" style="font-size: 1.5rem;"></i>
-                                    </div>
+                                    <i class="fas fa-file-alt text-primary me-3 mt-1" style="font-size: 1.5rem;"></i>
                                     <div>
-                                        <h6>System Purge (1-7 days)</h6>
-                                        <p class="mb-0">All personal information including your email, name, birth details, and usage data is completely removed from our databases.</p>
+                                        <h6>Provide Details</h6>
+                                        <p class="mb-0">Include your account email, purchase date, and reason for refund request</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="timeline-item p-4 mb-3">
+                            <div class="process-item p-3 mb-3">
                                 <div class="d-flex align-items-start">
-                                    <div class="timeline-icon me-3">
-                                        <i class="fas fa-server" style="font-size: 1.5rem;"></i>
-                                    </div>
+                                    <i class="fas fa-clock text-primary me-3 mt-1" style="font-size: 1.5rem;"></i>
                                     <div>
-                                        <h6>Backup Removal (7-30 days)</h6>
-                                        <p class="mb-0">Any remaining anonymized technical logs and backup data are purged from our systems within 30 days.</p>
+                                        <h6>Review Process</h6>
+                                        <p class="mb-0">Allow 2-3 business days for our team to review your request</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="important-notes p-4 mt-4">
-                            <h6 class="text-primary mb-3">Important Considerations</h6>
-                            <ul class="mb-0">
-                                <li><strong>Subscription:</strong> If you have an active subscription, it will be cancelled immediately upon account deletion</li>
-                                <li><strong>Recovery:</strong> Once deleted, your account and data cannot be recovered or restored</li>
-                                <li><strong>New Account:</strong> You can create a new account with the same email address, but it will start fresh with no previous data</li>
-                                <li><strong>Third-Party Services:</strong> We'll also remove any data shared with trusted third-party services within 30 days</li>
+                        <h2>Important Notes</h2>
+                        <div class="important-notes p-4">
+                            <ul>
+                                <li><strong>Auto-Renewal:</strong> Your subscription automatically renews unless cancelled at least 24 hours before the current period ends</li>
+                                <li><strong>Billing Cycle:</strong> Billing occurs at confirmation of purchase and repeats monthly</li>
+                                <li><strong>Cancellation Effect:</strong> You'll continue to have access to premium features until the end of your current billing period</li>
+                                <li><strong>Google Play Refunds:</strong> For purchases made through Google Play, refunds are ultimately governed by Google Play Store's refund policy</li>
                             </ul>
                         </div>
 
                         <div class="text-center mt-4 p-4">
-                            <h5>Need Help or Have Questions?</h5>
-                            <p class="mb-3">Our support team is available to assist you with the account deletion process or answer any privacy-related questions.</p>
+                            <h5>Need Help with Refunds?</h5>
+                            <p class="mb-3">Our support team is here to assist you with any refund-related questions.</p>
                             <a href="mailto:support@omai.app" class="btn btn-primary me-3">
                                 <i class="fas fa-envelope me-2"></i>Contact Support
                             </a>
-                            <a href="privacy-policy.html" class="btn btn-outline-primary">
-                                <i class="fas fa-shield-alt me-2"></i>Privacy Policy
+                            <a href="support.html" class="btn btn-outline-primary">
+                                <i class="fas fa-question-circle me-2"></i>View FAQ
                             </a>
                         </div>
+
+                        <p class="text-muted text-center mt-4"><small>This refund policy is effective as of 06/08/2024 and applies to all Om.AI services.</small></p>
                     </div>
                 </div>
             </div>
@@ -471,4 +441,4 @@
     
 </body>
 
-</html>
+</html> 

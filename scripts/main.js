@@ -854,18 +854,47 @@ function preloadCriticalResources() {
 // Initialize preloading
 preloadCriticalResources();
 
-// Service Worker registration (if available)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                // ServiceWorker registration successful
-            })
-            .catch(function(err) {
-                // ServiceWorker registration failed
-            });
+
+// Testimonial Scroll Buttons
+function initializeTestimonialScroll() {
+    const scrollContainer = document.querySelector('.testimonials-scroll-container');
+    const scrollLeftBtn = document.getElementById('scrollLeft');
+    const scrollRightBtn = document.getElementById('scrollRight');
+
+    if (!scrollContainer || !scrollLeftBtn || !scrollRightBtn) {
+        console.log('Testimonial scroll elements not found:', {
+            scrollContainer: !!scrollContainer,
+            scrollLeftBtn: !!scrollLeftBtn,
+            scrollRightBtn: !!scrollRightBtn
+        });
+        return;
+    }
+
+    console.log('Testimonial scroll initialized');
+
+    const scrollAmount = 400;
+
+    scrollLeftBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Left button clicked, scrolling by', -scrollAmount);
+        scrollContainer.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+        });
+    });
+
+    scrollRightBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Right button clicked, scrolling by', scrollAmount);
+        scrollContainer.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+        });
     });
 }
+
+// Initialize testimonial scroll on page load
+document.addEventListener('DOMContentLoaded', initializeTestimonialScroll);
 
 // Export functions for testing or external use
 window.OmAI = {
@@ -874,5 +903,6 @@ window.OmAI = {
     initializeAnimations,
     animateCounter,
     debounce,
-    throttle
+    throttle,
+    initializeTestimonialScroll
 };

@@ -14,17 +14,11 @@
     <meta property="og:description" content="Discover personalized Vedic astrology insights, birth chart analysis, compatibility reports, and spiritual wisdom from Hindu scriptures. Download Om.AI today.">
     <meta property="og:url" content="https://omai.app">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://omai.app/assets/logo-white.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Om.AI - Vedic Astrology & Spiritual Wisdom App">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Om.AI - Your Personal Vedic Astrology & Spiritual Wisdom Companion">
     <meta name="twitter:description" content="Discover personalized Vedic astrology insights, birth chart analysis, compatibility reports, and spiritual wisdom from Hindu scriptures.">
-    <meta name="twitter:image" content="https://omai.app/assets/logo-white.png">
-    <meta name="twitter:image:alt" content="Om.AI - Vedic Astrology & Spiritual Wisdom App">
 
     <!-- Additional Meta Tags -->
     <meta name="robots" content="index, follow">
@@ -40,18 +34,11 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#D97757">
 
-    <!-- Resource Hints for Performance -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles/styles.css?v=8">
+    <link rel="stylesheet" href="styles/styles.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -155,64 +142,9 @@
             a.appendChild(r);
         })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
     </script>
-
-    <!-- Structured Data (JSON-LD) for SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "MobileApplication",
-        "name": "Om.AI",
-        "applicationCategory": "LifestyleApplication",
-        "operatingSystem": ["iOS", "Android"],
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "5000",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "description": "Discover personalized Vedic astrology insights, birth chart analysis, compatibility reports, and spiritual wisdom from Hindu scriptures.",
-        "downloadUrl": [
-            "https://apps.apple.com/us/app/om-ai/id6630366988",
-            "https://play.google.com/store/apps/details?id=com.omai.app"
-        ],
-        "image": "https://omai.app/assets/logo-white.png",
-        "author": {
-            "@type": "Organization",
-            "name": "Om.AI"
-        }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Om.AI",
-        "url": "https://omai.app",
-        "logo": "https://omai.app/assets/logo-white.png",
-        "sameAs": [
-            "https://apps.apple.com/us/app/om-ai/id6630366988",
-            "https://play.google.com/store/apps/details?id=com.omai.app"
-        ],
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "support@omai.app",
-            "contactType": "customer support"
-        }
-    }
-    </script>
 </head>
 
 <body data-page="home">
-    <!-- Skip to Main Content (Accessibility) -->
-    <a href="#main-content" class="skip-to-content">Skip to main content</a>
-
     <!-- Starfield Background -->
     <div class="starfield">
         <div class="star star-1"></div>
@@ -436,7 +368,6 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
-        <main id="main-content">
         <div class="container">
             <div class="row align-items-center min-vh-100 py-5">
                 <div class="col-lg-6">
@@ -485,24 +416,6 @@
                                 <span>Charts Generated</span>
                             </div>
                         </div>
-                        <div class="trust-badges mt-4">
-                            <div class="badge-item">
-                                <i class="fas fa-shield-alt text-success"></i>
-                                <span>100% Secure</span>
-                            </div>
-                            <div class="badge-item">
-                                <i class="fas fa-lock text-primary"></i>
-                                <span>Privacy Protected</span>
-                            </div>
-                            <div class="badge-item">
-                                <i class="fab fa-app-store-ios"></i>
-                                <span>Available on App Store</span>
-                            </div>
-                            <div class="badge-item">
-                                <i class="fab fa-google-play text-success"></i>
-                                <span>Available on Play Store</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -530,7 +443,6 @@
             </div>
         </div>
     </section>
-        </main>
 
     <!-- Features Section -->
     <section id="features" class="py-5">
@@ -689,7 +601,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/home-screen.png" alt="Om.AI Home Screen" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="assets/screenshots/home-screen.png" alt="Om.AI Home Screen" class="screenshot-image">
                             <div class="screenshot-overlay">
                                 <h5>Home Screen</h5>
                                 <p class="text-muted">Main dashboard with daily horoscope and quick actions</p>
@@ -700,7 +612,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/birth-chart.png" alt="Om.AI Birth Chart" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="assets/screenshots/birth-chart.png" alt="Om.AI Birth Chart" class="screenshot-image">
                             <div class="screenshot-overlay">
                                 <h5>Birth Chart</h5>
                                 <p class="text-muted">Detailed Vedic birth chart with planetary positions</p>
@@ -711,7 +623,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/ai-chat.png" alt="Om.AI AI Chat" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="assets/screenshots/ai-chat.png" alt="Om.AI AI Chat" class="screenshot-image">
                             <div class="screenshot-overlay">
                                 <h5>AI Chat</h5>
                                 <p class="text-muted">Intelligent conversations about astrology and spirituality</p>
@@ -722,7 +634,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/compatibility.png" alt="Om.AI Compatibility" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="assets/screenshots/compatibility.png" alt="Om.AI Compatibility" class="screenshot-image">
                             <div class="screenshot-overlay">
                                 <h5>Compatibility</h5>
                                 <p class="text-muted">Comprehensive relationship compatibility analysis</p>
@@ -741,16 +653,9 @@
                 <h2 class="section-title">What Our Users Say</h2>
                 <p class="section-subtitle">Join thousands of satisfied users on their spiritual journey</p>
             </div>
-
-            <div class="position-relative testimonials-wrapper">
-                <button type="button" class="testimonial-scroll-btn testimonial-scroll-left" id="scrollLeft" aria-label="Scroll left" onclick="document.querySelector('.testimonials-scroll-container').scrollBy({left: -400, behavior: 'smooth'})">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button type="button" class="testimonial-scroll-btn testimonial-scroll-right" id="scrollRight" aria-label="Scroll right" onclick="document.querySelector('.testimonials-scroll-container').scrollBy({left: 400, behavior: 'smooth'})">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <div class="testimonials-scroll-container">
-                    <div class="testimonials-row">
+            
+            <div class="testimonials-scroll-container">
+                <div class="testimonials-row">
                     <div class="testimonial-card">
                         <div class="testimonial-header">
                             <div class="stars">
@@ -1298,13 +1203,12 @@
                         </div>
                     </div>
                 </div>
-                </div>
             </div>
         </div>
     </section>
 
     <!-- Download Section -->
-    <section id="download" class="py-5">
+    <section id="download" class="py-5 bg-primary text-white">
         <div class="container text-center">
             <h2 class="mb-4">Download Om.AI Today</h2>
             <p class="lead mb-5">Start your journey of self-discovery with personalized Vedic astrology and spiritual wisdom</p>
@@ -1427,33 +1331,6 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Scroll Animation Script -->
-    <script>
-        // Intersection Observer for scroll-triggered animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observe all feature cards, step cards, and sections
-        document.addEventListener('DOMContentLoaded', () => {
-            const animateElements = document.querySelectorAll('.feature-card, .step-card, .testimonial-card, .screenshot-card');
-            animateElements.forEach(el => {
-                el.classList.add('fade-in-on-scroll');
-                observer.observe(el);
-            });
-        });
-    </script>
     
     <!-- Custom JavaScript -->
     <script src="scripts/main.js"></script>
