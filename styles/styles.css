@@ -269,9 +269,16 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
   margin-bottom: var(--space-12); /* More whitespace like Claude */
   color: var(--text-primary) !important;
-  text-wrap: nowrap;
+  text-wrap: balance;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Desktop: no wrap */
+@media (min-width: 768px) {
+  .hero-title {
+    text-wrap: nowrap;
+  }
 }
 
 .hero-title span,
@@ -364,10 +371,13 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--primary-color);
 }
 
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.15rem rgba(217, 119, 87, 0.25);
+}
 
 .navbar-nav .nav-link {
   font-weight: 500;
-  color: var(--text-primary) !important;
+  color: var(--text-on-dark) !important;
   margin: 0 var(--spacing-xs);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
@@ -781,9 +791,15 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0;
 }
 
+/* Hero Content - Modern centered layout */
 .hero-content {
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 100%;
 }
 
 .hero-content h1,
@@ -810,12 +826,14 @@ footer {
   z-index: 2;
 }
 
+/* Hero Features - Centered inline items */
 .hero-features {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-xl);
   justify-content: center;
+  width: 100%;
 }
 
 .hero-features .feature-item {
@@ -831,54 +849,71 @@ footer {
   flex-shrink: 0;
 }
 
+/* Hero CTA - Centered button group */
 .hero-cta {
-  margin-bottom: var(--spacing-xl);
-  text-align: center;
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 1rem;
+  margin-bottom: var(--spacing-xl);
+  width: 100%;
 }
 
 .hero-cta .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+}
+
+/* Hero Media - Centered video container */
+.hero-media {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
 }
 
 @media (max-width: 991px) {
-  /* Mobile navbar - right aligned */
+  /* Mobile navbar drawer - matches dark desktop theme */
   .navbar-collapse {
     position: absolute;
     top: 100%;
     right: 0;
-    background: #141413 !important;
-    padding: 1rem;
-    border-radius: 0 0 0 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    background: var(--bg-elevated) !important;
+    padding: var(--spacing-lg);
+    border-radius: 0 0 0 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     min-width: 250px;
     z-index: 9999 !important;
-    border: 1px solid rgba(217, 119, 87, 0.3);
+    border: 1px solid rgba(217, 119, 87, 0.2);
+    border-top: none;
   }
 
   .navbar {
     z-index: 10000 !important;
   }
 
+  /* Mobile nav links spacing */
   .navbar-nav {
-    align-items: flex-end;
-    text-align: right;
+    gap: var(--spacing-sm);
   }
 
   .navbar-nav .nav-link {
-    padding: 0.75rem 1rem;
-    text-align: right;
-    color: var(--text-primary) !important;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-medium);
+    margin: 0;
+    color: var(--text-on-dark) !important;
   }
 
   .navbar-nav .nav-link:hover {
-    background: rgba(217, 119, 87, 0.1);
-    border-radius: 4px;
+    background: rgba(217, 119, 87, 0.15);
+    transform: translateX(4px);
+  }
+
+  /* Mobile download button */
+  .navbar-nav .btn {
+    margin-top: var(--spacing-xs);
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -895,50 +930,14 @@ footer {
     max-width: 100% !important;
   }
 
-  .hero-content {
-    text-align: center;
-  }
-
-  .hero-title,
-  .hero-subtitle,
-  .hero-free-badge {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
+  /* Hero adjustments for tablet - most styling inherited from base */
   .hero-features {
-    justify-content: center;
-    flex-direction: row;
     gap: var(--spacing-sm);
   }
 
-  .hero-features .feature-item {
-    display: inline-flex;
-    flex-direction: row;
-  }
-
-  .hero-cta {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
   .hero-cta .btn {
-    width: auto;
     min-width: 240px;
     max-width: 320px;
-    justify-content: center;
-    margin: 0 !important;
-    margin-bottom: var(--spacing-sm) !important;
-  }
-
-  .hero-cta .btn:last-child {
-    margin-bottom: 0 !important;
-  }
-
-  .cta-subtext {
-    text-align: center;
   }
 }
 
@@ -1574,6 +1573,10 @@ i.fas.fa-info-circle,
   transition: transform var(--transition-fast), opacity var(--transition-fast);
   height: 100%;
   min-height: 200px; /* Ensure minimum card height */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
 }
 
 .testimonial-card:hover {
@@ -1583,10 +1586,11 @@ i.fas.fa-info-circle,
 .testimonial-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: var(--spacing-md);
   margin-bottom: var(--spacing-md);
+  width: 100%;
 }
-
 
 .stars {
   display: flex;
@@ -1598,16 +1602,22 @@ i.fas.fa-info-circle,
   font-style: italic;
   margin-bottom: var(--spacing-md);
   line-height: 1.7;
+  width: 100%;
 }
 
 .testimonial-author {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
 }
 
 .author-info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .testimonial-author strong {
@@ -1622,7 +1632,6 @@ i.fas.fa-info-circle,
 }
 
 .store-icon {
-  margin-left: 1rem;
   font-size: 1.2rem;
   color: var(--primary-color);
   opacity: 0.8;
@@ -1793,35 +1802,41 @@ footer p {
     gap: var(--spacing-md);
   }
 
-  /* Hero CTA buttons mobile spacing fix */
+  /* Hero mobile optimizations */
   .hero-cta {
-    margin-bottom: var(--spacing-lg);
-    text-align: center;
+    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-sm);
   }
 
   .hero-cta .btn {
-    margin-bottom: var(--spacing-sm);
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    display: block;
-    width: auto;
     min-width: 200px;
     max-width: 280px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
-  .hero-cta .btn:last-child {
-    margin-bottom: 0;
+  .hero-video {
+    max-width: 280px;
   }
-  
+
+  .hero-media {
+    margin-block: var(--spacing-md);
+  }
+
+  /* Remove min-vh-100 on mobile for better content flow */
+  .hero-section .row.min-vh-100 {
+    min-height: auto !important;
+  }
+
+  .hero-section {
+    padding-block: clamp(2rem, 4vw, 3rem);
+  }
+
   .download-buttons {
     flex-direction: column;
     align-items: center;
     gap: 6px;
     text-align: center;
   }
-  
+
   .download-buttons .btn {
     width: auto;
     min-width: 240px;
