@@ -97,6 +97,11 @@
   --spacing-xl: var(--space-12);
   --spacing-xxl: var(--space-16);
 
+  /* ========== Section Spacing (Fluid) ========== */
+  --section-padding-block: clamp(2.5rem, 4vw, 4rem);     /* 40-64px */
+  --section-padding-inline: clamp(1rem, 3vw, 2rem);      /* 16-32px */
+  --hero-padding-block: clamp(4rem, 8vw, 8rem);          /* 64-128px */
+
   /* ========== Typography ========== */
   --font-family-heading: 'DM Serif Display', serif;
   --font-family-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -120,11 +125,17 @@
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.6;
 
-  /* ========== Transitions ========== */
-  --transition-fast: 150ms ease;
-  --transition-base: 300ms ease;
-  --transition-slow: 500ms ease;
+  /* ========== Transitions (Claude-inspired: snappier feedback) ========== */
+  --transition-instant: 50ms ease-in-out;   /* Active states */
+  --transition-fast: 100ms ease-in-out;     /* Hover states */
+  --transition-base: 300ms ease;            /* Default animations */
+  --transition-slow: 500ms ease;            /* Complex animations */
   --transition-all: all var(--transition-base);
+
+  /* ========== Easing Functions (Claude-style) ========== */
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);      /* Smooth deceleration */
+  --ease-power3-out: cubic-bezier(0.215, 0.61, 0.355, 1); /* GSAP power3.out */
+  --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);  /* Gentle motion */
 
   /* ========== Z-Index Scale ========== */
   --z-background: -1;
@@ -156,17 +167,90 @@
     box-sizing: border-box;
 }
 
+/* ========== Accessibility: Focus States (Claude-inspired) ========== */
+*:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Remove default focus styles */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Enhanced button focus states */
+.btn:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 4px; /* More prominent for interactive elements */
+}
+
+a:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-family-body);
-  line-height: var(--line-height-relaxed);
+  line-height: 1.6;
   color: var(--text-primary);
   background-color: var(--bg-base);
   overflow-x: hidden;
-  font-size: var(--font-size-base);
+  font-size: clamp(1rem, 0.5vw + 0.875rem, 1.125rem);
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* Exception for centered containers - only for page headers and CTA boxes */
+.page-header .text-center,
+.page-header .text-center *,
+.cta-box.text-center,
+.cta-box.text-center * {
+  text-align: center !important;
+}
+
+.text-center p,
+.text-center .lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Button spacing in centered text containers */
+.text-center .btn {
+  margin-bottom: 0.5rem;
+}
+
+.text-center .btn + .btn {
+  margin-left: 0.75rem;
+}
+
+@media (max-width: 576px) {
+  .text-center .btn {
+    display: block;
+    margin: 0 auto 0.75rem auto !important;
+    max-width: 280px;
+  }
+
+  .text-center .btn + .btn {
+    margin-left: auto;
+  }
+}
+
+/* Layout - Modern spacing and max-width */
+.container {
+  max-width: 1200px !important;
+}
+
+section {
+  padding-block: var(--section-padding-block);
+  padding-inline: var(--section-padding-inline);
 }
 
 /* Typography */
@@ -179,35 +263,61 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 6vw + 1rem, 5rem); /* Slightly larger for more impact */
   font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-tight);
-  margin-bottom: var(--space-6);
+  line-height: 1.05; /* Tighter for dramatic impact */
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-12); /* More whitespace like Claude */
+  color: var(--text-primary) !important;
+  text-wrap: nowrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-title span,
+.hero-title .word {
   color: var(--text-primary) !important;
 }
 
-.hero-title span {
+/* Ensure all animated word titles are white */
+[data-animate-words],
+[data-animate-words] .word,
+[data-animate-words] span {
   color: var(--text-primary) !important;
 }
 
 .section-title {
-  font-size: clamp(var(--font-size-3xl), 4vw, var(--font-size-4xl));
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  margin-bottom: var(--space-4);
+  font-size: clamp(2rem, 4vw + 1rem, 3rem);
+  font-weight: var(--font-weight-normal); /* Normal weight like Claude */
+  color: var(--text-primary) !important;
+  margin-bottom: var(--space-6); /* More space before subtitle */
+  line-height: 1.1; /* Tighter like hero */
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+}
+
+.section-title .word,
+.section-title span {
+  color: var(--text-primary) !important;
 }
 
 .section-subtitle {
-  font-size: var(--font-size-xl);
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.25rem); /* Slightly smaller */
   color: var(--text-secondary);
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-16); /* Much more space before content */
+  line-height: 1.5;
+  max-width: 50ch;  /* Narrower for better readability */
+  margin-inline: auto;
 }
 
 .hero-subtitle {
-  font-size: var(--font-size-xl);
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1.25rem); /* Smaller, more subtle */
   color: var(--text-secondary);
-  margin-bottom: var(--space-6);
-  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-8); /* More whitespace */
+  line-height: 1.5;
+  max-width: 50ch; /* Narrower */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-free-badge {
@@ -220,8 +330,8 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   font-size: 0.95rem;
   margin-bottom: var(--space-8);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: none; /* Remove blur for cardless design */
+  -webkit-backdrop-filter: none;
 }
 
 .hero-free-badge strong {
@@ -233,17 +343,11 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-secondary);
   font-size: 0.9rem;
   margin: 0;
+  text-align: center;
+  width: 100%;
 }
 
 /* Solid Color Text */
-.text-gradient {
-  color: var(--gradient-text);
-}
-
-/* Golden Vedic Text */
-.text-vedic {
-  color: #D2691E;
-}
 
 /* Navigation - Dark Theme */
 .navbar {
@@ -260,17 +364,6 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--primary-color);
 }
 
-.brand-text {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--primary-color);
-  transition: all 0.3s ease;
-}
-
-.brand-text:hover {
-  transform: scale(1.1);
-}
 
 .navbar-nav .nav-link {
   font-weight: 500;
@@ -314,21 +407,12 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
-/* Global Persistent Solar System Background */
+/* Global Persistent Solar System Background - Hidden for modern minimal aesthetic */
 .global-solar-system {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.08; /* Reduced from 0.15 for better text readability */
-  overflow: hidden;
+  display: none; /* Modern design prioritizes content over decoration */
 }
 
-/* Starfield Background - CSS Only (Performance Optimized) */
+/* Starfield Background - Subtle static stars only (modern minimal) */
 .starfield {
   position: fixed;
   top: 0;
@@ -337,7 +421,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.15; /* Barely visible - just texture */
   overflow: hidden;
   background-image:
     radial-gradient(2px 2px at 20% 30%, white, transparent),
@@ -378,17 +462,10 @@ h1, h2, h3, h4, h5, h6 {
     50% 70%,
     15% 45%,
     85% 65%;
-  animation: twinkle-stars 8s ease-in-out infinite;
+  animation: none; /* Static stars for modern minimal aesthetic */
 }
 
-@keyframes twinkle-stars {
-  0%, 100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
+/* Removed: twinkle animation for performance and modern aesthetic */
 
 /* Legacy star classes - removed for performance */
 .star {
@@ -689,7 +766,8 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: auto;
+  padding-block: clamp(4rem, 8vw, 8rem);
 }
 
 .hero-section::before {
@@ -737,23 +815,131 @@ footer {
   flex-wrap: wrap;
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-xl);
+  justify-content: center;
 }
 
-.feature-item {
-  display: flex;
+.hero-features .feature-item {
+  display: inline-flex;
   align-items: center;
   gap: var(--spacing-xs);
   color: var(--text-secondary);
   font-weight: 500;
 }
 
+.hero-features .feature-item i {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
 .hero-cta {
   margin-bottom: var(--spacing-xl);
-  text-align: left;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-cta .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  /* Mobile navbar - right aligned */
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #141413 !important;
+    padding: 1rem;
+    border-radius: 0 0 0 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    min-width: 250px;
+    z-index: 9999 !important;
+    border: 1px solid rgba(217, 119, 87, 0.3);
+  }
+
+  .navbar {
+    z-index: 10000 !important;
+  }
+
+  .navbar-nav {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem;
+    text-align: right;
+    color: var(--text-primary) !important;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background: rgba(217, 119, 87, 0.1);
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Footer two columns on mobile */
+  footer .col-lg-2,
+  footer .col-md-6 {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+
+  footer .col-lg-4 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-title,
+  .hero-subtitle,
+  .hero-free-badge {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-features {
+    justify-content: center;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+  }
+
+  .hero-features .feature-item {
+    display: inline-flex;
+    flex-direction: row;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-cta .btn {
+    width: auto;
+    min-width: 240px;
+    max-width: 320px;
+    justify-content: center;
+    margin: 0 !important;
+    margin-bottom: var(--spacing-sm) !important;
+  }
+
+  .hero-cta .btn:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .cta-subtext {
+    text-align: center;
+  }
 }
 
 .hero-stats {
@@ -779,69 +965,6 @@ footer {
 }
 
 /* Trust Badges */
-.trust-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  justify-content: center;
-  align-items: stretch;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.badge-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  flex: 1 1 auto;
-  min-width: 140px;
-  white-space: nowrap;
-}
-
-.badge-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
-  border-color: var(--brand-primary);
-}
-
-.badge-item i {
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
-.badge-item span {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-  line-height: 1.2;
-}
-
-/* Responsive adjustments for trust badges */
-@media (max-width: 768px) {
-  .trust-badges {
-    gap: var(--space-2);
-  }
-
-  .badge-item {
-    min-width: 120px;
-    padding: var(--space-2) var(--space-3);
-  }
-
-  .badge-item i {
-    font-size: 1rem;
-  }
-
-  .badge-item span {
-    font-size: 0.75rem;
-  }
-}
 
 /* Hero Media with Video/Image */
 .hero-media {
@@ -952,102 +1075,6 @@ footer {
 .placeholder-content small {
 }
 
-/* Planetary Animation */
-.planetary-system {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.3;
-}
-
-.orbit {
-  position: absolute;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.orbit-1 { width: 80px; height: 80px; }
-.orbit-2 { width: 120px; height: 120px; }
-.orbit-3 { width: 160px; height: 160px; }
-.orbit-4 { width: 200px; height: 200px; }
-
-.sun {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background: #FDB813;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.planet {
-  position: absolute;
-  border-radius: 50%;
-  top: -4px;
-  right: -4px;
-}
-
-.planet-1 {
-  width: 8px;
-  height: 8px;
-  background: #8C7853;
-  animation: orbit-1 8s linear infinite;
-}
-
-.planet-2 {
-  width: 10px;
-  height: 10px;
-  background: #FFC649;
-  animation: orbit-2 12s linear infinite;
-}
-
-.planet-3 {
-  width: 12px;
-  height: 12px;
-  background: #C0C0C0;
-  animation: orbit-3 16s linear infinite;
-}
-
-.planet-4 {
-  width: 10px;
-  height: 10px;
-  background: #CD5C5C;
-  animation: orbit-4 20s linear infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
-}
-
-@keyframes orbit-1 {
-  from { transform: rotate(0deg) translateX(40px) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(40px) rotate(-360deg); }
-}
-
-@keyframes orbit-2 {
-  from { transform: rotate(0deg) translateX(60px) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
-}
-
-@keyframes orbit-3 {
-  from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
-}
-
-@keyframes orbit-4 {
-  from { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
-}
 
 @keyframes cosmic-drift {
   0% { transform: translateX(0) translateY(0); }
@@ -1063,7 +1090,9 @@ footer {
   border-radius: var(--radius-lg);
   padding: 12px 18px;
   min-height: 48px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: background-color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              transform var(--transition-fast);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -1124,14 +1153,22 @@ footer {
 }
 
 .btn-primary:hover,
-.btn-primary:focus,
+.btn-primary:focus {
+  background: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  color: white !important;
+  /* No lift - just color change */
+  transition: all 100ms var(--ease-power3-out);
+}
+
 .btn-primary:active,
 .btn-primary.active,
 .btn-primary:not(:disabled):not(.disabled):active {
   background: var(--primary-dark) !important;
   border-color: var(--primary-dark) !important;
   color: white !important;
-  transform: translateY(-4px) scale(1.05);
+  opacity: 0.9;
+  transition: all 50ms var(--ease-power3-out);
 }
 
 .btn-primary:hover::before {
@@ -1163,55 +1200,92 @@ footer {
   background: var(--primary-color);
   border-color: var(--primary-color);
   color: white;
-  transform: translateY(-4px) scale(1.05);
+  /* No lift - just fill effect */
+  transition: all 100ms var(--ease-power3-out);
 }
 
-.btn-light {
-  background: var(--background-white);
-  color: var(--primary-color);
-  border: 1px solid var(--secondary-light);
+.btn-outline-primary:active {
+  opacity: 0.9;
+  transition: all 50ms var(--ease-power3-out);
 }
 
-.btn-light:hover {
-  background: var(--primary-color);
-  color: white;
-  transform: translateY(-4px) scale(1.05);
-  border-color: var(--primary-color);
+
+/* ========== Cardless Feature Items ========== */
+.feature-item {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
-/* Feature Cards - Enhanced with backdrop for better readability */
+.feature-item h4 {
+  color: var(--text-primary) !important;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-2);
+  line-height: 1.2;
+}
+
+.feature-item p {
+  color: var(--text-secondary);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+}
+
+.feature-separator {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: var(--space-6) 0;
+  opacity: 0.6;
+}
+
+.feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--brand-primary);
+  font-weight: var(--font-weight-medium);
+  padding: 0.5rem 0;
+}
+
+.feature-badge i {
+  font-size: 0.875rem;
+}
+
+/* Legacy feature-card styles (keeping for compatibility) */
 .feature-card {
-  background: rgba(48, 48, 46, 0.6) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(250, 249, 245, 0.1) !important;
-  border-radius: var(--radius-md);
-  padding: var(--spacing-xl);
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none !important;
+  border-radius: 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
   position: relative;
+  text-align: center;
+  align-items: center;
 }
 
 .feature-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, rgba(217, 119, 87, 0.05), transparent);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+  display: none;
 }
 
-/* Featured Card - Highlight AI Chat but keep icon normal */
 .feature-card.featured-card {
-  background: linear-gradient(135deg, rgba(217, 119, 87, 0.08), rgba(217, 119, 87, 0.03)) !important;
-  border: 2px solid rgba(217, 119, 87, 0.2) !important;
-  border-radius: var(--radius-md);
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0;
 }
 
 .feature-card.featured-card::after {
-  background: linear-gradient(135deg, rgba(217, 119, 87, 0.12), transparent);
-  opacity: 1;
+  display: none;
 }
 
 .feature-card.featured-card h4 {
@@ -1219,15 +1293,15 @@ footer {
 }
 
 .feature-card:hover {
-  transform: translateY(-8px);
-}
-
-.feature-card:hover::after {
   opacity: 1;
 }
 
+.feature-card:hover::after {
+  display: none;
+}
+
 .feature-card:hover .feature-icon {
-  transform: scale(1.1) rotate(5deg);
+  /* No icon animation */
 }
 
 
@@ -1345,26 +1419,26 @@ i.fas.fa-info-circle,
 .highlight {
   font-size: 0.875rem;
   color: var(--text-secondary);
-  padding: var(--spacing-xs);
-  background: var(--accent-light);
-  border-radius: var(--radius-small);
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 /* Step Cards - Enhanced with backdrop for better readability */
 .step-card {
-  background: rgba(48, 48, 46, 0.6) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(250, 249, 245, 0.1) !important;
-  border-radius: var(--radius-md);
+  background: transparent !important; /* Cardless design */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none !important;
+  border-radius: 0;
   padding: var(--spacing-xl);
-  transition: all 0.3s ease;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
   height: 100%;
   position: relative;
 }
 
 .step-card:hover {
-  transform: translateY(-2px);                   /* Minimal lift only */
+  /* No lift animation */
 }
 
 
@@ -1458,40 +1532,52 @@ i.fas.fa-info-circle,
 }
 
 /* Legacy placeholder styles for fallback */
-.screenshot-placeholder {
-  padding: var(--spacing-xxl);
-  text-align: center;
-  background: var(--gradient-warm);
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
+/* Testimonials Container - Fixed height with internal scroll */
+.testimonials-scroll-wrapper {
+  max-height: 600px; /* Fixed height */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px; /* Space for scrollbar */
+
+  /* Custom scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-primary) var(--bg-subtle);
 }
 
-.screenshot-placeholder h5 {
-  margin-bottom: var(--spacing-sm);
-  color: var(--text-primary);
+.testimonials-scroll-wrapper::-webkit-scrollbar {
+  width: 8px;
 }
 
-.screenshot-placeholder i {
-  color: var(--primary-color);
+.testimonials-scroll-wrapper::-webkit-scrollbar-track {
+  background: var(--bg-subtle);
+  border-radius: 4px;
+}
+
+.testimonials-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: var(--brand-primary);
+  border-radius: 4px;
+}
+
+.testimonials-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary-dark);
 }
 
 /* Testimonial Cards - Enhanced with backdrop for better readability */
 .testimonial-card {
-  background: rgba(48, 48, 46, 0.6) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(250, 249, 245, 0.1) !important;
-  border-radius: var(--radius-md);
+  background: transparent !important; /* Cardless design */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none !important;
+  border-radius: 0;
   padding: var(--spacing-xl);
-  transition: all 0.3s ease;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
   height: 100%;
+  min-height: 200px; /* Ensure minimum card height */
 }
 
 .testimonial-card:hover {
-  transform: translateY(-2px);
+  /* No lift animation */
 }
 
 .testimonial-header {
@@ -1501,20 +1587,6 @@ i.fas.fa-info-circle,
   margin-bottom: var(--spacing-md);
 }
 
-.user-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid var(--primary-color);
-  flex-shrink: 0;
-}
-
-.avatar-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 .stars {
   display: flex;
@@ -1592,63 +1664,6 @@ i.fas.fa-info-circle,
   background: var(--primary-dark);
 }
 
-.testimonials-row {
-  display: flex;
-  gap: 2rem;
-  min-width: max-content;
-  padding: 0 1rem;
-}
-
-.testimonials-row .testimonial-card {
-  min-width: 350px;
-  max-width: 400px;
-  flex-shrink: 0;
-  margin: 0;
-}
-
-/* Testimonial Scroll Buttons */
-.testimonial-scroll-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  color: var(--primary-color);
-  border: none;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 100;
-  transition: all 0.2s ease;
-  opacity: 0.6;
-}
-
-.testimonial-scroll-btn:hover {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.testimonial-scroll-left {
-  left: -20px;
-}
-
-.testimonial-scroll-right {
-  right: -20px;
-}
-
-.testimonial-scroll-btn i {
-  font-size: 1.5rem;
-  pointer-events: none;
-}
-
-/* Hide scroll buttons on mobile */
-@media (max-width: 768px) {
-  .testimonial-scroll-btn {
-    display: none;
-  }
-}
 
 /* Download Section - Dark Theme (Non-Orange) */
 #download {
@@ -1679,34 +1694,6 @@ i.fas.fa-info-circle,
   color: var(--text-primary);
 }
 
-.download-buttons {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-  text-align: center;
-}
-
-.download-buttons .btn {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-.app-info {
-  margin-top: var(--spacing-xl);
-}
-
-.app-info h4 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: var(--spacing-xs);
-  color: var(--text-primary);
-}
-
-.app-info p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
 
 /* Footer - Dark Theme */
 footer {
@@ -1792,28 +1779,14 @@ footer p {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  /* Disable heavy background animations on mobile for performance */
-  .global-solar-system {
-    opacity: 0.05 !important;
-  }
-
-  .global-solar-system .planet {
-    animation: none !important;
-  }
-
-  .global-solar-system .orbit {
-    animation: none !important;
-  }
+  /* Solar system already hidden globally via display:none - no mobile overrides needed */
 
   .starfield {
     opacity: 0.3 !important;
     animation-duration: 12s !important; /* Slower, less intensive */
   }
 
-  .hero-features {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
+  /* Hero features removed - handled by 768px breakpoint */
 
   .hero-stats {
     justify-content: center;
@@ -1999,11 +1972,11 @@ footer p {
 
   /* Reduce animation intensity on mobile */
   .feature-card:hover {
-    transform: translateY(-6px) scale(1.01);
+    /* No animation */
   }
 
   .step-card:hover {
-    transform: translateY(-6px) rotateY(2deg);
+    /* No animation */
   }
 
   .btn-primary:hover,
@@ -2015,10 +1988,7 @@ footer p {
     transform: translateY(-2px) scale(1.02);
   }
 
-  /* Better solar system visibility on mobile */
-  .global-solar-system {
-    opacity: 0.25; /* Reduced from 0.8 for better text visibility on mobile */
-  }
+  /* Solar system hidden globally - no overrides */
 
   /* Smaller but more visible solar system for mobile */
   .orbit-mercury { width: 150px; height: 150px; }
@@ -2103,26 +2073,16 @@ footer p {
 }
 
 @media (max-width: 576px) {
-  .hero-section {
-    padding: var(--spacing-lg) 0;
-  }
-  
-  .section-title {
-    font-size: 2rem;
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-  
+  /* All spacing handled by global section clamp() rule */
+
   .feature-card,
   .step-card,
   .testimonial-card {
     padding: var(--spacing-lg);
+  }
+
+  .content-card {
+    padding: var(--spacing-lg) !important;
   }
   
   .media-placeholder {
@@ -2253,14 +2213,7 @@ footer p {
     background: transparent;
   }
 
-  /* Additional mobile spacing fixes */
-  .hero-section {
-    padding: var(--spacing-md) 0;
-  }
-
-  .section {
-    padding: var(--spacing-lg) 0;
-  }
+  /* Mobile spacing handled by global section clamp() rule */
 
   .container {
     padding-left: var(--spacing-sm);
@@ -2270,19 +2223,7 @@ footer p {
 
 /* Extra Small Phones - 375px and below (iPhone SE, etc.) */
 @media (max-width: 375px) {
-  /* Typography adjustments for very small screens */
-  .hero-title {
-    font-size: 1.75rem !important;
-    line-height: 1.2;
-  }
-
-  .hero-subtitle {
-    font-size: 0.95rem !important;
-  }
-
-  .section-title {
-    font-size: 1.5rem !important;
-  }
+  /* Typography uses fluid clamp() - no overrides needed */
 
   /* Trust badges wrap better */
   .trust-badges {
@@ -2332,14 +2273,7 @@ footer p {
 
 /* Very Small Phones - 320px (iPhone 5/SE) */
 @media (max-width: 320px) {
-  /* Even more compact typography */
-  .hero-title {
-    font-size: 1.5rem !important;
-  }
-
-  .hero-subtitle {
-    font-size: 0.875rem !important;
-  }
+  /* Typography uses fluid clamp() - automatically scales */
 
   /* Container with minimal padding */
   .container {
@@ -2395,9 +2329,7 @@ footer p {
 
 /* Mobile landscape orientation adjustments */
 @media (max-width: 768px) and (orientation: landscape) {
-  .global-solar-system {
-    opacity: 0.2; /* Reduced from 0.9 for better text visibility on landscape mobile */
-  }
+  /* Solar system hidden globally - no overrides */
 
   /* Smaller solar system for landscape mobile */
   .orbit-mercury { width: 120px; height: 120px; }
@@ -2466,51 +2398,8 @@ footer p {
     transform: translateY(0);
   }
   
-  /* Elegant Slide animations */
-  .slide-in-left {
-    opacity: 0;
-    transform: translateX(-40px);
-    transition: all 0.8s var(--ease-elegant);
-  }
-  
-  .slide-in-left.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  
-  .slide-in-right {
-    opacity: 0;
-    transform: translateX(40px);
-    transition: all 0.8s var(--ease-elegant);
-  }
-  
-  .slide-in-right.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  
-  .slide-in-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s var(--ease-refined);
-  }
-  
-  .slide-in-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .slide-in-down {
-    opacity: 0;
-    transform: translateY(-40px);
-    transition: all 0.8s var(--ease-refined);
-  }
-  
-  .slide-in-down.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
+  /* Removed slide animations - using simple fade-in only like Claude */
+
   /* Subtle Scale animations */
   .scale-in {
     opacity: 0;
@@ -2643,7 +2532,7 @@ footer p {
   .hero-section {
     position: relative;
     z-index: 1;
-    min-height: 100vh;
+    min-height: auto; /* Compact hero like Claude */
   }
   
   /* All sections after hero should have higher z-index and slide up */
@@ -2683,37 +2572,13 @@ footer p {
   /* Mobile optimizations - faster transitions */
   @media (max-width: 768px) {
     .fade-in,
-    .slide-in-left,
-    .slide-in-right,
-    .slide-in-up,
-    .slide-in-down,
     .scale-in,
     .hero-animate {
       transition-duration: 0.5s;
     }
-    
-    /* Keep slower timing for main sections on mobile */
-    #features.slide-in-up {
-      transition-duration: 0.8s;
-    }
-    
-    #how-it-works.slide-in-left { 
-      transition-duration: 0.7s;
-    }
-    
-    #screenshots.slide-in-right {
-      transition-duration: 0.6s;
-    }
-    
+
     .stagger-children .animate-item {
       transition-duration: 0.4s;
-    }
-    
-    /* Slower staggered items for main sections on mobile too */
-    #features .stagger-children .animate-item,
-    #how-it-works .stagger-children .animate-item,
-    #screenshots .stagger-children .animate-item {
-      transition-duration: 0.6s;
     }
     
     /* Reduced hover effects on mobile */
@@ -2724,9 +2589,9 @@ footer p {
       transform: none;
     }
     
-    /* Mobile-specific hero covering effect */
+    /* Mobile-specific hero - compact like Claude */
     .hero-section {
-      min-height: 100vh;
+      min-height: auto;
     }
     
     section:not(.hero-section) {
@@ -2901,9 +2766,7 @@ footer p {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.feature-card:hover, .step-card:hover, .screenshot-card:hover, #features:hover, #how-it-works:hover, #screenshots:hover, #testimonials:hover, #download:hover, .hero-section:hover, footer:hover {
-  transform: translateY(-4px);
-}
+/* Removed all hover lift animations for cleaner, flatter design */
 
 /* Footer logo styling - make it white */
 footer .navbar-brand img {
@@ -2930,12 +2793,24 @@ footer .navbar-brand img:hover {
 
 /* Content Cards - Enhanced with backdrop for better readability */
 .content-card {
-  background: rgba(48, 48, 46, 0.6) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(250, 249, 245, 0.1) !important;
-  border-radius: var(--radius-md);
+  background: transparent !important; /* Cardless design */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none !important;
+  border-radius: 0;
   padding: var(--spacing-xxl);
+  text-align: left;
+}
+
+.content-card h2,
+.content-card h3,
+.content-card h4,
+.content-card h5,
+.content-card h6,
+.content-card p,
+.content-card ul,
+.content-card ol {
+  text-align: left;
 }
 
 .content-card h2 {
@@ -3431,9 +3306,11 @@ textarea.form-control {
 
 /* Enhanced Support & Policy Page Styles */
 
-/* Page Content Wrapper */
+/* Page Content Wrapper - Uses same spacing as global section rule */
 .py-5 {
   background: var(--bg-base);
+  padding-block: clamp(2.5rem, 4vw, 4rem) !important;
+  padding-inline: clamp(1rem, 3vw, 2rem);
 }
 
 /* Ensure proper text contrast in all content areas */
@@ -3587,6 +3464,17 @@ section.py-5:not(.bg-primary):not(.feedback-hero) {
 
 .contact-info:hover {
   border-color: var(--border-emphasis) !important;
+}
+
+.contact-info .d-flex > div {
+  flex: 1;
+  text-align: left;
+}
+
+.contact-info small {
+  text-align: left;
+  display: block;
+  width: 100%;
 }
 
 .contact-info .fas,
@@ -3776,6 +3664,11 @@ section.py-5:not(.bg-primary):not(.feedback-hero) {
   padding: var(--space-16) 0;
   position: relative;
   border-bottom: 1px solid var(--border-default);
+}
+
+.page-header .text-center,
+.page-header .text-center * {
+  text-align: center !important;
 }
 
 .page-header h1,
@@ -4059,18 +3952,7 @@ footer a.text-white-50:hover {
     opacity: 0.3 !important;
   }
 
-  .global-solar-system {
-    animation: none !important;
-    opacity: 0.1 !important;
-  }
-
-  .global-solar-system .planet {
-    animation: none !important;
-  }
-
-  .global-solar-system .orbit {
-    animation: none !important;
-  }
+  /* Solar system already hidden globally via display:none */
 
   /* Disable scroll-triggered animations */
   .fade-in-on-scroll {
@@ -4195,4 +4077,57 @@ footer a.text-white-50:hover {
 .skip-to-content:hover {
   background: var(--brand-primary-dark);
   color: white;
+}
+
+/* ============================================
+   Modern Scroll-Triggered Animations
+   Using Intersection Observer API
+   ============================================ */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px); /* Subtler movement (Claude uses ~20-30px) */
+  transition: opacity 0.6s var(--ease-power3-out),
+              transform 0.6s var(--ease-power3-out);
+  will-change: opacity, transform; /* Performance optimization */
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto; /* Clear after animation */
+}
+
+/* Stagger animation delays for cards in same row - Claude timing (80ms) */
+.fade-in:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+.fade-in:nth-child(2) {
+  transition-delay: 80ms;
+}
+
+.fade-in:nth-child(3) {
+  transition-delay: 160ms;
+}
+
+.fade-in:nth-child(4) {
+  transition-delay: 240ms;
+}
+
+.fade-in:nth-child(5) {
+  transition-delay: 320ms;
+}
+
+.fade-in:nth-child(6) {
+  transition-delay: 400ms;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

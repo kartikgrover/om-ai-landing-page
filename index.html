@@ -45,7 +45,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles/styles.css?v=11">
+    <link rel="stylesheet" href="styles/styles.css?v=44">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -284,8 +284,8 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                                        <img src="/assets/logo-white.png" alt="Om.AI Logo" width="70" height="70">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="/assets/logo-white.png" alt="Om.AI Logo" width="70" height="70" class="me-2">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -296,22 +296,10 @@
                         <a class="nav-link" href="#features">Features</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#how-it-works">How It Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#screenshots">Screenshots</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#testimonials">Reviews</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="support.html">Support</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="feedback.html">Feedback</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="#download">Download</a>
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="#smart-download">Download</a>
                     </li>
                 </ul>
             </div>
@@ -323,93 +311,64 @@
         <main id="main-content">
         <div class="container">
             <div class="row align-items-center min-vh-100 py-5">
-                <div class="col-lg-6">
-                    <div class="hero-content">
-                        <h1 class="hero-title">
-                            Your Personal <span>AI Astrologer</span> Available 24/7
+                <div class="col-lg-12">
+                    <div class="hero-content text-center">
+                        <h1 class="hero-title" data-animate-words>
+                            Your Personal AI Astrologer
                         </h1>
                         <p class="hero-subtitle">
-                            Get instant answers about love, career, and life decisions. Free Kundli, compatibility reports, and unlimited Bhagavad Gita wisdom - powered by AI.
+                            AI-powered Vedic astrology for love, career, and life guidance.
                         </p>
-                        <div class="hero-free-badge">
-                            <i class="fas fa-gift me-2"></i>
-                            <strong>Free Forever:</strong> Kundli, Compatibility & Unlimited Gita Chat
-                        </div>
                         <div class="hero-features">
                             <div class="feature-item">
                                 <i class="fas fa-comments text-primary"></i>
                                 <span>AI Astrology Chat</span>
                             </div>
                             <div class="feature-item">
-                                <i class="fas fa-heart text-danger"></i>
+                                <i class="fas fa-heart text-primary"></i>
                                 <span>Marriage Compatibility</span>
                             </div>
                             <div class="feature-item">
-                                <i class="fas fa-om text-warning"></i>
+                                <i class="fas fa-om text-primary"></i>
                                 <span>Mantras & Gita Wisdom</span>
                             </div>
                         </div>
                         <div class="hero-cta">
-                            <a href="#download" class="btn btn-primary btn-lg">
-                                <i class="fas fa-download me-2"></i>Download Free App
+                            <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+                                <i class="fab fa-google-play me-2"></i>Download on Android
                             </a>
-                            <p class="cta-subtext mt-2">
-                                <i class="fas fa-check-circle text-success me-1"></i>
+                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg ms-2">
+                                <i class="fab fa-apple me-2"></i>Download on iOS
+                            </a>
+                            <p class="cta-subtext mt-3">
+                                <i class="fas fa-check-circle text-primary me-1"></i>
                                 No Credit Card Required
                             </p>
                         </div>
-                        <div class="hero-stats">
-                            <div class="stat-item">
-                                <strong>5,000+</strong>
-                                <span>Happy Users</span>
-                            </div>
-                            <div class="stat-item">
-                                <strong>4.8★</strong>
-                                <span>App Rating</span>
-                            </div>
-                            <div class="stat-item">
-                                <strong>10,000+</strong>
-                                <span>Charts Generated</span>
-                            </div>
-                        </div>
-                        <div class="trust-badges mt-4">
-                            <div class="badge-item">
-                                <i class="fas fa-shield-alt text-success"></i>
-                                <span>100% Secure</span>
-                            </div>
-                            <div class="badge-item">
-                                <i class="fas fa-lock text-primary"></i>
-                                <span>Privacy Protected</span>
-                            </div>
-                            <div class="badge-item">
-                                <i class="fab fa-app-store-ios"></i>
-                                <span>Available on App Store</span>
-                            </div>
-                            <div class="badge-item">
-                                <i class="fab fa-google-play text-success"></i>
-                                <span>Available on Play Store</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="hero-media">
-                        <video autoplay muted loop playsinline class="hero-video">
-                            <source src="assets/om-ai-demo.mp4" type="video/mp4">
-                            <!-- Fallback for browsers that don't support video -->
-                            <div class="video-fallback">
-                                <div class="media-placeholder">
-                                    <div class="placeholder-content">
-                                        <h4>Om.AI App Preview</h4>
-                                        <p>Experience the power of AI-driven Vedic astrology</p>
-                                        <small>Video loading...</small>
+
+                        <!-- Video Demo -->
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-lg-8">
+                                <div class="hero-media">
+                                    <video autoplay muted loop playsinline class="hero-video">
+                                        <source src="assets/om-ai-demo.mp4" type="video/mp4">
+                                        <!-- Fallback for browsers that don't support video -->
+                                        <div class="video-fallback">
+                                            <div class="media-placeholder">
+                                                <div class="placeholder-content">
+                                                    <h4>Om.AI App Preview</h4>
+                                                    <p>Experience the power of AI-driven Vedic astrology</p>
+                                                    <small>Video loading...</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </video>
+                                    <div class="video-overlay">
+                                        <div class="play-button">
+                                            <i class="fas fa-play"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </video>
-                        <div class="video-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
                             </div>
                         </div>
                     </div>
@@ -423,11 +382,11 @@
     <section id="features" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title">Comprehensive Astrology & Spiritual Features</h2>
-                <p class="section-subtitle">Everything you need for your spiritual and astrological journey</p>
+                <h2 class="section-title" data-animate-words>Comprehensive Astrology & Spiritual Features</h2>
+                <p class="section-subtitle fade-in">Everything you need for your spiritual and astrological journey</p>
             </div>
-            
-            <div class="row g-4">
+
+            <div class="row g-4 justify-content-center">
                 <!-- AI Chat Feature - PROMINENT -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card h-100 featured-card">
@@ -450,8 +409,8 @@
                         <div class="feature-icon">
                             <i class="fas fa-chart-pie"></i>
                         </div>
-                        <h4>Birth Chart Analysis (Kundli)</h4>
-                        <p>Generate your complete Vedic birth chart in under 60 seconds - completely free. Get planetary positions, houses, lagna, and personalized insights based on your exact birth details.</p>
+                        <h4>Birth Chart (Kundli)</h4>
+                        <p>Get your complete Vedic birth chart (Kundli) with detailed planetary positions and house placements. Generated instantly using advanced Vedic calculations.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-gift"></i> 100% Free Forever</span>
                             <span class="highlight"><i class="fas fa-clock"></i> Generated in 60 Seconds</span>
@@ -465,8 +424,8 @@
                         <div class="feature-icon">
                             <i class="fas fa-heart"></i>
                         </div>
-                        <h4>Marriage Compatibility (Gun Milan)</h4>
-                        <p>Free Ashtakoot compatibility analysis for marriage and relationships. Get your first compatibility report free with detailed Guna breakdown, Kundli matching, and relationship insights.</p>
+                        <h4>Marriage Compatibility</h4>
+                        <p>Check marriage compatibility using traditional Ashtakoot matching. Get detailed Gun Milan reports with dosha analysis and remedies for a harmonious relationship.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-gift"></i> First Report Free</span>
                             <span class="highlight"><i class="fas fa-heart"></i> Ashtakoot Scoring</span>
@@ -481,7 +440,7 @@
                             <i class="fas fa-globe"></i>
                         </div>
                         <h4>Planetary Positions</h4>
-                        <p>Real-time planetary transits and their impact on your life. Stay updated with current cosmic influences and their effects on different aspects of life.</p>
+                        <p>Track current planetary positions and transits. Understand how planetary movements influence your life with detailed analysis and predictions.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-globe"></i> Live Planetary Data</span>
                             <span class="highlight"><i class="fas fa-chart-line"></i> Transit Analysis</span>
@@ -497,7 +456,7 @@
                             <i class="fas fa-book-open"></i>
                         </div>
                         <h4>Bhagavad Gita Wisdom</h4>
-                        <p>Ask unlimited questions about life's challenges and receive guidance from the Bhagavad Gita - completely free, forever. Get contextual verses and practical life applications.</p>
+                        <p>Access unlimited guidance from the Bhagavad Gita. Get verse-by-verse explanations and practical applications for modern life challenges.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-infinity"></i> Unlimited & Free Forever</span>
                             <span class="highlight"><i class="fas fa-book-open"></i> Verse-by-Verse Guidance</span>
@@ -511,8 +470,8 @@
                         <div class="feature-icon">
                             <i class="fas fa-om"></i>
                         </div>
-                        <h4>Sacred Mantras & Chants</h4>
-                        <p>Access powerful Vedic mantras including Gayatri Mantra, Hanuman Chalisa, and daily spiritual chants. Audio playback with meanings and benefits for meditation and spiritual growth.</p>
+                        <h4>Sacred Mantras</h4>
+                        <p>Access powerful Vedic mantras with audio playback and detailed meanings. Listen to sacred chants including Gayatri Mantra and Hanuman Chalisa.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-om"></i> Gayatri Mantra</span>
                             <span class="highlight"><i class="fas fa-praying-hands"></i> Hanuman Chalisa</span>
@@ -530,8 +489,8 @@
     <section id="how-it-works" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title">How Om.AI Works</h2>
-                <p class="section-subtitle">Simple steps to unlock your spiritual and astrological insights</p>
+                <h2 class="section-title" data-animate-words>How Om.AI Works</h2>
+                <p class="section-subtitle fade-in">Get started in four simple steps</p>
             </div>
             
             <div class="row g-4">
@@ -539,28 +498,28 @@
                     <div class="step-card text-center">
                         <div class="step-number">1</div>
                         <h4>Enter Birth Details</h4>
-                        <p>Provide your birth date, time, and place for accurate astrological calculations</p>
+                        <p>Birth date, time, and place</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="step-card text-center">
                         <div class="step-number">2</div>
                         <h4>Generate Your Chart</h4>
-                        <p>AI creates your personalized Vedic birth chart with detailed planetary analysis</p>
+                        <p>AI creates your personalized Kundli</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="step-card text-center">
                         <div class="step-number">3</div>
                         <h4>Ask Questions</h4>
-                        <p>Get insights about career, relationships, health, and spiritual guidance</p>
+                        <p>Get insights about career and relationships</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="step-card text-center">
                         <div class="step-number">4</div>
                         <h4>Receive Guidance</h4>
-                        <p>Get personalized predictions, compatibility reports, and scriptural wisdom</p>
+                        <p>Personalized predictions and wisdom</p>
                     </div>
                 </div>
             </div>
@@ -571,8 +530,8 @@
     <section id="screenshots" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title">See Om.AI in Action</h2>
-                <p class="section-subtitle">Explore Om.AI's beautiful and intuitive interface</p>
+                <h2 class="section-title" data-animate-words>See Om.AI in Action</h2>
+                <p class="section-subtitle fade-in">Beautiful and intuitive interface</p>
             </div>
             
             <div class="row g-4">
@@ -628,19 +587,14 @@
     <section id="testimonials" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title">What Our Users Say</h2>
-                <p class="section-subtitle">Join thousands of satisfied users on their spiritual journey</p>
+                <h2 class="section-title" data-animate-words>What Our Users Say</h2>
+                <p class="section-subtitle fade-in">Join thousands on their spiritual journey</p>
             </div>
 
-            <div class="position-relative testimonials-wrapper">
-                <button type="button" class="testimonial-scroll-btn testimonial-scroll-left" id="scrollLeft" aria-label="Scroll left" onclick="document.querySelector('.testimonials-scroll-container').scrollBy({left: -400, behavior: 'smooth'})">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button type="button" class="testimonial-scroll-btn testimonial-scroll-right" id="scrollRight" aria-label="Scroll right" onclick="document.querySelector('.testimonials-scroll-container').scrollBy({left: 400, behavior: 'smooth'})">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <div class="testimonials-scroll-container">
-                    <div class="testimonials-row">
+            <!-- Fixed height with internal scroll -->
+            <div class="testimonials-scroll-wrapper">
+                <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="testimonial-card">
                         <div class="testimonial-header">
                             <div class="stars">
@@ -651,17 +605,18 @@
                                 <i class="fas fa-star text-warning"></i>
                             </div>
                         </div>
-                        <p>"Love it! I use this everyday to learn more about scriptures and translation while learning meanings of sacred mantras. This app helps me so much on my journey of enlightenment. It is simple, easy to use and very informative. Thank you, Namaste 🙏🏼"</p>
+                        <p>"Helps me so much on my journey of enlightenment"</p>
                         <div class="testimonial-author">
                             <div class="author-info">
                                 <strong>Ilaydenb99</strong>
-                                <span>Feb 7, 2025</span>
+                                <span>iOS User</span>
                             </div>
                             <div class="store-icon">
                                 <i class="fab fa-apple"></i>
                             </div>
                         </div>
                     </div>
+                </div>
                     <div class="testimonial-card">
                         <div class="testimonial-header">
                             <div class="stars">
@@ -956,9 +911,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 11 testimonials removed to reduce clutter (kept top 15 most detailed reviews) -->
+                    <!-- Now showing 6 best testimonials in scrollable container -->
                 </div>
-                </div>
+            </div>
             </div>
         </div>
     </section>
@@ -966,7 +921,7 @@
     <!-- Download Section - Removed to reduce CTA clutter. Download available in hero, navbar, and footer -->
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
+    <footer class="text-white py-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-4">
@@ -997,6 +952,7 @@
                     <ul class="list-unstyled">
                         <li><a href="support.html" class="text-white-50">Help Center</a></li>
                         <li><a href="support.html" class="text-white-50">Contact Us</a></li>
+                        <li><a href="feedback.html" class="text-white-50">Feedback</a></li>
                         <li><a href="refund-policy.html" class="text-white-50">Refund Policy</a></li>
                     </ul>
                 </div>
@@ -1006,6 +962,7 @@
                         <li><a href="privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
                         <li><a href="terms-of-service.html" class="text-white-50">Terms of Service</a></li>
                         <li><a href="delete-account.html" class="text-white-50">Delete Account</a></li>
+                        <li><a href="unsubscribe.html" class="text-white-50">Unsubscribe</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">

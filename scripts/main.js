@@ -473,8 +473,8 @@ function initializeExistingFeatures() {
         });
     }
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // Smooth scrolling for navigation links (exclude smart-download)
+    document.querySelectorAll('a[href^="#"]:not([href="#smart-download"])').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
@@ -839,9 +839,9 @@ document.addEventListener('mousedown', function() {
 // Preload critical resources
 function preloadCriticalResources() {
     const criticalImages = [
-        '/assets/logo.png'
+        '/assets/logo-white.png'
     ];
-    
+
     criticalImages.forEach(src => {
         const link = document.createElement('link');
         link.rel = 'preload';
@@ -897,6 +897,159 @@ function initializeTestimonialScroll() {
 document.addEventListener('DOMContentLoaded', initializeTestimonialScroll);
 
 // Export functions for testing or external use
+// Modern Scroll-Triggered Fade-In Animations (Intersection Observer)
+function initializeScrollAnimations() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+        // Skip animations for users who prefer reduced motion
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.classList.add('fade-in-visible');
+        });
+        return;
+    }
+
+    // Claude-style threshold: trigger when 15% visible
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -10% 0px' // Claude uses percentage-based margin
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add visible class with slight delay for smoother sequencing
+                requestAnimationFrame(() => {
+                    entry.target.classList.add('fade-in-visible');
+                });
+                // Stop observing after animation (one-time reveal like Claude)
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards, sections, and text elements
+    const elementsToAnimate = document.querySelectorAll(
+        '.feature-card, .step-card, .testimonial-card, .content-card, .screenshot-card, .section-title, .section-subtitle'
+    );
+
+    elementsToAnimate.forEach(el => {
+        el.classList.add('fade-in');
+        observer.observe(el);
+    });
+}
+
+// Initialize scroll animations when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeScrollAnimations);
+} else {
+    initializeScrollAnimations();
+}
+
+// Smart Download Link - Detects iOS/Android and redirects accordingly
+function initializeSmartDownloadLinks() {
+    const androidUrl = 'https://play.google.com/store/apps/details?id=com.omai.app';
+    const iosUrl = 'https://apps.apple.com/us/app/om-ai/id6630366988';
+
+    // Detect user's device
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    const isAndroid = /android/i.test(userAgent);
+    const isMac = /Mac/i.test(userAgent) && !isIOS; // Desktop Mac users
+
+    // Get default smart download URL based on device
+    // Mac users likely have iPhones, Android users have Android phones, else default to iOS
+    const smartDownloadUrl = isAndroid ? androidUrl : iosUrl;
+
+    // Update all smart download links
+    document.querySelectorAll('a[href="#smart-download"]').forEach(link => {
+        link.href = smartDownloadUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+
+        // Update button text based on device
+        const currentText = link.textContent.trim();
+        if (isIOS) {
+            link.textContent = 'Download on iOS';
+        } else if (isAndroid) {
+            link.textContent = 'Download on Android';
+        } else if (isMac) {
+            link.textContent = 'Download on iOS'; // Mac users likely have iPhones
+        } else {
+            link.textContent = 'Download App';
+        }
+    });
+}
+
+// Initialize smart download links when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeSmartDownloadLinks);
+} else {
+    initializeSmartDownloadLinks();
+}
+
+// Word-by-word fade-in animation (Claude-style)
+function initializeWordAnimation() {
+    const animatedHeadings = document.querySelectorAll('[data-animate-words]');
+
+    animatedHeadings.forEach(heading => {
+        const text = heading.textContent;
+        const words = text.trim().split(/\s+/);
+
+        // Clear the heading
+        heading.textContent = '';
+        heading.setAttribute('aria-label', text);
+
+        // Wrap each word in a span
+        words.forEach((word, index) => {
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'word';
+            wordSpan.textContent = word;
+            wordSpan.style.opacity = '0';
+            wordSpan.style.display = 'inline-block';
+            wordSpan.style.transform = 'translateY(10px)';
+            wordSpan.setAttribute('aria-hidden', 'true');
+
+            heading.appendChild(wordSpan);
+
+            // Add space after word (except last word)
+            if (index < words.length - 1) {
+                heading.appendChild(document.createTextNode(' '));
+            }
+        });
+    });
+
+    // Animate words on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const words = entry.target.querySelectorAll('.word');
+                words.forEach((word, index) => {
+                    setTimeout(() => {
+                        word.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        word.style.opacity = '1';
+                        word.style.transform = 'translateY(0)';
+                    }, index * 100); // 100ms delay between each word
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -10% 0px'
+    });
+
+    animatedHeadings.forEach(heading => observer.observe(heading));
+}
+
+// Initialize word animations when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeWordAnimation);
+} else {
+    initializeWordAnimation();
+}
+
 window.OmAI = {
     initializeNavigation,
     initializeScrollEffects,
@@ -904,5 +1057,7 @@ window.OmAI = {
     animateCounter,
     debounce,
     throttle,
-    initializeTestimonialScroll
+    initializeTestimonialScroll,
+    initializeScrollAnimations,
+    initializeSmartDownloadLinks
 };
