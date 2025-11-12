@@ -286,77 +286,25 @@ function initializeMobileCarousel() {
     // Only initialize on mobile devices
     if (window.innerWidth <= 768) {
         const carouselSections = ['#features', '#how-it-works', '#screenshots'];
-        
+
         carouselSections.forEach(sectionId => {
             const section = document.querySelector(sectionId);
             const row = section?.querySelector('.row');
-            
+
             if (row) {
-                // Store original card count before cloning
+                // Store original card count (no cloning for simplicity)
                 const originalCards = Array.from(row.children);
                 const cardCount = originalCards.length;
-                
-                // Clone first and last cards for infinite scroll
-                const firstCardClone = originalCards[0].cloneNode(true);
-                const lastCardClone = originalCards[cardCount - 1].cloneNode(true);
-                
-                // Add aria-hidden to clones for accessibility
-                firstCardClone.setAttribute('aria-hidden', 'true');
-                lastCardClone.setAttribute('aria-hidden', 'true');
-                
-                // Add clones: last clone at beginning, first clone at end
-                row.insertBefore(lastCardClone, row.firstChild);
-                row.appendChild(firstCardClone);
-                
-                // Start at the real first card (index 1 now due to clone)
+
+                // Ensure scroll starts at the beginning (first card)
+                row.scrollLeft = 0;
+
+                // Calculate card dimensions
                 const cardWidth = originalCards[0].offsetWidth;
-                const cardSpacing = 20;
+                const cardSpacing = 20; // margin-right between cards
                 const cardWithSpacing = cardWidth + cardSpacing;
-                row.scrollLeft = cardWithSpacing; // Start at first real card
                 
-                let isUserInteracting = false;
-                let isTransitioning = false;
-                
-                row.addEventListener('touchstart', () => {
-                    isUserInteracting = true;
-                }, { passive: true });
-                
-                row.addEventListener('touchend', () => {
-                    // Small delay to let scroll snap finish
-                    setTimeout(() => {
-                        isUserInteracting = false;
-                    }, 100);
-                }, { passive: true });
-                
-                // Handle infinite scroll transitions
-                row.addEventListener('scrollend', () => {
-                    if (isUserInteracting || isTransitioning) return;
-                    
-                    const scrollPosition = row.scrollLeft;
-                    const currentIndex = Math.round(scrollPosition / cardWithSpacing);
-                    const totalCards = row.children.length; // includes clones
-                    
-                    // Check if we're at a clone and need to transition
-                    if (currentIndex === 0) {
-                        // At last card clone, jump to real last card
-                        isTransitioning = true;
-                        row.scrollTo({
-                            left: cardCount * cardWithSpacing, // Real last card position
-                            behavior: 'auto'
-                        });
-                        setTimeout(() => { isTransitioning = false; }, 50);
-                    } else if (currentIndex === totalCards - 1) {
-                        // At first card clone, jump to real first card
-                        isTransitioning = true;
-                        row.scrollTo({
-                            left: cardWithSpacing, // Real first card position
-                            behavior: 'auto'
-                        });
-                        setTimeout(() => { isTransitioning = false; }, 50);
-                    }
-                });
-                
-                // Create and initialize dynamic dots (only for original cards)
+                // Create and initialize dynamic dots
                 createCarouselDots(sectionId, row, cardCount);
                 updateCarouselDots(sectionId, row, cardCount);
             }
@@ -381,11 +329,11 @@ function createCarouselDots(sectionId, row, originalCardCount) {
         
         // Add click handler to jump to card
         dot.addEventListener('click', () => {
-            const cardWidth = row.children[1]?.offsetWidth || 0; // Use real card for width
+            const cardWidth = row.children[0]?.offsetWidth || 0;
             const cardSpacing = 20;
             const cardWithSpacing = cardWidth + cardSpacing;
-            // Add 1 to account for the clone at the beginning
-            const targetScroll = (i + 1) * cardWithSpacing;
+            // No clones, so just use the index directly
+            const targetScroll = i * cardWithSpacing;
             row.scrollTo({
                 left: targetScroll,
                 behavior: 'smooth'
@@ -408,22 +356,14 @@ function updateCarouselDots(sectionId, row, originalCardCount) {
     
     if (dotsContainer) {
         row.addEventListener('scroll', throttle(() => {
-            const cardWidth = row.children[1]?.offsetWidth || 0; // Use real card for width
+            const cardWidth = row.children[0]?.offsetWidth || 0;
             const cardSpacing = 20;
             const cardWithSpacing = cardWidth + cardSpacing;
             const scrollPosition = row.scrollLeft;
-            
-            // Calculate active index based on scroll position
-            // Subtract 1 to account for the clone at the beginning
-            let activeIndex = Math.round(scrollPosition / cardWithSpacing) - 1;
-            
-            // Handle wrapping for infinite scroll
-            if (activeIndex < 0) {
-                activeIndex = originalCardCount - 1; // Show last dot when at last clone
-            } else if (activeIndex >= originalCardCount) {
-                activeIndex = 0; // Show first dot when at first clone
-            }
-            
+
+            // Calculate active index based on scroll position (no clones)
+            let activeIndex = Math.round(scrollPosition / cardWithSpacing);
+
             // Ensure activeIndex is within bounds
             activeIndex = Math.max(0, Math.min(activeIndex, originalCardCount - 1));
             

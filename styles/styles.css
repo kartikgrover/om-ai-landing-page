@@ -1866,8 +1866,9 @@ footer p {
     scroll-snap-type: x mandatory;
     padding: 0 20px;
     /* Prevent bounce/overscroll */
-    overscroll-behavior-x: none;
+    overscroll-behavior-x: contain;
     overscroll-behavior-y: auto;
+    justify-content: flex-start !important;
   }
 
   /* Hide scrollbar for webkit browsers */
@@ -1886,12 +1887,24 @@ footer p {
     scroll-snap-align: center;
   }
 
+  /* First card should align to start, not center */
+  #features .row > .col-lg-4:first-child,
+  #features .row > .col-md-6:first-child {
+    scroll-snap-align: start;
+  }
+
   #how-it-works .row > .col-lg-3,
   #how-it-works .row > .col-md-6 {
     flex: 0 0 calc(100vw - 60px);
     max-width: calc(100vw - 60px);
     margin-right: 20px;
     scroll-snap-align: center;
+  }
+
+  /* First card in how-it-works should also align to start */
+  #how-it-works .row > .col-lg-3:first-child,
+  #how-it-works .row > .col-md-6:first-child {
+    scroll-snap-align: start;
   }
 
   #screenshots .row > .col-lg-3,
@@ -1902,7 +1915,13 @@ footer p {
     scroll-snap-align: center;
   }
 
-  /* Remove margin from last item */
+  /* First card in screenshots should also align to start */
+  #screenshots .row > .col-lg-3:first-child,
+  #screenshots .row > .col-md-6:first-child {
+    scroll-snap-align: start;
+  }
+
+  /* Last item keeps right margin for proper spacing */
   #features .row > .col-lg-4:last-child,
   #features .row > .col-md-6:last-child,
   #how-it-works .row > .col-lg-3:last-child,
@@ -2135,8 +2154,8 @@ footer p {
   #how-it-works .row > .col-md-6,
   #screenshots .row > .col-lg-3,
   #screenshots .row > .col-md-6 {
-    flex: 0 0 calc(100vw - 40px);
-    max-width: calc(100vw - 40px);
+    flex: 0 0 calc(100vw - 50px);
+    max-width: calc(100vw - 50px);
     margin-right: 15px;
   }
 
