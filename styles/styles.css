@@ -1246,6 +1246,27 @@ footer {
   pointer-events: none;
 }
 
+/* Featured Card - Highlight AI Chat */
+.feature-card.featured-card {
+  background: linear-gradient(135deg, rgba(217, 119, 87, 0.08), rgba(217, 119, 87, 0.03)) !important;
+  border: 2px solid rgba(217, 119, 87, 0.2) !important;
+  border-radius: var(--radius-md);
+}
+
+.feature-card.featured-card::after {
+  background: linear-gradient(135deg, rgba(217, 119, 87, 0.12), transparent);
+  opacity: 1;
+}
+
+.feature-card.featured-card .feature-icon {
+  background: linear-gradient(135deg, var(--brand-primary), var(--primary-dark));
+  box-shadow: 0 8px 20px rgba(217, 119, 87, 0.3);
+}
+
+.feature-card.featured-card h4 {
+  color: var(--brand-primary);
+}
+
 .feature-card:hover {
   transform: translateY(-8px);
 }
