@@ -41,11 +41,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/assets/om-ai-demo.mp4" as="video" type="video/mp4">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles/styles.css?v=49">
+    <link rel="stylesheet" href="/styles/styles.css?v=49">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -348,7 +351,7 @@
 
                         <div class="hero-media">
                             <video autoplay muted loop playsinline class="hero-video">
-                                <source src="assets/om-ai-demo.mp4" type="video/mp4">
+                                <source src="/assets/om-ai-demo.mp4" type="video/mp4">
                                 <!-- Fallback for browsers that don't support video -->
                                 <div class="video-fallback">
                                     <div class="media-placeholder">
@@ -532,7 +535,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/home-screen.png" alt="Om.AI Home Screen" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="/assets/screenshots/home-screen.png" alt="Om.AI Home Screen" class="screenshot-image" loading="eager" width="300" height="650">
                             <div class="screenshot-overlay">
                                 <h5>Home Screen</h5>
                                 <p class="text-muted">Main dashboard with daily horoscope and quick actions</p>
@@ -543,7 +546,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/birth-chart.png" alt="Om.AI Birth Chart" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="/assets/screenshots/birth-chart.png" alt="Om.AI Birth Chart" class="screenshot-image" loading="eager" width="300" height="650">
                             <div class="screenshot-overlay">
                                 <h5>Birth Chart</h5>
                                 <p class="text-muted">Detailed Vedic birth chart with planetary positions</p>
@@ -554,7 +557,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/ai-chat.png" alt="Om.AI AI Chat" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="/assets/screenshots/ai-chat.png" alt="Om.AI AI Chat" class="screenshot-image" loading="lazy" width="300" height="650">
                             <div class="screenshot-overlay">
                                 <h5>AI Chat</h5>
                                 <p class="text-muted">Intelligent conversations about astrology and spirituality</p>
@@ -565,7 +568,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="assets/screenshots/compatibility.png" alt="Om.AI Compatibility" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <img src="/assets/screenshots/compatibility.png" alt="Om.AI Compatibility" class="screenshot-image" loading="lazy" width="300" height="650">
                             <div class="screenshot-overlay">
                                 <h5>Compatibility</h5>
                                 <p class="text-muted">Comprehensive relationship compatibility analysis</p>
@@ -1018,7 +1021,7 @@
     </script>
     
     <!-- Custom JavaScript -->
-    <script src="scripts/main.js"></script>
+    <script src="/scripts/main.js"></script>
 </body>
 
 </html>
