@@ -870,6 +870,8 @@ footer {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-xl);
 }
 
 @media (max-width: 991px) {
