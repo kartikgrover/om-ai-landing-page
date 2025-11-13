@@ -116,6 +116,30 @@
                 'value': 1
             });
         }
+
+        // Track navigation clicks
+        function trackNavigation(linkName) {
+            gtag('event', 'navigation_click', {
+                'event_category': 'Navigation',
+                'event_label': linkName
+            });
+        }
+
+        // Track social media clicks
+        function trackSocial(platform) {
+            gtag('event', 'social_click', {
+                'event_category': 'Social Media',
+                'event_label': platform
+            });
+        }
+
+        // Track video engagement
+        function trackVideo(action) {
+            gtag('event', 'video_' + action, {
+                'event_category': 'Video Engagement',
+                'event_label': 'Hero Video'
+            });
+        }
     </script>
 
     <!-- Meta Pixel Code -->
@@ -208,7 +232,7 @@
         "name": "Om.AI - AI-Powered Meditation & Mindfulness App Demo",
         "description": "Watch how Om.AI transforms your meditation practice with AI-powered personalized guidance, mindfulness tracking, and spiritual wisdom.",
         "thumbnailUrl": "https://omai.app/assets/favicon/favicon-512x512.png",
-        "uploadDate": "2025-11-11",
+        "uploadDate": "2024-11-11T00:00:00+00:00",
         "contentUrl": "https://omai.app/assets/om-ai-demo.mp4",
         "embedUrl": "https://omai.app/",
         "duration": "PT47S"
@@ -295,13 +319,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
+                        <a class="nav-link" href="#features" onclick="trackNavigation('Features')">Features</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="support.html">Support</a>
+                        <a class="nav-link" href="support.html" onclick="trackNavigation('Support')">Support</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="#smart-download">Download</a>
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="#smart-download" onclick="trackNavigation('Download Nav Button')">Download</a>
                     </li>
                 </ul>
             </div>
@@ -336,10 +360,10 @@
                             </div>
                         </div>
                         <div class="hero-cta">
-                            <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+                            <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg" onclick="trackDownload('android')">
                                 <i class="fab fa-google-play me-2"></i>Download on Android
                             </a>
-                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg">
+                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg" onclick="trackDownload('ios')">
                                 <i class="fab fa-apple me-2"></i>Download on iOS
                             </a>
                             <p class="cta-subtext">
@@ -921,10 +945,10 @@
                     </div>
                     <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom. Ask questions, get instant answers, and discover your cosmic blueprint.</p>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" onclick="trackSocial('Facebook')">
                             <i class="fab fa-facebook" style="font-size: 1.5rem;"></i>
                         </a>
-                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3">
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" onclick="trackSocial('Instagram')">
                             <i class="fab fa-instagram" style="font-size: 1.5rem;"></i>
                         </a>
                     </div>
@@ -961,11 +985,11 @@
                     <ul class="list-unstyled">
                       <li>
                         <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dlanding%26utm_campaign%3Dapp_download"
-                           class="text-white-50">Android App</a>
+                           class="text-white-50" onclick="trackDownload('android')">Android App</a>
                       </li>
                       <li>
                         <a href="https://apps.apple.com/us/app/om-ai/id6630366988?utm_source=website&utm_medium=landing&utm_campaign=app_download"
-                           class="text-white-50">iOS App</a>
+                           class="text-white-50" onclick="trackDownload('ios')">iOS App</a>
                       </li>
                     </ul>
                   </div>                  
@@ -1016,6 +1040,54 @@
                 el.classList.add('fade-in-on-scroll');
                 observer.observe(el);
             });
+
+            // Video tracking
+            const heroVideo = document.querySelector('.hero-video');
+            if (heroVideo) {
+                let videoTracked = {
+                    play: false,
+                    quarter: false,
+                    half: false,
+                    threeQuarter: false,
+                    complete: false
+                };
+
+                heroVideo.addEventListener('play', () => {
+                    if (!videoTracked.play) {
+                        trackVideo('play');
+                        videoTracked.play = true;
+                    }
+                });
+
+                heroVideo.addEventListener('pause', () => {
+                    trackVideo('pause');
+                });
+
+                heroVideo.addEventListener('ended', () => {
+                    if (!videoTracked.complete) {
+                        trackVideo('complete');
+                        videoTracked.complete = true;
+                    }
+                });
+
+                // Track progress milestones
+                heroVideo.addEventListener('timeupdate', () => {
+                    const progress = (heroVideo.currentTime / heroVideo.duration) * 100;
+
+                    if (progress >= 25 && !videoTracked.quarter) {
+                        trackVideo('25_percent');
+                        videoTracked.quarter = true;
+                    }
+                    if (progress >= 50 && !videoTracked.half) {
+                        trackVideo('50_percent');
+                        videoTracked.half = true;
+                    }
+                    if (progress >= 75 && !videoTracked.threeQuarter) {
+                        trackVideo('75_percent');
+                        videoTracked.threeQuarter = true;
+                    }
+                });
+            }
         });
     </script>
     
