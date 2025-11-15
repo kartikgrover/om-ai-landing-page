@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(for file in support.html delete-account.html privacy-policy.html refund-policy.html terms-of-service.html)",
+      "Bash(do grep -n \"navbar-brand\" \"$file\" -A1)",
+      "Bash(echo \"  Found in $file\" done)"
     ],
     "deny": [],
     "ask": []
