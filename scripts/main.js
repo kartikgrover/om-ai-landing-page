@@ -265,19 +265,169 @@ function initializeFeatureHighlights() {
     });
 }
 
+// Initialize hero video to ensure it loads and plays properly
+function initializeHeroVideo() {
+    const heroVideo = document.querySelector('.hero-video');
+    if (!heroVideo) return;
+
+    const videoOverlay = document.querySelector('.video-overlay');
+    let hasPlayed = false;
+    let loadTimeout;
+
+    // Show loading state
+    const showLoadingState = () => {
+        if (videoOverlay) {
+            videoOverlay.style.opacity = '1';
+            videoOverlay.style.pointerEvents = 'auto';
+        }
+    };
+
+    // Hide loading state
+    const hideLoadingState = () => {
+        if (videoOverlay) {
+            videoOverlay.style.opacity = '0';
+            videoOverlay.style.pointerEvents = 'none';
+        }
+    };
+
+    // Function to attempt playing the video
+    const playVideo = () => {
+        if (hasPlayed) return; // Prevent multiple play attempts
+
+        const playPromise = heroVideo.play();
+
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    // Video started playing successfully
+                    console.log('Hero video playing');
+                    hasPlayed = true;
+                    hideLoadingState();
+                    clearTimeout(loadTimeout);
+                })
+                .catch(error => {
+                    // Autoplay was prevented - this is normal on some browsers
+                    console.log('Autoplay prevented, will play on user interaction:', error);
+
+                    // Add a one-time click/touch listener to start video on first interaction
+                    const startVideoOnInteraction = () => {
+                        heroVideo.play()
+                            .then(() => {
+                                hasPlayed = true;
+                                hideLoadingState();
+                            })
+                            .catch(e => console.log('Play on interaction failed:', e));
+                        document.removeEventListener('click', startVideoOnInteraction);
+                        document.removeEventListener('touchstart', startVideoOnInteraction);
+                    };
+
+                    document.addEventListener('click', startVideoOnInteraction, { once: true });
+                    document.addEventListener('touchstart', startVideoOnInteraction, { once: true });
+                });
+        }
+    };
+
+    // Show initial loading state
+    showLoadingState();
+
+    // Set a timeout to force load attempt after 3 seconds if nothing has happened
+    loadTimeout = setTimeout(() => {
+        console.log('Video load timeout - forcing load attempt');
+        if (!hasPlayed && heroVideo.readyState < 3) {
+            heroVideo.load();
+        }
+    }, 3000);
+
+    // Handle when video has loaded enough data to play
+    heroVideo.addEventListener('loadeddata', () => {
+        console.log('Video data loaded');
+        playVideo();
+    }, { once: true });
+
+    // Handle when video can play through without buffering
+    heroVideo.addEventListener('canplaythrough', () => {
+        console.log('Video can play through');
+        if (!hasPlayed) {
+            playVideo();
+        }
+    }, { once: true });
+
+    // Handle when video starts playing
+    heroVideo.addEventListener('playing', () => {
+        console.log('Video playing event fired');
+        hasPlayed = true;
+        hideLoadingState();
+        clearTimeout(loadTimeout);
+    }, { once: true });
+
+    // Ensure video is ready before attempting to play
+    if (heroVideo.readyState >= 3) {
+        // Video is already loaded enough to play
+        console.log('Video already ready, playing immediately');
+        playVideo();
+    } else if (heroVideo.readyState >= 2) {
+        // Video metadata loaded, try to play
+        console.log('Video metadata loaded, attempting play');
+        playVideo();
+    } else {
+        // Wait for video to be ready and also start loading
+        heroVideo.addEventListener('canplay', playVideo, { once: true });
+
+        // Force load immediately
+        heroVideo.load();
+    }
+
+    // Handle video stalling or errors
+    heroVideo.addEventListener('stalled', () => {
+        console.log('Video stalled, attempting to reload');
+        if (!hasPlayed) {
+            heroVideo.load();
+        }
+    });
+
+    heroVideo.addEventListener('suspend', () => {
+        console.log('Video loading suspended');
+        // Browser has intentionally stopped loading - try to resume
+        if (!hasPlayed && heroVideo.readyState < 3) {
+            setTimeout(() => heroVideo.load(), 100);
+        }
+    });
+
+    heroVideo.addEventListener('error', (e) => {
+        console.error('Video error:', e);
+        clearTimeout(loadTimeout);
+        if (videoOverlay) {
+            const playButton = videoOverlay.querySelector('.play-button');
+            if (playButton) {
+                playButton.style.display = 'block';
+            }
+        }
+    });
+
+    // Add click handler to overlay for manual play
+    if (videoOverlay) {
+        videoOverlay.addEventListener('click', () => {
+            playVideo();
+        });
+    }
+}
+
 // Initialize continuous solar system on page load
 document.addEventListener('DOMContentLoaded', function() {
     // Only initialize if we have the solar system elements
     if (document.querySelector('.global-solar-system')) {
         new SolarSystemTracker();
     }
-    
+
+    // Initialize hero video
+    initializeHeroVideo();
+
     // Rest of the existing main.js functionality
     initializeExistingFeatures();
-    
+
     // Initialize mobile carousel
     initializeMobileCarousel();
-    
+
 
 });
 
@@ -999,5 +1149,6 @@ window.OmAI = {
     throttle,
     initializeTestimonialScroll,
     initializeScrollAnimations,
-    initializeSmartDownloadLinks
+    initializeSmartDownloadLinks,
+    initializeHeroVideo
 };
