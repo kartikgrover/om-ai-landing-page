@@ -91,6 +91,14 @@
     }
     </script>
 
+    <!-- Canonical URL enforcement -->
+    <script>
+        // Redirect /index.html to root URL for SEO
+        if (window.location.pathname === '/index.html') {
+            window.location.replace(window.location.origin + window.location.search + window.location.hash);
+        }
+    </script>
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
     <script>
