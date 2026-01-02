@@ -1462,9 +1462,12 @@ i.fas.fa-info-circle,
   transform: translateY(0);
 }
 
-.screenshot-overlay h5 {
+.screenshot-overlay h5,
+.screenshot-overlay .screenshot-title {
   margin-bottom: var(--spacing-xs);
   color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .screenshot-overlay p,
@@ -3757,7 +3760,8 @@ h1, h2, h3, h4, h5, h6,
 .feature-card .feature-title,
 .step-card h4,
 .step-card .step-title,
-.screenshot-card h5 {
+.screenshot-card h5,
+.screenshot-card .screenshot-title {
   color: var(--text-primary) !important;
 }
 
@@ -3869,9 +3873,14 @@ footer * {
   color: var(--text-secondary) !important;
 }
 
+footer h4,
 footer h5,
-footer h6 {
+footer h6,
+footer .footer-heading {
   color: var(--text-primary) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 footer a,
