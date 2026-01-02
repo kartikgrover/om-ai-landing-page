@@ -1336,9 +1336,12 @@ i.fas.fa-info-circle,
   background-image: none !important;
 }
 
-.feature-card h4 {
+.feature-card h4,
+.feature-card .feature-title {
   color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .feature-card p {
@@ -1400,9 +1403,12 @@ i.fas.fa-info-circle,
   margin-top: -8px; /* Align with title baseline */
 }
 
-.step-card h4 {
+.step-card h4,
+.step-card .step-title {
   margin-bottom: var(--spacing-sm);
   color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 .step-card p {
@@ -1461,8 +1467,9 @@ i.fas.fa-info-circle,
   color: white;
 }
 
-.screenshot-overlay p {
-  color: rgba(255, 255, 255, 0.9);
+.screenshot-overlay p,
+.screenshot-overlay p.text-muted {
+  color: rgba(255, 255, 255, 0.85) !important;
   margin: 0;
   font-size: 0.9rem;
 }
@@ -1870,7 +1877,9 @@ footer p {
 
   /* Optimized card content for mobile - reduced font sizes and spacing */
   .feature-card h4,
-  .step-card h4 {
+  .feature-card .feature-title,
+  .step-card h4,
+  .step-card .step-title {
     font-size: 1.3rem !important; /* Reduced from 1.5rem */
     margin-bottom: var(--spacing-sm) !important; /* Reduced from md */
   }
@@ -2090,7 +2099,9 @@ footer p {
 
   /* Smaller typography for very small screens */
   .feature-card h4,
-  .step-card h4 {
+  .feature-card .feature-title,
+  .step-card h4,
+  .step-card .step-title {
     font-size: 1.3rem;
   }
 
@@ -3743,7 +3754,9 @@ h1, h2, h3, h4, h5, h6,
 
 /* Feature cards */
 .feature-card h4,
+.feature-card .feature-title,
 .step-card h4,
+.step-card .step-title,
 .screenshot-card h5 {
   color: var(--text-primary) !important;
 }

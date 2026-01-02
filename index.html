@@ -53,7 +53,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Google Fonts - Matching App Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -315,9 +315,12 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -377,7 +380,7 @@
                         </div>
 
                         <div class="hero-media">
-                            <video autoplay muted loop playsinline preload="auto" class="hero-video">
+                            <video autoplay muted loop playsinline preload="metadata" class="hero-video">
                                 <source src="/assets/om-ai-demo.mp4" type="video/mp4">
                                 <!-- Fallback for browsers that don't support video -->
                                 <div class="video-fallback">
@@ -417,7 +420,7 @@
                         <div class="feature-icon">
                             <i class="fas fa-comments"></i>
                         </div>
-                        <h4>AI Astrology Chat</h4>
+                        <h3 class="feature-title">AI Astrology Chat</h3>
                         <p>Get instant AI-powered answers about love, career, health, and life decisions. Try your first question free, then unlock 200 questions/month with premium.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-gift"></i> First Question Free</span>
@@ -433,7 +436,7 @@
                         <div class="feature-icon">
                             <i class="fas fa-chart-pie"></i>
                         </div>
-                        <h4>Birth Chart (Kundli)</h4>
+                        <h3 class="feature-title">Birth Chart (Kundli)</h3>
                         <p>Get your complete Vedic birth chart (Kundli) with detailed planetary positions and house placements. Generated instantly using advanced Vedic calculations.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-gift"></i> 100% Free Forever</span>
@@ -448,7 +451,7 @@
                         <div class="feature-icon">
                             <i class="fas fa-heart"></i>
                         </div>
-                        <h4>Marriage Compatibility</h4>
+                        <h3 class="feature-title">Marriage Compatibility</h3>
                         <p>Check marriage compatibility using traditional Ashtakoot matching. Get detailed Gun Milan reports with dosha analysis and remedies for a harmonious relationship.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-gift"></i> First Report Free</span>
@@ -463,7 +466,7 @@
                         <div class="feature-icon">
                             <i class="fas fa-globe"></i>
                         </div>
-                        <h4>Planetary Positions</h4>
+                        <h3 class="feature-title">Planetary Positions</h3>
                         <p>Track current planetary positions and transits. Understand how planetary movements influence your life with detailed analysis and predictions.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-globe"></i> Live Planetary Data</span>
@@ -479,7 +482,7 @@
                         <div class="feature-icon">
                             <i class="fas fa-book-open"></i>
                         </div>
-                        <h4>Bhagavad Gita Wisdom</h4>
+                        <h3 class="feature-title">Bhagavad Gita Wisdom</h3>
                         <p>Access unlimited guidance from the Bhagavad Gita. Get verse-by-verse explanations and practical applications for modern life challenges.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-infinity"></i> Unlimited & Free Forever</span>
@@ -494,7 +497,7 @@
                         <div class="feature-icon">
                             <i class="fas fa-om"></i>
                         </div>
-                        <h4>Sacred Mantras</h4>
+                        <h3 class="feature-title">Sacred Mantras</h3>
                         <p>Access powerful Vedic mantras with audio playback and detailed meanings. Listen to sacred chants including Gayatri Mantra and Hanuman Chalisa.</p>
                         <div class="feature-highlights">
                             <span class="highlight"><i class="fas fa-om"></i> Gayatri Mantra</span>
@@ -521,28 +524,28 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="step-card text-center">
                         <div class="step-number">1</div>
-                        <h4>Enter Birth Details</h4>
+                        <h3 class="step-title">Enter Birth Details</h3>
                         <p>Birth date, time, and place</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="step-card text-center">
                         <div class="step-number">2</div>
-                        <h4>Generate Your Chart</h4>
+                        <h3 class="step-title">Generate Your Chart</h3>
                         <p>AI creates your personalized Kundli</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="step-card text-center">
                         <div class="step-number">3</div>
-                        <h4>Ask Questions</h4>
+                        <h3 class="step-title">Ask Questions</h3>
                         <p>Get insights about career and relationships</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="step-card text-center">
                         <div class="step-number">4</div>
-                        <h4>Receive Guidance</h4>
+                        <h3 class="step-title">Receive Guidance</h3>
                         <p>Personalized predictions and wisdom</p>
                     </div>
                 </div>
@@ -562,7 +565,10 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="/assets/screenshots/home-screen.png" alt="Om.AI Home Screen" class="screenshot-image" loading="eager" width="300" height="650">
+                            <picture>
+                                <source srcset="/assets/screenshots/home-screen.webp" type="image/webp">
+                                <img src="/assets/screenshots/home-screen.png" alt="Om.AI Home Screen" class="screenshot-image" loading="eager" width="300" height="650">
+                            </picture>
                             <div class="screenshot-overlay">
                                 <h5>Home Screen</h5>
                                 <p class="text-muted">Main dashboard with daily horoscope and quick actions</p>
@@ -573,7 +579,10 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="/assets/screenshots/birth-chart.png" alt="Om.AI Birth Chart" class="screenshot-image" loading="eager" width="300" height="650">
+                            <picture>
+                                <source srcset="/assets/screenshots/birth-chart.webp" type="image/webp">
+                                <img src="/assets/screenshots/birth-chart.png" alt="Om.AI Birth Chart" class="screenshot-image" loading="eager" width="300" height="650">
+                            </picture>
                             <div class="screenshot-overlay">
                                 <h5>Birth Chart</h5>
                                 <p class="text-muted">Detailed Vedic birth chart with planetary positions</p>
@@ -584,7 +593,10 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="/assets/screenshots/ai-chat.png" alt="Om.AI AI Chat" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <picture>
+                                <source srcset="/assets/screenshots/ai-chat.webp" type="image/webp">
+                                <img src="/assets/screenshots/ai-chat.png" alt="Om.AI AI Chat" class="screenshot-image" loading="lazy" width="300" height="650">
+                            </picture>
                             <div class="screenshot-overlay">
                                 <h5>AI Chat</h5>
                                 <p class="text-muted">Intelligent conversations about astrology and spirituality</p>
@@ -595,7 +607,10 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="screenshot-card">
                         <div class="screenshot-container">
-                            <img src="/assets/screenshots/compatibility.png" alt="Om.AI Compatibility" class="screenshot-image" loading="lazy" width="300" height="650">
+                            <picture>
+                                <source srcset="/assets/screenshots/compatibility.webp" type="image/webp">
+                                <img src="/assets/screenshots/compatibility.png" alt="Om.AI Compatibility" class="screenshot-image" loading="lazy" width="300" height="650">
+                            </picture>
                             <div class="screenshot-overlay">
                                 <h5>Compatibility</h5>
                                 <p class="text-muted">Comprehensive relationship compatibility analysis</p>
@@ -945,15 +960,18 @@
             <div class="row">
                 <div class="col-lg-4 mb-4">
                     <div class="d-flex align-items-center mb-3">
-                        <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70">
+                        </picture>
                     </div>
                     <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom. Ask questions, get instant answers, and discover your cosmic blueprint.</p>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" onclick="trackSocial('Facebook')">
-                            <i class="fab fa-facebook" style="font-size: 1.5rem;"></i>
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" onclick="trackSocial('Facebook')" aria-label="Follow us on Facebook">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
                         </a>
-                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" onclick="trackSocial('Instagram')">
-                            <i class="fab fa-instagram" style="font-size: 1.5rem;"></i>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" onclick="trackSocial('Instagram')" aria-label="Follow us on Instagram">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
@@ -1011,8 +1029,8 @@
     </footer>
 
     <!-- Back to Top Button -->
-    <button type="button" class="btn btn-primary back-to-top" id="backToTop">
-        <i class="fas fa-chevron-up"></i>
+    <button type="button" class="btn btn-primary back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
     </button>
 
 
@@ -1096,7 +1114,7 @@
     </script>
     
     <!-- Custom JavaScript -->
-    <script src="/scripts/main.js"></script>
+    <script src="/scripts/main.js" defer></script>
 </body>
 
 </html>
