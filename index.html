@@ -6,22 +6,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Om.AI - AI Astrologer | Free Kundli, Marriage Compatibility & Bhagavad Gita</title>
-    <meta name="description" content="Discover personalized Vedic astrology insights, birth chart analysis, compatibility reports, and spiritual wisdom from Hindu scriptures. Download Om.AI - India's most trusted astrology app.">
+    <meta name="description" content="Get free Kundli, marriage compatibility reports & daily horoscopes powered by AI. Om.AI analyzes your Vedic birth chart instantly. 4.8★ rated, 2500+ reviews. Download free on Android & iOS.">
     <meta name="keywords" content="AI astrology chatbot, AI astrologer, Vedic astrology app, birth chart calculator, kundli matching, marriage compatibility, daily horoscope, Bhagavad Gita verses, ask astrologer questions, free astrology app, mantra, Gayatri Mantra, Hanuman Chalisa, Ashtakoot calculator, personal astrologer, planetary positions, spiritual guidance India, zodiac signs, lagna calculator">
     
     <!-- Open Graph Meta Tags for Social Media -->
     <meta property="og:title" content="Om.AI - AI Astrologer | Free Kundli, Marriage Compatibility & Bhagavad Gita">
     <meta property="og:description" content="Discover personalized Vedic astrology insights, birth chart analysis, compatibility reports, and spiritual wisdom from Hindu scriptures. Download Om.AI today.">
-    <meta property="og:url" content="https://omai.app">
+    <meta property="og:url" content="https://omai.app/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
     <meta property="og:image:alt" content="Om.AI - Vedic Astrology & Spiritual Wisdom App">
+    <meta property="og:site_name" content="Om.AI">
+    <meta property="og:locale" content="en_IN">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Om.AI - AI Astrologer | Free Kundli, Marriage Compatibility & Bhagavad Gita">
+    <meta name="twitter:description" content="Get personalized Vedic astrology insights, birth chart analysis, and compatibility reports powered by AI. Download free on Android & iOS.">
+    <meta name="twitter:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
 
     <!-- Additional Meta Tags -->
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://omai.app">
+    <link rel="canonical" href="https://omai.app/">
+    <link rel="alternate" hreflang="en" href="https://omai.app/">
+    <link rel="alternate" hreflang="hi" href="https://omai.app/">
+    <link rel="alternate" hreflang="x-default" href="https://omai.app/">
 
     <!-- Enhanced Favicon and App Icons -->
     <!-- High-res first for Retina/4K displays (Google Search, modern browsers) -->
@@ -47,7 +58,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="/styles/styles.css?v=49">
+    <link rel="stylesheet" href="/styles/styles.css?v=50">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -61,14 +72,20 @@
         "@context": "https://schema.org",
         "@type": "MobileApplication",
         "name": "Om.AI",
-        "description": "AI-powered astrology chatbot with instant answers to your questions. Get Kundli analysis, marriage compatibility reports, daily horoscopes, Bhagavad Gita wisdom, and sacred mantras.",
-        "applicationCategory": "Lifestyle",
+        "description": "AI-powered astrology chatbot with instant answers to your questions. Get Kundli analysis, marriage compatibility reports, daily horoscopes, Bhagavad Gita wisdom, and sacred mantras including Gayatri Mantra and Hanuman Chalisa.",
+        "applicationCategory": "LifestyleApplication",
         "operatingSystem": ["ANDROID", "IOS"],
         "url": "https://omai.app",
+        "image": "https://omai.app/assets/favicon/favicon-512x512.png",
+        "screenshot": "https://omai.app/assets/screenshots/home-screen.png",
+        "softwareVersion": "1.0",
+        "inLanguage": ["en", "hi"],
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.8",
-            "reviewCount": "2500"
+            "reviewCount": "2500",
+            "bestRating": "5",
+            "worstRating": "1"
         },
         "offers": [
             {
@@ -76,16 +93,97 @@
                 "url": "https://play.google.com/store/apps/details?id=com.omai.app",
                 "price": "0",
                 "priceCurrency": "INR",
-                "availability": "https://schema.org/InStock",
-                "applicationPlatform": "ANDROID"
+                "availability": "https://schema.org/InStock"
             },
             {
                 "@type": "Offer",
                 "url": "https://apps.apple.com/us/app/om-ai/id6630366988",
                 "price": "0",
                 "priceCurrency": "INR",
-                "availability": "https://schema.org/InStock",
-                "applicationPlatform": "IOS"
+                "availability": "https://schema.org/InStock"
+            }
+        ],
+        "downloadUrl": [
+            "https://play.google.com/store/apps/details?id=com.omai.app",
+            "https://apps.apple.com/us/app/om-ai/id6630366988"
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "Om.AI",
+            "url": "https://omai.app"
+        }
+    }
+    </script>
+
+    <!-- FAQ Structured Data for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is Om.AI?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Om.AI is an AI-powered Vedic astrology app that provides personalized insights using your birth chart. It offers astrology chat, birth chart analysis, relationship compatibility, daily horoscopes, Bhagavad Gita with audio, mantras, and spiritual guidance — all powered by classical Vedic texts and modern AI."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does the AI astrology work?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You enter your birth date, time, and city. Our AI calculates your complete Kundali and planetary positions, then analyzes them using traditional Vedic astrology principles from texts like Brihat Parashara Hora Shastra and Lal Kitab. Every response is personalized to your unique chart — no generic horoscopes."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does the Compatibility feature do?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It analyzes relationship potential between you and your partner using Ashtakoot matching (8-point scoring), Navamsa chart analysis, and dosha identification. Simply enter both birth details and get a detailed compatibility report with personalized relationship insights and remedies."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What's included in Premium?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Premium gives you unlimited astrology and scripture questions, tomorrow's horoscope and transits today, detailed planetary insights, personalized daily remedies, and an ad-free experience. First question is free for all users, and the first month is 50% off at ₹99/mo."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How much does it cost? What's the refund policy?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Premium is ₹199/month or ₹1,799/year. Your first month is 50% off at just ₹99. On Android, you can request a full refund within 48 hours of purchase. On iOS, refunds are handled through Apple's refund policy. Cancel anytime from your app store settings."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does the Bhagavad Gita feature work?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Access all 700 Sanskrit verses with English translations, Hindi transliterations, and proper audio pronunciation. Search by chapter, verse, or themes like Dharma, Devotion, and Knowledge. Share and copy verses, and receive daily scripture guidance as part of your spiritual practice."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What languages are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Om.AI currently supports English and Hindi. All astrological insights, Gita content, and app features are available in both languages. You can switch your preferred language anytime in the app settings."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my personal data safe?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely. We collect only what's necessary (birth details and email), encrypt all data with industry-standard security, and never sell your personal information. Your astrological consultations are 100% private. Read our full Privacy Policy for details."
+                }
             }
         ]
     }
@@ -163,7 +261,7 @@
     fbq('init', '819993440663760');
     fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
+    <noscript><img height="1" width="1" style="display:none" alt=""
     src="https://www.facebook.com/tr?id=819993440663760&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
@@ -180,38 +278,6 @@
         })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
     </script>
 
-    <!-- Structured Data (JSON-LD) for SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "MobileApplication",
-        "name": "Om.AI",
-        "applicationCategory": "LifestyleApplication",
-        "operatingSystem": ["iOS", "Android"],
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "5000",
-            "bestRating": "5",
-            "worstRating": "1"
-        },
-        "description": "AI-powered astrology chatbot with instant answers. Get Kundli analysis, marriage compatibility, daily horoscopes, Bhagavad Gita wisdom, and sacred mantras including Gayatri Mantra and Hanuman Chalisa.",
-        "downloadUrl": [
-            "https://apps.apple.com/us/app/om-ai/id6630366988",
-            "https://play.google.com/store/apps/details?id=com.omai.app"
-        ],
-        "image": "https://omai.app/assets/favicon/favicon-512x512.png",
-        "author": {
-            "@type": "Organization",
-            "name": "Om.AI"
-        }
-    }
-    </script>
 
     <script type="application/ld+json">
     {
@@ -243,6 +309,21 @@
         "contentUrl": "https://omai.app/assets/om-ai-demo.mp4",
         "embedUrl": "https://omai.app/assets/om-ai-demo.mp4",
         "duration": "PT47S"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://omai.app/"
+            }
+        ]
     }
     </script>
 </head>
@@ -314,7 +395,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <a class="navbar-brand d-flex align-items-center" href="/">
                 <picture>
                     <source srcset="/assets/logo.webp" type="image/webp">
                     <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
@@ -346,8 +427,9 @@
             <div class="row justify-content-center align-items-center min-vh-100 py-5">
                 <div class="col-12 col-lg-10 col-xl-9">
                     <div class="hero-content">
+                        <p class="hero-badge"><i class="fas fa-om me-1"></i> Powered by Ancient Vedic Wisdom + Modern AI</p>
                         <h1 class="hero-title" data-animate-words>
-                            Your Personal AI Astrologer
+                            Get Instant Answers from India's Most Accurate AI Astrologer
                         </h1>
                         <p class="hero-subtitle">
                             AI-powered Vedic astrology for love, career, and life guidance.
@@ -366,21 +448,28 @@
                                 <span>Mantras & Gita Wisdom</span>
                             </div>
                         </div>
-                        <div class="hero-cta">
-                            <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg" onclick="trackDownload('android')">
-                                <i class="fab fa-google-play me-2"></i>Download on Android
+                        <div class="hero-cta" id="hero-cta">
+                            <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg store-btn store-btn-android" id="btn-android" onclick="trackDownload('android')">
+                                <i class="fab fa-google-play me-2"></i>Start My Free Reading
                             </a>
-                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg" onclick="trackDownload('ios')">
-                                <i class="fab fa-apple me-2"></i>Download on iOS
+                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg store-btn store-btn-ios" id="btn-ios" onclick="trackDownload('ios')">
+                                <i class="fab fa-apple me-2"></i>Start My Free Reading
                             </a>
                             <p class="cta-subtext">
-                                <i class="fas fa-check-circle text-primary me-1"></i>
-                                No Credit Card Required
+                                <i class="fas fa-gift text-primary me-1"></i>
+                                First Question Free &bull; Premium ₹99/mo (50% off)
                             </p>
+                            <div class="hero-trust">
+                                <span class="trust-item"><i class="fas fa-star text-warning"></i> 4.5★ Rating</span>
+                                <span class="trust-divider">|</span>
+                                <span class="trust-item"><i class="fas fa-download text-primary"></i> 20K+ Downloads</span>
+                                <span class="trust-divider">|</span>
+                                <span class="trust-item"><i class="fas fa-shield-alt text-success"></i> 100% Private & Secure</span>
+                            </div>
                         </div>
 
                         <div class="hero-media">
-                            <video autoplay muted loop playsinline preload="metadata" class="hero-video">
+                            <video autoplay muted loop playsinline preload="metadata" poster="/assets/om-ai-demo-poster.jpg" class="hero-video">
                                 <source src="/assets/om-ai-demo.mp4" type="video/mp4">
                                 <track kind="captions" src="/assets/om-ai-demo.vtt" srclang="en" label="English" default>
                                 <!-- Fallback for browsers that don't support video -->
@@ -431,6 +520,14 @@
                     </div>
                 </div>
 
+                <!-- Inline Quote -->
+                <div class="col-12">
+                    <blockquote class="inline-testimonial">
+                        <p>"Helps me so much on my journey of enlightenment"</p>
+                        <cite>— Ilaydenb99, App Store</cite>
+                    </blockquote>
+                </div>
+
                 <!-- Astrology Features -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card h-100">
@@ -460,6 +557,14 @@
                             <span class="highlight"><i class="fas fa-balance-scale"></i> Dosha Analysis & Remedies</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Inline Quote -->
+                <div class="col-12">
+                    <blockquote class="inline-testimonial">
+                        <p>"The birth chart is right and it gives you the exact month or date for predictions. That's awesome!"</p>
+                        <cite>— Adiuuuuuuuu, App Store</cite>
+                    </blockquote>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
@@ -508,6 +613,13 @@
                     </div>
                 </div>
 
+                <!-- Inline Quote -->
+                <div class="col-12">
+                    <blockquote class="inline-testimonial">
+                        <p>"Great app, different than the rest. I use this everyday to learn more about scriptures and get my daily readings."</p>
+                        <cite>— Jennlynn, App Store</cite>
+                    </blockquote>
+                </div>
                 <!-- Daily Horoscope and Reading Streak removed to reduce feature clutter -->
             </div>
         </div>
@@ -554,71 +666,61 @@
         </div>
     </section>
 
+    <!-- Try It Now Demo -->
+    <section id="try-demo" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 text-center mb-4">
+                    <h2 class="section-title">See Om.AI in Action</h2>
+                    <p class="text-secondary">Ask a question and watch our AI astrologer respond instantly.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="demo-chat">
+                        <div class="demo-chat-header">
+                            <img src="/assets/logo.webp" alt="Om.AI astrology chatbot" width="28" height="28">
+                            <span>Om.AI</span>
+                            <span class="demo-badge">Demo</span>
+                        </div>
+                        <div class="demo-chat-body" id="demo-chat-body">
+                            <div class="demo-msg demo-msg-bot">
+                                <p>Namaste! 🙏 This is a sample of real responses from Om.AI. Tap a question to see how our AI astrologer responds. Download the app for personalized readings based on your birth chart.</p>
+                            </div>
+                        </div>
+                        <div class="demo-chat-prompts" id="demo-prompts">
+                            <button class="demo-prompt-btn" data-q="I'm confused about my career, I want to start freelancing but not getting high paying clients" data-a="For your Aries rising with Saturn Mahadasha and Venus Antardasha, focus on skills related to leadership, discipline, and practical work. Aries rules action and courage, so fields like management, entrepreneurship, or any role requiring initiative suit you well. Saturn's influence favors structured industries like manufacturing or logistics. Venus encourages creativity and diplomacy, so combining practical skills with communication or design can be powerful. Since you want financial stability without a typical job, consider developing skills in real estate, project management, or creative freelancing that allow independence but steady income. Start by deepening expertise in your current work, then gradually add new skills after mid-2026 when Jupiter's support enhances growth. Would you like simple daily practices to boost your focus and confidence?">I'm confused about my career path</button>
+                            <button class="demo-prompt-btn" data-q="When will I find love? My parents are also looking for marriage proposals" data-a="Your chart shows a strong mix of energies for relationships. The Moon is friendly and well-placed, giving you warmth and openness. Venus, the key planet for love and marriage, has mixed signals — challenged in your main chart but friendly in your deeper relationship chart — indicating some ups and downs in love matters. Currently, you are in a Venus phase within Saturn's longer cycle, which brings lessons in patience and maturity in relationships. Your chart leans toward a love marriage because Venus's influence encourages personal choice, but family and tradition also play a part. The best timing for significant relationship progress is around February 2028, when Saturn's movement aligns powerfully with your chart. Would you like simple remedies to strengthen Venus and smooth your love path?">When will I find love?</button>
+                            <button class="demo-prompt-btn" data-q="Give me full chart analysis — love, health issues to watch, and when will my finances improve?" data-a="Your Taurus rising chart shows a strong foundation for leadership and respect, thanks to powerful qualities that bring wisdom and status. Your natural charm and creativity are supported by good house strengths in wealth, home, and social circles. Currently, you are in a phase ruled by Saturn and Jupiter, which encourages disciplined growth. Love will find you best around June 2026, when Jupiter moves into Cancer activating your house of relationships — an excellent period for new romantic beginnings. Health-wise, watch for stress-related issues and digestive concerns, especially around late December. Financially, steady improvement is underway, but the best growth comes after mid-2026 when your leadership and wealth-building qualities fully activate. What would you like to explore next?">Full chart analysis</button>
+                            <button class="demo-prompt-btn" data-q="Tell me more about my health" data-a="Your chart shows a focus on health, particularly influenced by your Moon in Scorpio. This placement can lead to emotional fluctuations and stress, impacting your overall well-being. The Moon's position in the 9th house suggests that nurturing your mental health through spiritual practices or travel can be beneficial. During the current Mahadasha of Venus, you may experience a heightened awareness of your health and wellness. Prioritize emotional balance and self-care routines to support your vitality.">Tell me about my health</button>
+                            <button class="demo-prompt-btn" data-q="Is this a good year for investments?" data-a="2026 is a favorable year for your finances. Early in the year, Mercury's transit urges careful management of expenses. By June, Jupiter's strong presence boosts income through communication and networking. Saturn's influence on your 2nd and 11th houses supports steady, long-term wealth accumulation. Focus on disciplined, research-backed investments rather than speculation, and you will see solid returns by year-end.">Is this a good year for investments?</button>
+                            <button class="demo-prompt-btn" data-q="Which mantra can enhance my personality and confidence?" data-a="To boost your confidence and clarity during this Rahu-Mars phase, chant the Mars mantra: 'Om Angarakaya Namaha.' This mantra strengthens courage, energy, and focus, helping you overcome obstacles and communicate effectively. Your chart shows strong leadership and wisdom, so this mantra will support your natural talents and help you navigate current challenges smoothly. Repeat it 108 times daily, ideally before important calls or meetings.">Which mantra boosts confidence?</button>
+                            <button class="demo-prompt-btn" data-q="I am financially stable now but having family issues" data-a="You are unlikely to face major family issues this year. Venus entering your 2nd house in early March 2026 is highly auspicious, boosting wealth, communication, and overall harmony — Venus is exalted here, bringing smooth progress. While Mars entering your 1st house in February can bring challenges, these relate to personal energy and drive, not family conflict. Jupiter's movement further supports harmony at home. Practice patience and open communication with loved ones during this transit period.">Having family issues</button>
+                        </div>
+                    </div>
+                    <p class="text-center mt-3"><a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" class="btn btn-primary btn-sm">Try the Full App Free <i class="fas fa-arrow-right ms-1"></i></a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Screenshots Section -->
     <section id="screenshots" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="section-title" data-animate-words>See Om.AI in Action</h2>
+                <h2 class="section-title" data-animate-words>App Screenshots</h2>
                 <p class="section-subtitle fade-in">Beautiful and intuitive interface</p>
             </div>
             
             <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="screenshot-card">
-                        <div class="screenshot-container">
-                            <picture>
-                                <source srcset="/assets/screenshots/home-screen.webp" type="image/webp">
-                                <img src="/assets/screenshots/home-screen.png" alt="Om.AI Home Screen" class="screenshot-image" loading="eager" width="300" height="650">
-                            </picture>
-                            <div class="screenshot-overlay">
-                                <h3 class="screenshot-title">Home Screen</h3>
-                                <p class="text-muted">Main dashboard with daily horoscope and quick actions</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="screenshot-card">
-                        <div class="screenshot-container">
-                            <picture>
-                                <source srcset="/assets/screenshots/birth-chart.webp" type="image/webp">
-                                <img src="/assets/screenshots/birth-chart.png" alt="Om.AI Birth Chart" class="screenshot-image" loading="eager" width="300" height="650">
-                            </picture>
-                            <div class="screenshot-overlay">
-                                <h3 class="screenshot-title">Birth Chart</h3>
-                                <p class="text-muted">Detailed Vedic birth chart with planetary positions</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="screenshot-card">
-                        <div class="screenshot-container">
-                            <picture>
-                                <source srcset="/assets/screenshots/ai-chat.webp" type="image/webp">
-                                <img src="/assets/screenshots/ai-chat.png" alt="Om.AI AI Chat" class="screenshot-image" loading="lazy" width="300" height="650">
-                            </picture>
-                            <div class="screenshot-overlay">
-                                <h3 class="screenshot-title">AI Chat</h3>
-                                <p class="text-muted">Intelligent conversations about astrology and spirituality</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="screenshot-card">
-                        <div class="screenshot-container">
-                            <picture>
-                                <source srcset="/assets/screenshots/compatibility.webp" type="image/webp">
-                                <img src="/assets/screenshots/compatibility.png" alt="Om.AI Compatibility" class="screenshot-image" loading="lazy" width="300" height="650">
-                            </picture>
-                            <div class="screenshot-overlay">
-                                <h3 class="screenshot-title">Compatibility</h3>
-                                <p class="text-muted">Comprehensive relationship compatibility analysis</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/home-screen.webp" type="image/webp"><img src="/assets/screenshots/home-screen.png" alt="Om.AI home screen with daily horoscope scores" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">Choose Your Mode</h3><p class="text-muted">Daily horoscope, birth chart & AI chat</p></div></div></div></div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/ai-chat.webp" type="image/webp"><img src="/assets/screenshots/ai-chat.png" alt="AI astrology chat with personalized chart analysis" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">AI Readings</h3><p class="text-muted">Personalized astrological guidance</p></div></div></div></div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/horoscope.webp" type="image/webp"><img src="/assets/screenshots/horoscope.png" alt="Daily horoscope with Money, Love, Career, Wellness scores" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">Daily Horoscope</h3><p class="text-muted">Scores with best hours and timing</p></div></div></div></div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/birth-chart.webp" type="image/webp"><img src="/assets/screenshots/birth-chart.png" alt="Vedic Diamond birth chart with planetary positions" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">Birth Chart</h3><p class="text-muted">Vedic Diamond Chart with planets</p></div></div></div></div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/compatibility.webp" type="image/webp"><img src="/assets/screenshots/compatibility.png" alt="Marriage compatibility report with Guna Milan" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">Compatibility</h3><p class="text-muted">Kundli matching with Guna Milan</p></div></div></div></div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/scripture.webp" type="image/webp"><img src="/assets/screenshots/scripture.png" alt="Scripture chat explaining Gayatri Mantra" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">Vedic Wisdom</h3><p class="text-muted">Mantras, scriptures and meanings</p></div></div></div></div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/gita.webp" type="image/webp"><img src="/assets/screenshots/gita.png" alt="Bhagavad Gita with Sanskrit verses and audio" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">Bhagavad Gita</h3><p class="text-muted">700 verses with audio and themes</p></div></div></div></div>
+                <div class="col-lg-3 col-md-6"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/transits.webp" type="image/webp"><img src="/assets/screenshots/transits.png" alt="Today's planetary transits with zodiac positions" class="screenshot-image" loading="lazy" width="300" height="650"></picture><div class="screenshot-overlay"><h3 class="screenshot-title">Today's Transits</h3><p class="text-muted">Live planetary positions and effects</p></div></div></div></div>
             </div>
         </div>
     </section>
@@ -626,9 +728,17 @@
     <!-- Testimonials Section -->
     <section id="testimonials" class="py-5">
         <div class="container">
-            <div class="text-center mb-5">
+            <div class="text-center mb-4">
                 <h2 class="section-title" data-animate-words>What Our Users Say</h2>
                 <p class="section-subtitle fade-in">Join thousands on their spiritual journey</p>
+            </div>
+            <!-- Aggregate Rating Header -->
+            <div class="aggregate-rating text-center mb-5">
+                <div class="aggregate-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="aggregate-score">4.5 / 5</span>
+                <span class="aggregate-count">from 20,000+ reviews</span>
             </div>
 
             <!-- Fixed height with internal scroll -->
@@ -687,11 +797,32 @@
                                 <i class="fas fa-star text-warning"></i>
                             </div>
                         </div>
-                        <p>"Awesome"</p>
+                        <p>"Very helpful astrology app with precise readings and quick responses. Highly recommend for anyone interested in Vedic astrology!"</p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <strong>Seema Arora</strong>
-                                <span>Jul 23, 2025</span>
+                                <strong>Kiranmayi</strong>
+                                <span>App Store</span>
+                            </div>
+                            <div class="store-icon">
+                                <i class="fab fa-apple"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="stars">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                        <p>"This AI Astro app is best and it gives very accurate answers in a clear manner. Really impressed with the detail!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <strong>Google User</strong>
+                                <span>Google Play</span>
                             </div>
                             <div class="store-icon">
                                 <i class="fab fa-google-play"></i>
@@ -708,14 +839,14 @@
                                 <i class="fas fa-star text-warning"></i>
                             </div>
                         </div>
-                        <p>"Really good"</p>
+                        <p>"Amazing app! The birth chart is right and it gives you the exact month or date for predictions. That's awesome!"</p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <strong>Harpreet Kaur</strong>
-                                <span>Jul 23, 2025</span>
+                                <strong>Adiuuuuuuuu</strong>
+                                <span>App Store</span>
                             </div>
                             <div class="store-icon">
-                                <i class="fab fa-google-play"></i>
+                                <i class="fab fa-apple"></i>
                             </div>
                         </div>
                     </div>
@@ -729,14 +860,14 @@
                                 <i class="fas fa-star text-warning"></i>
                             </div>
                         </div>
-                        <p>"It was good using this app + this gave really insightful predictions"</p>
+                        <p>"A very honest and detailed explanation is given. I didn't expect the answers to be this real — everything is correct!"</p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <strong>Aman Singh</strong>
-                                <span>Oct 5, 2025</span>
+                                <strong>Rainyritu</strong>
+                                <span>App Store</span>
                             </div>
                             <div class="store-icon">
-                                <i class="fab fa-google-play"></i>
+                                <i class="fab fa-apple"></i>
                             </div>
                         </div>
                     </div>
@@ -750,32 +881,11 @@
                                 <i class="fas fa-star text-warning"></i>
                             </div>
                         </div>
-                        <p>"Accurate predictions.."</p>
+                        <p>"Great app, different than the rest. I use this everyday to learn more about scriptures and get my daily readings."</p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <strong>Ranitha R</strong>
-                                <span>Oct 4, 2025</span>
-                            </div>
-                            <div class="store-icon">
-                                <i class="fab fa-google-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <div class="stars">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </div>
-                        </div>
-                        <p>"Love the daily horoscope feature. It provides daily guidance based on horoscopes."</p>
-                        <div class="testimonial-author">
-                            <div class="author-info">
-                                <strong>Praney Goyal</strong>
-                                <span>Aug 3, 2025</span>
+                                <strong>Jennlynn</strong>
+                                <span>App Store</span>
                             </div>
                             <div class="store-icon">
                                 <i class="fab fa-apple"></i>
@@ -948,6 +1058,216 @@
                     <!-- Now showing 6 best testimonials in scrollable container -->
                 </div>
             </div>
+            <!-- Scroll indicator dots for mobile -->
+            <div class="testimonial-dots" id="testimonial-dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Capture Section -->
+    <section id="email-capture" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 text-center">
+                    <h2 class="section-title mb-3">Get Daily Vedic Astrology Insights</h2>
+                    <p class="text-secondary mb-4">Join 20K+ users. Receive personalized astrology insights in your inbox every morning.</p>
+                    <form id="email-capture-form" class="email-capture-form">
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="capture-email" placeholder="Enter your email" required aria-label="Email address for daily astrology insights">
+                            <button type="submit" class="btn btn-primary" id="capture-btn">Subscribe Free</button>
+                        </div>
+                        <p class="email-capture-msg mt-2" id="capture-msg"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Section -->
+    <section id="learn" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title">Ancient Wisdom Meets Modern AI</h2>
+                    <p class="text-secondary">Understand the science behind Om.AI</p>
+                </div>
+            </div>
+            <div class="row justify-content-center g-4">
+                <div class="col-lg-5 col-md-6">
+                    <div class="edu-card">
+                        <div class="edu-icon"><i class="fas fa-om"></i></div>
+                        <h3>What is Vedic Astrology?</h3>
+                        <p>Vedic astrology (Jyotish) is a 5,000-year-old system originating from ancient Indian scriptures. Unlike Western astrology, it uses the sidereal zodiac — the actual position of stars — making it astronomically precise.</p>
+                        <p>It analyzes your birth chart across 12 houses covering every aspect of life: career, relationships, health, wealth, and spiritual growth. Classical texts like <strong>Brihat Parashara Hora Shastra</strong>, <strong>Lal Kitab</strong>, and <strong>Uttara Kalamrita</strong> form its foundation.</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6">
+                    <div class="edu-card">
+                        <div class="edu-icon"><i class="fas fa-brain"></i></div>
+                        <h3>How Our AI Works</h3>
+                        <p>Om.AI is trained on the core Vedic astrology texts — the same scriptures that traditional astrologers study for decades. Our AI reads your exact birth chart data: planetary positions, house strengths, Mahadasha periods, and transits.</p>
+                        <p>It then translates complex astrological data into <strong>clear, actionable guidance</strong> — no jargon, no vague predictions. Every response is personalized to your chart, giving you specific timing, remedies, and mantras rooted in authentic Vedic knowledge.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section id="comparison" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center mb-4">
+                    <h2 class="section-title">Why Choose Om.AI?</h2>
+                    <p class="text-secondary">See how we compare to traditional astrologers and other apps.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Feature</th>
+                                    <th scope="col" class="highlight-col">Om.AI</th>
+                                    <th scope="col">Traditional Astrologer</th>
+                                    <th scope="col">Other Apps</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Price</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> ₹99/mo</td>
+                                    <td>₹500–₹5,000/session</td>
+                                    <td>₹200–₹500/mo</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Availability</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> 24/7 Instant</td>
+                                    <td>By appointment</td>
+                                    <td>Limited hours</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Vedic Accuracy</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> AI + Vedic Texts</td>
+                                    <td>Varies by astrologer</td>
+                                    <td>Generic algorithms</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Birth Chart Analysis</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> Detailed & Instant</td>
+                                    <td>Manual, takes days</td>
+                                    <td>Basic only</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Marriage Compatibility</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> Kundli + AI</td>
+                                    <td><i class="fas fa-check-circle text-success"></i> Yes</td>
+                                    <td>Limited</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Privacy</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> 100% Private</td>
+                                    <td>Face-to-face</td>
+                                    <td>Data may be shared</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Mantras & Remedies</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> Personalized</td>
+                                    <td><i class="fas fa-check-circle text-success"></i> Yes</td>
+                                    <td><i class="fas fa-times-circle text-danger"></i> No</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Gita Wisdom</th>
+                                    <td class="highlight-col"><i class="fas fa-check-circle text-success"></i> Daily Verses</td>
+                                    <td><i class="fas fa-times-circle text-danger"></i> No</td>
+                                    <td><i class="fas fa-times-circle text-danger"></i> No</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Badges Section (moved from hero) -->
+    <section id="security-badges-section" class="py-4">
+        <div class="container">
+            <div class="security-badges-bar">
+                <span class="security-badge-item"><i class="fas fa-lock"></i> SSL Encrypted</span>
+                <span class="security-badge-item"><i class="fas fa-user-shield"></i> GDPR Compliant</span>
+                <span class="security-badge-item"><i class="fas fa-database"></i> No Data Sold</span>
+                <span class="security-badge-item"><i class="fas fa-undo"></i> 48hr Money-Back</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="text-secondary">Everything you need to know about Om.AI</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion" role="list" itemscope itemtype="https://schema.org/FAQPage">
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-1"><span itemprop="name">What is Om.AI?</span></button>
+                            <div class="faq-answer" id="faq-1" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Om.AI is an AI-powered Vedic astrology app that provides personalized insights using your birth chart. It offers astrology chat, birth chart analysis, relationship compatibility, daily horoscopes, Bhagavad Gita with audio, mantras, and spiritual guidance — all powered by classical Vedic texts and modern AI.</span></div>
+                        </div>
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-2"><span itemprop="name">How does the AI astrology work?</span></button>
+                            <div class="faq-answer" id="faq-2" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">You enter your birth date, time, and city. Our AI calculates your complete Kundali and planetary positions, then analyzes them using traditional Vedic astrology principles from texts like Brihat Parashara Hora Shastra and Lal Kitab. Every response is personalized to your unique chart — no generic horoscopes.</span></div>
+                        </div>
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-3"><span itemprop="name">What does the Compatibility feature do?</span></button>
+                            <div class="faq-answer" id="faq-3" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">It analyzes relationship potential between you and your partner using Ashtakoot matching (8-point scoring), Navamsa chart analysis, and dosha identification. Simply enter both birth details and get a detailed compatibility report with personalized relationship insights and remedies.</span></div>
+                        </div>
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-4"><span itemprop="name">What's included in Premium?</span></button>
+                            <div class="faq-answer" id="faq-4" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Premium gives you unlimited astrology and scripture questions, tomorrow's horoscope and transits today, detailed planetary insights, personalized daily remedies, and an ad-free experience. First question is free for all users, and the first month is 50% off at ₹99/mo.</span></div>
+                        </div>
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-5"><span itemprop="name">How much does it cost? What's the refund policy?</span></button>
+                            <div class="faq-answer" id="faq-5" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Premium is ₹199/month or ₹1,799/year. Your first month is 50% off at just ₹99. On Android, you can request a full refund within 48 hours of purchase. On iOS, refunds are handled through Apple's refund policy. Cancel anytime from your app store settings.</span></div>
+                        </div>
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-6"><span itemprop="name">How does the Bhagavad Gita feature work?</span></button>
+                            <div class="faq-answer" id="faq-6" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Access all 700 Sanskrit verses with English translations, Hindi transliterations, and proper audio pronunciation. Search by chapter, verse, or themes like Dharma, Devotion, and Knowledge. Share and copy verses, and receive daily scripture guidance as part of your spiritual practice.</span></div>
+                        </div>
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-7"><span itemprop="name">What languages are supported?</span></button>
+                            <div class="faq-answer" id="faq-7" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Om.AI currently supports English and Hindi. All astrological insights, Gita content, and app features are available in both languages. You can switch your preferred language anytime in the app settings.</span></div>
+                        </div>
+                        <div class="faq-item" role="listitem" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-8"><span itemprop="name">Is my personal data safe?</span></button>
+                            <div class="faq-answer" id="faq-8" role="region" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><span itemprop="text">Absolutely. We collect only what's necessary (birth details and email), encrypt all data with industry-standard security, and never sell your personal information. Your astrological consultations are 100% private. Read our full Privacy Policy for details.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post-FAQ CTA -->
+    <section id="post-faq-cta" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title">Still Have Questions? Ask Om.AI</h2>
+                    <p class="section-subtitle">Your personal AI astrologer is ready to answer anything about your chart, relationships, career, and life path.</p>
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg store-btn store-btn-android post-faq-btn-android" onclick="trackDownload('android')">
+                        <i class="fab fa-google-play me-2"></i>Start My Free Reading
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg store-btn store-btn-ios post-faq-btn-ios" onclick="trackDownload('ios')">
+                        <i class="fab fa-apple me-2"></i>Start My Free Reading
+                    </a>
+                    <p class="cta-subtext mt-3"><i class="fas fa-gift text-primary me-1"></i> First Question Free &bull; No credit card required</p>
+                </div>
             </div>
         </div>
     </section>
@@ -963,7 +1283,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <picture>
                             <source srcset="/assets/logo.webp" type="image/webp">
-                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
                         </picture>
                     </div>
                     <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom. Ask questions, get instant answers, and discover your cosmic blueprint.</p>
@@ -1020,7 +1340,7 @@
             <hr class="my-4">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <p class="mb-0">&copy; 2024 Om.AI. All rights reserved.</p>
+                    <p class="mb-0">&copy; 2025 Om.AI. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p class="mb-0">Made with <i class="fas fa-heart"></i> for spiritual seekers in India</p>
@@ -1035,6 +1355,98 @@
     </button>
 
 
+
+    <!-- FAQ Toggle Script -->
+    <script>
+    document.querySelectorAll('[data-toggle="faq"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var item = btn.parentElement;
+            var isOpen = item.classList.contains('faq-open');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('faq-open'); });
+            document.querySelectorAll('[data-toggle="faq"]').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
+            // Toggle clicked
+            if (!isOpen) {
+                item.classList.add('faq-open');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+    </script>
+
+    <!-- Exit Intent Popup -->
+    <div class="exit-popup-overlay" id="exit-popup" style="display:none">
+        <div class="exit-popup">
+            <button class="exit-popup-close" id="exit-popup-close">&times;</button>
+            <div class="exit-popup-icon"><i class="fas fa-om"></i></div>
+            <h3>Wait! Your Stars Have a Message</h3>
+            <p>Get daily Vedic astrology insights delivered to your inbox every morning.</p>
+            <form id="exit-popup-form">
+                <input type="email" class="form-control" id="exit-popup-email" placeholder="Enter your email" required aria-label="Email address for daily Vedic insights">
+                <button type="submit" class="btn btn-primary w-100 mt-2" id="exit-popup-btn">Get Daily Insights</button>
+            </form>
+            <p class="exit-popup-msg mt-2" id="exit-popup-msg"></p>
+            <p class="exit-popup-note">Join 20K+ users. No spam, unsubscribe anytime.</p>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxSLx0fz8Y01e7yenvUproNlPQ1HnHTJniJyXeahDFnliDBIRsnoccTcZz3hIsCFXRxoQ/exec';
+        var popup = document.getElementById('exit-popup');
+        var shown = false;
+
+        // Exit intent — mouse leaves viewport
+        document.addEventListener('mouseout', function(e) {
+            if (shown) return;
+            if (e.clientY < 5 && !e.relatedTarget && !e.toElement) {
+                // Don't show if already subscribed or within first 5 seconds
+                if (sessionStorage.getItem('exit-popup-dismissed')) return;
+                shown = true;
+                popup.style.display = 'flex';
+            }
+        });
+
+        // Close popup
+        document.getElementById('exit-popup-close').addEventListener('click', function() {
+            popup.style.display = 'none';
+            sessionStorage.setItem('exit-popup-dismissed', '1');
+        });
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+                sessionStorage.setItem('exit-popup-dismissed', '1');
+            }
+        });
+
+        // Submit
+        document.getElementById('exit-popup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var email = document.getElementById('exit-popup-email').value;
+            var btn = document.getElementById('exit-popup-btn');
+            var msg = document.getElementById('exit-popup-msg');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            fetch(ENDPOINT, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'email=' + encodeURIComponent(email)
+            }).then(function() {
+                msg.textContent = 'You\'re in! Check your inbox soon.';
+                msg.style.color = '#4ade80';
+                btn.textContent = 'Subscribed!';
+                sessionStorage.setItem('exit-popup-dismissed', '1');
+                setTimeout(function() { popup.style.display = 'none'; }, 2000);
+            }).catch(function() {
+                msg.textContent = 'Something went wrong. Try again.';
+                msg.style.color = '#f87171';
+                btn.disabled = false;
+                btn.textContent = 'Get Free Daily Horoscope';
+            });
+        });
+    })();
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1114,6 +1526,206 @@
         });
     </script>
     
+    <!-- Demo Chat Script -->
+    <script>
+    (function() {
+        var body = document.getElementById('demo-chat-body');
+        var prompts = document.getElementById('demo-prompts');
+        var isStreaming = false;
+
+        function typewriter(el, text, cb) {
+            var i = 0;
+            isStreaming = true;
+            var tick = function() {
+                if (i < text.length) {
+                    el.textContent += text[i];
+                    i++;
+                    body.scrollTop = body.scrollHeight;
+                    setTimeout(tick, 8);
+                } else {
+                    isStreaming = false;
+                    // Re-enable prompt buttons
+                    prompts.querySelectorAll('.demo-prompt-btn').forEach(function(b) { b.disabled = false; b.style.opacity = '1'; });
+                    if (cb) cb();
+                }
+            };
+            tick();
+        }
+
+        prompts.addEventListener('click', function(e) {
+            var btn = e.target.closest('.demo-prompt-btn');
+            if (!btn || btn.disabled || isStreaming) return;
+            var q = btn.getAttribute('data-q');
+            var a = btn.getAttribute('data-a');
+            // Disable all buttons during response
+            prompts.querySelectorAll('.demo-prompt-btn').forEach(function(b) { b.disabled = true; b.style.opacity = '0.4'; });
+            // Show user message
+            body.insertAdjacentHTML('beforeend', '<div class="demo-msg demo-msg-user"><p>' + q + '</p></div>');
+            body.scrollTop = body.scrollHeight;
+            // Show loading spinner
+            body.insertAdjacentHTML('beforeend', '<div class="demo-msg demo-msg-bot" id="demo-loading"><div class="demo-spinner"><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div></div><p class="demo-loading-text">Analyzing your birth chart</p></div>');
+            body.scrollTop = body.scrollHeight;
+            // Stream answer after delay
+            setTimeout(function() {
+                var loading = document.getElementById('demo-loading');
+                if (loading) loading.remove();
+                var msgDiv = document.createElement('div');
+                msgDiv.className = 'demo-msg demo-msg-bot';
+                var p = document.createElement('p');
+                msgDiv.appendChild(p);
+                body.appendChild(msgDiv);
+                typewriter(p, a);
+            }, 2000);
+        });
+    })();
+    </script>
+
+    <!-- Email Capture Script -->
+    <script>
+    (function() {
+        var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxSLx0fz8Y01e7yenvUproNlPQ1HnHTJniJyXeahDFnliDBIRsnoccTcZz3hIsCFXRxoQ/exec';
+        var form = document.getElementById('email-capture-form');
+        var msg = document.getElementById('capture-msg');
+        var btn = document.getElementById('capture-btn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var email = document.getElementById('capture-email').value;
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            fetch(ENDPOINT, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'email=' + encodeURIComponent(email)
+            }).then(function() {
+                msg.textContent = 'You\'re in! Check your inbox soon.';
+                msg.style.color = '#4ade80';
+                form.reset();
+                btn.textContent = 'Subscribed!';
+            }).catch(function() {
+                msg.textContent = 'Something went wrong. Please try again.';
+                msg.style.color = '#f87171';
+                btn.disabled = false;
+                btn.textContent = 'Subscribe Free';
+            });
+        });
+    })();
+    </script>
+
+    <!-- Sticky Mobile CTA -->
+    <div id="sticky-mobile-cta" class="sticky-mobile-cta" style="display:none">
+        <a href="https://play.google.com/store/apps/details?id=com.omai.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg w-100 sticky-cta-btn sticky-cta-android" onclick="trackDownload('android-sticky')">
+            <i class="fab fa-google-play me-2"></i>Start My Free Reading
+        </a>
+        <a href="https://apps.apple.com/us/app/om-ai/id6630366988" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg w-100 sticky-cta-btn sticky-cta-ios" style="display:none" onclick="trackDownload('ios-sticky')">
+            <i class="fab fa-apple me-2"></i>Start My Free Reading
+        </a>
+    </div>
+
+    <!-- Platform Detection & Sticky CTA Logic -->
+    <script>
+    (function() {
+        var ua = navigator.userAgent || '';
+        var isIOS = /iPhone|iPad|iPod/i.test(ua);
+        var isAndroid = /Android/i.test(ua);
+
+        var androidUrl = 'https://play.google.com/store/apps/details?id=com.omai.app';
+        var iosUrl = 'https://apps.apple.com/us/app/om-ai/id6630366988';
+
+        // Platform-smart store buttons
+        function applyPlatformDetection() {
+            var androidBtns = document.querySelectorAll('.store-btn-android');
+            var iosBtns = document.querySelectorAll('.store-btn-ios');
+
+            if (isIOS) {
+                // iOS: make iOS primary, Android secondary
+                iosBtns.forEach(function(btn) {
+                    btn.classList.remove('btn-outline-primary');
+                    btn.classList.add('btn-primary', 'store-btn-primary');
+                });
+                androidBtns.forEach(function(btn) {
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-outline-primary', 'store-btn-secondary');
+                });
+            } else if (isAndroid) {
+                // Android: keep Android primary (default)
+                androidBtns.forEach(function(btn) {
+                    btn.classList.add('store-btn-primary');
+                });
+                iosBtns.forEach(function(btn) {
+                    btn.classList.add('store-btn-secondary');
+                });
+            }
+            // Desktop: show both, default order is fine
+
+            // Sticky CTA: show correct platform
+            var stickyAndroid = document.querySelector('.sticky-cta-android');
+            var stickyIOS = document.querySelector('.sticky-cta-ios');
+            if (isIOS) {
+                stickyAndroid.style.display = 'none';
+                stickyIOS.style.display = '';
+            } else {
+                stickyAndroid.style.display = '';
+                stickyIOS.style.display = 'none';
+            }
+        }
+
+        applyPlatformDetection();
+
+        // Sticky CTA: show/hide based on hero CTA visibility (mobile only)
+        var stickyCta = document.getElementById('sticky-mobile-cta');
+        var heroCta = document.getElementById('hero-cta');
+
+        if (heroCta && stickyCta && window.innerWidth < 768) {
+            var stickyObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    stickyCta.style.display = entry.isIntersecting ? 'none' : 'block';
+                });
+            }, { threshold: 0 });
+            stickyObserver.observe(heroCta);
+        }
+
+        // Also handle resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                stickyCta.style.display = 'none';
+            }
+        });
+    })();
+    </script>
+
+    <!-- Testimonial scroll dots -->
+    <script>
+    (function() {
+        if (window.innerWidth > 768) return;
+        var wrapper = document.querySelector('.testimonials-scroll-wrapper');
+        var dotsContainer = document.getElementById('testimonial-dots');
+        if (!wrapper || !dotsContainer) return;
+        var cards = wrapper.querySelectorAll('.col-lg-4, .col-md-6');
+        if (!cards.length) return;
+        // Create dots
+        cards.forEach(function(_, i) {
+            var dot = document.createElement('span');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', function() {
+                cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            });
+            dotsContainer.appendChild(dot);
+        });
+        // Update active dot on scroll
+        var dots = dotsContainer.querySelectorAll('.dot');
+        wrapper.addEventListener('scroll', function() {
+            var scrollLeft = wrapper.scrollLeft;
+            var cardWidth = cards[0].offsetWidth + 12;
+            var activeIndex = Math.round(scrollLeft / cardWidth);
+            dots.forEach(function(d, i) {
+                d.classList.toggle('active', i === activeIndex);
+            });
+        });
+    })();
+    </script>
+
     <!-- Custom JavaScript -->
     <script src="/scripts/main.js" defer></script>
 </body>

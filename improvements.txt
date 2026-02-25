@@ -1,0 +1,42 @@
+CRITICAL FIXES:
+- Fix hero video (compress to <5MB or add poster image)
+- Enhance primary CTA (Start Free - 5 Questions Free)
+- Add trust elements (4.8★ rating, 50k+ users, security badges)
+- Implement email capture (Get Your Free Daily Horoscope)
+- Fix mobile issues (viewport width bug, horizontal scroll)
+
+QUICK WINS:
+- Add real testimonials with photos and cities
+- Improve headline (Get Instant Answers from India's Most Accurate AI Astrologer)
+- Performance optimization (compress images, lazy loading, WebP)
+- Show actual app screenshots with Indian users
+- Use culturally relevant symbols (Om, chakras)
+- Display astrologer credentials (Powered by Vedic knowledge)
+- Add security badges (SSL, data privacy)
+- Add media mentions section
+
+STRATEGIC IMPROVEMENTS:
+- Add FAQ section
+- Create How It Works video
+- Add comparison table (Om.AI vs traditional vs other apps)
+- Create trust/privacy page
+- Interactive demo (Try It Now)
+- Personalized landing pages (Choose: Love/Career/Health/Family)
+- Add Hindi language option
+- Educational content (What is Vedic Astrology, How AI Works)
+- Festival-based predictions feature
+
+CONVERSION OPTIMIZATION:
+- Exit-intent popup for email capture
+- Footer newsletter signup
+- Countdown timer for limited offers
+- Chat widget for support
+- A/B test headlines and CTAs
+- Money-back guarantee for risk reversal
+
+LONG-TERM:
+- Start blog for SEO (astrology guides)
+- Implement referral program
+- Build backlinks for SEO
+
+Estimated impact: 50-100% conversion boost | Total work: 40-60 hours

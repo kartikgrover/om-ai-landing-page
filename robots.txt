@@ -1,5 +1,5 @@
 # Om.AI Robots.txt
-# Updated: November 11, 2025
+# Updated: February 24, 2026
 
 User-agent: *
 Allow: /

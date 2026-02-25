@@ -435,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeMobileCarousel() {
     // Only initialize on mobile devices
     if (window.innerWidth <= 768) {
-        const carouselSections = ['#features', '#how-it-works', '#screenshots'];
+        const carouselSections = ['#features', '#how-it-works'];
 
         carouselSections.forEach(sectionId => {
             const section = document.querySelector(sectionId);
@@ -594,271 +594,10 @@ function initializeExistingFeatures() {
 
 }
 
-// Navigation functionality
-function initializeNavigation() {
-    const navbar = document.querySelector('.navbar');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    // Navbar scroll effect
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-        
-        lastScrollTop = scrollTop;
-    });
-    
-    // Smooth scrolling for navigation links
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            // Only handle internal links
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const targetId = href.substring(1);
-                const targetElement = document.getElementById(targetId);
-                
-                if (targetElement) {
-                    const navbarHeight = navbar.offsetHeight;
-                    const targetPosition = targetElement.offsetTop - navbarHeight - 20;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    const navbarCollapse = document.querySelector('.navbar-collapse');
-                    if (navbarCollapse.classList.contains('show')) {
-                        const navbarToggler = document.querySelector('.navbar-toggler');
-                        navbarToggler.click();
-                    }
-                }
-            }
-        });
-    });
-}
 
-// Advanced scroll effects and animations
-function initializeScrollEffects() {
-    // Enhanced animations are now handled by initializeSectionAnimations()
-    // This provides more comprehensive and performant section-by-section animations
-    
-    // Enhanced parallax effect for hero section
-    const heroSection = document.querySelector('.hero-section');
-    const heroContent = document.querySelector('.hero-content');
-    const heroMedia = document.querySelector('.hero-media');
-    
-    if (heroSection) {
-        window.addEventListener('scroll', throttle(function() {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.3;
-            const contentRate = scrolled * -0.1;
-            const mediaRate = scrolled * 0.1;
-            
-            if (scrolled < heroSection.offsetHeight) {
-                heroSection.style.transform = `translateY(${rate}px)`;
-                if (heroContent) heroContent.style.transform = `translateY(${contentRate}px)`;
-                if (heroMedia) heroMedia.style.transform = `translateY(${mediaRate}px)`;
-            }
-        }, 16));
-    }
-    
-    // Magical scroll progress indicator
-    createScrollProgress();
-    
-    // Section highlighting effect
-    highlightCurrentSection();
-}
 
-// Create animated scroll progress indicator
-function createScrollProgress() {
-    const progressBar = document.createElement('div');
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 4px;
-        background: #924622;
-        z-index: 9999;
-        transition: width 0.1s ease;
-        box-shadow: 0 0 10px rgba(146, 70, 34, 0.5);
-    `;
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', throttle(function() {
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
-        progressBar.style.width = scrolled + '%';
-    }, 16));
-}
 
-// Highlight current section in navigation
-function highlightCurrentSection() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-    
-    const sectionObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const currentId = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${currentId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-}
 
-// Initialize animations
-function initializeAnimations() {
-    // Counter animation for stats
-    const statNumbers = document.querySelectorAll('.stat-item strong');
-    const statsObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    statNumbers.forEach(stat => {
-        statsObserver.observe(stat);
-    });
-    
-    // Stagger animation for feature cards
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-    });
-    
-    // Hover effects for interactive elements (excluding feature cards which have CSS hover effects)
-    const interactiveCards = document.querySelectorAll('.step-card, .testimonial-card, .screenshot-card');
-    interactiveCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-}
-
-// Counter animation function
-function animateCounter(element) {
-    const text = element.textContent;
-    const number = parseInt(text.replace(/[^\d]/g, ''));
-    const suffix = text.replace(/[\d,]/g, '');
-    
-    if (isNaN(number)) return;
-    
-    const duration = 2000;
-    const steps = 60;
-    const increment = number / steps;
-    let current = 0;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= number) {
-            current = number;
-            clearInterval(timer);
-        }
-        
-        let displayNumber = Math.floor(current);
-        if (displayNumber >= 1000) {
-            displayNumber = (displayNumber / 1000).toFixed(0) + 'K';
-        }
-        
-        element.textContent = displayNumber + suffix;
-    }, duration / steps);
-}
-
-// Back to top button functionality
-function initializeBackToTop() {
-    const backToTopButton = document.getElementById('backToTop');
-    
-    if (backToTopButton) {
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-}
-
-// Analytics and tracking
-function initializeAnalytics() {
-    // Track feature card interactions
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach((card, index) => {
-        card.addEventListener('click', function() {
-            const featureName = this.querySelector('h4').textContent;
-            if (typeof trackFeature === 'function') {
-                trackFeature(featureName);
-            }
-        });
-    });
-    
-    // Track scroll depth
-    let maxScroll = 0;
-    window.addEventListener('scroll', function() {
-        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-        
-        if (scrollPercent > maxScroll) {
-            maxScroll = scrollPercent;
-            
-            // Track milestone scroll depths
-            if ([25, 50, 75, 90].includes(scrollPercent)) {
-                if (typeof gtag === 'function') {
-                    gtag('event', 'scroll_depth', {
-                        'event_category': 'Engagement',
-                        'event_label': `${scrollPercent}%`,
-                        'value': scrollPercent
-                    });
-                }
-            }
-        }
-    });
-    
-    // Track time on page
-    let startTime = Date.now();
-    window.addEventListener('beforeunload', function() {
-        const timeSpent = Math.round((Date.now() - startTime) / 1000);
-        if (typeof gtag === 'function' && timeSpent > 10) {
-            gtag('event', 'time_on_page', {
-                'event_category': 'Engagement',
-                'event_label': 'seconds',
-                'value': timeSpent
-            });
-        }
-    });
-}
 
 // Utility functions
 function debounce(func, wait) {
@@ -886,17 +625,6 @@ function throttle(func, limit) {
     }
 }
 
-// Performance optimizations
-const debouncedScroll = debounce(function() {
-    // Handle scroll events that don't need to run on every scroll
-}, 100);
-
-const throttledScroll = throttle(function() {
-    // Handle scroll events that need more frequent updates
-}, 16); // ~60fps
-
-window.addEventListener('scroll', debouncedScroll);
-window.addEventListener('scroll', throttledScroll);
 
 // Error handling
 window.addEventListener('error', function(e) {
@@ -1141,10 +869,6 @@ if (document.readyState === 'loading') {
 }
 
 window.OmAI = {
-    initializeNavigation,
-    initializeScrollEffects,
-    initializeAnimations,
-    animateCounter,
     debounce,
     throttle,
     initializeTestimonialScroll,
