@@ -100,7 +100,7 @@
   /* ========== Section Spacing (Fluid) ========== */
   --section-padding-block: clamp(2rem, 4vw, 4rem);       /* 32-64px */
   --section-padding-inline: clamp(1rem, 3vw, 2rem);      /* 16-32px */
-  --hero-padding-block: clamp(3rem, 8vw, 8rem);          /* 48-128px */
+  --hero-padding-block: clamp(1.5rem, 3vw, 3rem);        /* 24-48px */
 
   /* ========== Typography ========== */
   --font-family-heading: 'DM Serif Display', serif;
@@ -1161,7 +1161,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   overflow: hidden;
   min-height: auto;
-  padding-block: clamp(4rem, 8vw, 8rem);
+  padding-block: var(--hero-padding-block);
 }
 
 
