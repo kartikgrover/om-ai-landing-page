@@ -1,0 +1,115 @@
+name: Scheduled Blog Publish
+
+on:
+  schedule:
+    # Runs daily at 5:30 AM IST (00:00 UTC)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check and publish scheduled posts
+        run: |
+          SCHEDULE_FILE="blog/drafts/schedule.json"
+          TODAY=$(date -u +%Y-%m-%d)
+          CHANGED=false
+
+          if [ ! -f "$SCHEDULE_FILE" ]; then
+            echo "No schedule file found. Nothing to publish."
+            exit 0
+          fi
+
+          # Get all posts scheduled for today or earlier
+          for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$SCHEDULE_FILE"); do
+            DRAFT_PATH="blog/drafts/$FILE"
+            PUBLISH_PATH="blog/$FILE"
+
+            if [ ! -f "$DRAFT_PATH" ]; then
+              echo "Warning: Draft $DRAFT_PATH not found, skipping."
+              continue
+            fi
+
+            echo "Publishing: $FILE"
+
+            # Move draft to blog/
+            mv "$DRAFT_PATH" "$PUBLISH_PATH"
+
+            # Get metadata from schedule.json
+            TAG=$(jq -r ".\"$FILE\".tag" "$SCHEDULE_FILE")
+            TITLE=$(jq -r ".\"$FILE\".title" "$SCHEDULE_FILE")
+            EXCERPT=$(jq -r ".\"$FILE\".excerpt" "$SCHEDULE_FILE")
+            DATE_RAW=$(jq -r ".\"$FILE\".date" "$SCHEDULE_FILE")
+            READ_TIME=$(jq -r ".\"$FILE\".readTime" "$SCHEDULE_FILE")
+
+            # Format date for display (e.g., "March 3, 2026")
+            DISPLAY_DATE=$(date -d "$DATE_RAW" +"%B %-d, %Y" 2>/dev/null || date -j -f "%Y-%m-%d" "$DATE_RAW" +"%B %-d, %Y" 2>/dev/null || echo "$DATE_RAW")
+
+            # Build the blog card HTML
+            CARD="\\
+                        <article class=\"blog-card\">\\
+                            <a href=\"/blog/$FILE\">\\
+                                <div class=\"blog-card-tag\">$TAG</div>\\
+                                <h2>$TITLE</h2>\\
+                                <p class=\"blog-card-excerpt\">$EXCERPT</p>\\
+                                <span class=\"blog-card-date\">$DISPLAY_DATE</span>\\
+                            </a>\\
+                        </article>"
+
+            # Insert new card before closing </div> of blog-grid
+            sed -i "/<\/div><!-- end blog-grid -->/i\\
+            $CARD" blog/index.html
+
+            # Add to sitemap.xml
+            SITEMAP_ENTRY="  <url>\\
+      <loc>https:\/\/omai.app\/blog\/$FILE<\/loc>\\
+      <lastmod>$DATE_RAW<\/lastmod>\\
+      <changefreq>monthly<\/changefreq>\\
+      <priority>0.8<\/priority>\\
+    <\/url>"
+            sed -i "/<\/urlset>/i\\
+            $SITEMAP_ENTRY" sitemap.xml
+
+            # Add to RSS feed if it exists
+            if [ -f "blog/feed.xml" ]; then
+              RSS_ITEM="    <item>\\
+          <title>$TITLE<\/title>\\
+          <link>https:\/\/omai.app\/blog\/$FILE<\/link>\\
+          <description>$EXCERPT<\/description>\\
+          <pubDate>$(date -d "$DATE_RAW" -R 2>/dev/null || echo "$DATE_RAW")<\/pubDate>\\
+          <guid>https:\/\/omai.app\/blog\/$FILE<\/guid>\\
+        <\/item>"
+              sed -i "/<\/channel>/i\\
+              $RSS_ITEM" blog/feed.xml
+            fi
+
+            # Remove published entry from schedule.json
+            jq "del(.\"$FILE\")" "$SCHEDULE_FILE" > tmp_schedule.json && mv tmp_schedule.json "$SCHEDULE_FILE"
+
+            CHANGED=true
+          done
+
+          # Clean up empty schedule file
+          REMAINING=$(jq 'length' "$SCHEDULE_FILE")
+          if [ "$REMAINING" -eq 0 ]; then
+            echo "All posts published. Schedule is empty."
+          fi
+
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+        id: publish
+
+      - name: Commit and push changes
+        if: steps.publish.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish scheduled blog posts for $(date -u +%Y-%m-%d)"
+          git push
