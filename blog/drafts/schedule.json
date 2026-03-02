@@ -1,9 +1,30 @@
 {
+  "sade-sati-explained.html": {
+    "date": "2026-03-01",
+    "tag": "Guide",
+    "title": "Sade Sati: Saturn's 7.5-Year Transit Explained",
+    "excerpt": "Learn what Sade Sati means, how Saturn's 7.5-year transit over your Moon sign works, its three phases, and traditional remedies.",
+    "readTime": "3 min read"
+  },
+  "how-to-find-your-ascendant.html": {
+    "date": "2026-03-02",
+    "tag": "Guide",
+    "title": "How to Find Your Ascendant (Lagna) in Vedic Astrology",
+    "excerpt": "Your Ascendant is the most important point in your Vedic birth chart. Learn what it is, why it matters, and how to calculate it.",
+    "readTime": "2 min read"
+  },
   "raj-yoga-vedic-astrology.html": {
     "date": "2026-03-03",
     "tag": "Yogas",
     "title": "Raj Yoga in Vedic Astrology: Formation, Types & Effects",
     "excerpt": "What Raj Yoga really means, how it forms through Kendra-Trikona connections, and what it indicates in your birth chart.",
+    "readTime": "3 min read"
+  },
+  "kaal-sarp-dosha-explained.html": {
+    "date": "2026-03-05",
+    "tag": "Guide",
+    "title": "Kaal Sarp Dosha: What It Really Means",
+    "excerpt": "Understand what Kaal Sarp Dosha is, how it forms when all planets are between Rahu and Ketu, and why it's often misunderstood.",
     "readTime": "3 min read"
   },
   "pancha-mahapurusha-yoga-guide.html": {
@@ -13,12 +34,26 @@
     "excerpt": "Understand the five powerful yogas formed by Mars, Mercury, Jupiter, Venus, and Saturn in Kendra houses.",
     "readTime": "3 min read"
   },
+  "tithi-lunar-days-explained.html": {
+    "date": "2026-03-08",
+    "tag": "Guide",
+    "title": "Tithi Explained: Understanding Lunar Days in Vedic Astrology",
+    "excerpt": "Learn what Tithi means — the lunar day system based on the angular distance between Sun and Moon.",
+    "readTime": "2 min read"
+  },
   "nadi-dosha-explained.html": {
     "date": "2026-03-10",
     "tag": "Compatibility",
     "title": "Nadi Dosha Explained: What It Means & Cancellations",
     "excerpt": "Learn what Nadi Dosha is, why it carries the highest weight in Ashtakoot, and when traditional exceptions apply.",
     "readTime": "2 min read"
+  },
+  "nakshatra-basics-vedic-astrology.html": {
+    "date": "2026-03-12",
+    "tag": "Guide",
+    "title": "27 Nakshatras: A Beginner's Guide to Lunar Mansions",
+    "excerpt": "An introduction to the 27 Nakshatras — what they are, how they divide the zodiac, and why your birth Nakshatra matters.",
+    "readTime": "3 min read"
   },
   "ascendant-vs-sun-sign.html": {
     "date": "2026-03-13",
@@ -27,6 +62,13 @@
     "excerpt": "Why Vedic astrology prioritizes your Ascendant (Lagna) over your Sun sign, and what role the Moon sign plays.",
     "readTime": "2 min read"
   },
+  "ashtakoot-deep-dive.html": {
+    "date": "2026-03-15",
+    "tag": "Compatibility",
+    "title": "Ashtakoot Matching: All 8 Points Explained in Detail",
+    "excerpt": "A detailed guide to all 8 koots — Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, and Nadi — with scoring.",
+    "readTime": "3 min read"
+  },
   "what-is-panchang.html": {
     "date": "2026-03-17",
     "tag": "Guide",
@@ -34,12 +76,306 @@
     "excerpt": "Understand Tithi, Nakshatra, Yoga, Karana, and Vara — the five elements that make up the traditional Hindu calendar.",
     "readTime": "3 min read"
   },
+  "mahadasha-planetary-periods.html": {
+    "date": "2026-03-19",
+    "tag": "Guide",
+    "title": "Mahadasha: Understanding Planetary Periods in Vedic Astrology",
+    "excerpt": "Learn how the Vimshottari Dasha system works — the 120-year cycle of planetary periods used to time events.",
+    "readTime": "3 min read"
+  },
+  "dhana-yoga-wealth-astrology.html": {
+    "date": "2026-03-20",
+    "tag": "Yogas",
+    "title": "Dhana Yoga: Wealth Combinations in Your Birth Chart",
+    "excerpt": "Discover how Dhana Yoga forms in Vedic astrology, which houses indicate wealth, and what planetary combinations suggest financial prosperity.",
+    "readTime": "2 min read"
+  },
+  "lakshmi-yoga-vedic-astrology.html": {
+    "date": "2026-03-21",
+    "tag": "Yogas",
+    "title": "Lakshmi Yoga: The Yoga of Divine Prosperity",
+    "excerpt": "Learn how Lakshmi Yoga forms in Vedic astrology, what conditions create it, and what it traditionally indicates about wealth and prosperity.",
+    "readTime": "2 min read"
+  },
+  "why-moon-sign-matters-vedic-astrology.html": {
+    "date": "2026-03-22",
+    "tag": "Guide",
+    "title": "Why Your Moon Sign Matters More in Vedic Astrology",
+    "excerpt": "Understand why Vedic astrology prioritizes the Moon sign over the Sun sign for horoscopes and daily predictions.",
+    "readTime": "2 min read"
+  },
+  "vedic-remedies-by-weekday.html": {
+    "date": "2026-03-23",
+    "tag": "Remedies",
+    "title": "Vedic Remedies by Weekday: A Simple Daily Guide",
+    "excerpt": "Learn which Vedic remedies to follow each day of the week based on the ruling planet — colors, donations, and mantras.",
+    "readTime": "3 min read"
+  },
+  "donation-remedies-vedic-astrology.html": {
+    "date": "2026-03-24",
+    "tag": "Remedies",
+    "title": "Donation Remedies (Daan) for All 9 Planets",
+    "excerpt": "Discover traditional Vedic donation remedies for each of the nine planets — what items to donate, when, and how.",
+    "readTime": "3 min read"
+  },
+  "planet-colors-vedic-remedies.html": {
+    "date": "2026-03-25",
+    "tag": "Remedies",
+    "title": "Planet Colors in Vedic Astrology: What to Wear & When",
+    "excerpt": "Learn which colors are associated with each planet and how wearing the right colors is traditionally believed to help.",
+    "readTime": "2 min read"
+  },
+  "what-is-transit-vedic-astrology.html": {
+    "date": "2026-03-26",
+    "tag": "Guide",
+    "title": "What Is a Transit (Gochar) in Vedic Astrology?",
+    "excerpt": "Understand what planetary transits mean in Vedic astrology, how Gochar works, and which transits matter most.",
+    "readTime": "2 min read"
+  },
+  "solar-eclipse-august-2026.html": {
+    "date": "2026-03-27",
+    "tag": "Eclipse",
+    "title": "Solar Eclipse August 2026: Vedic Astrology Guide",
+    "excerpt": "A partial solar eclipse occurs on August 11, 2026 in Cancer. Learn what this Surya Grahan means and traditional dos and don'ts.",
+    "readTime": "2 min read"
+  },
+  "saturn-retrograde-july-2026.html": {
+    "date": "2026-03-28",
+    "tag": "Transit",
+    "title": "Saturn Retrograde July 2026: What It Means for You",
+    "excerpt": "Saturn goes retrograde on July 26, 2026. Learn what Shani retrograde means and traditional remedies.",
+    "readTime": "3 min read"
+  },
+  "gana-matching-compatibility.html": {
+    "date": "2026-03-29",
+    "tag": "Compatibility",
+    "title": "Gana Matching in Kundli: Deva, Manushya & Rakshasa",
+    "excerpt": "Learn about Gana matching in Vedic compatibility — the three Ganas, how scoring works, and what the results mean.",
+    "readTime": "2 min read"
+  },
+  "retrograde-planets-birth-chart.html": {
+    "date": "2026-03-31",
+    "tag": "Guide",
+    "title": "Retrograde Planets in Your Birth Chart: What They Mean",
+    "excerpt": "Learn what it means when a planet is retrograde in your birth chart and how it differs from transiting retrogrades.",
+    "readTime": "2 min read"
+  },
+  "combustion-planets-astanga.html": {
+    "date": "2026-04-02",
+    "tag": "Guide",
+    "title": "Combustion of Planets (Astanga): When Planets Get Too Close to the Sun",
+    "excerpt": "Understand what happens when a planet gets too close to the Sun — combustion degrees, effects, and remedies.",
+    "readTime": "2 min read"
+  },
+  "exaltation-debilitation-planets.html": {
+    "date": "2026-04-04",
+    "tag": "Guide",
+    "title": "Exaltation & Debilitation of Planets in Vedic Astrology",
+    "excerpt": "Learn where each planet is strongest and weakest in the zodiac, and what these placements mean in your chart.",
+    "readTime": "2 min read"
+  },
+  "yogakaraka-planet-explained.html": {
+    "date": "2026-04-06",
+    "tag": "Guide",
+    "title": "Yogakaraka Planet: The Most Beneficial Planet for Your Ascendant",
+    "excerpt": "Learn what a Yogakaraka planet is and which planet serves this role for each ascendant.",
+    "readTime": "2 min read"
+  },
+  "navamsha-d9-chart-guide.html": {
+    "date": "2026-04-08",
+    "tag": "Guide",
+    "title": "Navamsha (D9) Chart: The Key to Marriage & Destiny",
+    "excerpt": "Understand the Navamsha divisional chart — how it's calculated and what it reveals about marriage and planet strength.",
+    "readTime": "3 min read"
+  },
+  "planetary-aspects-vedic-astrology.html": {
+    "date": "2026-04-10",
+    "tag": "Guide",
+    "title": "Planetary Aspects (Drishti) in Vedic Astrology",
+    "excerpt": "Learn how aspects work — the standard 7th house aspect and the special aspects of Mars, Jupiter, and Saturn.",
+    "readTime": "2 min read"
+  },
+  "functional-benefics-malefics.html": {
+    "date": "2026-04-12",
+    "tag": "Guide",
+    "title": "Functional Benefics & Malefics: Why Good Planets Can Be Bad",
+    "excerpt": "A planet's nature changes based on which houses it rules. Learn why Jupiter can be harmful and Saturn beneficial.",
+    "readTime": "2 min read"
+  },
+  "career-indicators-vedic-astrology.html": {
+    "date": "2026-04-14",
+    "tag": "Guide",
+    "title": "Career Indicators in Your Vedic Birth Chart",
+    "excerpt": "Discover which houses and planets traditionally indicate career — the 10th house, its lord, and key combinations.",
+    "readTime": "3 min read"
+  },
+  "jupiter-cancer-transit-aries.html": {
+    "date": "2026-04-16",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Aries Ascendant",
+    "excerpt": "Jupiter enters your 4th house on June 2, 2026. How this exalted Jupiter may bring domestic happiness and property gains.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-taurus.html": {
+    "date": "2026-04-18",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Taurus Ascendant",
+    "excerpt": "Jupiter enters your 3rd house on June 2, 2026. How this transit may affect courage, siblings, and communication.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-gemini.html": {
+    "date": "2026-04-20",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Gemini Ascendant",
+    "excerpt": "Jupiter enters your 2nd house on June 2, 2026. How this exalted Jupiter may boost wealth, speech, and family harmony.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-cancer.html": {
+    "date": "2026-04-22",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Cancer Ascendant",
+    "excerpt": "Exalted Jupiter enters your 1st house on June 2, 2026 — the best possible placement. A once-in-12-years opportunity.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-leo.html": {
+    "date": "2026-04-24",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Leo Ascendant",
+    "excerpt": "Jupiter enters your 12th house on June 2, 2026. How this transit may influence spirituality, foreign connections, and expenses.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-virgo.html": {
+    "date": "2026-04-26",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Virgo Ascendant",
+    "excerpt": "Jupiter enters your 11th house on June 2, 2026. How this exalted Jupiter may boost income and fulfillment of desires.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-libra.html": {
+    "date": "2026-04-28",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Libra Ascendant",
+    "excerpt": "Jupiter enters your 10th house on June 2, 2026. How this exalted Jupiter may elevate career and reputation.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-scorpio.html": {
+    "date": "2026-04-30",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Scorpio Ascendant",
+    "excerpt": "Jupiter enters your 9th house on June 2, 2026. Exalted Jupiter in the house of fortune — luck and spiritual growth.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-sagittarius.html": {
+    "date": "2026-05-02",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Sagittarius Ascendant",
+    "excerpt": "Jupiter enters your 8th house on June 2, 2026. How this transit through the house of transformation may bring deep changes.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-capricorn.html": {
+    "date": "2026-05-04",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Capricorn Ascendant",
+    "excerpt": "Jupiter enters your 7th house on June 2, 2026. How exalted Jupiter may strengthen relationships and partnerships.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-aquarius.html": {
+    "date": "2026-05-06",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Aquarius Ascendant",
+    "excerpt": "Jupiter enters your 6th house on June 2, 2026. How this transit may affect health, competition, and daily routines.",
+    "readTime": "2 min read"
+  },
+  "jupiter-cancer-transit-pisces.html": {
+    "date": "2026-05-08",
+    "tag": "Transit",
+    "title": "Jupiter Transit Cancer 2026: Pisces Ascendant",
+    "excerpt": "Jupiter enters your 5th house on June 2, 2026. Exalted Jupiter may bring blessings in creativity, children, and romance.",
+    "readTime": "2 min read"
+  },
+  "mercury-retrograde-june-2026.html": {
+    "date": "2026-05-10",
+    "tag": "Transit",
+    "title": "Mercury Retrograde June 2026: Cancer to Gemini",
+    "excerpt": "Mercury goes retrograde on June 29, 2026 in Cancer, moving to Gemini by July 23. What to expect and how to navigate.",
+    "readTime": "3 min read"
+  },
+  "marriage-timing-vedic-astrology.html": {
+    "date": "2026-05-12",
+    "tag": "Guide",
+    "title": "Marriage Timing in Vedic Astrology: Key Indicators",
+    "excerpt": "How Vedic astrology determines marriage timing — through the 7th house, Venus, Jupiter, and Dasha periods.",
+    "readTime": "3 min read"
+  },
+  "bhava-chart-vs-rashi-chart.html": {
+    "date": "2026-05-14",
+    "tag": "Guide",
+    "title": "Bhava Chart vs Rashi Chart: Understanding the Difference",
+    "excerpt": "Learn the difference between sign-based and cusp-based house systems and why planets can shift between them.",
+    "readTime": "2 min read"
+  },
+  "atmakaraka-soul-planet.html": {
+    "date": "2026-05-16",
+    "tag": "Guide",
+    "title": "Atmakaraka: The Soul Planet in Your Birth Chart",
+    "excerpt": "The planet with the highest degree represents your soul's deepest desire and karmic lessons in Jaimini astrology.",
+    "readTime": "2 min read"
+  },
+  "nakshatra-pada-explained.html": {
+    "date": "2026-05-18",
+    "tag": "Guide",
+    "title": "Nakshatra Pada: The 4 Quarters of Each Lunar Mansion",
+    "excerpt": "Understand the four subdivisions of each Nakshatra that add precision and connect to the Navamsha chart.",
+    "readTime": "2 min read"
+  },
+  "four-life-areas-horoscope.html": {
+    "date": "2026-05-20",
+    "tag": "Guide",
+    "title": "The 4 Aims of Life (Purusharthas) in Your Horoscope",
+    "excerpt": "How the 12 houses map to Dharma, Artha, Kama, and Moksha — and what they reveal about your life's purpose.",
+    "readTime": "2 min read"
+  },
+  "rahu-ketu-shadow-planets.html": {
+    "date": "2026-05-22",
+    "tag": "Guide",
+    "title": "Rahu & Ketu: The Shadow Planets Explained",
+    "excerpt": "Understand the lunar nodes — Rahu represents worldly desire and obsession, Ketu represents detachment and liberation.",
+    "readTime": "3 min read"
+  },
+  "dasha-timing-predictions.html": {
+    "date": "2026-05-24",
+    "tag": "Guide",
+    "title": "How Dasha Timing Works for Predictions in Vedic Astrology",
+    "excerpt": "Learn how the Dasha system times life events — Mahadasha, Antardasha, and Pratyantar Dasha levels.",
+    "readTime": "2 min read"
+  },
+  "shadbala-planetary-strength.html": {
+    "date": "2026-05-26",
+    "tag": "Guide",
+    "title": "Shadbala: How Planetary Strength Is Measured",
+    "excerpt": "Understand the six-fold strength calculation that determines how powerful each planet is in your birth chart.",
+    "readTime": "2 min read"
+  },
   "jupiter-transit-cancer-2026.html": {
     "date": "2026-05-28",
     "tag": "Transit",
     "title": "Jupiter Transit to Cancer 2026: Complete Guide",
     "excerpt": "Jupiter enters its sign of exaltation on June 2, 2026. Here's what this rare 12-year transit means for all 12 ascendants.",
     "readTime": "4 min read"
+  },
+  "remedies-weak-planets-overview.html": {
+    "date": "2026-05-30",
+    "tag": "Remedies",
+    "title": "Vedic Remedies for Weak Planets: A Complete Overview",
+    "excerpt": "A guide to remedy types — mantras, gemstones, donations, fasting, and yantras — and when each is recommended.",
+    "readTime": "3 min read"
+  },
+  "saturn-in-pisces-transit-2026.html": {
+    "date": "2026-06-01",
+    "tag": "Transit",
+    "title": "Saturn in Pisces 2026: What This Long Transit Means",
+    "excerpt": "Saturn continues through Pisces in 2026, going retrograde July 26 to December 10. Effects for each ascendant.",
+    "readTime": "3 min read"
   },
   "venus-retrograde-october-2026.html": {
     "date": "2026-09-25",
