@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Vedic Horoscope — Free Moon Sign Rashifal Today | Om.AI</title>
+    <meta name="description" content="Free daily Vedic horoscope based on your Moon sign. Get today's Rashifal with career, love, health & finance predictions for all 12 zodiac signs. Updated daily.">
+    <meta name="keywords" content="daily horoscope, today horoscope, rashifal today, vedic horoscope, moon sign horoscope, aaj ka rashifal, daily rashifal, zodiac prediction today, aries horoscope today, taurus horoscope today">
+
+    <meta property="og:title" content="Daily Vedic Horoscope — Free Moon Sign Rashifal Today">
+    <meta property="og:description" content="Free daily Vedic horoscope for all 12 Moon signs. Career, love, health & finance predictions updated daily.">
+    <meta property="og:url" content="https://omai.app/horoscope.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Daily Vedic Horoscope — Free Moon Sign Rashifal Today">
+    <meta name="twitter:description" content="Free daily Vedic horoscope for all 12 Moon signs. Updated daily.">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/horoscope.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=51">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .sign-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        .sign-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: rgba(255,255,255,0.8);
+        }
+        .sign-btn:hover, .sign-btn.active {
+            background: rgba(217,119,87,0.15);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .sign-btn .sign-symbol {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .sign-btn .sign-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .sign-btn .sign-hindi {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+        }
+        .horoscope-detail {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .horoscope-detail h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+        }
+        .score-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+        .score-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        .score-item {
+            margin-bottom: 1rem;
+        }
+        .score-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+        .horoscope-loading {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255,255,255,0.6);
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <div class="container text-center">
+                <h1 class="display-4 mb-3">Daily Vedic Horoscope</h1>
+                <p class="lead">Select your Moon sign (Rashi) for today's personalized Vedic predictions</p>
+                <p style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:#D97757;" id="horoscope-date"></p>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <!-- Moon Sign Selector -->
+                <div class="sign-grid" id="sign-grid"></div>
+
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.5); font-size:0.85rem;">
+                    <i class="fas fa-info-circle me-1" aria-hidden="true"></i>
+                    Don't know your Moon sign? It's different from your Western sun sign.
+                    <a href="/#smart-download" class="text-primary">Download Om.AI</a> to find yours instantly.
+                </p>
+
+                <!-- Loading -->
+                <div id="horoscope-loading" class="horoscope-loading" style="display:none">
+                    <i class="fas fa-om fa-spin fa-2x mb-3" aria-hidden="true"></i>
+                    <p>Loading your horoscope...</p>
+                </div>
+
+                <!-- Horoscope Detail -->
+                <div id="horoscope-detail" class="horoscope-detail" style="display:none">
+                    <h2 id="detail-title"></h2>
+                    <p id="detail-summary" style="font-size:1.1rem;"></p>
+
+                    <h3 style="font-size:1.1rem; margin-top:1.5rem;">Life Area Scores</h3>
+                    <div id="detail-scores"></div>
+
+                    <div id="detail-remedy" class="mt-4" style="display:none">
+                        <h3 style="font-size:1.1rem;">Today's Remedy</h3>
+                        <p id="detail-remedy-text" style="color:rgba(255,255,255,0.8);"></p>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="cta-box mt-5">
+                    <h2 style="font-size:1.3rem;">Want predictions based on YOUR exact birth chart?</h2>
+                    <p class="text-secondary mb-3">This horoscope is based on your Moon sign. Om.AI analyzes your complete Kundli — Lagna, all 9 planets, Dasha periods, and current transits — for truly personalized guidance.</p>
+                    <a href="/#smart-download" class="btn btn-primary btn-lg">
+                        <i class="fas fa-download me-2" aria-hidden="true"></i>Get Personalized Reading
+                    </a>
+                    <p class="mt-2" style="font-size:0.85rem; color: rgba(255,255,255,0.5);">First question free. No credit card required.</p>
+                </div>
+
+                <!-- SEO Content -->
+                <div class="mt-5">
+                    <h2>What is Vedic Horoscope (Rashifal)?</h2>
+                    <p>A Vedic horoscope, called Rashifal in Hindi, provides daily predictions based on your Moon sign (Rashi) in Vedic astrology. Unlike Western astrology which uses the Sun sign, Vedic astrology considers your Moon sign as the primary indicator of daily experiences because the Moon changes signs every 2.5 days, making it more sensitive to daily fluctuations. Your Moon sign is determined by which zodiac constellation the Moon was in at the exact time and place of your birth.</p>
+
+                    <h2>The 12 Moon Signs (Rashis)</h2>
+                    <p>The 12 Vedic Moon signs are: Mesha (Aries), Vrishabha (Taurus), Mithuna (Gemini), Karka (Cancer), Simha (Leo), Kanya (Virgo), Tula (Libra), Vrishchika (Scorpio), Dhanu (Sagittarius), Makara (Capricorn), Kumbha (Aquarius), and Meena (Pisces). Each sign is ruled by a specific planet — for example, Mesha is ruled by Mars, Vrishabha by Venus, and Karka by the Moon itself.</p>
+
+                    <h2>How Om.AI's Horoscope Works</h2>
+                    <p>Om.AI generates daily Vedic horoscopes by analyzing current planetary transits against each Moon sign. The AI considers the Panchang (Tithi, Nakshatra, Yoga), planetary aspects, and Hora timings to provide predictions across key life areas including career, finance, love, health, and spirituality. For even more accurate predictions, <a href="/#smart-download">download the app</a> and get readings based on your complete birth chart.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/#features" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/#features" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/#features" class="text-white-50">Relationship Compatibility</a></li>
+                        <li><a href="/#features" class="text-white-50">Mantras & Gita</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Free Tools</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhoroscope%26utm_campaign%3Dfree_tools" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?utm_source=website&utm_medium=horoscope&utm_campaign=free_tools" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function() {
+        var API_BASE = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+
+        var signs = [
+            { id: 'aries', name: 'Aries', hindi: 'Mesha', symbol: '\u2648' },
+            { id: 'taurus', name: 'Taurus', hindi: 'Vrishabha', symbol: '\u2649' },
+            { id: 'gemini', name: 'Gemini', hindi: 'Mithuna', symbol: '\u264A' },
+            { id: 'cancer', name: 'Cancer', hindi: 'Karka', symbol: '\u264B' },
+            { id: 'leo', name: 'Leo', hindi: 'Simha', symbol: '\u264C' },
+            { id: 'virgo', name: 'Virgo', hindi: 'Kanya', symbol: '\u264D' },
+            { id: 'libra', name: 'Libra', hindi: 'Tula', symbol: '\u264E' },
+            { id: 'scorpio', name: 'Scorpio', hindi: 'Vrishchika', symbol: '\u264F' },
+            { id: 'sagittarius', name: 'Sagittarius', hindi: 'Dhanu', symbol: '\u2650' },
+            { id: 'capricorn', name: 'Capricorn', hindi: 'Makara', symbol: '\u2651' },
+            { id: 'aquarius', name: 'Aquarius', hindi: 'Kumbha', symbol: '\u2652' },
+            { id: 'pisces', name: 'Pisces', hindi: 'Meena', symbol: '\u2653' }
+        ];
+
+        // Display date
+        var now = new Date();
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('horoscope-date').textContent = now.toLocaleDateString('en-IN', options);
+
+        // Build sign grid
+        var grid = document.getElementById('sign-grid');
+        signs.forEach(function(sign) {
+            var btn = document.createElement('div');
+            btn.className = 'sign-btn';
+            btn.setAttribute('role', 'button');
+            btn.setAttribute('tabindex', '0');
+            btn.setAttribute('aria-label', sign.name + ' horoscope');
+            btn.innerHTML = '<span class="sign-symbol">' + sign.symbol + '</span><span class="sign-name">' + sign.name + '</span><span class="sign-hindi">' + sign.hindi + '</span>';
+            btn.addEventListener('click', function() { loadHoroscope(sign); });
+            btn.addEventListener('keydown', function(e) { if (e.key === 'Enter') loadHoroscope(sign); });
+            grid.appendChild(btn);
+        });
+
+        function loadHoroscope(sign) {
+            // Update active state
+            document.querySelectorAll('.sign-btn').forEach(function(b) { b.classList.remove('active'); });
+            event.currentTarget.classList.add('active');
+
+            document.getElementById('horoscope-loading').style.display = 'block';
+            document.getElementById('horoscope-detail').style.display = 'none';
+
+            fetch(API_BASE + '/daily-horoscope/' + sign.id)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    document.getElementById('horoscope-loading').style.display = 'none';
+                    document.getElementById('horoscope-detail').style.display = 'block';
+
+                    var h = data.horoscope || data;
+
+                    document.getElementById('detail-title').textContent = sign.symbol + ' ' + sign.name + ' (' + sign.hindi + ') — Today\'s Horoscope';
+
+                    // Summary
+                    var summary = h.summary || h.description || h.overview || '';
+                    document.getElementById('detail-summary').textContent = summary;
+
+                    // Scores
+                    var scoresEl = document.getElementById('detail-scores');
+                    scoresEl.innerHTML = '';
+                    var scoreFields = [
+                        { key: 'career', label: 'Career', icon: 'briefcase' },
+                        { key: 'finance', label: 'Finance', icon: 'wallet' },
+                        { key: 'love', label: 'Love', icon: 'heart' },
+                        { key: 'health', label: 'Health', icon: 'heartbeat' },
+                        { key: 'wellness', label: 'Wellness', icon: 'spa' },
+                        { key: 'spirituality', label: 'Spirituality', icon: 'om' }
+                    ];
+
+                    var scores = h.scores || h.lifeAreaScores || h.life_scores || {};
+                    scoreFields.forEach(function(f) {
+                        var val = scores[f.key] || scores[f.label] || 0;
+                        if (!val && typeof val !== 'number') return;
+                        var color = val >= 70 ? '#4ade80' : val >= 40 ? '#fbbf24' : '#f87171';
+                        var item = document.createElement('div');
+                        item.className = 'score-item';
+                        item.innerHTML = '<div class="score-label"><span><i class="fas fa-' + f.icon + ' me-1" aria-hidden="true" style="color:' + color + '"></i> ' + f.label + '</span><span>' + val + '/100</span></div><div class="score-bar"><div class="score-fill" style="width:' + val + '%;background:' + color + '"></div></div>';
+                        scoresEl.appendChild(item);
+                    });
+
+                    // Remedy
+                    var remedy = h.remedy || h.remedies || '';
+                    if (remedy) {
+                        document.getElementById('detail-remedy').style.display = 'block';
+                        document.getElementById('detail-remedy-text').textContent = typeof remedy === 'string' ? remedy : JSON.stringify(remedy);
+                    } else {
+                        document.getElementById('detail-remedy').style.display = 'none';
+                    }
+
+                    // Track
+                    gtag('event', 'horoscope_view', { 'event_category': 'Free Tools', 'event_label': sign.name });
+                })
+                .catch(function() {
+                    document.getElementById('horoscope-loading').style.display = 'none';
+                    document.getElementById('horoscope-detail').style.display = 'block';
+                    document.getElementById('detail-title').textContent = sign.name + ' Horoscope';
+                    document.getElementById('detail-summary').textContent = 'Unable to load horoscope. Please try again later.';
+                    document.getElementById('detail-scores').innerHTML = '';
+                });
+        }
+    })();
+    </script>
+    <script src="/scripts/main.min.js" defer></script>
+</body>
+</html>
