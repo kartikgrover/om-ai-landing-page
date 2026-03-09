@@ -1185,7 +1185,6 @@ h1, h2, h3, h4, h5, h6 {
   background: transparent;
   color: var(--text-primary);
   position: relative;
-  overflow: hidden;
   min-height: auto;
   padding-block: var(--hero-padding-block);
 }
