@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vedic Astrology — Om.AI | Ancient Wisdom Meets Modern AI</title>
+    <meta name="description" content="Discover how Om.AI combines artificial intelligence with ancient Vedic astrology. AI-powered birth chart analysis, daily horoscopes, compatibility matching, and yoga detection based on classical Sanskrit texts.">
+    <meta name="keywords" content="AI Vedic astrology, AI astrology app, AI kundli, AI horoscope, artificial intelligence astrology, Vedic astrology AI, AI birth chart">
+
+    <meta property="og:title" content="AI Vedic Astrology — Ancient Wisdom Meets Modern AI">
+    <meta property="og:description" content="Om.AI combines artificial intelligence with ancient Vedic astrology. AI-powered birth chart analysis, daily horoscopes, compatibility matching, and yoga detection.">
+    <meta property="og:url" content="https://omai.app/ai-vedic-astrology.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AI Vedic Astrology — Ancient Wisdom Meets Modern AI">
+    <meta name="twitter:description" content="Om.AI combines artificial intelligence with ancient Vedic astrology for AI-powered birth chart analysis and daily horoscopes.">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/ai-vedic-astrology.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=51">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .text-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1.25rem;
+        }
+        .text-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .text-card p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "AI Vedic Astrology — Om.AI",
+                "description": "Discover how Om.AI combines artificial intelligence with ancient Vedic astrology. AI-powered birth chart analysis, daily horoscopes, compatibility matching, and yoga detection.",
+                "url": "https://omai.app/ai-vedic-astrology.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is AI Vedic astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "AI Vedic astrology uses artificial intelligence to analyze birth charts, planetary positions, and classical Jyotish texts. Instead of replacing the astrologer, AI processes thousands of combinatorial rules from texts like Brihat Parashara Hora Shastra simultaneously, delivering personalized interpretations that would take a human practitioner hours to compile manually."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How accurate is AI astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI calculates planetary positions using precision astronomical algorithms, the same standard used by research institutions. The AI interprets these positions using rules from classical Vedic texts. The astronomical calculations are precise to arc-seconds. The interpretive layer is grounded in traditional Jyotish principles rather than generic content."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is Om.AI free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI offers free daily horoscopes, Panchang, and Gita Verse of the Day on the website. The mobile app includes free birth chart generation, basic AI chat, and daily predictions. Premium features like unlimited AI chat, detailed yoga analysis, and advanced compatibility reports are available through a subscription."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What's the difference between Vedic and Western astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vedic astrology (Jyotish) uses the sidereal zodiac, which accounts for Earth's axial precession and aligns with the actual positions of constellations. Western astrology uses the tropical zodiac fixed to the seasons. Vedic astrology also emphasizes the Moon sign (Rashi) over the Sun sign and includes systems like Nakshatras, Dashas, and divisional charts that have no Western equivalent."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What classical texts does Om.AI use?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI's AI is trained on four foundational Jyotish texts: Brihat Parashara Hora Shastra (the comprehensive guide to Vedic astrology), Lal Kitab (the remedial astrology tradition), KP System Reader (Krishnamurti Paddhati for precise timing), and Uttara Kalamrita (advanced planetary combinations and yogas)."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI-Powered Vedic Astrology</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    Ancient Jyotish wisdom interpreted through modern artificial intelligence. Om.AI reads your birth chart the way a classical pandit would — grounded in Sanskrit texts, powered by precision astronomy, and available instantly on your phone.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What Is AI Vedic Astrology? -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What Is AI Vedic Astrology?</h2>
+                <p>
+                    Vedic astrology — known as Jyotish Shastra — is one of the oldest systematic frameworks for understanding human life through celestial observation. Developed over thousands of years in the Indian subcontinent, it relies on precise astronomical calculations and a vast body of interpretive literature written in Sanskrit. Traditionally, learning Jyotish required years of study under a guru, memorizing thousands of planetary combinations (yogas), understanding the interplay of twelve houses, nine planets, twenty-seven nakshatras, and multiple divisional charts.
+                </p>
+                <p>
+                    AI Vedic astrology brings this depth to everyone. Instead of replacing the astrologer, artificial intelligence processes the massive combinatorial space of a birth chart — the same space that would take even an experienced practitioner hours to fully analyze. An AI system can cross-reference planetary positions against hundreds of classical rules simultaneously, checking for yogas across the Rashi chart, Navamsa (D9), Dashamsa (D10), and other divisional charts in seconds.
+                </p>
+                <p>
+                    What makes this different from generic horoscope apps is the source material. Most astrology apps generate vague predictions from templates. Om.AI's artificial intelligence is grounded in the actual classical texts — Brihat Parashara Hora Shastra, Lal Kitab, Krishnamurti Paddhati, and Uttara Kalamrita — interpreting your specific planetary placements through the same principles a traditional Jyotishi would apply.
+                </p>
+                <p>
+                    The astronomical backbone is equally important. Om.AI uses high-precision astronomical calculations, the same standard relied upon by research institutions worldwide, to compute planetary longitudes. This means every chart generated reflects the actual sidereal positions of planets at your exact birth time and location — not approximations, not pre-computed tables, but real-time astronomical data with Lahiri Ayanamsa correction.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How Om.AI Uses AI -->
+        <section class="content-section">
+            <div class="container">
+                <h2 class="text-center mb-4">How Om.AI Uses AI</h2>
+                <p class="text-center mb-5" style="color:rgba(255,255,255,0.7); max-width:680px; margin-left:auto; margin-right:auto;">
+                    Four core features where artificial intelligence transforms the Vedic astrology experience.
+                </p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
+                            <h3>AI Astrology Chat</h3>
+                            <p>
+                                Ask questions about your birth chart in plain English or Hindi and receive interpretations rooted in classical Jyotish. Wondering why your career feels stuck? The AI examines your 10th house lord, its Nakshatra placement, current Dasha period, and Saturn's transit influence — then explains it in language you can actually understand. Every response draws from Brihat Parashara Hora Shastra (BPHS), Lal Kitab, the KP System, and Uttara Kalamrita, citing specific principles rather than generating generic advice.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-sun" aria-hidden="true"></i></div>
+                            <h3>AI Horoscope Generation</h3>
+                            <p>
+                                Om.AI's daily horoscopes are not recycled paragraphs shuffled between signs. Each day, the AI analyzes real planetary positions computed via precision astronomical algorithms — the Moon's exact Nakshatra, active transits over each Rashi, and current Tithi — then generates fresh predictions for career, relationships, health, and finances. The result is a daily Rashifal that reflects what is actually happening in the sky, not what was written months ago.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                            <h3>AI Compatibility Analysis</h3>
+                            <p>
+                                Traditional Ashtakoot matching scores compatibility on 8 parameters (Kootas) totaling 36 points. Om.AI goes further. After computing the standard Guna Milan score, the AI analyzes both partners' Navamsa (D9) charts to assess the deeper quality of the relationship — examining Venus and Jupiter placements, 7th house lords in divisional charts, and Nakshatra-level compatibility. The AI also checks for Manglik Dosha, Nadi Dosha, and Bhakoot exceptions that are often missed by basic calculators.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-star" aria-hidden="true"></i></div>
+                            <h3>AI Yoga Detection</h3>
+                            <p>
+                                Yogas are specific planetary combinations that indicate particular life outcomes — wealth, fame, spiritual growth, or challenges. Om.AI's AI automatically scans your chart for hundreds of yogas including Raj Yoga (power and authority), Gaja Kesari Yoga (wisdom and reputation), Pancha Mahapurusha Yogas (Hamsa, Malavya, Ruchaka, Bhadra, Sasa), Dhana Yoga (wealth), and Viparita Raj Yoga (success through adversity). Each detected yoga comes with a plain-language explanation of what it means for your life and when its effects are likely to manifest based on your Dasha timeline.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Vedic vs Western -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Vedic vs Western: Why It Matters</h2>
+                <p>
+                    If you have ever looked up your zodiac sign and felt it did not quite fit, there is a structural reason. Western astrology uses the tropical zodiac, which is fixed to the Earth's seasons — the first day of spring always marks 0 degrees Aries. Vedic astrology uses the sidereal zodiac, which is calibrated to the actual positions of the constellations in the sky. Due to a phenomenon called axial precession, these two systems have drifted apart by roughly 24 degrees. This means your Vedic Moon sign (Rashi) is likely different from your Western Sun sign.
+                </p>
+                <p>
+                    The difference goes deeper than the zodiac. Vedic astrology places primary emphasis on the Moon sign, not the Sun sign. The Moon represents the mind (Manas) in Jyotish — your emotional nature, instinctive reactions, and daily mental patterns. This is why Vedic daily horoscopes are based on your Moon's Rashi, and why they often feel more personally relevant than Sun-sign predictions.
+                </p>
+                <p>
+                    Vedic astrology also uses systems that have no Western equivalent: the 27 Nakshatras (lunar mansions) that add a layer of precision beyond the 12 signs, the Vimshottari Dasha system that maps life periods to specific planets, and 16 divisional charts (Vargas) that reveal different dimensions of life — from career (Dashamsa) to marriage (Navamsa) to spiritual purpose (Trimsamsa). Om.AI's AI processes all of these layers, giving you a depth of analysis that generic Western astrology apps simply cannot provide.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Classical Texts -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Classical Texts Powering Om.AI</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.7);">
+                    Om.AI's AI is grounded in four foundational works of Jyotish Shastra, each contributing a distinct dimension to chart interpretation.
+                </p>
+
+                <div class="text-card">
+                    <h3><i class="fas fa-book me-2" style="color:#D97757;" aria-hidden="true"></i>Brihat Parashara Hora Shastra (BPHS)</h3>
+                    <p>
+                        Attributed to Sage Parashara, BPHS is considered the most comprehensive classical text on Vedic astrology. It covers the foundational rules for house significations, planetary dignities, Dasha systems, yoga formations, and remedial measures. Om.AI uses BPHS as its primary reference for birth chart interpretation and yoga detection.
+                    </p>
+                </div>
+
+                <div class="text-card">
+                    <h3><i class="fas fa-book me-2" style="color:#D97757;" aria-hidden="true"></i>Lal Kitab</h3>
+                    <p>
+                        Originally written in Urdu with Persian influences, Lal Kitab offers a unique remedial system based on planetary placements in houses. Unlike classical texts that prescribe mantras and gemstones, Lal Kitab remedies are practical and accessible — specific charitable acts, household adjustments, and behavioral changes. Om.AI's AI references Lal Kitab especially for its remedy suggestions and its distinctive house-based interpretation system.
+                    </p>
+                </div>
+
+                <div class="text-card">
+                    <h3><i class="fas fa-book me-2" style="color:#D97757;" aria-hidden="true"></i>KP System (Krishnamurti Paddhati)</h3>
+                    <p>
+                        Developed by Prof. K.S. Krishnamurti in the 20th century, the KP System refines Vedic astrology with sub-lord theory, dividing each Nakshatra into further subdivisions for pinpoint timing predictions. Om.AI uses KP principles for precise event timing and to resolve ambiguities in classical chart analysis.
+                    </p>
+                </div>
+
+                <div class="text-card">
+                    <h3><i class="fas fa-book me-2" style="color:#D97757;" aria-hidden="true"></i>Uttara Kalamrita</h3>
+                    <p>
+                        Written by Kalidasa, Uttara Kalamrita is a concise but powerful text that catalogs planetary combinations (yogas), their effects, and the specific conditions under which they manifest. It is particularly valuable for understanding the nuances of planetary strengths and weaknesses. Om.AI draws on this text for advanced yoga analysis and detailed planetary dignity assessment.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA Section -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Try Om.AI Free</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Explore free Vedic astrology tools on the web, or download the app for your full AI-powered birth chart analysis.
+                    </p>
+
+                    <div class="row justify-content-center mb-4">
+                        <div class="col-md-4">
+                            <a href="/horoscope.html" class="insight-link">
+                                <i class="fas fa-sun" aria-hidden="true"></i> Daily Horoscope
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/panchang.html" class="insight-link">
+                                <i class="fas fa-moon" aria-hidden="true"></i> Today's Panchang
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/gita.html" class="insight-link">
+                                <i class="fas fa-om" aria-hidden="true"></i> Gita Verse of the Day
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dai_vedic%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?utm_source=website&utm_medium=ai_vedic&utm_campaign=seo_page" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>What is AI Vedic astrology?</h3>
+                    <p>
+                        AI Vedic astrology uses artificial intelligence to analyze birth charts, planetary positions, and classical Jyotish texts. Instead of replacing the astrologer, AI processes thousands of combinatorial rules from texts like Brihat Parashara Hora Shastra simultaneously, delivering personalized interpretations that would take a human practitioner hours to compile manually. It combines precision astronomical calculations with the interpretive depth of classical Sanskrit literature.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How accurate is AI astrology?</h3>
+                    <p>
+                        Om.AI calculates planetary positions using precision astronomical algorithms, the same standard used by research institutions worldwide. Positions are precise to arc-seconds and use the Lahiri Ayanamsa for sidereal correction. The AI interprets these positions using rules directly from classical Vedic texts — BPHS, Lal Kitab, KP System, and Uttara Kalamrita — rather than generating vague, template-based content. The astronomical layer is verifiably accurate; the interpretive layer is grounded in the same traditional principles that Jyotish practitioners have used for centuries.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is Om.AI free?</h3>
+                    <p>
+                        Yes, Om.AI offers several free features. On the website, you can access daily Vedic horoscopes for all 12 Moon signs, today's Panchang with Tithi, Nakshatra, and Rahu Kalam, and the Gita Verse of the Day — all updated daily. The mobile app includes free birth chart generation, basic AI chat sessions, and daily predictions. Premium features like unlimited AI conversations, detailed yoga analysis, multi-chart compatibility reports, and advanced Dasha predictions are available through an optional subscription.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What's the difference between Vedic and Western astrology?</h3>
+                    <p>
+                        The fundamental difference is the zodiac system. Vedic astrology uses the sidereal zodiac aligned with actual constellation positions, while Western astrology uses the tropical zodiac fixed to the seasons. Due to axial precession (~24 degree drift), your Vedic sign is usually one sign behind your Western sign. Vedic astrology also prioritizes the Moon sign over the Sun sign, uses the 27 Nakshatra system for additional precision, employs the Vimshottari Dasha system for life-period timing, and analyzes up to 16 divisional charts for different life areas.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What classical texts does Om.AI use?</h3>
+                    <p>
+                        Om.AI's AI draws from four foundational Jyotish texts. Brihat Parashara Hora Shastra (BPHS) provides the comprehensive framework for chart interpretation, house significations, and yoga formations. Lal Kitab contributes its unique remedial system and house-based planetary analysis. The KP System (Krishnamurti Paddhati) enables precise event timing through sub-lord theory. Uttara Kalamrita by Kalidasa offers detailed planetary combination catalogs and dignity assessments. Together, these texts cover the full spectrum of Vedic astrological analysis.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/#features" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/#features" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/#features" class="text-white-50">Relationship Compatibility</a></li>
+                        <li><a href="/#features" class="text-white-50">Mantras & Gita</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dai_vedic%26utm_campaign%3Dseo_page" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?utm_source=website&utm_medium=ai_vedic&utm_campaign=seo_page" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

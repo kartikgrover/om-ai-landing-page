@@ -833,6 +833,12 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--background-white) !important;
   border-bottom: 1px solid var(--secondary-light);
   backdrop-filter: blur(10px);
+  overflow: visible;
+  z-index: 1050;
+}
+
+.navbar .container {
+  overflow: visible;
 }
 
 .navbar.scrolled {
@@ -849,6 +855,9 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--bg-elevated);
   border: 1px solid rgba(217, 119, 87, 0.2);
   border-radius: 8px;
+  z-index: 1055;
+  overflow: visible;
+  position: absolute;
 }
 
 .navbar .dropdown-item {
