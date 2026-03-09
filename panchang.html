@@ -381,8 +381,6 @@
                 var items = [
                     { icon: 'fa-moon', label: 'Tithi', value: panchang.tithi || '\u2014', sub: panchang.paksha || '' },
                     { icon: 'fa-star', label: 'Nakshatra', value: panchang.nakshatra || '\u2014', sub: panchang.pada ? 'Pada ' + panchang.pada : '' },
-                    { icon: 'fa-sun', label: 'Sunrise', value: tw.sunrise ? formatIST(tw.sunrise) : (meta.sunrise ? formatIST(meta.sunrise) : '\u2014'), sub: 'Delhi (IST)' },
-                    { icon: 'fa-cloud-sun', label: 'Sunset', value: tw.sunset ? formatIST(tw.sunset) : (meta.sunset ? formatIST(meta.sunset) : '\u2014'), sub: 'Delhi (IST)' },
                     { icon: 'fa-check-circle', label: 'Tithi Quality', value: panchang.tithiQuality || '\u2014', sub: '' }
                 ];
 
