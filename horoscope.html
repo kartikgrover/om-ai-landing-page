@@ -61,8 +61,8 @@
             color: #fff;
         }
         .sign-btn .sign-symbol { font-size: 1.5rem; display: block; margin-bottom: 0.25rem; }
-        .sign-btn .sign-name { font-size: 0.85rem; font-weight: 600; }
-        .sign-btn .sign-hindi { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+        .sign-btn .sign-name { font-size: 0.85rem; font-weight: 600; display: block; }
+        .sign-btn .sign-hindi { font-size: 0.75rem; color: rgba(255,255,255,0.5); display: block; }
         .card-section {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(217,119,87,0.2);
@@ -167,6 +167,14 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Free Tools</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/blog/">Blog</a>
@@ -601,7 +609,9 @@
 
         function renderTransits(data) {
             var pp = data && data.planetaryPositions;
-            if (!pp) {
+            // Fallback: check inside metadata (V2 stores it there)
+            if (!pp || !Object.keys(pp).length) pp = data && data.metadata && data.metadata.planetaryPositions;
+            if (!pp || !Object.keys(pp).length) {
                 document.getElementById('section-transits').style.display = 'none';
                 return;
             }

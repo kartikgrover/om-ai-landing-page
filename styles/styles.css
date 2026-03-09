@@ -845,6 +845,23 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 0 0.15rem rgba(217, 119, 87, 0.25);
 }
 
+.navbar .dropdown-menu {
+  background: var(--bg-elevated);
+  border: 1px solid rgba(217, 119, 87, 0.2);
+  border-radius: 8px;
+}
+
+.navbar .dropdown-item {
+  color: var(--text-on-dark);
+  padding: 0.5rem 1.25rem;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background: rgba(217, 119, 87, 0.15);
+  color: #fff;
+}
+
 .navbar-nav .nav-link {
   font-weight: 500;
   color: var(--text-on-dark) !important;
