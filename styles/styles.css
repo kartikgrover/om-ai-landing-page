@@ -830,11 +830,23 @@ h1, h2, h3, h4, h5, h6 {
 .navbar {
   padding: var(--spacing-sm) 0;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  background-color: var(--background-white) !important;
+  background-color: transparent !important;
   border-bottom: 1px solid var(--secondary-light);
-  backdrop-filter: blur(10px);
   overflow: visible;
   z-index: 1050;
+  position: relative;
+}
+
+/* Pseudo-element for backdrop blur - prevents dropdown clipping */
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(48, 48, 46, 0.85);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  z-index: -1;
+  transition: background-color 0.3s ease;
 }
 
 .navbar .container {
@@ -842,7 +854,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar.scrolled {
-  background-color: var(--background-white) !important;
   transform: translateY(0);
   border-bottom: 1px solid var(--primary-color);
 }
@@ -4698,19 +4709,20 @@ footer a.text-white-50:hover {
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5), 0 0 40px rgba(217, 119, 87, 0.08);
 }
 
-/* --- Navbar: Refined glass effect --- */
+/* --- Navbar: Refined glass effect (blur on ::before pseudo-element) --- */
 .navbar {
-  backdrop-filter: blur(16px) saturate(1.2) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.2) !important;
-  background-color: rgba(48, 48, 46, 0.85) !important;
+  background-color: transparent !important;
   border-bottom-color: rgba(255, 255, 255, 0.06) !important;
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 .navbar.scrolled {
-  background-color: rgba(48, 48, 46, 0.95) !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   border-bottom-color: rgba(217, 119, 87, 0.2) !important;
+}
+
+.navbar.scrolled::before {
+  background-color: rgba(48, 48, 46, 0.95);
 }
 
 /* --- Exit Popup: Glass effect --- */
@@ -4806,7 +4818,7 @@ img[loading="lazy"] {
     box-shadow: none;
   }
 
-  .navbar {
+  .navbar::before {
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
   }
