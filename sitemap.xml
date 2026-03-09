@@ -2,58 +2,60 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://omai.app/</loc>
-    <lastmod>2026-02-24</lastmod>
+    <lastmod>2026-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://omai.app/feedback.html</loc>
-    <lastmod>2026-02-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://omai.app/blog/</loc>
+    <lastmod>2026-03-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://omai.app/support.html</loc>
     <lastmod>2026-02-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://omai.app/privacy-policy.html</loc>
-    <lastmod>2026-02-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://omai.app/terms-of-service.html</loc>
-    <lastmod>2026-02-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://omai.app/refund-policy.html</loc>
-    <lastmod>2026-02-24</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://omai.app/delete-account.html</loc>
+    <loc>https://omai.app/feedback.html</loc>
     <lastmod>2026-02-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://omai.app/unsubscribe.html</loc>
+    <loc>https://omai.app/privacy-policy.html</loc>
     <lastmod>2026-02-24</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://omai.app/blog/</loc>
-    <lastmod>2026-02-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://omai.app/terms-of-service.html</loc>
+    <lastmod>2026-02-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://omai.app/refund-policy.html</loc>
+    <lastmod>2026-02-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/delete-account.html</loc>
+    <lastmod>2026-02-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/unsubscribe.html</loc>
+    <lastmod>2026-02-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Blog Articles -->
   <url>
     <loc>https://omai.app/blog/12-houses-vedic-astrology.html</loc>
     <lastmod>2026-02-20</lastmod>
