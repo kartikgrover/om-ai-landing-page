@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Today's Panchang — Hindu Calendar, Tithi, Nakshatra & Rahu Kaal | Om.AI</title>
-    <meta name="description" content="Free daily Panchang with today's Tithi, Nakshatra, Yoga, Karana, Rahu Kalam, and auspicious Hora timings. Updated daily for accurate Hindu calendar information.">
-    <meta name="keywords" content="today panchang, aaj ka panchang, daily panchang, tithi today, nakshatra today, rahu kaal today, hindu calendar, choghadiya, shubh muhurat, hora today">
+    <title>Today's Panchang — Free Daily Tithi, Nakshatra, Rahu Kalam | Om.AI</title>
+    <meta name="description" content="Free daily Panchang for today. Get Tithi, Nakshatra, Yoga, Sunrise, Sunset, Rahu Kalam, and planetary transits. Accurate Vedic Hindu calendar updated daily.">
+    <meta name="keywords" content="today panchang, daily panchang, aaj ka panchang, tithi today, nakshatra today, rahu kalam today, hindu calendar today, panchang 2026, sunrise sunset today">
 
-    <meta property="og:title" content="Today's Panchang — Tithi, Nakshatra & Rahu Kaal">
-    <meta property="og:description" content="Free daily Panchang with Tithi, Nakshatra, Yoga, Rahu Kalam, and auspicious timings. Updated daily.">
+    <meta property="og:title" content="Today's Panchang — Free Daily Tithi, Nakshatra & Rahu Kalam">
+    <meta property="og:description" content="Free daily Panchang with Tithi, Nakshatra, Sunrise/Sunset, Rahu Kalam, and planetary transits. Updated daily.">
     <meta property="og:url" content="https://omai.app/panchang.html">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
     <meta property="og:site_name" content="Om.AI">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Today's Panchang — Tithi, Nakshatra & Rahu Kaal">
-    <meta name="twitter:description" content="Free daily Panchang with Tithi, Nakshatra, Yoga, Rahu Kalam, and auspicious timings.">
+    <meta name="twitter:title" content="Today's Panchang — Free Daily Tithi, Nakshatra & Rahu Kalam">
+    <meta name="twitter:description" content="Free daily Panchang with Tithi, Nakshatra, Sunrise/Sunset, and planetary transits.">
 
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://omai.app/panchang.html">
@@ -39,60 +39,57 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        .panchang-card {
+        .card-section {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(217,119,87,0.2);
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
         }
-        .panchang-card h3 {
+        .card-section h2, .card-section h3 {
             font-family: 'DM Serif Display', serif;
-            font-size: 1.1rem;
-            color: #D97757;
-            margin-bottom: 0.75rem;
-        }
-        .panchang-card .value {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .panchang-card .detail {
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-        .panchang-date {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.8rem;
             color: #D97757;
         }
-        .panchang-loading {
-            text-align: center;
-            padding: 3rem;
-            color: rgba(255,255,255,0.6);
-        }
-        .panchang-error {
-            text-align: center;
-            padding: 2rem;
-            color: #f87171;
-        }
-        .hora-grid {
+        .panchang-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
         }
-        .hora-item {
+        .panchang-card {
             background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
         }
-        .hora-item .hora-time {
-            font-weight: 600;
+        .panchang-card .p-icon { font-size: 1.5rem; margin-bottom: 0.5rem; color: #D97757; }
+        .panchang-card .p-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em; }
+        .panchang-card .p-value { font-size: 1.1rem; color: #fff; font-weight: 600; margin-top: 0.25rem; }
+        .panchang-card .p-sub { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.15rem; }
+        .transit-planet {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .hora-item .hora-planet {
-            color: #D97757;
+        .transit-planet:last-child { border-bottom: none; }
+        .transit-planet .planet-name { font-weight: 600; min-width: 70px; color: #D97757; }
+        .transit-planet .planet-pos { color: rgba(255,255,255,0.8); }
+        .transit-planet .planet-retro { color: #f87171; font-size: 0.8rem; margin-left: 0.5rem; }
+        .rahu-box {
+            background: rgba(248,113,113,0.08);
+            border: 1px solid rgba(248,113,113,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
+        .rahu-box .rahu-icon { font-size: 1.5rem; color: #f87171; }
+        .rahu-box .rahu-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+        .rahu-box .rahu-time { font-size: 1.1rem; font-weight: 600; color: #f87171; }
+        .rahu-box .rahu-note { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
         .cta-box {
             background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
             border: 1px solid rgba(217,119,87,0.3);
@@ -100,7 +97,38 @@
             padding: 2rem;
             text-align: center;
         }
+        .cross-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+        .cross-link {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .cross-link:hover { background: rgba(217,119,87,0.1); border-color: #D97757; color: #fff; }
+        .cross-link .cl-title { font-weight: 600; color: #D97757; }
+        .cross-link .cl-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
+        .loading-state { text-align: center; padding: 3rem; color: rgba(255,255,255,0.6); }
     </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Today's Panchang — Daily Tithi, Nakshatra & Rahu Kalam",
+        "description": "Free daily Panchang with Tithi, Nakshatra, Sunrise/Sunset, Rahu Kalam, and planetary transits.",
+        "url": "https://omai.app/panchang.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Om.AI",
+            "url": "https://omai.app"
+        }
+    }
+    </script>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
@@ -126,18 +154,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog/">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/support.html">Support</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/blog/">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/support.html">Support</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a></li>
                 </ul>
             </div>
         </div>
@@ -147,80 +167,65 @@
         <section class="page-header">
             <div class="container text-center">
                 <h1 class="display-4 mb-3">Today's Panchang</h1>
-                <p class="lead">Daily Hindu calendar with Tithi, Nakshatra, Yoga, Rahu Kalam & auspicious timings</p>
-                <p class="panchang-date" id="panchang-date"></p>
+                <p class="lead">Daily Vedic Hindu calendar with Tithi, Nakshatra, and auspicious timings</p>
+                <p style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:#D97757;" id="panchang-date"></p>
             </div>
         </section>
 
         <section class="py-5">
             <div class="container">
-                <div id="panchang-loading" class="panchang-loading">
+
+                <!-- Loading -->
+                <div id="loading" class="loading-state">
                     <i class="fas fa-om fa-spin fa-2x mb-3" aria-hidden="true"></i>
                     <p>Loading today's Panchang...</p>
                 </div>
-                <div id="panchang-error" class="panchang-error" style="display:none">
-                    <i class="fas fa-exclamation-circle fa-2x mb-3" aria-hidden="true"></i>
-                    <p>Unable to load Panchang data. Please try again later.</p>
-                </div>
+
+                <!-- Panchang Content -->
                 <div id="panchang-content" style="display:none">
-                    <div class="row g-3">
-                        <div class="col-md-6 col-lg-4">
-                            <div class="panchang-card">
-                                <h3><i class="fas fa-moon me-2" aria-hidden="true"></i>Tithi</h3>
-                                <div class="value" id="p-tithi">—</div>
-                                <div class="detail" id="p-tithi-detail"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="panchang-card">
-                                <h3><i class="fas fa-star me-2" aria-hidden="true"></i>Nakshatra</h3>
-                                <div class="value" id="p-nakshatra">—</div>
-                                <div class="detail" id="p-nakshatra-detail"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="panchang-card">
-                                <h3><i class="fas fa-balance-scale me-2" aria-hidden="true"></i>Yoga</h3>
-                                <div class="value" id="p-yoga">—</div>
-                                <div class="detail" id="p-yoga-detail"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="panchang-card">
-                                <h3><i class="fas fa-sun me-2" aria-hidden="true"></i>Sunrise & Sunset</h3>
-                                <div class="value" id="p-sunrise">—</div>
-                                <div class="detail" id="p-sunset"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="panchang-card">
-                                <h3><i class="fas fa-exclamation-triangle me-2" aria-hidden="true"></i>Rahu Kalam</h3>
-                                <div class="value" id="p-rahu">—</div>
-                                <div class="detail">Inauspicious period — avoid starting new ventures</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="panchang-card">
-                                <h3><i class="fas fa-calendar-day me-2" aria-hidden="true"></i>Karana</h3>
-                                <div class="value" id="p-karana">—</div>
-                                <div class="detail" id="p-karana-detail"></div>
-                            </div>
-                        </div>
+
+                    <!-- Panchang Elements -->
+                    <div class="card-section">
+                        <h2 style="font-size:1.3rem; margin-bottom:1.25rem;"><i class="fas fa-calendar-day me-2" aria-hidden="true"></i>Panchang for Today</h2>
+                        <div class="panchang-grid" id="panchang-grid"></div>
                     </div>
 
-                    <!-- Hora Section -->
-                    <div class="mt-4" id="hora-section" style="display:none">
-                        <h2 class="section-title mb-3" style="font-size:1.4rem;">Planetary Hora (Hourly Rulers)</h2>
-                        <div class="hora-grid" id="hora-grid"></div>
+                    <!-- Rahu Kalam -->
+                    <div id="rahu-section" style="display:none" class="mb-4">
+                        <div class="rahu-box" id="rahu-box"></div>
                     </div>
+
+                    <!-- Planetary Transits -->
+                    <div class="card-section" id="section-transits">
+                        <h3 style="font-size:1.2rem; margin-bottom:1rem;"><i class="fas fa-globe me-2" aria-hidden="true"></i>Planetary Positions Today</h3>
+                        <div id="transits-list"></div>
+                    </div>
+                </div>
+
+                <!-- Error State -->
+                <div id="error-state" style="display:none" class="card-section text-center">
+                    <i class="fas fa-exclamation-circle fa-2x mb-3" style="color:#f87171;" aria-hidden="true"></i>
+                    <p>Unable to load today's Panchang. Please try again later.</p>
+                </div>
+
+                <!-- Cross Links -->
+                <div class="cross-links mt-4">
+                    <a href="/horoscope.html" class="cross-link">
+                        <div class="cl-title"><i class="fas fa-star me-1" aria-hidden="true"></i> Daily Horoscope</div>
+                        <div class="cl-desc">Get today's Rashifal for your Moon sign</div>
+                    </a>
+                    <a href="/gita.html" class="cross-link">
+                        <div class="cl-title"><i class="fas fa-book-open me-1" aria-hidden="true"></i> Gita Verse of the Day</div>
+                        <div class="cl-desc">Daily wisdom from the Bhagavad Gita</div>
+                    </a>
                 </div>
 
                 <!-- CTA -->
-                <div class="cta-box mt-5">
+                <div class="cta-box mt-4">
                     <h2 style="font-size:1.3rem;">What does today's Panchang mean for YOUR chart?</h2>
-                    <p class="text-secondary mb-3">Om.AI's AI astrologer combines today's Panchang with your personal birth chart for personalized guidance.</p>
+                    <p class="text-secondary mb-3">Om.AI analyzes how today's Tithi, Nakshatra, and transits interact with your personal Kundli for truly personalized daily guidance.</p>
                     <a href="/#smart-download" class="btn btn-primary btn-lg">
-                        <i class="fas fa-download me-2" aria-hidden="true"></i>Ask Om.AI Free
+                        <i class="fas fa-download me-2" aria-hidden="true"></i>Get Personalized Reading
                     </a>
                     <p class="mt-2" style="font-size:0.85rem; color: rgba(255,255,255,0.5);">First question free. No credit card required.</p>
                 </div>
@@ -228,13 +233,13 @@
                 <!-- SEO Content -->
                 <div class="mt-5">
                     <h2>What is Panchang?</h2>
-                    <p>Panchang (also spelled Panchangam) is the Hindu astrological almanac that tracks five key elements of each day: Tithi (lunar day), Nakshatra (lunar mansion), Yoga (luni-solar combination), Karana (half-tithi), and Vara (weekday). Together, these five elements — "pancha" meaning five and "anga" meaning limb — form the foundation of Vedic timekeeping and are used to determine auspicious timings (muhurat) for important activities like marriages, business ventures, travel, and religious ceremonies.</p>
+                    <p>Panchang (also spelled Panchangam) is the traditional Vedic Hindu calendar that tracks five key elements of each day: Tithi (lunar day), Nakshatra (lunar mansion), Yoga (Sun-Moon angular relationship), Karana (half of Tithi), and Var (weekday). The word "Panch-ang" literally means "five limbs" in Sanskrit. Hindus consult the Panchang daily to determine auspicious timings (Muhurta) for important activities like starting a new business, travel, marriage ceremonies, and religious rituals.</p>
 
-                    <h2>Why Check Daily Panchang?</h2>
-                    <p>Millions of people across India consult the Panchang daily to plan their activities. Knowing the Rahu Kalam helps you avoid starting important tasks during inauspicious periods. The Hora (planetary hour) system tells you which planet rules each hour of the day, helping you align your activities with favorable planetary energies — for example, Jupiter's hora is ideal for education and spiritual activities, while Venus's hora favors creative work and relationships.</p>
+                    <h2>Understanding Tithi and Nakshatra</h2>
+                    <p>Tithi is the lunar day determined by the angular distance between the Sun and Moon. There are 30 Tithis in a lunar month — 15 in Shukla Paksha (waxing) and 15 in Krishna Paksha (waning). Each Tithi has a specific quality: some are considered auspicious for new beginnings (like Dwitiya, Panchami, Saptami) while others are better for spiritual practices (like Ekadashi, Amavasya). Nakshatra is the lunar mansion — one of 27 constellations the Moon passes through — each carrying its own energy and ruling deity.</p>
 
-                    <h2>How Om.AI Uses Panchang Data</h2>
-                    <p>Om.AI goes beyond generic Panchang information. Our AI combines today's Panchang data with your personal birth chart to give you advice specific to your situation. For example, if today's Nakshatra is your birth Nakshatra, it could be an especially significant day for you. <a href="/#smart-download">Download Om.AI</a> to get personalized daily guidance based on your chart and today's cosmic alignments.</p>
+                    <h2>What is Rahu Kalam?</h2>
+                    <p>Rahu Kalam (also called Rahu Kaal) is an inauspicious period of approximately 1.5 hours each day ruled by the shadow planet Rahu. During Rahu Kalam, it is traditionally advised to avoid starting new ventures, signing contracts, or beginning travel. The timing varies by weekday and is calculated from sunrise and sunset times. Om.AI calculates Rahu Kalam precisely based on astronomical sunrise/sunset for Delhi (IST).</p>
                 </div>
             </div>
         </section>
@@ -252,12 +257,8 @@
                     </div>
                     <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
-                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
-                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
-                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank"><i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank"><i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
@@ -274,6 +275,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
                         <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
                         <li><a href="/blog/" class="text-white-50">Blog</a></li>
                     </ul>
                 </div>
@@ -304,70 +306,108 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     (function() {
-        var API_BASE = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+        var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
-        // Display today's date
+        // Display date
         var now = new Date();
-        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('panchang-date').textContent = now.toLocaleDateString('en-IN', options);
+        document.getElementById('panchang-date').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        fetch(API_BASE + '/daily-panchang')
-            .then(function(res) { return res.json(); })
-            .then(function(data) {
-                document.getElementById('panchang-loading').style.display = 'none';
-                document.getElementById('panchang-content').style.display = 'block';
+        function formatIST(isoStr) {
+            if (!isoStr) return '';
+            if (/^\d{2}:\d{2}(:\d{2})?$/.test(isoStr)) return isoStr.substring(0, 5);
+            try {
+                var d = new Date(isoStr);
+                var h = d.getUTCHours(), m = d.getUTCMinutes();
+                return h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0');
+            } catch(e) { return isoStr; }
+        }
 
-                var p = data.panchang || data;
+        // Cache key uses IST date (UTC+5:30) to match backend's daily cycle
+        var istNow = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+        var today = istNow.toISOString().split('T')[0];
+        var cached = null;
+        try {
+            var stored = JSON.parse(sessionStorage.getItem('omai_panchang') || '{}');
+            if (stored.date === today && stored.data) cached = stored.data;
+        } catch(e) {}
 
-                // Tithi
-                if (p.tithi) {
-                    document.getElementById('p-tithi').textContent = p.tithi.name || p.tithi;
-                    if (p.tithi.end_time) document.getElementById('p-tithi-detail').textContent = 'Until ' + p.tithi.end_time;
-                }
+        if (cached) {
+            renderPanchang(cached);
+        } else {
+            loadPanchang();
+        }
 
-                // Nakshatra
-                if (p.nakshatra) {
-                    document.getElementById('p-nakshatra').textContent = p.nakshatra.name || p.nakshatra;
-                    if (p.nakshatra.end_time) document.getElementById('p-nakshatra-detail').textContent = 'Until ' + p.nakshatra.end_time;
-                }
-
-                // Yoga
-                if (p.yoga) {
-                    document.getElementById('p-yoga').textContent = p.yoga.name || p.yoga;
-                    if (p.yoga.end_time) document.getElementById('p-yoga-detail').textContent = 'Until ' + p.yoga.end_time;
-                }
-
-                // Sunrise/Sunset
-                if (p.sunrise) document.getElementById('p-sunrise').textContent = 'Sunrise: ' + p.sunrise;
-                if (p.sunset) document.getElementById('p-sunset').textContent = 'Sunset: ' + p.sunset;
-
-                // Rahu Kalam
-                if (p.rahu_kalam || p.rahuKalam) {
-                    document.getElementById('p-rahu').textContent = p.rahu_kalam || p.rahuKalam;
-                }
-
-                // Karana
-                if (p.karana) {
-                    document.getElementById('p-karana').textContent = p.karana.name || p.karana;
-                    if (p.karana.end_time) document.getElementById('p-karana-detail').textContent = 'Until ' + p.karana.end_time;
-                }
-
-                // Hora
-                if (p.hora && Array.isArray(p.hora) && p.hora.length > 0) {
-                    document.getElementById('hora-section').style.display = 'block';
-                    var grid = document.getElementById('hora-grid');
-                    p.hora.forEach(function(h) {
-                        var item = document.createElement('div');
-                        item.className = 'hora-item';
-                        item.innerHTML = '<span class="hora-time">' + (h.time || h.start) + '</span> <span class="hora-planet">' + (h.planet || h.ruler) + '</span>';
-                        grid.appendChild(item);
-                    });
-                }
+        function loadPanchang() {
+        // Fetch metadata only (1 Firestore read — no sign data needed)
+        fetch(API + '/daily-horoscope/v2/metadata')
+            .then(function(r) {
+                if (!r.ok) throw new Error('metadata failed');
+                return r.json();
             })
             .catch(function() {
-                document.getElementById('panchang-loading').style.display = 'none';
-                document.getElementById('panchang-error').style.display = 'block';
+                // Fallback: fetch any sign and extract metadata
+                return fetch(API + '/daily-horoscope/aries').then(function(r) { return r.json(); });
+            })
+            .then(function(data) {
+                // Cache it
+                try { sessionStorage.setItem('omai_panchang', JSON.stringify({ date: today, data: data })); } catch(e) {}
+                renderPanchang(data);
+            })
+            .catch(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error-state').style.display = 'block';
             });
+        } // end loadPanchang
+
+        function renderPanchang(data) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('panchang-content').style.display = 'block';
+
+                var meta = data.metadata || {};
+                var panchang = meta.panchang || {};
+                var tw = meta.timingWindows || {};
+                var pp = data.planetaryPositions || {};
+
+                // Build panchang grid
+                var grid = document.getElementById('panchang-grid');
+                var items = [
+                    { icon: 'fa-moon', label: 'Tithi', value: panchang.tithi || '\u2014', sub: panchang.paksha || '' },
+                    { icon: 'fa-star', label: 'Nakshatra', value: panchang.nakshatra || '\u2014', sub: panchang.pada ? 'Pada ' + panchang.pada : '' },
+                    { icon: 'fa-sun', label: 'Sunrise', value: tw.sunrise ? formatIST(tw.sunrise) : (meta.sunrise ? formatIST(meta.sunrise) : '\u2014'), sub: 'Delhi (IST)' },
+                    { icon: 'fa-cloud-sun', label: 'Sunset', value: tw.sunset ? formatIST(tw.sunset) : (meta.sunset ? formatIST(meta.sunset) : '\u2014'), sub: 'Delhi (IST)' },
+                    { icon: 'fa-check-circle', label: 'Tithi Quality', value: panchang.tithiQuality || '\u2014', sub: '' }
+                ];
+
+                if (pp.Moon && pp.Moon.zodiac) {
+                    items.push({ icon: 'fa-circle', label: 'Moon Sign', value: pp.Moon.zodiac, sub: pp.Moon.nakshatra || '' });
+                }
+
+                items.forEach(function(it) {
+                    grid.innerHTML += '<div class="panchang-card"><div class="p-icon"><i class="fas ' + it.icon + '" aria-hidden="true"></i></div><div class="p-label">' + it.label + '</div><div class="p-value">' + it.value + '</div>' + (it.sub ? '<div class="p-sub">' + it.sub + '</div>' : '') + '</div>';
+                });
+
+                // Rahu Kalam
+                var rk = tw.rahuKalam || meta.rahuKalam;
+                if (rk) {
+                    document.getElementById('rahu-section').style.display = 'block';
+                    document.getElementById('rahu-box').innerHTML =
+                        '<div class="rahu-icon"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></div>' +
+                        '<div><div class="rahu-label">Rahu Kalam</div><div class="rahu-time">' + formatIST(rk.start) + ' \u2014 ' + formatIST(rk.end) + '</div><div class="rahu-note">Avoid new beginnings, contracts, and travel during this period</div></div>';
+                }
+
+                // Planetary transits
+                var list = document.getElementById('transits-list');
+                var order = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Rahu', 'Ketu'];
+                order.forEach(function(planet) {
+                    var p = pp[planet];
+                    if (!p) return;
+                    var retro = p.retrograde ? '<span class="planet-retro">(R)</span>' : '';
+                    var nak = p.nakshatra ? ' \u00B7 ' + p.nakshatra + (p.pada ? ' Pada ' + p.pada : '') : '';
+                    list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + planet + '</span><span class="planet-pos">' + (p.zodiac || '') + nak + retro + '</span></div>';
+                });
+
+                gtag('event', 'panchang_view', { 'event_category': 'Free Tools' });
+        }
     })();
     </script>
     <script src="/scripts/main.min.js" defer></script>

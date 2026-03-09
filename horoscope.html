@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Vedic Horoscope — Free Moon Sign Rashifal Today | Om.AI</title>
-    <meta name="description" content="Free daily Vedic horoscope based on your Moon sign. Get today's Rashifal with career, love, health & finance predictions for all 12 zodiac signs. Updated daily.">
+    <meta name="description" content="Free daily Vedic horoscope based on your Moon sign. Get today's Rashifal with career, love, health & finance predictions, Gita verse, and planetary transits. Updated daily.">
     <meta name="keywords" content="daily horoscope, today horoscope, rashifal today, vedic horoscope, moon sign horoscope, aaj ka rashifal, daily rashifal, zodiac prediction today, aries horoscope today, taurus horoscope today">
 
     <meta property="og:title" content="Daily Vedic Horoscope — Free Moon Sign Rashifal Today">
@@ -60,26 +60,17 @@
             border-color: #D97757;
             color: #fff;
         }
-        .sign-btn .sign-symbol {
-            font-size: 1.5rem;
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-        .sign-btn .sign-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .sign-btn .sign-hindi {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.5);
-        }
-        .horoscope-detail {
+        .sign-btn .sign-symbol { font-size: 1.5rem; display: block; margin-bottom: 0.25rem; }
+        .sign-btn .sign-name { font-size: 0.85rem; font-weight: 600; }
+        .sign-btn .sign-hindi { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+        .card-section {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(217,119,87,0.2);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
         }
-        .horoscope-detail h2 {
+        .card-section h2, .card-section h3 {
             font-family: 'DM Serif Display', serif;
             color: #D97757;
         }
@@ -95,9 +86,7 @@
             border-radius: 4px;
             transition: width 0.5s;
         }
-        .score-item {
-            margin-bottom: 1rem;
-        }
+        .score-item { margin-bottom: 1rem; }
         .score-label {
             display: flex;
             justify-content: space-between;
@@ -115,6 +104,41 @@
             padding: 2rem;
             text-align: center;
         }
+        .day-badge {
+            display: inline-block;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .day-badge.good { background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+        .day-badge.moderate { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+        .day-badge.challenging { background: rgba(248,113,113,0.15); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+        .transit-planet {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .transit-planet:last-child { border-bottom: none; }
+        .transit-planet .planet-name { font-weight: 600; min-width: 70px; color: #D97757; }
+        .transit-planet .planet-pos { color: rgba(255,255,255,0.8); }
+        .transit-planet .planet-retro { color: #f87171; font-size: 0.8rem; margin-left: 0.5rem; }
+        .timing-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
+        .timing-item {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+        }
+        .timing-item .t-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+        .timing-item .t-time { font-size: 1rem; font-weight: 600; color: #fff; }
+        .timing-item .t-note { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+        .timing-item.avoid { border-left: 3px solid #f87171; }
+        .timing-item.best { border-left: 3px solid #4ade80; }
     </style>
 
     <!-- Google Analytics -->
@@ -184,17 +208,53 @@
                     <p>Loading your horoscope...</p>
                 </div>
 
-                <!-- Horoscope Detail -->
-                <div id="horoscope-detail" class="horoscope-detail" style="display:none">
-                    <h2 id="detail-title"></h2>
-                    <p id="detail-summary" style="font-size:1.1rem;"></p>
+                <!-- Horoscope Section -->
+                <div id="horoscope-content" style="display:none">
 
-                    <h3 style="font-size:1.1rem; margin-top:1.5rem;">Life Area Scores</h3>
-                    <div id="detail-scores"></div>
+                    <!-- Day Score + Summary -->
+                    <div class="card-section" id="section-horoscope">
+                        <div id="day-badge"></div>
+                        <h2 id="detail-title"></h2>
+                        <p id="detail-summary" style="font-size:1.05rem; line-height:1.7;"></p>
 
-                    <div id="detail-remedy" class="mt-4" style="display:none">
-                        <h3 style="font-size:1.1rem;">Today's Remedy</h3>
-                        <p id="detail-remedy-text" style="color:rgba(255,255,255,0.8);"></p>
+                        <h3 style="font-size:1.1rem; margin-top:1.5rem;">Life Areas</h3>
+                        <div id="detail-scores"></div>
+
+                        <div id="detail-moon-tip" style="display:none; margin-top:1.25rem;">
+                            <p style="color:#D97757; font-weight:600; margin-bottom:0.25rem;"><i class="fas fa-moon me-1" aria-hidden="true"></i> Moon Tip</p>
+                            <p id="moon-tip-text" style="color:rgba(255,255,255,0.8);"></p>
+                        </div>
+
+                        <div id="detail-remedy" style="display:none; margin-top:1.25rem;">
+                            <p style="color:#D97757; font-weight:600; margin-bottom:0.25rem;"><i class="fas fa-hand-sparkles me-1" aria-hidden="true"></i> Today's Remedy</p>
+                            <p id="detail-remedy-text" style="color:rgba(255,255,255,0.8);"></p>
+                        </div>
+
+                        <!-- Timing -->
+                        <div id="detail-timing" style="display:none; margin-top:1.25rem;">
+                            <p style="color:#D97757; font-weight:600; margin-bottom:0.5rem;"><i class="fas fa-clock me-1" aria-hidden="true"></i> Today's Timing</p>
+                            <div class="timing-row" id="timing-row"></div>
+                        </div>
+                    </div>
+
+                    <!-- Planetary Transits -->
+                    <div class="card-section" id="section-transits" style="display:none">
+                        <h3 style="font-size:1.2rem; margin-bottom:1rem;"><i class="fas fa-globe me-2" aria-hidden="true"></i>Today's Planetary Transits</h3>
+                        <div id="transits-list"></div>
+                    </div>
+                </div>
+
+                <!-- Cross Links -->
+                <div id="cross-links" class="mt-4" style="display:none">
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                        <a href="/panchang.html" style="flex:1; min-width:200px; background:rgba(255,255,255,0.03); border:1px solid rgba(217,119,87,0.2); border-radius:10px; padding:1rem 1.25rem; color:#fff; text-decoration:none; transition:all 0.2s;">
+                            <div style="font-weight:600; color:#D97757;"><i class="fas fa-calendar-day me-1" aria-hidden="true"></i> Today's Panchang</div>
+                            <div style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">Tithi, Nakshatra, Rahu Kalam & more</div>
+                        </a>
+                        <a href="/gita.html" style="flex:1; min-width:200px; background:rgba(255,255,255,0.03); border:1px solid rgba(217,119,87,0.2); border-radius:10px; padding:1rem 1.25rem; color:#fff; text-decoration:none; transition:all 0.2s;">
+                            <div style="font-weight:600; color:#D97757;"><i class="fas fa-book-open me-1" aria-hidden="true"></i> Gita Verse of the Day</div>
+                            <div style="font-size:0.85rem; color:rgba(255,255,255,0.6); margin-top:0.25rem;">Daily wisdom from the Bhagavad Gita</div>
+                        </a>
                     </div>
                 </div>
 
@@ -217,7 +277,7 @@
                     <p>The 12 Vedic Moon signs are: Mesha (Aries), Vrishabha (Taurus), Mithuna (Gemini), Karka (Cancer), Simha (Leo), Kanya (Virgo), Tula (Libra), Vrishchika (Scorpio), Dhanu (Sagittarius), Makara (Capricorn), Kumbha (Aquarius), and Meena (Pisces). Each sign is ruled by a specific planet — for example, Mesha is ruled by Mars, Vrishabha by Venus, and Karka by the Moon itself.</p>
 
                     <h2>How Om.AI's Horoscope Works</h2>
-                    <p>Om.AI generates daily Vedic horoscopes by analyzing current planetary transits against each Moon sign. The AI considers the Panchang (Tithi, Nakshatra, Yoga), planetary aspects, and Hora timings to provide predictions across key life areas including career, finance, love, health, and spirituality. For even more accurate predictions, <a href="/#smart-download">download the app</a> and get readings based on your complete birth chart.</p>
+                    <p>Om.AI generates daily Vedic horoscopes using Swiss Ephemeris planetary calculations, Ashtakavarga scoring, and AI analysis. It factors in the Panchang (Tithi, Nakshatra), planetary transits, Hora timings, and Rahu Kalam to score key life areas — career, finance, love, and wellness. For even more accurate predictions, <a href="/#smart-download">download the app</a> and get readings based on your complete birth chart.</p>
                 </div>
             </div>
         </section>
@@ -257,6 +317,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
                         <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
                         <li><a href="/blog/" class="text-white-50">Blog</a></li>
                     </ul>
                 </div>
@@ -287,7 +348,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     (function() {
-        var API_BASE = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+        var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
         var signs = [
             { id: 'aries', name: 'Aries', hindi: 'Mesha', symbol: '\u2648' },
@@ -306,8 +367,32 @@
 
         // Display date
         var now = new Date();
-        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('horoscope-date').textContent = now.toLocaleDateString('en-IN', options);
+        document.getElementById('horoscope-date').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // Client-side cache: metadata fetched once, sign data cached per session
+        // Cache key uses IST date (UTC+5:30) to match backend's daily cycle
+        var istNow = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+        var istDate = istNow.toISOString().split('T')[0];
+        var cache = { metadata: null, signs: {} };
+        try {
+            var stored = JSON.parse(sessionStorage.getItem('omai_horoscope') || '{}');
+            if (stored.date === istDate) cache = stored;
+        } catch(e) {}
+
+        function saveCache() {
+            try {
+                cache.date = istDate;
+                sessionStorage.setItem('omai_horoscope', JSON.stringify(cache));
+            } catch(e) {}
+        }
+
+        // Pre-fetch metadata (panchang, transits — shared across all signs)
+        if (!cache.metadata) {
+            fetch(API + '/daily-horoscope/v2/metadata')
+                .then(function(r) { return r.ok ? r.json() : null; })
+                .then(function(d) { if (d) { cache.metadata = d; saveCache(); } })
+                .catch(function() {});
+        }
 
         // Build sign grid
         var grid = document.getElementById('sign-grid');
@@ -317,76 +402,234 @@
             btn.setAttribute('role', 'button');
             btn.setAttribute('tabindex', '0');
             btn.setAttribute('aria-label', sign.name + ' horoscope');
+            btn.dataset.sign = sign.id;
             btn.innerHTML = '<span class="sign-symbol">' + sign.symbol + '</span><span class="sign-name">' + sign.name + '</span><span class="sign-hindi">' + sign.hindi + '</span>';
-            btn.addEventListener('click', function() { loadHoroscope(sign); });
-            btn.addEventListener('keydown', function(e) { if (e.key === 'Enter') loadHoroscope(sign); });
+            btn.addEventListener('click', function() { loadHoroscope(sign, this); });
+            btn.addEventListener('keydown', function(e) { if (e.key === 'Enter') loadHoroscope(sign, this); });
             grid.appendChild(btn);
         });
 
-        function loadHoroscope(sign) {
-            // Update active state
+        function scoreColor(val) {
+            return val >= 68 ? '#4ade80' : val >= 50 ? '#fbbf24' : '#f87171';
+        }
+
+        function formatIST(isoStr) {
+            if (!isoStr) return '';
+            // Handle HH:MM format
+            if (/^\d{2}:\d{2}$/.test(isoStr)) return isoStr;
+            // Handle HH:MM:SS format
+            if (/^\d{2}:\d{2}:\d{2}$/.test(isoStr)) return isoStr.substring(0, 5);
+            // Handle ISO string
+            try {
+                var d = new Date(isoStr);
+                return d.getUTCHours().toString().padStart(2, '0') + ':' + d.getUTCMinutes().toString().padStart(2, '0');
+            } catch(e) { return isoStr; }
+        }
+
+        function loadHoroscope(sign, btnEl) {
             document.querySelectorAll('.sign-btn').forEach(function(b) { b.classList.remove('active'); });
-            event.currentTarget.classList.add('active');
+            btnEl.classList.add('active');
+
+            // Check session cache first
+            if (cache.signs[sign.id]) {
+                var cached = cache.signs[sign.id];
+                if (cached._v2) renderV2(cached, sign);
+                else renderV1(cached, sign);
+                return;
+            }
 
             document.getElementById('horoscope-loading').style.display = 'block';
-            document.getElementById('horoscope-detail').style.display = 'none';
+            document.getElementById('horoscope-content').style.display = 'none';
 
-            fetch(API_BASE + '/daily-horoscope/' + sign.id)
-                .then(function(res) { return res.json(); })
+            // Try V2 first, fall back to V1
+            fetch(API + '/daily-horoscope/v2/' + sign.id)
+                .then(function(res) {
+                    if (!res.ok) throw new Error('V2 not available');
+                    return res.json();
+                })
                 .then(function(data) {
-                    document.getElementById('horoscope-loading').style.display = 'none';
-                    document.getElementById('horoscope-detail').style.display = 'block';
-
-                    var h = data.horoscope || data;
-
-                    document.getElementById('detail-title').textContent = sign.symbol + ' ' + sign.name + ' (' + sign.hindi + ') — Today\'s Horoscope';
-
-                    // Summary
-                    var summary = h.summary || h.description || h.overview || '';
-                    document.getElementById('detail-summary').textContent = summary;
-
-                    // Scores
-                    var scoresEl = document.getElementById('detail-scores');
-                    scoresEl.innerHTML = '';
-                    var scoreFields = [
-                        { key: 'career', label: 'Career', icon: 'briefcase' },
-                        { key: 'finance', label: 'Finance', icon: 'wallet' },
-                        { key: 'love', label: 'Love', icon: 'heart' },
-                        { key: 'health', label: 'Health', icon: 'heartbeat' },
-                        { key: 'wellness', label: 'Wellness', icon: 'spa' },
-                        { key: 'spirituality', label: 'Spirituality', icon: 'om' }
-                    ];
-
-                    var scores = h.scores || h.lifeAreaScores || h.life_scores || {};
-                    scoreFields.forEach(function(f) {
-                        var val = scores[f.key] || scores[f.label] || 0;
-                        if (!val && typeof val !== 'number') return;
-                        var color = val >= 70 ? '#4ade80' : val >= 40 ? '#fbbf24' : '#f87171';
-                        var item = document.createElement('div');
-                        item.className = 'score-item';
-                        item.innerHTML = '<div class="score-label"><span><i class="fas fa-' + f.icon + ' me-1" aria-hidden="true" style="color:' + color + '"></i> ' + f.label + '</span><span>' + val + '/100</span></div><div class="score-bar"><div class="score-fill" style="width:' + val + '%;background:' + color + '"></div></div>';
-                        scoresEl.appendChild(item);
-                    });
-
-                    // Remedy
-                    var remedy = h.remedy || h.remedies || '';
-                    if (remedy) {
-                        document.getElementById('detail-remedy').style.display = 'block';
-                        document.getElementById('detail-remedy-text').textContent = typeof remedy === 'string' ? remedy : JSON.stringify(remedy);
-                    } else {
-                        document.getElementById('detail-remedy').style.display = 'none';
+                    data._v2 = true;
+                    // Use pre-fetched metadata if sign response is missing it
+                    if (cache.metadata && !data.metadata) {
+                        data.metadata = cache.metadata.metadata;
+                        data.planetaryPositions = cache.metadata.planetaryPositions;
                     }
-
-                    // Track
-                    gtag('event', 'horoscope_view', { 'event_category': 'Free Tools', 'event_label': sign.name });
+                    cache.signs[sign.id] = data;
+                    saveCache();
+                    renderV2(data, sign);
                 })
                 .catch(function() {
-                    document.getElementById('horoscope-loading').style.display = 'none';
-                    document.getElementById('horoscope-detail').style.display = 'block';
-                    document.getElementById('detail-title').textContent = sign.name + ' Horoscope';
-                    document.getElementById('detail-summary').textContent = 'Unable to load horoscope. Please try again later.';
-                    document.getElementById('detail-scores').innerHTML = '';
+                    fetch(API + '/daily-horoscope/' + sign.id)
+                        .then(function(res) { return res.json(); })
+                        .then(function(data) {
+                            cache.signs[sign.id] = data;
+                            saveCache();
+                            renderV1(data, sign);
+                        })
+                        .catch(function() { renderError(sign); });
                 });
+        }
+
+        function renderV2(data, sign) {
+            document.getElementById('horoscope-loading').style.display = 'none';
+            document.getElementById('horoscope-content').style.display = 'block';
+
+            // Day score badge
+            var ds = data.day_score || {};
+            var badgeEl = document.getElementById('day-badge');
+            if (ds.label) {
+                badgeEl.innerHTML = '<span class="day-badge ' + (ds.level || 'moderate') + '">' + ds.label + ' (' + ds.score + '/100)</span>';
+            } else {
+                badgeEl.innerHTML = '';
+            }
+
+            // Title + Summary
+            document.getElementById('detail-title').textContent = sign.symbol + ' ' + sign.name + ' (' + sign.hindi + ') \u2014 Today\'s Horoscope';
+            document.getElementById('detail-summary').textContent = data.summary || '';
+
+            // Life scores
+            var scoresEl = document.getElementById('detail-scores');
+            scoresEl.innerHTML = '';
+            var ls = data.life_scores || {};
+            var areas = [
+                { key: 'career', label: 'Career', icon: 'briefcase' },
+                { key: 'money', label: 'Finance', icon: 'wallet' },
+                { key: 'love', label: 'Love', icon: 'heart' },
+                { key: 'wellness', label: 'Wellness', icon: 'spa' }
+            ];
+            areas.forEach(function(a) {
+                var area = ls[a.key];
+                if (!area) return;
+                var val = area.score || 0;
+                var color = scoreColor(val);
+                var insight = area.insight || '';
+                var item = document.createElement('div');
+                item.className = 'score-item';
+                item.innerHTML = '<div class="score-label"><span><i class="fas fa-' + a.icon + ' me-1" aria-hidden="true" style="color:' + color + '"></i> ' + a.label + '</span><span>' + val + '/100</span></div>' +
+                    '<div class="score-bar"><div class="score-fill" style="width:' + val + '%;background:' + color + '"></div></div>' +
+                    (insight ? '<p style="font-size:0.85rem;color:rgba(255,255,255,0.6);margin-top:0.35rem;margin-bottom:0">' + insight + '</p>' : '');
+                scoresEl.appendChild(item);
+            });
+
+            // Moon tip
+            var moonEnergy = data.moon_energy;
+            if (moonEnergy && moonEnergy.tip) {
+                document.getElementById('detail-moon-tip').style.display = 'block';
+                document.getElementById('moon-tip-text').textContent = moonEnergy.tip;
+            } else {
+                document.getElementById('detail-moon-tip').style.display = 'none';
+            }
+
+            // Remedy
+            var remedy = data.remedy;
+            if (remedy) {
+                document.getElementById('detail-remedy').style.display = 'block';
+                var txt = remedy.text || remedy.description || '';
+                if (remedy.mantra) txt += ' Mantra: ' + remedy.mantra;
+                document.getElementById('detail-remedy-text').textContent = txt || JSON.stringify(remedy);
+            } else {
+                document.getElementById('detail-remedy').style.display = 'none';
+            }
+
+            // Timing
+            var timing = data.timing;
+            var timingRow = document.getElementById('timing-row');
+            timingRow.innerHTML = '';
+            if (timing && (timing.best_time || timing.avoid_time)) {
+                document.getElementById('detail-timing').style.display = 'block';
+                if (timing.best_time) {
+                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">Best Time</div><div class="t-time">' + timing.best_time.window + '</div><div class="t-note">' + (timing.best_time.hora || '') + ' Hora</div></div>';
+                }
+                if (timing.avoid_time) {
+                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">Rahu Kalam</div><div class="t-time">' + timing.avoid_time.window + '</div><div class="t-note">' + (timing.avoid_time.reason || 'Avoid new beginnings') + '</div></div>';
+                }
+            } else {
+                document.getElementById('detail-timing').style.display = 'none';
+            }
+
+            // Planetary transits
+            renderTransits(data);
+
+            // Show cross links
+            document.getElementById('cross-links').style.display = 'block';
+
+            // GA tracking
+            gtag('event', 'horoscope_view', { 'event_category': 'Free Tools', 'event_label': sign.name, 'version': 'v2' });
+        }
+
+        function renderV1(data, sign) {
+            document.getElementById('horoscope-loading').style.display = 'none';
+            document.getElementById('horoscope-content').style.display = 'block';
+
+            var h = data.report || data;
+            document.getElementById('day-badge').innerHTML = '';
+            document.getElementById('detail-title').textContent = sign.symbol + ' ' + sign.name + ' (' + sign.hindi + ') \u2014 Today\'s Horoscope';
+
+            // V1 summary
+            var summary = '';
+            if (h.overview && h.overview.summary) summary = h.overview.summary;
+            else if (h.core_focus && h.core_focus.panchang) summary = h.core_focus.panchang.tithi + '. ' + h.core_focus.panchang.nakshatra;
+            document.getElementById('detail-summary').textContent = summary;
+
+            // V1 doesn't have life_scores in the same format — hide
+            document.getElementById('detail-scores').innerHTML = '';
+            document.getElementById('detail-moon-tip').style.display = 'none';
+            document.getElementById('detail-remedy').style.display = 'none';
+
+            // V1 timing
+            var timing = h.timing;
+            var timingRow = document.getElementById('timing-row');
+            timingRow.innerHTML = '';
+            if (timing) {
+                document.getElementById('detail-timing').style.display = 'block';
+                if (timing.auspicious_windows && timing.auspicious_windows.length) {
+                    var w = timing.auspicious_windows[0];
+                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">' + (w.label || 'Best Time') + '</div><div class="t-time">' + w.start + '-' + w.end + '</div><div class="t-note">' + (w.focus || '') + '</div></div>';
+                }
+                if (timing.rahu_kalam) {
+                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">Rahu Kalam</div><div class="t-time">' + timing.rahu_kalam.start + '-' + timing.rahu_kalam.end + '</div><div class="t-note">' + (timing.rahu_kalam.note || 'Avoid new beginnings') + '</div></div>';
+                }
+            } else {
+                document.getElementById('detail-timing').style.display = 'none';
+            }
+
+            renderTransits(data);
+            document.getElementById('cross-links').style.display = 'block';
+
+            gtag('event', 'horoscope_view', { 'event_category': 'Free Tools', 'event_label': sign.name, 'version': 'v1' });
+        }
+
+        function renderTransits(data) {
+            var pp = data && data.planetaryPositions;
+            if (!pp) {
+                document.getElementById('section-transits').style.display = 'none';
+                return;
+            }
+            document.getElementById('section-transits').style.display = 'block';
+            var list = document.getElementById('transits-list');
+            list.innerHTML = '';
+            var order = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Rahu', 'Ketu'];
+            order.forEach(function(planet) {
+                var p = pp[planet];
+                if (!p) return;
+                var retro = p.retrograde ? '<span class="planet-retro">(R)</span>' : '';
+                var nak = p.nakshatra ? ' \u00B7 ' + p.nakshatra + (p.pada ? ' Pada ' + p.pada : '') : '';
+                list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + planet + '</span><span class="planet-pos">' + (p.zodiac || '') + nak + retro + '</span></div>';
+            });
+        }
+
+        function renderError(sign) {
+            document.getElementById('horoscope-loading').style.display = 'none';
+            document.getElementById('horoscope-content').style.display = 'block';
+            document.getElementById('day-badge').innerHTML = '';
+            document.getElementById('detail-title').textContent = sign.name + ' Horoscope';
+            document.getElementById('detail-summary').textContent = 'Unable to load horoscope. Please try again later.';
+            document.getElementById('detail-scores').innerHTML = '';
+            document.getElementById('detail-moon-tip').style.display = 'none';
+            document.getElementById('detail-remedy').style.display = 'none';
+            document.getElementById('detail-timing').style.display = 'none';
+            document.getElementById('section-transits').style.display = 'none';
+            document.getElementById('cross-links').style.display = 'none';
         }
     })();
     </script>

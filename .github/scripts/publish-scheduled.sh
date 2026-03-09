@@ -35,20 +35,33 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
   # Format date for display
   DISPLAY_DATE=$(date -d "$DATE_RAW" +"%B %-d, %Y" 2>/dev/null || echo "$DATE_RAW")
 
-  # Build blog card HTML and insert before end marker
+  # Build blog card HTML and insert before end marker using awk (sed-safe)
   CARD_HTML="                    <article class=\"blog-card\"><a href=\"/blog/$FILE\"><div class=\"blog-card-tag\">$TAG</div><h2>$TITLE</h2><p class=\"blog-card-excerpt\">$EXCERPT</p><span class=\"blog-card-date\">$DISPLAY_DATE</span></a></article>"
 
-  sed -i "s|</div><!-- end blog-grid -->|$CARD_HTML\n                </div><!-- end blog-grid -->|" blog/index.html
+  awk -v card="$CARD_HTML" '{
+    if ($0 ~ /<\/div><!-- end blog-grid -->/) {
+      print card
+    }
+    print
+  }' blog/index.html > blog/index.html.tmp && mv blog/index.html.tmp blog/index.html
 
-  # Add to sitemap.xml
-  SITEMAP_ENTRY="  <url>\n    <loc>https://omai.app/blog/$FILE</loc>\n    <lastmod>$DATE_RAW</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>"
-  sed -i "s|</urlset>|$SITEMAP_ENTRY\n</urlset>|" sitemap.xml
+  # Add to sitemap.xml using awk (safe from special characters)
+  awk -v file="$FILE" -v date="$DATE_RAW" '{
+    if ($0 ~ /<\/urlset>/) {
+      printf "  <url>\n    <loc>https://omai.app/blog/%s</loc>\n    <lastmod>%s</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>\n", file, date
+    }
+    print
+  }' sitemap.xml > sitemap.xml.tmp && mv sitemap.xml.tmp sitemap.xml
 
   # Add to RSS feed if it exists (with proper RFC 822 date format)
   if [ -f "blog/feed.xml" ]; then
     RFC_DATE=$(date -d "$DATE_RAW" -u +"%a, %d %b %Y 00:00:00 +0000" 2>/dev/null || echo "$DATE_RAW")
-    RSS_ITEM="    <item>\n      <title>$TITLE</title>\n      <link>https://omai.app/blog/$FILE</link>\n      <description>$EXCERPT</description>\n      <pubDate>$RFC_DATE</pubDate>\n      <guid>https://omai.app/blog/$FILE</guid>\n    </item>"
-    sed -i "s|</channel>|$RSS_ITEM\n  </channel>|" blog/feed.xml
+    awk -v title="$TITLE" -v file="$FILE" -v excerpt="$EXCERPT" -v pubdate="$RFC_DATE" '{
+      if ($0 ~ /<\/channel>/) {
+        printf "    <item>\n      <title>%s</title>\n      <link>https://omai.app/blog/%s</link>\n      <description>%s</description>\n      <pubDate>%s</pubDate>\n      <guid>https://omai.app/blog/%s</guid>\n    </item>\n", title, file, excerpt, pubdate, file
+      }
+      print
+    }' blog/feed.xml > blog/feed.xml.tmp && mv blog/feed.xml.tmp blog/feed.xml
   fi
 
   # Add to ItemList schema in blog/index.html
