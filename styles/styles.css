@@ -837,7 +837,10 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1050;
 }
 
-.navbar .container {
+.navbar .container,
+.navbar .navbar-collapse,
+.navbar .navbar-nav,
+.navbar .nav-item.dropdown {
   overflow: visible !important;
 }
 
@@ -912,12 +915,6 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
-/* Global Persistent Solar System Background - Hidden for modern minimal aesthetic */
-.global-solar-system {
-  display: none; /* Modern design prioritizes content over decoration */
-}
-
-/* Starfield removed for cleaner design */
 
 
 
@@ -933,251 +930,6 @@ h1, h2, h3, h4, h5, h6 {
   background: transparent !important;
   border: none;
 }
-
-/* Orbit paths */
-.orbit {
-  position: absolute;
-  border: 1px dashed rgba(217, 119, 87, 0.15);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.orbit-mercury { width: 300px; height: 300px; }
-.orbit-venus { width: 420px; height: 420px; }
-.orbit-moon { width: 540px; height: 540px; }
-.orbit-mars { width: 660px; height: 660px; }
-.orbit-jupiter { width: 840px; height: 840px; }
-.orbit-saturn { width: 1020px; height: 1020px; }
-.orbit-rahu { width: 1200px; height: 1200px; }
-.orbit-ketu { width: 1380px; height: 1380px; }
-
-/* Central Sun */
-.sun-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90px;
-  height: 90px;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-}
-
-.sun-center i {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 65px;
-  color: var(--brand-primary);
-  animation: sun-pulse 3s ease-in-out infinite;
-  opacity: 0.8;
-}
-
-.sun-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150px;
-  height: 150px;
-  transform: translate(-50%, -50%);
-  background: var(--brand-primary-transparent);
-  border-radius: 50%;
-  animation: glow-pulse 4s ease-in-out infinite;
-}
-
-/* Planet containers for orbital motion */
-.planet-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.mercury-container {
-  width: 300px;
-  height: 300px;
-  animation: orbit-mercury 8s linear infinite;
-}
-
-.venus-container {
-  width: 420px;
-  height: 420px;
-  animation: orbit-venus 12s linear infinite;
-}
-
-.moon-container {
-  width: 540px;
-  height: 540px;
-  animation: orbit-moon 16s linear infinite;
-}
-
-.mars-container {
-  width: 660px;
-  height: 660px;
-  animation: orbit-mars 20s linear infinite;
-}
-
-.jupiter-container {
-  width: 840px;
-  height: 840px;
-  animation: orbit-jupiter 28s linear infinite;
-}
-
-.saturn-container {
-  width: 1020px;
-  height: 1020px;
-  animation: orbit-saturn 36s linear infinite;
-}
-
-.rahu-container {
-  width: 1200px;
-  height: 1200px;
-  animation: orbit-rahu 44s linear infinite;
-}
-
-.ketu-container {
-  width: 1380px;
-  height: 1380px;
-  animation: orbit-ketu 48s linear infinite;
-}
-
-/* Individual planets */
-.planet {
-  position: absolute;
-  top: -30px;
-  right: -30px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.8;
-}
-
-.planet i {
-  font-size: 32px;
-  color: white;
-}
-
-.mercury {
-  background: #8C7853;
-}
-
-.venus {
-  background: #FFC649;
-}
-
-.moon {
-  background: #F5F5F5;
-}
-
-.mars {
-  background: #CD5C5C;
-}
-
-.jupiter {
-  background: #D2B48C;
-  width: 75px;
-  height: 75px;
-  top: -37px;
-  right: -37px;
-}
-
-.jupiter i {
-  font-size: 42px;
-}
-
-.saturn {
-  background: #FAD5A5;
-  width: 70px;
-  height: 70px;
-  top: -35px;
-  right: -35px;
-}
-
-.saturn i {
-  font-size: 38px;
-}
-
-.rahu {
-  background: #4B0082;
-  width: 50px;
-  height: 50px;
-  top: -25px;
-  right: -25px;
-}
-
-.rahu i {
-  font-size: 28px;
-}
-
-.ketu {
-  background: #800080;
-  width: 50px;
-  height: 50px;
-  top: -25px;
-  right: -25px;
-}
-
-.ketu i {
-  font-size: 28px;
-}
-
-/* Orbital animations */
-@keyframes orbit-mercury {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-venus {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-moon {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-mars {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-jupiter {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-saturn {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-rahu {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-ketu {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Sun animations */
-@keyframes sun-pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.1); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
-}
-
 
 /* Hero Section */
 .hero-section {
@@ -2428,43 +2180,6 @@ footer p {
     transform: translateY(-2px) scale(1.02);
   }
 
-  /* Solar system hidden globally - no overrides */
-
-  /* Smaller but more visible solar system for mobile */
-  .orbit-mercury { width: 150px; height: 150px; }
-  .orbit-venus { width: 200px; height: 200px; }
-  .orbit-moon { width: 250px; height: 250px; }
-  .orbit-mars { width: 300px; height: 300px; }
-  .orbit-jupiter { width: 380px; height: 380px; }
-  .orbit-saturn { width: 460px; height: 460px; }
-  .orbit-rahu { width: 540px; height: 540px; }
-  .orbit-ketu { width: 620px; height: 620px; }
-
-  .mercury-container { width: 150px; height: 150px; }
-  .venus-container { width: 200px; height: 200px; }
-  .moon-container { width: 250px; height: 250px; }
-  .mars-container { width: 300px; height: 300px; }
-  .jupiter-container { width: 380px; height: 380px; }
-  .saturn-container { width: 460px; height: 460px; }
-  .rahu-container { width: 540px; height: 540px; }
-  .ketu-container { width: 620px; height: 620px; }
-
-  /* More transparent sections on mobile for better solar system visibility */
-  #features.bg-light,
-  #screenshots.bg-light {
-    background: rgba(253, 246, 240, 0.08) !important;
-  }
-
-  #how-it-works,
-  #testimonials {
-    background: rgba(255, 255, 255, 0.05) !important;
-  }
-
-  .feature-card,
-  .step-card,
-  .testimonial-card {
-    background: transparent;
-  }
 
   /* Hero section adjustments for mobile */
   .hero-section {
@@ -2600,35 +2315,6 @@ footer p {
     -webkit-backdrop-filter: none;
   }
 
-  /* Optimized solar system for small screens - still visible but compact */
-  .orbit-mercury { width: 100px; height: 100px; }
-  .orbit-venus { width: 140px; height: 140px; }
-  .orbit-moon { width: 180px; height: 180px; }
-  .orbit-mars { width: 220px; height: 220px; }
-  .orbit-jupiter { width: 280px; height: 280px; }
-  .orbit-saturn { width: 340px; height: 340px; }
-  .orbit-rahu { width: 400px; height: 400px; }
-  .orbit-ketu { width: 460px; height: 460px; }
-
-  .mercury-container { width: 100px; height: 100px; }
-  .venus-container { width: 140px; height: 140px; }
-  .moon-container { width: 180px; height: 180px; }
-  .mars-container { width: 220px; height: 220px; }
-  .jupiter-container { width: 280px; height: 280px; }
-  .saturn-container { width: 340px; height: 340px; }
-  .rahu-container { width: 400px; height: 400px; }
-  .ketu-container { width: 460px; height: 460px; }
-
-  /* Even more transparent sections for very small screens */
-  #features.bg-light,
-  #screenshots.bg-light {
-    background: rgba(253, 246, 240, 0.05) !important;
-  }
-
-  #how-it-works,
-  #testimonials {
-    background: rgba(255, 255, 255, 0.03) !important;
-  }
 
   .feature-card,
   .step-card,
@@ -2725,37 +2411,6 @@ footer p {
 
 }
 
-/* Mobile landscape orientation adjustments */
-@media (max-width: 768px) and (orientation: landscape) {
-  /* Solar system hidden globally - no overrides */
-
-  /* Smaller solar system for landscape mobile */
-  .orbit-mercury { width: 120px; height: 120px; }
-  .orbit-venus { width: 160px; height: 160px; }
-  .orbit-moon { width: 200px; height: 200px; }
-  .orbit-mars { width: 240px; height: 240px; }
-  .orbit-jupiter { width: 300px; height: 300px; }
-  .orbit-saturn { width: 360px; height: 360px; }
-  .orbit-rahu { width: 420px; height: 420px; }
-  .orbit-ketu { width: 480px; height: 480px; }
-
-  .mercury-container { width: 120px; height: 120px; }
-  .venus-container { width: 160px; height: 160px; }
-  .moon-container { width: 200px; height: 200px; }
-  .mars-container { width: 240px; height: 240px; }
-  .jupiter-container { width: 300px; height: 300px; }
-  .saturn-container { width: 360px; height: 360px; }
-  .rahu-container { width: 420px; height: 420px; }
-  .ketu-container { width: 480px; height: 480px; }
-
-  /* Ultra transparent sections for landscape */
-  #features.bg-light,
-  #screenshots.bg-light,
-  #how-it-works,
-  #testimonials {
-    background: rgba(255, 255, 255, 0.02) !important;
-  }
-}
 
 /* Minimalist Elegant Animation System */
 

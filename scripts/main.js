@@ -1,57 +1,5 @@
 // Om.AI Landing Page - Modern JavaScript Functionality
 
-// Continuous Solar System Animation Tracker
-class SolarSystemTracker {
-    constructor() {
-        this.startTime = Date.now();
-        this.animationDurations = {
-            mercury: 8000,   // 8s
-            venus: 12000,    // 12s
-            moon: 16000,     // 16s
-            mars: 20000,     // 20s
-            jupiter: 28000,  // 28s
-            saturn: 36000,   // 36s
-            rahu: 44000,     // 44s
-            ketu: 48000      // 48s
-        };
-        
-        this.initializeContinuousAnimation();
-    }
-    
-    initializeContinuousAnimation() {
-        // Get the session start time, or set it if this is the first page
-        let sessionStartTime = sessionStorage.getItem('solarSystemStartTime');
-        if (!sessionStartTime) {
-            sessionStartTime = Date.now();
-            sessionStorage.setItem('solarSystemStartTime', sessionStartTime.toString());
-        } else {
-            sessionStartTime = parseInt(sessionStartTime);
-        }
-        
-        // Calculate how much time has elapsed since the session started
-        const elapsedTime = Date.now() - sessionStartTime;
-        
-        // Apply dynamic animation delays based on elapsed time
-        this.applyContinuousDelays(elapsedTime);
-    }
-    
-    applyContinuousDelays(elapsedTime) {
-        Object.keys(this.animationDurations).forEach(planet => {
-            const container = document.querySelector(`.${planet}-container`);
-            if (container) {
-                const duration = this.animationDurations[planet];
-                // Calculate how far through the current cycle we are
-                const cycleProgress = elapsedTime % duration;
-                // Convert to negative delay (how far back to start)
-                const delay = -(cycleProgress / 1000);
-                
-                // Apply the calculated delay
-                container.style.animationDelay = `${delay}s`;
-            }
-        });
-    }
-}
-
 // Minimalist Elegant Section Animation System
 function initializeSectionAnimations() {
     // Check if user prefers reduced motion
@@ -412,13 +360,7 @@ function initializeHeroVideo() {
     }
 }
 
-// Initialize continuous solar system on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Only initialize if we have the solar system elements
-    if (document.querySelector('.global-solar-system')) {
-        new SolarSystemTracker();
-    }
-
     // Initialize hero video
     initializeHeroVideo();
 
