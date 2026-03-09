@@ -856,8 +856,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(217, 119, 87, 0.2);
   border-radius: 8px;
   z-index: 1055;
-  overflow: visible;
-  position: absolute;
+  overflow: visible !important;
 }
 
 .navbar .dropdown-item {
