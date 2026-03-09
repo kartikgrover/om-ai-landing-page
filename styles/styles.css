@@ -833,12 +833,12 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--background-white) !important;
   border-bottom: 1px solid var(--secondary-light);
   backdrop-filter: blur(10px);
-  overflow: visible;
+  overflow: visible !important;
   z-index: 1050;
 }
 
 .navbar .container {
-  overflow: visible;
+  overflow: visible !important;
 }
 
 .navbar.scrolled {
@@ -879,7 +879,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
 }
 
-.navbar-nav .nav-link::after {
+.navbar-nav .nav-link:not(.dropdown-toggle)::after {
   content: '';
   position: absolute;
   bottom: -5px;
@@ -890,7 +890,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: width 0.3s ease, left 0.3s ease;
 }
 
-.navbar-nav .nav-link:hover::after {
+.navbar-nav .nav-link:not(.dropdown-toggle):hover::after {
   width: 100%;
   left: 0;
 }
@@ -901,7 +901,7 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
-.navbar-nav .nav-link.active::after {
+.navbar-nav .nav-link.active:not(.dropdown-toggle)::after {
   width: 100%;
   left: 0;
 }
