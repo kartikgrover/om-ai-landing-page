@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahu Kaal Today & Auspicious Hours — Free Daily Timings (IST) | Om.AI</title>
+    <meta name="description" content="Check today's Rahu Kaal (Rahu Kalam) timings and auspicious planetary hours (Hora) for Delhi IST. Know inauspicious and best times for new work, travel, or contracts. Updated daily.">
+    <meta name="keywords" content="rahu kaal today, rahu kalam today, rahu kaal time today, aaj ka rahu kaal, rahu kalam timings, rahu kaal 2026, inauspicious time today, rahu kaal delhi, shubh muhurat today, auspicious time today, planetary hora today">
+
+    <meta property="og:title" content="Rahu Kaal Today — Free Daily Rahu Kalam Timings">
+    <meta property="og:description" content="Check today's Rahu Kaal timings. Know when to avoid starting new ventures, signing contracts, or beginning travel.">
+    <meta property="og:url" content="https://omai.app/rahu-kaal-today.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Rahu Kaal Today — Free Daily Rahu Kalam Timings">
+    <meta name="twitter:description" content="Check today's Rahu Kaal timings. Updated daily based on astronomical calculations.">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/rahu-kaal-today.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=59">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .rahu-hero {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        .rahu-time-display {
+            background: rgba(248,113,113,0.08);
+            border: 2px solid rgba(248,113,113,0.3);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            max-width: 500px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+        .rahu-time-display .rahu-label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .rahu-time-display .rahu-time {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            color: #f87171;
+            margin: 0.5rem 0;
+        }
+        .rahu-time-display .rahu-status {
+            font-size: 1rem;
+            padding: 0.35rem 1.25rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        .rahu-time-display .rahu-status.active {
+            background: rgba(248,113,113,0.2);
+            color: #f87171;
+        }
+        .rahu-time-display .rahu-status.safe {
+            background: rgba(74,222,128,0.15);
+            color: #4ade80;
+        }
+        .timing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .timing-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .timing-card .tc-icon { font-size: 1.3rem; margin-bottom: 0.5rem; color: #D97757; }
+        .timing-card .tc-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em; }
+        .timing-card .tc-value { font-size: 1.1rem; color: #fff; font-weight: 600; margin-top: 0.25rem; }
+        .timing-card .tc-sub { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.15rem; }
+        .week-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+        }
+        .week-table th {
+            background: rgba(217,119,87,0.15);
+            color: #D97757;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .week-table th:first-child { border-radius: 8px 0 0 0; }
+        .week-table th:last-child { border-radius: 0 8px 0 0; }
+        .week-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8);
+        }
+        .week-table tr.today td {
+            background: rgba(248,113,113,0.08);
+            color: #fff;
+            font-weight: 600;
+        }
+        .card-section {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-section h2, .card-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .cross-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+        .cross-link {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .cross-link:hover { background: rgba(217,119,87,0.1); border-color: #D97757; color: #fff; }
+        .cross-link .cl-title { font-weight: 600; color: #D97757; }
+        .cross-link .cl-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
+        .loading-state { text-align: center; padding: 3rem; color: rgba(255,255,255,0.6); }
+        .hora-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 1rem; }
+        .hora-table th {
+            background: rgba(74,222,128,0.12);
+            color: #4ade80;
+            padding: 0.6rem 0.75rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .hora-table th:first-child { border-radius: 8px 0 0 0; }
+        .hora-table th:last-child { border-radius: 0 8px 0 0; }
+        .hora-table td {
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+        }
+        .hora-table tr.hora-auspicious td { background: rgba(74,222,128,0.06); }
+        .hora-table tr.hora-caution td { background: rgba(248,113,113,0.04); }
+        .hora-table tr.hora-active td { background: rgba(217,119,87,0.12); color: #fff; font-weight: 600; }
+        .hora-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .hora-badge.good { background: rgba(74,222,128,0.15); color: #4ade80; }
+        .hora-badge.warn { background: rgba(248,113,113,0.15); color: #f87171; }
+        .hora-badge.now { background: rgba(217,119,87,0.2); color: #D97757; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "Rahu Kaal Today — Daily Rahu Kalam Timings",
+                "description": "Check today's Rahu Kaal timings. Know the inauspicious period to avoid starting new work, travel, or contracts.",
+                "url": "https://omai.app/rahu-kaal-today.html",
+                "isPartOf": {
+                    "@type": "WebSite",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Rahu Kaal Today", "item": "https://omai.app/rahu-kaal-today.html"}
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is Rahu Kaal?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Rahu Kaal (also called Rahu Kalam) is an inauspicious period of approximately 1.5 hours each day in Vedic astrology, ruled by the shadow planet Rahu. During this time, it is traditionally advised to avoid starting new ventures, signing contracts, or beginning travel."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How is Rahu Kaal calculated?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Rahu Kaal is calculated by dividing the daytime (sunrise to sunset) into 8 equal parts. Each day of the week has a fixed position for Rahu Kaal: Monday (2nd), Saturday (3rd), Friday (4th), Wednesday (5th), Thursday (6th), Tuesday (7th), and Sunday (8th)."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What should I avoid during Rahu Kaal?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Traditionally, people avoid starting new businesses, signing important documents, beginning travel, making major purchases, and performing auspicious ceremonies during Rahu Kaal. Routine activities and ongoing work are generally considered acceptable."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is the best auspicious time today?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The best auspicious time is determined by the Hora (planetary hour) system. Jupiter Hora and Venus Hora are considered the most auspicious for starting new activities, provided they do not overlap with Rahu Kaal. Om.AI calculates both Rahu Kaal and all 12 planetary hours daily based on astronomical sunrise and sunset."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/#features">Features</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/blog/">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/support.html">Support</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="page-header">
+            <div class="container text-center">
+                <h1 class="display-4 mb-3">Rahu Kaal Today</h1>
+                <p class="lead">Daily Rahu Kalam & auspicious planetary hours calculated from astronomical sunrise and sunset</p>
+                <p style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:#D97757;" id="rahu-date"></p>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+
+                <!-- Loading -->
+                <div id="loading" class="loading-state">
+                    <i class="fas fa-om fa-spin fa-2x mb-3" aria-hidden="true"></i>
+                    <p>Loading today's Rahu Kaal...</p>
+                </div>
+
+                <!-- Main Content -->
+                <div id="rahu-content" style="display:none">
+
+                    <!-- Rahu Kaal Time Display -->
+                    <div class="rahu-time-display" id="rahu-display">
+                        <div class="rahu-label">Rahu Kaal Today</div>
+                        <div class="rahu-time" id="rahu-time">--:-- — --:--</div>
+                        <div id="rahu-status"></div>
+                        <p style="font-size:0.85rem; color:rgba(255,255,255,0.5); margin-top:0.75rem;" id="rahu-location"></p>
+                    </div>
+
+                    <!-- Sunrise / Sunset -->
+                    <div class="timing-grid" id="timing-grid"></div>
+
+                    <!-- Today's Planetary Hours (Hora) -->
+                    <div class="card-section mt-4" id="hora-section" style="display:none">
+                        <h2 style="font-size:1.3rem; margin-bottom:0.5rem;"><i class="fas fa-sun me-2" style="color:#4ade80;" aria-hidden="true"></i>Today's Auspicious Hours (Hora)</h2>
+                        <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:0.5rem;">Planetary hours based on classical Hora system. <span style="color:#4ade80;">Jupiter</span> and <span style="color:#4ade80;">Venus</span> hours are most auspicious for new beginnings.</p>
+                        <div style="overflow-x:auto;">
+                            <table class="hora-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Time</th>
+                                        <th>Ruling Planet</th>
+                                        <th>Quality</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hora-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Rahu Kaal Table -->
+                    <div class="card-section mt-4">
+                        <h2 style="font-size:1.3rem; margin-bottom:1rem;"><i class="fas fa-calendar-week me-2" aria-hidden="true"></i>This Week's Rahu Kaal Timings</h2>
+                        <p style="font-size:0.9rem; color:rgba(255,255,255,0.6);">Rahu Kaal position is fixed for each weekday. Timings vary based on sunrise and sunset.</p>
+                        <div style="overflow-x:auto;">
+                            <table class="week-table" id="week-table">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Rahu Kaal Period</th>
+                                        <th>Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="week-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error State -->
+                <div id="error-state" style="display:none" class="card-section text-center">
+                    <i class="fas fa-exclamation-circle fa-2x mb-3" style="color:#f87171;" aria-hidden="true"></i>
+                    <p>Unable to load today's Rahu Kaal. Please try again later.</p>
+                </div>
+
+                <!-- Cross Links -->
+                <div class="cross-links mt-4">
+                    <a href="/panchang.html" class="cross-link">
+                        <div class="cl-title"><i class="fas fa-calendar-day me-1" aria-hidden="true"></i> Today's Panchang</div>
+                        <div class="cl-desc">Tithi, Nakshatra, and planetary positions</div>
+                    </a>
+                    <a href="/horoscope.html" class="cross-link">
+                        <div class="cl-title"><i class="fas fa-star me-1" aria-hidden="true"></i> Daily Horoscope</div>
+                        <div class="cl-desc">Get today's Rashifal for your Moon sign</div>
+                    </a>
+                </div>
+
+                <!-- CTA -->
+                <div class="cta-box mt-4">
+                    <h2 style="font-size:1.3rem;">How does Rahu Kaal affect YOUR chart?</h2>
+                    <p class="text-secondary mb-3">Om.AI analyzes Rahu Kaal alongside your personal Dasha periods and planetary transits for truly personalized guidance on auspicious timing.</p>
+                    <a href="/#smart-download" class="btn btn-primary btn-lg">
+                        <i class="fas fa-download me-2" aria-hidden="true"></i>Get Personalized Timing
+                    </a>
+                    <p class="mt-2" style="font-size:0.85rem; color: rgba(255,255,255,0.5);">First question free. No credit card required.</p>
+                </div>
+
+                <!-- SEO Content -->
+                <div class="mt-5">
+                    <h2>What is Rahu Kaal?</h2>
+                    <p>Rahu Kaal (also spelled Rahu Kalam or Rahu Kala) is an inauspicious period of approximately 1.5 hours each day in Vedic astrology, governed by the shadow planet Rahu. In Hindu tradition, Rahu is considered a malefic graha (planet) that can cause obstacles, confusion, and unexpected setbacks. The period of Rahu Kaal is therefore considered unfavorable for initiating any new or important activity.</p>
+
+                    <h2>How is Rahu Kaal Calculated?</h2>
+                    <p>Rahu Kaal is calculated by dividing the daytime duration (from sunrise to sunset) into 8 equal parts, known as Muhurtas. Each day of the week has a fixed slot assigned to Rahu:</p>
+                    <ul>
+                        <li><strong>Monday:</strong> 2nd period (7:30 AM – 9:00 AM approx.)</li>
+                        <li><strong>Saturday:</strong> 3rd period (9:00 AM – 10:30 AM approx.)</li>
+                        <li><strong>Friday:</strong> 4th period (10:30 AM – 12:00 PM approx.)</li>
+                        <li><strong>Wednesday:</strong> 5th period (12:00 PM – 1:30 PM approx.)</li>
+                        <li><strong>Thursday:</strong> 6th period (1:30 PM – 3:00 PM approx.)</li>
+                        <li><strong>Tuesday:</strong> 7th period (3:00 PM – 4:30 PM approx.)</li>
+                        <li><strong>Sunday:</strong> 8th period (4:30 PM – 6:00 PM approx.)</li>
+                    </ul>
+                    <p>Note: The exact times vary with sunrise and sunset, which change throughout the year. Om.AI calculates precise Rahu Kaal timings based on astronomical sunrise and sunset for Delhi (IST) each day.</p>
+
+                    <h2>What to Avoid During Rahu Kaal</h2>
+                    <p>According to Vedic tradition, the following activities should be avoided during Rahu Kaal:</p>
+                    <ul>
+                        <li>Starting a new business or venture</li>
+                        <li>Signing important contracts or documents</li>
+                        <li>Beginning travel, especially long journeys</li>
+                        <li>Making major financial transactions or investments</li>
+                        <li>Performing auspicious ceremonies like weddings or griha pravesh</li>
+                        <li>Purchasing property, vehicles, or expensive items</li>
+                    </ul>
+
+                    <h2>What Can You Do During Rahu Kaal?</h2>
+                    <p>Rahu Kaal does not mean all activity must stop. Routine work, ongoing projects, spiritual practices, and prayers are generally considered acceptable. In fact, some traditions recommend chanting the Rahu mantra ("Om Bhram Bhreem Bhroum Sah Rahave Namah") or performing Rahu-specific puja during this period to mitigate negative effects.</p>
+
+                    <h2>Rahu Kaal vs. Yamagandam and Gulikai</h2>
+                    <p>Rahu Kaal is the most widely observed inauspicious period, but Vedic astrology also recognizes Yamagandam (ruled by Yama, lord of death) and Gulikai Kalam (ruled by Saturn's son). All three are calculated by dividing daytime into 8 parts but use different slot positions. For comprehensive Muhurta analysis, all three should be considered alongside the Panchang.</p>
+
+                    <h2>Planetary Hours (Hora) — Auspicious Timings</h2>
+                    <p>While Rahu Kaal tells you when to avoid new beginnings, the Hora system tells you the <em>best</em> time to act. In Vedic astrology, each daytime hour is ruled by one of the seven classical planets in a fixed sequence: Sun, Venus, Mercury, Moon, Saturn, Jupiter, and Mars. The day's first Hora is always ruled by the day lord (e.g., Sunday starts with the Sun Hora, Monday with the Moon Hora).</p>
+                    <p>The 12 daytime hours (sunrise to sunset) are divided into 12 equal Hora periods. Each planet's Hora is suited for specific activities:</p>
+                    <ul>
+                        <li><strong>Jupiter Hora:</strong> Best for education, religious activities, financial decisions, and starting new ventures</li>
+                        <li><strong>Venus Hora:</strong> Ideal for love, relationships, arts, luxury purchases, and social events</li>
+                        <li><strong>Sun Hora:</strong> Suited for government work, authority matters, and leadership decisions</li>
+                        <li><strong>Moon Hora:</strong> Good for travel, emotional matters, and public-facing activities</li>
+                        <li><strong>Mercury Hora:</strong> Favourable for communication, trade, writing, and intellectual pursuits</li>
+                        <li><strong>Mars Hora:</strong> Use caution — suited only for competitive activities, surgery, or courage-demanding tasks</li>
+                        <li><strong>Saturn Hora:</strong> Use caution — suited for property matters, iron/steel trades, and disciplined work</li>
+                    </ul>
+                    <p>For best results, choose a Jupiter or Venus Hora that does not overlap with Rahu Kaal. Om.AI shows both Rahu Kaal and Hora timings together so you can plan your day with confidence.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank"><i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank"><i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/#features" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/#features" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/#features" class="text-white-50">Relationship Compatibility</a></li>
+                        <li><a href="/#features" class="text-white-50">Mantras & Gita</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Drahukaal%26utm_campaign%3Dfree_tools" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?utm_source=website&utm_medium=rahukaal&utm_campaign=free_tools" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    (function() {
+        var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+
+        var now = new Date();
+        document.getElementById('rahu-date').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // IST date for cache key
+        var istNow = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+        var today = istNow.toISOString().split('T')[0];
+        var cached = null;
+        try {
+            var stored = JSON.parse(sessionStorage.getItem('omai_rahukaal') || '{}');
+            if (stored.date === today && stored.data) cached = stored.data;
+        } catch(e) {}
+
+        if (cached) {
+            render(cached);
+        } else {
+            loadData();
+        }
+
+        function loadData() {
+            fetch(API + '/daily-horoscope/v2/metadata')
+                .then(function(r) {
+                    if (!r.ok) throw new Error('metadata failed');
+                    return r.json();
+                })
+                .catch(function() {
+                    return fetch(API + '/daily-horoscope/aries').then(function(r) { return r.json(); });
+                })
+                .then(function(data) {
+                    try { sessionStorage.setItem('omai_rahukaal', JSON.stringify({ date: today, data: data })); } catch(e) {}
+                    render(data);
+                })
+                .catch(function() {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error-state').style.display = 'block';
+                });
+        }
+
+        function formatIST(isoStr) {
+            if (!isoStr) return '--:--';
+            if (/^\d{2}:\d{2}(:\d{2})?$/.test(isoStr)) return isoStr.substring(0, 5);
+            try {
+                var d = new Date(isoStr);
+                var h = d.getUTCHours(), m = d.getUTCMinutes();
+                return h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
+            } catch(e) { return isoStr; }
+        }
+
+        function toMinutes(isoStr) {
+            if (!isoStr) return -1;
+            if (/^\d{2}:\d{2}/.test(isoStr)) {
+                var parts = isoStr.split(':');
+                return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+            }
+            try {
+                var d = new Date(isoStr);
+                return d.getUTCHours() * 60 + d.getUTCMinutes();
+            } catch(e) { return -1; }
+        }
+
+        function render(data) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('rahu-content').style.display = 'block';
+
+            var meta = data.metadata || {};
+            var tw = meta.timingWindows || {};
+            var rk = tw.rahuKalam || meta.rahuKalam;
+
+            // Rahu Kaal display
+            if (rk && rk.start && rk.end) {
+                var startStr = formatIST(rk.start);
+                var endStr = formatIST(rk.end);
+                document.getElementById('rahu-time').textContent = startStr + ' — ' + endStr;
+
+                // Check if currently in Rahu Kaal (using IST)
+                var nowIST = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
+                var nowMins = nowIST.getUTCHours() * 60 + nowIST.getUTCMinutes();
+                var startMins = toMinutes(rk.start);
+                var endMins = toMinutes(rk.end);
+
+                var statusEl = document.getElementById('rahu-status');
+                if (startMins >= 0 && endMins >= 0 && nowMins >= startMins && nowMins < endMins) {
+                    statusEl.innerHTML = '<span class="rahu-status active"><i class="fas fa-exclamation-triangle me-1" aria-hidden="true"></i> Rahu Kaal Active Now</span>';
+                } else if (startMins >= 0 && nowMins < startMins) {
+                    var diff = startMins - nowMins;
+                    var hh = Math.floor(diff / 60);
+                    var mm = diff % 60;
+                    statusEl.innerHTML = '<span class="rahu-status safe"><i class="fas fa-check-circle me-1" aria-hidden="true"></i> Starts in ' + (hh > 0 ? hh + 'h ' : '') + mm + 'min</span>';
+                } else {
+                    statusEl.innerHTML = '<span class="rahu-status safe"><i class="fas fa-check-circle me-1" aria-hidden="true"></i> Rahu Kaal has ended for today</span>';
+                }
+            } else {
+                document.getElementById('rahu-time').textContent = 'Data unavailable';
+            }
+
+            document.getElementById('rahu-location').textContent = (tw.location || 'Delhi (IST)') + ' — Based on astronomical sunrise/sunset';
+
+            // Sunrise / Sunset cards
+            var grid = document.getElementById('timing-grid');
+            var timings = [];
+            if (tw.sunrise) timings.push({ icon: 'fa-sun', label: 'Sunrise', value: formatIST(tw.sunrise) });
+            if (tw.sunset) timings.push({ icon: 'fa-moon', label: 'Sunset', value: formatIST(tw.sunset) });
+            if (rk) {
+                var dur = toMinutes(rk.end) - toMinutes(rk.start);
+                if (dur > 0) timings.push({ icon: 'fa-clock', label: 'Duration', value: Math.floor(dur / 60) + 'h ' + (dur % 60) + 'min' });
+            }
+
+            timings.forEach(function(t) {
+                grid.innerHTML += '<div class="timing-card"><div class="tc-icon"><i class="fas ' + t.icon + '" aria-hidden="true"></i></div><div class="tc-label">' + t.label + '</div><div class="tc-value">' + t.value + '</div></div>';
+            });
+
+            // Planetary Hours (Hora) table
+            if (tw.horaWindows && tw.horaWindows.length > 0) {
+                document.getElementById('hora-section').style.display = 'block';
+                var horaBody = document.getElementById('hora-body');
+                var nowIST2 = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
+                var nowMins2 = nowIST2.getUTCHours() * 60 + nowIST2.getUTCMinutes();
+                var rkStart = rk ? toMinutes(rk.start) : -1;
+                var rkEnd = rk ? toMinutes(rk.end) : -1;
+
+                var auspicious = ['Jupiter', 'Venus'];
+                var caution = ['Saturn', 'Mars'];
+                var planetIcons = { Sun: '\u2609', Moon: '\u263D', Mars: '\u2642', Mercury: '\u263F', Jupiter: '\u2643', Venus: '\u2640', Saturn: '\u2644' };
+
+                tw.horaWindows.forEach(function(hora, idx) {
+                    var hStart = toMinutes(hora.start);
+                    var hEnd = toMinutes(hora.end);
+                    var isActive = (hStart >= 0 && hEnd >= 0 && nowMins2 >= hStart && nowMins2 < hEnd);
+                    var isAusp = auspicious.indexOf(hora.ruler) >= 0;
+                    var isCaut = caution.indexOf(hora.ruler) >= 0;
+                    var inRahu = (rkStart >= 0 && rkEnd >= 0 && hStart < rkEnd && hEnd > rkStart);
+
+                    var rowClass = isActive ? 'hora-active' : (isAusp ? 'hora-auspicious' : (isCaut ? 'hora-caution' : ''));
+                    var badges = '';
+                    if (isActive) badges += '<span class="hora-badge now">NOW</span>';
+                    if (isAusp && !inRahu) badges += '<span class="hora-badge good">Auspicious</span>';
+                    if (inRahu) badges += '<span class="hora-badge warn">Rahu Kaal</span>';
+
+                    var quality = isAusp ? 'Favourable' : (isCaut ? 'Challenging' : 'Neutral');
+                    if (inRahu) quality = 'Avoid';
+                    if (hora.ruler === 'Sun') quality = 'Authority & Power';
+                    if (hora.ruler === 'Moon') quality = 'Calm & Emotions';
+                    if (hora.ruler === 'Mercury') quality = 'Communication';
+
+                    horaBody.innerHTML += '<tr class="' + rowClass + '">' +
+                        '<td>' + (idx + 1) + '</td>' +
+                        '<td>' + formatIST(hora.start) + ' \u2013 ' + formatIST(hora.end) + '</td>' +
+                        '<td>' + (planetIcons[hora.ruler] || '') + ' ' + hora.ruler + badges + '</td>' +
+                        '<td>' + quality + '</td></tr>';
+                });
+            }
+
+            // Weekly table with classical Rahu Kaal positions
+            var weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var rahuPositions = [8, 2, 7, 5, 6, 4, 3]; // Classical order
+            var rahuPeriodLabels = ['8th period', '2nd period', '7th period', '5th period', '6th period', '4th period', '3rd period'];
+            var todayDay = now.getDay();
+
+            var tbody = document.getElementById('week-body');
+            for (var i = 0; i < 7; i++) {
+                var isToday = (i === todayDay);
+                // Calculate approximate times using standard 6:00 AM sunrise, 6:30 PM sunset
+                var dayMins = 12.5 * 60; // ~750 minutes
+                var partDur = Math.round(dayMins / 8);
+                var startMin = 360 + (rahuPositions[i] - 1) * partDur; // 360 = 6:00 AM
+                var endMin = startMin + partDur;
+                var approxStart = Math.floor(startMin / 60) + ':' + (startMin % 60).toString().padStart(2, '0');
+                var approxEnd = Math.floor(endMin / 60) + ':' + (endMin % 60).toString().padStart(2, '0');
+
+                tbody.innerHTML += '<tr' + (isToday ? ' class="today"' : '') + '>' +
+                    '<td>' + weekDays[i] + (isToday ? ' <span style="color:#D97757;font-size:0.8rem;">(Today)</span>' : '') + '</td>' +
+                    '<td>' + (isToday && rk ? formatIST(rk.start) + ' — ' + formatIST(rk.end) : approxStart + ' — ' + approxEnd + ' (approx.)') + '</td>' +
+                    '<td>' + rahuPeriodLabels[i] + '</td></tr>';
+            }
+
+            gtag('event', 'rahu_kaal_view', { 'event_category': 'Free Tools' });
+        }
+    })();
+    </script>
+    <script src="/scripts/main.min.js" defer></script>
+</body>
+</html>

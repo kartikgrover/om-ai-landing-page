@@ -125,14 +125,14 @@
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.6;
 
-  /* ========== Transitions (Claude-inspired: snappier feedback) ========== */
+  /* ========== Transitions ========== */
   --transition-instant: 50ms ease-in-out;   /* Active states */
   --transition-fast: 100ms ease-in-out;     /* Hover states */
   --transition-base: 300ms ease;            /* Default animations */
   --transition-slow: 500ms ease;            /* Complex animations */
   --transition-all: all var(--transition-base);
 
-  /* ========== Easing Functions (Claude-style) ========== */
+  /* ========== Easing Functions ========== */
   --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);      /* Smooth deceleration */
   --ease-power3-out: cubic-bezier(0.215, 0.61, 0.355, 1); /* GSAP power3.out */
   --ease-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);  /* Gentle motion */
@@ -167,7 +167,7 @@
     box-sizing: border-box;
 }
 
-/* ========== Accessibility: Focus States (Claude-inspired) ========== */
+/* ========== Accessibility: Focus States ========== */
 *:focus-visible {
   outline: 2px solid var(--brand-primary);
   outline-offset: 2px;
@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: var(--font-weight-normal);
   line-height: 1.05; /* Tighter for dramatic impact */
   letter-spacing: -0.02em;
-  margin-bottom: var(--space-12); /* More whitespace like Claude */
+  margin-bottom: var(--space-12);
   color: var(--text-primary) !important;
   text-wrap: balance;
   text-align: center;
@@ -298,7 +298,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-title {
   font-size: clamp(2rem, 4vw + 1rem, 3rem);
-  font-weight: var(--font-weight-normal); /* Normal weight like Claude */
+  font-weight: var(--font-weight-normal);
   color: var(--text-primary) !important;
   margin-bottom: var(--space-6); /* More space before subtitle */
   line-height: 1.1; /* Tighter like hero */
@@ -2458,7 +2458,7 @@ footer p {
     transform: translateY(0);
   }
   
-  /* Removed slide animations - using simple fade-in only like Claude */
+  /* Simple fade-in only */
 
   /* Subtle Scale animations */
   .scale-in {
@@ -2592,7 +2592,7 @@ footer p {
   .hero-section {
     position: relative;
     z-index: 1;
-    min-height: auto; /* Compact hero like Claude */
+    min-height: auto; /* Compact hero */
   }
   
   /* All sections after hero should have higher z-index and slide up */
@@ -2649,7 +2649,7 @@ footer p {
       transform: none;
     }
     
-    /* Mobile-specific hero - compact like Claude */
+    /* Mobile-specific hero - compact */
     .hero-section {
       min-height: auto;
     }
@@ -3912,7 +3912,7 @@ footer a.text-white-50:hover {
 
 .fade-in {
   opacity: 0;
-  transform: translateY(24px); /* Subtler movement (Claude uses ~20-30px) */
+  transform: translateY(24px); /* Subtler movement (~20-30px) */
   transition: opacity 0.6s var(--ease-power3-out),
               transform 0.6s var(--ease-power3-out);
   will-change: opacity, transform; /* Performance optimization */
@@ -3924,7 +3924,7 @@ footer a.text-white-50:hover {
   will-change: auto; /* Clear after animation */
 }
 
-/* Stagger animation delays for cards in same row - Claude timing (80ms) */
+/* Stagger animation delays for cards in same row (80ms) */
 .fade-in:nth-child(1) {
   transition-delay: 0ms;
 }

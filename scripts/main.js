@@ -670,10 +670,10 @@ function initializeScrollAnimations() {
         return;
     }
 
-    // Claude-style threshold: trigger when 15% visible
+    // Threshold: trigger when 15% visible
     const observerOptions = {
         threshold: 0.15,
-        rootMargin: '0px 0px -10% 0px' // Claude uses percentage-based margin
+        rootMargin: '0px 0px -10% 0px' // Percentage-based margin
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -683,7 +683,7 @@ function initializeScrollAnimations() {
                 requestAnimationFrame(() => {
                     entry.target.classList.add('fade-in-visible');
                 });
-                // Stop observing after animation (one-time reveal like Claude)
+                // Stop observing after animation (one-time reveal)
                 observer.unobserve(entry.target);
             }
         });
@@ -749,7 +749,7 @@ if (document.readyState === 'loading') {
     initializeSmartDownloadLinks();
 }
 
-// Word-by-word fade-in animation (Claude-style)
+// Word-by-word fade-in animation
 function initializeWordAnimation() {
     const animatedHeadings = document.querySelectorAll('[data-animate-words]');
 
