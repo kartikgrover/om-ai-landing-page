@@ -2004,18 +2004,13 @@ footer p {
     margin-block: var(--spacing-md);
   }
 
-  /* Remove min-vh-100 on mobile for better content flow */
-  .hero-section .row.min-vh-100 {
-    min-height: auto !important;
-  }
-
   .hero-section {
     padding-block: clamp(1rem, 3vw, 2rem);
   }
 
-  .hero-section .row.py-5 {
-    padding-top: 1rem !important;
-    padding-bottom: 1.5rem !important;
+  .hero-section .row {
+    padding-top: 0.5rem !important;
+    padding-bottom: 1rem !important;
   }
 
   /* Mobile Card Carousel - One Card at a Time */
