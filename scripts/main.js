@@ -247,16 +247,12 @@ function initializeHeroVideo() {
         if (playPromise !== undefined) {
             playPromise
                 .then(() => {
-                    // Video started playing successfully
-                    console.log('Hero video playing');
                     hasPlayed = true;
                     hideLoadingState();
                     clearTimeout(loadTimeout);
                 })
                 .catch(error => {
                     // Autoplay was prevented - this is normal on some browsers
-                    console.log('Autoplay prevented, will play on user interaction:', error);
-
                     // Add a one-time click/touch listener to start video on first interaction
                     const startVideoOnInteraction = () => {
                         heroVideo.play()
@@ -264,7 +260,7 @@ function initializeHeroVideo() {
                                 hasPlayed = true;
                                 hideLoadingState();
                             })
-                            .catch(e => console.log('Play on interaction failed:', e));
+                            .catch(() => {});
                         document.removeEventListener('click', startVideoOnInteraction);
                         document.removeEventListener('touchstart', startVideoOnInteraction);
                     };
@@ -280,7 +276,6 @@ function initializeHeroVideo() {
 
     // Set a timeout to force load attempt after 3 seconds if nothing has happened
     loadTimeout = setTimeout(() => {
-        console.log('Video load timeout - forcing load attempt');
         if (!hasPlayed && heroVideo.readyState < 3) {
             heroVideo.load();
         }
@@ -288,13 +283,11 @@ function initializeHeroVideo() {
 
     // Handle when video has loaded enough data to play
     heroVideo.addEventListener('loadeddata', () => {
-        console.log('Video data loaded');
         playVideo();
     }, { once: true });
 
     // Handle when video can play through without buffering
     heroVideo.addEventListener('canplaythrough', () => {
-        console.log('Video can play through');
         if (!hasPlayed) {
             playVideo();
         }
@@ -302,7 +295,6 @@ function initializeHeroVideo() {
 
     // Handle when video starts playing
     heroVideo.addEventListener('playing', () => {
-        console.log('Video playing event fired');
         hasPlayed = true;
         hideLoadingState();
         clearTimeout(loadTimeout);
@@ -310,12 +302,8 @@ function initializeHeroVideo() {
 
     // Ensure video is ready before attempting to play
     if (heroVideo.readyState >= 3) {
-        // Video is already loaded enough to play
-        console.log('Video already ready, playing immediately');
         playVideo();
     } else if (heroVideo.readyState >= 2) {
-        // Video metadata loaded, try to play
-        console.log('Video metadata loaded, attempting play');
         playVideo();
     } else {
         // Wait for video to be ready and also start loading
@@ -327,22 +315,19 @@ function initializeHeroVideo() {
 
     // Handle video stalling or errors
     heroVideo.addEventListener('stalled', () => {
-        console.log('Video stalled, attempting to reload');
         if (!hasPlayed) {
             heroVideo.load();
         }
     });
 
     heroVideo.addEventListener('suspend', () => {
-        console.log('Video loading suspended');
         // Browser has intentionally stopped loading - try to resume
         if (!hasPlayed && heroVideo.readyState < 3) {
             setTimeout(() => heroVideo.load(), 100);
         }
     });
 
-    heroVideo.addEventListener('error', (e) => {
-        console.error('Video error:', e);
+    heroVideo.addEventListener('error', () => {
         clearTimeout(loadTimeout);
         if (videoOverlay) {
             const playButton = videoOverlay.querySelector('.play-button');
@@ -542,18 +527,6 @@ function initializeExistingFeatures() {
 
 
 // Utility functions
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
 function throttle(func, limit) {
     let inThrottle;
     return function() {
@@ -568,22 +541,6 @@ function throttle(func, limit) {
 }
 
 
-// Error handling
-window.addEventListener('error', function(e) {
-            // JavaScript error handled
-    // Could send to analytics or error tracking service
-});
-
-// Feature detection and progressive enhancement
-if ('IntersectionObserver' in window) {
-    // Modern browsers - full functionality
-            // Full functionality enabled
-} else {
-    // Fallback for older browsers
-            // Fallback mode enabled
-    // Add polyfills or simplified functionality
-}
-
 // Accessibility enhancements
 document.addEventListener('keydown', function(e) {
     // Handle keyboard navigation
@@ -595,66 +552,6 @@ document.addEventListener('keydown', function(e) {
 document.addEventListener('mousedown', function() {
     document.body.classList.remove('keyboard-navigation');
 });
-
-// Preload critical resources
-function preloadCriticalResources() {
-    const criticalImages = [
-        '/assets/logo.png'
-    ];
-
-    criticalImages.forEach(src => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = src;
-        document.head.appendChild(link);
-    });
-}
-
-// Initialize preloading
-preloadCriticalResources();
-
-
-// Testimonial Scroll Buttons
-function initializeTestimonialScroll() {
-    const scrollContainer = document.querySelector('.testimonials-scroll-container');
-    const scrollLeftBtn = document.getElementById('scrollLeft');
-    const scrollRightBtn = document.getElementById('scrollRight');
-
-    if (!scrollContainer || !scrollLeftBtn || !scrollRightBtn) {
-        console.log('Testimonial scroll elements not found:', {
-            scrollContainer: !!scrollContainer,
-            scrollLeftBtn: !!scrollLeftBtn,
-            scrollRightBtn: !!scrollRightBtn
-        });
-        return;
-    }
-
-    console.log('Testimonial scroll initialized');
-
-    const scrollAmount = 400;
-
-    scrollLeftBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Left button clicked, scrolling by', -scrollAmount);
-        scrollContainer.scrollBy({
-            left: -scrollAmount,
-            behavior: 'smooth'
-        });
-    });
-
-    scrollRightBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('Right button clicked, scrolling by', scrollAmount);
-        scrollContainer.scrollBy({
-            left: scrollAmount,
-            behavior: 'smooth'
-        });
-    });
-}
-
-// Initialize testimonial scroll on page load
-document.addEventListener('DOMContentLoaded', initializeTestimonialScroll);
 
 // Export functions for testing or external use
 // Modern Scroll-Triggered Fade-In Animations (Intersection Observer)
@@ -811,9 +708,7 @@ if (document.readyState === 'loading') {
 }
 
 window.OmAI = {
-    debounce,
     throttle,
-    initializeTestimonialScroll,
     initializeScrollAnimations,
     initializeSmartDownloadLinks,
     initializeHeroVideo

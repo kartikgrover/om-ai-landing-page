@@ -13,6 +13,7 @@ Crawl-delay: 1
 # Disallow certain file types (optional)
 Disallow: /*.pdf$
 Disallow: /*.zip$
+Disallow: /blog/drafts/
 
 # Allow important directories
 Allow: /assets/
