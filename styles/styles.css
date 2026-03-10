@@ -1979,6 +1979,12 @@ footer p {
 @media (max-width: 768px) {
   /* Solar system already hidden globally via display:none - no mobile overrides needed */
 
+  /* Compact navbar logo on mobile */
+  .navbar .navbar-brand img {
+    width: 60px;
+    height: 60px;
+  }
+
   /* Hero mobile optimizations */
   .hero-cta {
     margin-bottom: var(--spacing-md);
@@ -2004,7 +2010,12 @@ footer p {
   }
 
   .hero-section {
-    padding-block: clamp(2rem, 4vw, 3rem);
+    padding-block: clamp(1rem, 3vw, 2rem);
+  }
+
+  .hero-section .row.py-5 {
+    padding-top: 1rem !important;
+    padding-bottom: 1.5rem !important;
   }
 
   /* Mobile Card Carousel - One Card at a Time */
