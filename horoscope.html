@@ -68,17 +68,6 @@
         .sign-btn .sign-symbol { font-size: 1.5rem; display: block; margin-bottom: 0.25rem; }
         .sign-btn .sign-name { font-size: 0.85rem; font-weight: 600; display: block; }
         .sign-btn .sign-hindi { font-size: 0.75rem; color: rgba(255,255,255,0.5); display: block; }
-        .card-section {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(217,119,87,0.2);
-            border-radius: 12px;
-            padding: 1.5rem 2rem;
-            margin-bottom: 1.5rem;
-        }
-        .card-section h2, .card-section h3 {
-            font-family: 'DM Serif Display', serif;
-            color: #D97757;
-        }
         .score-bar {
             height: 8px;
             background: rgba(255,255,255,0.1);
@@ -101,13 +90,6 @@
             text-align: center;
             padding: 3rem;
             color: rgba(255,255,255,0.6);
-        }
-        .cta-box {
-            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
-            border: 1px solid rgba(217,119,87,0.3);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
         }
         .day-badge {
             display: inline-block;
@@ -394,6 +376,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     (function() {
+        function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
         var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
         var signs = [
@@ -524,7 +508,7 @@
             var ds = data.day_score || {};
             var badgeEl = document.getElementById('day-badge');
             if (ds.label) {
-                badgeEl.innerHTML = '<span class="day-badge ' + (ds.level || 'moderate') + '">' + ds.label + ' (' + ds.score + '/100)</span>';
+                badgeEl.innerHTML = '<span class="day-badge ' + (ds.level || 'moderate') + '">' + esc(ds.label) + ' (' + esc(String(ds.score)) + '/100)</span>';
             } else {
                 badgeEl.innerHTML = '';
             }
@@ -553,7 +537,7 @@
                 item.className = 'score-item';
                 item.innerHTML = '<div class="score-label"><span><i class="fas fa-' + a.icon + ' me-1" aria-hidden="true" style="color:' + color + '"></i> ' + a.label + '</span><span>' + val + '/100</span></div>' +
                     '<div class="score-bar"><div class="score-fill" style="width:' + val + '%;background:' + color + '"></div></div>' +
-                    (insight ? '<p style="font-size:0.85rem;color:rgba(255,255,255,0.6);margin-top:0.35rem;margin-bottom:0">' + insight + '</p>' : '');
+                    (insight ? '<p style="font-size:0.85rem;color:rgba(255,255,255,0.6);margin-top:0.35rem;margin-bottom:0">' + esc(insight) + '</p>' : '');
                 scoresEl.appendChild(item);
             });
 
@@ -584,10 +568,10 @@
             if (timing && (timing.best_time || timing.avoid_time)) {
                 document.getElementById('detail-timing').style.display = 'block';
                 if (timing.best_time) {
-                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">Best Time</div><div class="t-time">' + timing.best_time.window + '</div><div class="t-note">' + (timing.best_time.hora || '') + ' Hora</div></div>';
+                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">Best Time</div><div class="t-time">' + esc(timing.best_time.window) + '</div><div class="t-note">' + esc(timing.best_time.hora || '') + ' Hora</div></div>';
                 }
                 if (timing.avoid_time) {
-                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">Rahu Kalam</div><div class="t-time">' + timing.avoid_time.window + '</div><div class="t-note">' + (timing.avoid_time.reason || 'Avoid new beginnings') + '</div></div>';
+                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">Rahu Kalam</div><div class="t-time">' + esc(timing.avoid_time.window) + '</div><div class="t-note">' + esc(timing.avoid_time.reason || 'Avoid new beginnings') + '</div></div>';
                 }
             } else {
                 document.getElementById('detail-timing').style.display = 'none';
@@ -630,10 +614,10 @@
                 document.getElementById('detail-timing').style.display = 'block';
                 if (timing.auspicious_windows && timing.auspicious_windows.length) {
                     var w = timing.auspicious_windows[0];
-                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">' + (w.label || 'Best Time') + '</div><div class="t-time">' + w.start + '-' + w.end + '</div><div class="t-note">' + (w.focus || '') + '</div></div>';
+                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">' + esc(w.label || 'Best Time') + '</div><div class="t-time">' + esc(w.start) + '-' + esc(w.end) + '</div><div class="t-note">' + esc(w.focus || '') + '</div></div>';
                 }
                 if (timing.rahu_kalam) {
-                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">Rahu Kalam</div><div class="t-time">' + timing.rahu_kalam.start + '-' + timing.rahu_kalam.end + '</div><div class="t-note">' + (timing.rahu_kalam.note || 'Avoid new beginnings') + '</div></div>';
+                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">Rahu Kalam</div><div class="t-time">' + esc(timing.rahu_kalam.start) + '-' + esc(timing.rahu_kalam.end) + '</div><div class="t-note">' + esc(timing.rahu_kalam.note || 'Avoid new beginnings') + '</div></div>';
                 }
             } else {
                 document.getElementById('detail-timing').style.display = 'none';
@@ -661,8 +645,8 @@
                 var p = pp[planet];
                 if (!p) return;
                 var retro = p.retrograde ? '<span class="planet-retro">(R)</span>' : '';
-                var nak = p.nakshatra ? ' \u00B7 ' + p.nakshatra + (p.pada ? ' Pada ' + p.pada : '') : '';
-                list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + planet + '</span><span class="planet-pos">' + (p.zodiac || '') + nak + retro + '</span></div>';
+                var nak = p.nakshatra ? ' \u00B7 ' + esc(p.nakshatra) + (p.pada ? ' Pada ' + esc(String(p.pada)) : '') : '';
+                list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + esc(planet) + '</span><span class="planet-pos">' + esc(p.zodiac || '') + nak + retro + '</span></div>';
             });
         }
 

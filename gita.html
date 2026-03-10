@@ -44,13 +44,7 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
     <style>
-        .card-section {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(217,119,87,0.2);
-            border-radius: 12px;
-            padding: 2rem 2.5rem;
-            margin-bottom: 1.5rem;
-        }
+        .card-section { padding: 2rem 2.5rem; }
         .verse-container {
             max-width: 720px;
             margin: 0 auto;
@@ -98,29 +92,6 @@
             font-size: 0.9rem;
             color: rgba(255,255,255,0.6);
         }
-        .cta-box {
-            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
-            border: 1px solid rgba(217,119,87,0.3);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-        }
-        .cross-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
-        .cross-link {
-            flex: 1;
-            min-width: 200px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(217,119,87,0.2);
-            border-radius: 10px;
-            padding: 1rem 1.25rem;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .cross-link:hover { background: rgba(217,119,87,0.1); border-color: #D97757; color: #fff; }
-        .cross-link .cl-title { font-weight: 600; color: #D97757; }
-        .cross-link .cl-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
-        .loading-state { text-align: center; padding: 3rem; color: rgba(255,255,255,0.6); }
     </style>
 
     <script type="application/ld+json">
@@ -331,6 +302,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     (function() {
+        function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
         var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
         // Display date
@@ -366,8 +339,8 @@
             document.getElementById('loading').style.display = 'none';
             document.getElementById('verse-content').style.display = 'block';
 
-            var badges = '<span class="verse-ref-badge">' + (v.reference || v.source || 'Bhagavad Gita') + '</span>';
-            if (v.theme) badges += '<span class="verse-theme">' + v.theme + '</span>';
+            var badges = '<span class="verse-ref-badge">' + esc(v.reference || v.source || 'Bhagavad Gita') + '</span>';
+            if (v.theme) badges += '<span class="verse-theme">' + esc(v.theme) + '</span>';
             document.getElementById('verse-badges').innerHTML = badges;
 
             document.getElementById('verse-original').textContent = v.original || '';

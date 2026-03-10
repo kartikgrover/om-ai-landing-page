@@ -389,7 +389,7 @@
                         <a class="nav-link" href="/blog/" onclick="trackNavigation('Blog')">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="support.html" onclick="trackNavigation('Support')">Support</a>
+                        <a class="nav-link" href="/support.html" onclick="trackNavigation('Support')">Support</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-primary text-white px-3 ms-2" href="#smart-download" onclick="trackNavigation('Download Nav Button')">Download</a>
@@ -1362,10 +1362,10 @@
                     <h4 class="footer-heading">Resources</h4>
                     <ul class="list-unstyled">
                         <li><a href="/blog/" class="text-white-50">Blog</a></li>
-                        <li><a href="support.html" class="text-white-50">Help Center</a></li>
-                        <li><a href="feedback.html" class="text-white-50">Feedback</a></li>
-                        <li><a href="privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
-                        <li><a href="terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/support.html" class="text-white-50">Help Center</a></li>
+                        <li><a href="/feedback.html" class="text-white-50">Feedback</a></li>
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
@@ -1532,7 +1532,12 @@
             // Disable all buttons during response
             prompts.querySelectorAll('.demo-prompt-btn').forEach(function(b) { b.disabled = true; b.style.opacity = '0.4'; });
             // Show user message
-            body.insertAdjacentHTML('beforeend', '<div class="demo-msg demo-msg-user"><p>' + q + '</p></div>');
+            var userMsg = document.createElement('div');
+            userMsg.className = 'demo-msg demo-msg-user';
+            var userP = document.createElement('p');
+            userP.textContent = q;
+            userMsg.appendChild(userP);
+            body.appendChild(userMsg);
             body.scrollTop = body.scrollHeight;
             // Show loading spinner
             body.insertAdjacentHTML('beforeend', '<div class="demo-msg demo-msg-bot" id="demo-loading"><div class="demo-spinner"><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div></div><p class="demo-loading-text">Analyzing your birth chart</p></div>');
