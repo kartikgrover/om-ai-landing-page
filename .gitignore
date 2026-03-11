@@ -29,8 +29,8 @@ secrets.properties
 node_modules/
 vendor/
 
-# Ignore generated documentation
-docs/
+# Ignore generated documentation (except our project docs)
+# docs/
 
 # Ignore files specific to your development environment
 .env
