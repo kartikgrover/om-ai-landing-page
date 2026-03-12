@@ -5394,9 +5394,7 @@ img[loading="lazy"] {
   margin-bottom: var(--space-8);
 }
 .blog-hero-img.planet-img {
-  max-height: 240px;
-  object-fit: contain;
-  background: radial-gradient(ellipse at center, rgba(30,30,50,0.8) 0%, transparent 70%);
+  background: #000;
 }
 
 /* Blog card thumbnail */
