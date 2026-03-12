@@ -715,7 +715,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .faq-open .faq-answer {
-  max-height: 300px;
+  max-height: 600px;
   padding-bottom: 1.1rem;
   opacity: 1;
 }
@@ -4077,7 +4077,7 @@ footer a.text-white-50:hover {
   }
 
   .faq-open .faq-answer {
-    max-height: 500px; /* longer answers need more room */
+    max-height: 800px; /* longer answers need more room on mobile */
   }
 
   /* --- Exit popup: fit small screens --- */
@@ -5383,6 +5383,55 @@ img[loading="lazy"] {
 }
 .blog-related-grid a:hover {
   border-color: var(--brand-primary);
+}
+
+/* Blog hero image */
+.blog-hero-img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-8);
+}
+.blog-hero-img.planet-img {
+  max-height: 240px;
+  object-fit: contain;
+  background: radial-gradient(ellipse at center, rgba(30,30,50,0.8) 0%, transparent 70%);
+}
+
+/* Blog card thumbnail */
+.blog-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+.blog-card picture {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+/* Key takeaway / info box */
+.blog-callout {
+  background: rgba(217, 119, 87, 0.08);
+  border-left: 3px solid var(--brand-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: var(--space-4) var(--space-6);
+  margin: var(--space-6) 0;
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+.blog-callout strong {
+  color: var(--brand-primary);
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* ========== Shared Tool Page Styles ========== */
