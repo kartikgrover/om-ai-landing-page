@@ -14,8 +14,6 @@ Crawl-delay: 1
 Disallow: /*.pdf$
 Disallow: /*.zip$
 Disallow: /blog/drafts/
-Disallow: /delete-account.html
-Disallow: /unsubscribe.html
 
 # Allow important directories
 Allow: /assets/
