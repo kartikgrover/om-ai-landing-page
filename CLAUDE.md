@@ -5,10 +5,10 @@ Static landing page for Om.ai (Vedic astrology app). Hosted via GitHub Pages wit
 
 ## Workspace Context
 This is part of a multi-project VS Code workspace:
-- **om-ai-landing-page** (this project) — Landing page website
-- **om/om1** — React Native frontend (Expo)
-- **om.ai-backend** — Node.js API server, Heroku-deployed
-- **om-ai-ops** — Firebase config, Firestore rules/indexes, Cloud Functions
+- **om-ai-landing-page** (this project) — Landing page website → `/Users/kartikgrover/Documents/Projects/om-ai-landing-page`
+- **om/om1** — React Native frontend (Expo) → `/Users/kartikgrover/Documents/Projects/om/om1`
+- **om.ai-backend** — Node.js API server, Heroku-deployed → `/Users/kartikgrover/Documents/Projects/om.ai-backend`
+- **om-ai-ops** — Firebase config, Firestore rules/indexes, Cloud Functions → `/Users/kartikgrover/Documents/Projects/om-ai-ops`
 
 ## CRITICAL: Deployment Safety
 
