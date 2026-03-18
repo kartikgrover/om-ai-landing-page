@@ -31,6 +31,24 @@ This is part of a multi-project VS Code workspace:
 - Hosted on GitHub Pages
 - Do not modify `CNAME`, `app-ads.txt`, or `docs/` without permission
 
+## Analytics & Ad Data Access
+
+### Google Analytics (GA4) via BigQuery
+GA4 data is exported to BigQuery and accessible via the `bq` CLI (already authenticated via gcloud as `groverkartik25@gmail.com`).
+- **GCP Project:** `omai-1ea53`
+- **Dataset:** `analytics_498597496`
+- **Tables:** `events_YYYYMMDD` (daily export, data from 2026-01-17 onward)
+- **Key fields:** `event_name`, `event_date`, `user_pseudo_id`, `geo.country`, `traffic_source.{source,medium,name}`, `device`, `platform`, `event_value_in_usd`, `collected_traffic_source` (gclid for Google Ads)
+- **Key events:** `first_open` (installs), `session_start`, `in_app_purchase`, `page_view`, `user_engagement`
+- **Usage:** `bq query --use_legacy_sql=false --format=json 'SELECT ... FROM \`omai-1ea53.analytics_498597496.events_*\` WHERE _TABLE_SUFFIX BETWEEN "YYYYMMDD" AND "YYYYMMDD"'`
+- **Landing page traffic:** Filter by `event_dimensions.hostname` or `traffic_source.source = 'website'` / `traffic_source.medium = 'landing'`
+
+### Meta Ads API
+Available via the backend project (`../om.ai-backend/server.js:3008`). Account `act_1704926593380350`, token in `META_ADS_ACCESS_TOKEN` env var. Read-only.
+
+### P&L Dashboard Data
+Daily P&L in Firestore `dailyPnlHistory` (keyed by `YYYY-MM-DD`). Access via `../om.ai-backend/firebase-config.js`.
+
 ## IMPORTANT: No Mention of Internal Tools/Vendors
 - **NEVER mention Swiss Ephemeris** on any public-facing page (no license yet)
 - **NEVER mention OpenAI** or any AI vendor/model names on public-facing pages
