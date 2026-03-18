@@ -2200,18 +2200,6 @@ footer p {
   
   /* Simple fade-in only */
 
-  /* Subtle Scale animations */
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: all 0.7s var(--ease-subtle);
-  }
-  
-  .scale-in.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-  
   /* Slower animations for main sections - more specific targeting */
   #features.fade-in {
     opacity: 0;
@@ -2235,17 +2223,6 @@ footer p {
     transform: translateY(0);
   }
   
-  #screenshots.scale-in {
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-    transition: all 1.0s var(--ease-gentle);
-  }
-  
-  #screenshots.scale-in.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  
   /* Ensure sections are visible even if animation fails */
   #features,
   #how-it-works,
@@ -2255,8 +2232,7 @@ footer p {
   
   /* Only hide them if they specifically have animation classes without visible */
   #features.fade-in:not(.visible),
-  #how-it-works.slide-in-up:not(.visible),
-  #screenshots.scale-in:not(.visible) {
+  #how-it-works.slide-in-up:not(.visible) {
     opacity: 0;
   }
   
@@ -2353,8 +2329,7 @@ footer p {
   
   /* Subtle hover enhancement for animated elements */
   .animate-item.visible:hover,
-  .fade-in.visible:hover,
-  .scale-in.visible:hover {
+  .fade-in.visible:hover {
     transform: translateY(-4px);
     transition: all 0.3s var(--ease-elegant);
   }
@@ -2372,7 +2347,6 @@ footer p {
   /* Mobile optimizations - faster transitions */
   @media (max-width: 768px) {
     .fade-in,
-    .scale-in,
     .hero-animate {
       transition-duration: 0.5s;
     }
@@ -2384,7 +2358,6 @@ footer p {
     /* Reduced hover effects on mobile */
     .animate-item.visible:hover,
     .fade-in.visible:hover,
-    .scale-in.visible:hover,
     .feature-card.animate-item.visible:hover {
       transform: none;
     }
@@ -2406,7 +2379,6 @@ footer p {
   .slide-in-right,
   .slide-in-up,
   .slide-in-down,
-  .scale-in,
   .hero-animate,
   .stagger-children .animate-item {
     transition: opacity 0.2s ease;
@@ -2418,7 +2390,6 @@ footer p {
   .slide-in-right.visible,
   .slide-in-up.visible,
   .slide-in-down.visible,
-  .scale-in.visible,
   .hero-animate.visible,
   .stagger-children.visible .animate-item {
     opacity: 1;
@@ -2430,16 +2401,6 @@ footer p {
 
 
 
-
-/* Loading Animation */
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
 
 /* Scroll-Triggered Fade-In Animations (2025 Best Practice) */
 .fade-in-on-scroll {

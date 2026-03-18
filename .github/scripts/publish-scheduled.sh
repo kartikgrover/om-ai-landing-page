@@ -44,6 +44,11 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
     HERO_ALT=$(grep -o 'alt="[^"]*"[^>]*class="blog-hero-img' "$PUBLISH_PATH" | head -1 | grep -o 'alt="[^"]*"' | sed 's/alt="//;s/"//')
     [ -z "$HERO_ALT" ] && HERO_ALT="$TITLE"
     IMG_HTML="<picture><source srcset=\"$WEBP_SRC\" type=\"image/webp\"><img src=\"$HERO_IMG_SRC\" alt=\"$HERO_ALT\" class=\"blog-card-img\" loading=\"lazy\" width=\"800\" height=\"600\"></picture>"
+
+    # Update og:image meta tag to use the hero image instead of generic favicon
+    OG_IMG_URL="https://omai.app${HERO_IMG_SRC}"
+    sed -i "s|<meta property=\"og:image\" content=\"[^\"]*\">|<meta property=\"og:image\" content=\"${OG_IMG_URL}\">|" "$PUBLISH_PATH"
+    sed -i "s|<meta property=\"og:image:alt\" content=\"[^\"]*\">|<meta property=\"og:image:alt\" content=\"${HERO_ALT}\">|" "$PUBLISH_PATH"
   fi
 
   # Build blog card HTML and insert before end marker using awk (sed-safe)
