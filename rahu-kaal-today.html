@@ -647,17 +647,11 @@
             var tbody = document.getElementById('week-body');
             for (var i = 0; i < 7; i++) {
                 var isToday = (i === todayDay);
-                // Calculate approximate times using standard 6:00 AM sunrise, 6:30 PM sunset
-                var dayMins = 12.5 * 60; // ~750 minutes
-                var partDur = Math.round(dayMins / 8);
-                var startMin = 360 + (rahuPositions[i] - 1) * partDur; // 360 = 6:00 AM
-                var endMin = startMin + partDur;
-                var approxStart = Math.floor(startMin / 60) + ':' + (startMin % 60).toString().padStart(2, '0');
-                var approxEnd = Math.floor(endMin / 60) + ':' + (endMin % 60).toString().padStart(2, '0');
+                var timeCell = isToday && rk ? formatIST(rk.start) + ' — ' + formatIST(rk.end) : '—';
 
                 tbody.innerHTML += '<tr' + (isToday ? ' class="today"' : '') + '>' +
                     '<td>' + weekDays[i] + (isToday ? ' <span style="color:#D97757;font-size:0.8rem;">(Today)</span>' : '') + '</td>' +
-                    '<td>' + (isToday && rk ? formatIST(rk.start) + ' — ' + formatIST(rk.end) : approxStart + ' — ' + approxEnd + ' (approx.)') + '</td>' +
+                    '<td>' + timeCell + '</td>' +
                     '<td>' + rahuPeriodLabels[i] + '</td></tr>';
             }
 
