@@ -35,8 +35,19 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
   # Format date for display
   DISPLAY_DATE=$(date -d "$DATE_RAW" +"%B %-d, %Y" 2>/dev/null || echo "$DATE_RAW")
 
+  # Extract hero image from the blog post for the card
+  HERO_IMG_SRC=$(grep -o 'src="[^"]*"[^>]*class="blog-hero-img' "$PUBLISH_PATH" | head -1 | grep -o 'src="[^"]*"' | sed 's/src="//;s/"//')
+  IMG_HTML=""
+  if [ -n "$HERO_IMG_SRC" ]; then
+    # Derive webp path and alt text
+    WEBP_SRC=$(echo "$HERO_IMG_SRC" | sed 's/\.jpg$/.webp/;s/\.png$/.webp/')
+    HERO_ALT=$(grep -o 'alt="[^"]*"[^>]*class="blog-hero-img' "$PUBLISH_PATH" | head -1 | grep -o 'alt="[^"]*"' | sed 's/alt="//;s/"//')
+    [ -z "$HERO_ALT" ] && HERO_ALT="$TITLE"
+    IMG_HTML="<picture><source srcset=\"$WEBP_SRC\" type=\"image/webp\"><img src=\"$HERO_IMG_SRC\" alt=\"$HERO_ALT\" class=\"blog-card-img\" loading=\"lazy\" width=\"800\" height=\"600\"></picture>"
+  fi
+
   # Build blog card HTML and insert before end marker using awk (sed-safe)
-  CARD_HTML="                    <article class=\"blog-card\"><a href=\"/blog/$FILE\"><div class=\"blog-card-tag\">$TAG</div><h2>$TITLE</h2><p class=\"blog-card-excerpt\">$EXCERPT</p><span class=\"blog-card-date\">$DISPLAY_DATE</span></a></article>"
+  CARD_HTML="                    <article class=\"blog-card\"><a href=\"/blog/$FILE\">${IMG_HTML}<div class=\"blog-card-tag\">$TAG</div><h2>$TITLE</h2><p class=\"blog-card-excerpt\">$EXCERPT</p><span class=\"blog-card-date\">$DISPLAY_DATE</span></a></article>"
 
   awk -v card="$CARD_HTML" '{
     if ($0 ~ /<\/div><!-- end blog-grid -->/) {
