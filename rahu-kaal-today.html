@@ -323,8 +323,8 @@
 
                     <!-- Weekly Rahu Kaal Table -->
                     <div class="card-section mt-4">
-                        <h2 style="font-size:1.3rem; margin-bottom:1rem;"><i class="fas fa-calendar-week me-2" aria-hidden="true"></i>This Week's Rahu Kaal Timings</h2>
-                        <p style="font-size:0.9rem; color:rgba(255,255,255,0.6);">Rahu Kaal position is fixed for each weekday. Timings vary based on sunrise and sunset.</p>
+                        <h2 style="font-size:1.3rem; margin-bottom:1rem;"><i class="fas fa-calendar-day me-2" aria-hidden="true"></i>Today's Rahu Kaal</h2>
+                        <p style="font-size:0.9rem; color:rgba(255,255,255,0.6);">Calculated from astronomical sunrise and sunset.</p>
                         <div style="overflow-x:auto;">
                             <table class="week-table" id="week-table">
                                 <thead>
@@ -645,15 +645,10 @@
             var todayDay = now.getDay();
 
             var tbody = document.getElementById('week-body');
-            for (var i = 0; i < 7; i++) {
-                var isToday = (i === todayDay);
-                var timeCell = isToday && rk ? formatIST(rk.start) + ' — ' + formatIST(rk.end) : '—';
-
-                tbody.innerHTML += '<tr' + (isToday ? ' class="today"' : '') + '>' +
-                    '<td>' + weekDays[i] + (isToday ? ' <span style="color:#D97757;font-size:0.8rem;">(Today)</span>' : '') + '</td>' +
-                    '<td>' + timeCell + '</td>' +
-                    '<td>' + rahuPeriodLabels[i] + '</td></tr>';
-            }
+            tbody.innerHTML = '<tr class="today">' +
+                '<td>' + weekDays[todayDay] + ' <span style="color:#D97757;font-size:0.8rem;">(Today)</span></td>' +
+                '<td>' + (rk ? formatIST(rk.start) + ' — ' + formatIST(rk.end) : '—') + '</td>' +
+                '<td>' + rahuPeriodLabels[todayDay] + '</td></tr>';
 
             gtag('event', 'rahu_kaal_view', { 'event_category': 'Free Tools' });
         }
