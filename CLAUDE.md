@@ -30,3 +30,9 @@ This is part of a multi-project VS Code workspace:
 - Static HTML/CSS/JS — no build system
 - Hosted on GitHub Pages
 - Do not modify `CNAME`, `app-ads.txt`, or `docs/` without permission
+
+## IMPORTANT: No Mention of Internal Tools/Vendors
+- **NEVER mention Swiss Ephemeris** on any public-facing page (no license yet)
+- **NEVER mention OpenAI** or any AI vendor/model names on public-facing pages
+- Use generic terms like "AI-powered", "advanced calculations", "classical algorithms" instead
+- This applies to landing pages, blog posts, meta tags, structured data, and any user-visible content
