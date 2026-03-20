@@ -3,6 +3,9 @@
 ## Project
 Static landing page for Om.ai (Vedic astrology app). Hosted via GitHub Pages with custom domain.
 
+## Response Accuracy
+**If you are not confident about a factual claim (pricing, industry norms, competitor data, best practices, etc.), do a web search BEFORE responding.** Do not guess or state things as fact when unsure — verify first. Getting it wrong wastes time and erodes trust.
+
 ## Workspace Context
 This is part of a multi-project VS Code workspace:
 - **om-ai-landing-page** (this project) — Landing page website → `/Users/kartikgrover/Documents/Projects/om-ai-landing-page`
