@@ -80,24 +80,25 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
     }' blog/feed.xml > blog/feed.xml.tmp && mv blog/feed.xml.tmp blog/feed.xml
   fi
 
-  # Add to ItemList schema in blog/index.html
+  # Add to ItemList schema in blog/index.html (only the first itemListElement, not BreadcrumbList)
   NEXT_POS=$(grep -c '"@type": "ListItem"' blog/index.html)
-  NEXT_POS=$((NEXT_POS + 1))
+  # Subtract 2 for the BreadcrumbList items (Home + Blog), then add 1 for next position
+  NEXT_POS=$((NEXT_POS - 2 + 1))
   JSON_TITLE=$(echo "$TITLE" | sed 's/"/\\"/g')
   NEW_ITEM=$(cat <<ITEMEOF
 ,
                 {
                     "@type": "ListItem",
                     "position": $NEXT_POS,
-                    "url": "https://omai.app/blog/$FILE",
+                    "item": "https://omai.app/blog/$FILE",
                     "name": "$JSON_TITLE"
                 }
 ITEMEOF
 )
-  # Use awk to insert new ListItem before the ] that closes itemListElement
+  # Use awk to insert new ListItem before the ] that closes the FIRST itemListElement only
   awk -v item="$NEW_ITEM" '
-    /itemListElement/ { in_list=1 }
-    in_list && /\]/ { printf "%s\n", item; in_list=0 }
+    /itemListElement/ && !done_list { in_list=1 }
+    in_list && /\]/ { printf "%s\n", item; in_list=0; done_list=1 }
     { print }
   ' blog/index.html > blog/index.html.tmp && mv blog/index.html.tmp blog/index.html
 
