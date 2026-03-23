@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Astrology — Career Prediction by Date of Birth | Om.AI</title>
+    <meta name="description" content="Get AI-powered career predictions based on your 10th house, Dashamsa chart & planetary periods. Know the best time for job change, promotion, or business using Vedic astrology.">
+    <meta name="keywords" content="career prediction astrology ai, career astrology by date of birth, ai career prediction, job change astrology, career horoscope, 10th house astrology, dashamsa chart, career vedic astrology, promotion astrology, business astrology">
+
+    <meta property="og:title" content="AI Career Astrology — Career Prediction by Date of Birth | Om.AI">
+    <meta property="og:description" content="Get AI-powered career predictions based on your 10th house, Dashamsa chart & planetary periods. Know the best time for job change, promotion, or business.">
+    <meta property="og:url" content="https://omai.app/career-astrology.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - AI Career Astrology">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/career-astrology.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 0.75rem;
+        }
+        .topic-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .topic-card .topic-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .topic-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .topic-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+        .dasha-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        .dasha-table th {
+            background: rgba(217,119,87,0.15);
+            color: #D97757;
+            font-family: 'DM Serif Display', serif;
+            padding: 0.85rem 1.25rem;
+            text-align: left;
+            font-weight: normal;
+            font-size: 1.05rem;
+        }
+        .dasha-table td {
+            background: rgba(255,255,255,0.03);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 0.75rem 1.25rem;
+            color: rgba(255,255,255,0.78);
+            font-size: 1rem;
+        }
+        .dasha-table tr:hover td {
+            background: rgba(217,119,87,0.06);
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "AI Career Astrology — Career Prediction by Date of Birth | Om.AI",
+                "description": "Get AI-powered career predictions based on your 10th house, Dashamsa chart & planetary periods. Know the best time for job change, promotion, or business using Vedic astrology.",
+                "url": "https://omai.app/career-astrology.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Can astrology predict my career path?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vedic astrology analyzes your 10th house (house of career), its lord, planets placed in or aspecting it, and your Dashamsa (D10) chart to identify career tendencies and timing. Om.AI's AI reads all these factors from your birth chart and provides personalized career insights based on classical Jyotish principles."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is the 10th house in astrology and how does it affect career?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The 10th house in Vedic astrology is the house of karma (action), profession, and public reputation. The sign on the 10th house cusp, the planet ruling it, any planets placed in the 10th, and aspects to the 10th house together shape your professional inclinations, work style, and career trajectory. A strong 10th house often indicates career success and recognition."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "When is the best time for a job change according to astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "In Vedic astrology, favorable job changes typically occur during Mahadasha or Antardasha periods of planets connected to your 10th house, 6th house (service), or 7th house (business partnerships). Jupiter transits over the 10th house or its lord also support career moves. Om.AI analyzes your specific Dasha periods and upcoming transits to identify the best timing windows for a job change."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is a Dashamsa (D10) chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The Dashamsa or D10 chart is a divisional chart in Vedic astrology specifically used for career analysis. It divides each sign into 10 equal parts (3 degrees each) to provide a more detailed picture of your professional life than the birth chart alone. Planets strong in the D10 chart indicate areas of professional success, while the D10 ascendant and its lord reveal your career direction."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can Om.AI tell me if I should do business or a job?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. The AI analyzes specific chart factors that differentiate business aptitude from service orientation — the strength of your 7th house (business partnerships), 10th house (career), and planets like Saturn (service) versus Jupiter and Mercury (entrepreneurship). Your Dasha periods also influence whether a particular phase of life favors independent work or employment."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How do I get a career astrology reading on Om.AI?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Download Om.AI from the App Store or Google Play, enter your date, time, and place of birth to generate your Kundli, then ask any career-related question in the AI chat. The AI analyzes your 10th house, Dashamsa chart, current Dasha period, and transits to give you a personalized career reading. You get an initial question included, and can earn more through daily reading streaks or purchase question packs and Premium."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "AI Career Astrology", "item": "https://omai.app/career-astrology.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI Career Astrology</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    Career predictions based on your 10th house, Dashamsa (D10) chart, and planetary periods. Know the right time for a job change, promotion, or starting a business — powered by your actual birth chart.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dcareer%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_career&mt=8" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How Vedic Astrology Reads Career -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How Vedic Astrology Reads Your Career</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    In Jyotish, career is not determined by a single factor. Multiple chart elements combine to reveal your professional path, strengths, and timing.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-home" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">The 10th House (Karma Bhava)</h3>
+                        <p>The 10th house is the primary house of career, profession, and public life. The sign on your 10th house cusp and any planets placed there shape what kind of work suits you, how the world sees your professional identity, and the nature of your ambitions.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-planet-ringed" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">The 10th Lord</h3>
+                        <p>The planet ruling the sign on your 10th house cusp is your 10th lord. Its placement in a specific house and sign reveals the sector or environment where your career thrives. For example, 10th lord in the 9th house often indicates careers in teaching, law, or foreign lands.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-chart-pie" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Dashamsa Chart (D10)</h3>
+                        <p>The Dashamsa is a divisional chart dedicated to career analysis. It divides each sign into 10 parts (3 degrees each) for a granular view of professional life. Planets strong in D10 indicate areas of career success. The D10 ascendant and its lord point to your career direction and professional reputation.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-star" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Planets in the 10th House</h3>
+                        <p>Each planet in the 10th house brings distinct career tendencies. Sun favors government or leadership roles, Moon indicates public-facing work, Mars points to engineering or military, Mercury to communication and business, Jupiter to teaching or advisory roles, Venus to arts and luxury industries, and Saturn to disciplined, structured professions.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-clock" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Mahadasha & Antardasha Influence</h3>
+                        <p>Your Vimshottari Dasha timeline determines when career events unfold. The Mahadasha and Antardasha of planets connected to the 10th house trigger job changes, promotions, and professional breakthroughs. Transits of Jupiter and Saturn over the 10th house further refine timing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What Om.AI Analyzes -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What Om.AI Analyzes for Career Questions</h2>
+                <p class="mb-4">When you ask a career-related question, Om.AI's AI examines multiple layers of your birth chart simultaneously.</p>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-th" aria-hidden="true"></i></div>
+                            <h3>Rashi & Dashamsa Charts</h3>
+                            <p>Your main birth chart (D1) and career-specific Dashamsa (D10) chart are analyzed together. The AI cross-references planet positions, house lordships, and strengths across both charts for a complete career picture.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
+                            <h3>Active Dasha Periods</h3>
+                            <p>Your current Mahadasha, Antardasha, and Pratyantardasha are checked against career houses (2nd, 6th, 7th, 10th, 11th) to determine whether the current period favors growth, stability, or transitions.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-exchange-alt" aria-hidden="true"></i></div>
+                            <h3>Career-Related Transits</h3>
+                            <p>Jupiter and Saturn transits over your 10th house and its lord are tracked. The AI identifies upcoming windows when planetary alignments support career moves, promotions, or new ventures.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-balance-scale" aria-hidden="true"></i></div>
+                            <h3>Career Yogas & Strengths</h3>
+                            <p>The AI identifies career-enhancing yogas like Rajayoga, Dhana Yoga, and Amala Yoga in your chart, along with Shadbala strength of career-relevant planets to assess professional potential.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Types of Career Questions -->
+        <section class="content-section">
+            <div class="container" style="max-width:960px;">
+                <h2 class="text-center mb-4">Career Questions You Can Ask</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-exchange-alt" aria-hidden="true"></i></div>
+                        <h4>Job Change Timing</h4>
+                        <p>"When is the best time to switch jobs this year?"</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-arrow-up" aria-hidden="true"></i></div>
+                        <h4>Promotion Prospects</h4>
+                        <p>"Will I get a promotion in 2026?"</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-store" aria-hidden="true"></i></div>
+                        <h4>Business vs Job</h4>
+                        <p>"Am I better suited for business or a salaried job?"</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-compass" aria-hidden="true"></i></div>
+                        <h4>Ideal Profession</h4>
+                        <p>"What career field suits my birth chart the most?"</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                        <h4>Salary & Growth</h4>
+                        <p>"Will my income increase in the next two years?"</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-plane-departure" aria-hidden="true"></i></div>
+                        <h4>Foreign Job</h4>
+                        <p>"Do I have a chance of working abroad?"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How to Get Your Career Reading -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Get Your Career Reading</h2>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
+                        <p>Get the app from Google Play or the App Store. It takes under a minute to set up.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Enter Your Birth Details</h3>
+                        <p>Enter your date of birth, exact time of birth, and place of birth. The app calculates your complete Kundli with precise planetary positions, house placements, and Dasha periods.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Ask Your Career Question</h3>
+                        <p>Open the AI chat and ask anything about your career. The AI reads your 10th house, Dashamsa chart, current Dasha, and transits to give you a personalized answer with specific timing and guidance. You get an initial question included, and can earn more through daily streaks (up to 35/month), purchase question packs, or subscribe to Premium for unlimited questions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Ask About Your Career</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Your 10th house holds the blueprint for your professional life. Download Om.AI, enter your birth details, and get a career reading based on your actual chart.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dcareer%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_career&mt=8" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI Astrology Chat
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/dasha-calculator.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> Dasha Calculator
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/birth-chart.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> AI Birth Chart Analysis
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> Mahadasha Explained
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> Kundli & Birth Chart
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/horoscope.html" class="insight-link">
+                            <i class="fas fa-sun" aria-hidden="true"></i> Daily Horoscope
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>Can astrology predict my career path?</h3>
+                    <p>
+                        Vedic astrology analyzes your 10th house (house of career), its lord, planets placed in or aspecting it, and your Dashamsa (D10) chart to identify career tendencies and timing. Om.AI's AI reads all these factors from your birth chart and provides personalized career insights based on classical Jyotish principles.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is the 10th house in astrology and how does it affect career?</h3>
+                    <p>
+                        The 10th house in Vedic astrology is the house of karma (action), profession, and public reputation. The sign on the 10th house cusp, the planet ruling it, any planets placed in the 10th, and aspects to the 10th house together shape your professional inclinations, work style, and career trajectory. A strong 10th house often indicates career success and recognition.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>When is the best time for a job change according to astrology?</h3>
+                    <p>
+                        Favorable job changes typically occur during Mahadasha or Antardasha periods of planets connected to your 10th house, 6th house (service), or 7th house (business partnerships). Jupiter transits over the 10th house or its lord also support career moves. Om.AI analyzes your specific Dasha periods and upcoming transits to identify the best timing windows.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is a Dashamsa (D10) chart?</h3>
+                    <p>
+                        The Dashamsa or D10 chart is a divisional chart in Vedic astrology specifically used for career analysis. It divides each sign into 10 equal parts (3 degrees each) to provide a more detailed picture of your professional life than the birth chart alone. Planets strong in the D10 chart indicate areas of professional success, while the D10 ascendant and its lord reveal your career direction.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can Om.AI tell me if I should do business or a job?</h3>
+                    <p>
+                        Yes. The AI analyzes specific chart factors that differentiate business aptitude from service orientation — the strength of your 7th house (business partnerships), 10th house (career), and planets like Saturn (service) versus Jupiter and Mercury (entrepreneurship). Your Dasha periods also influence whether a particular phase of life favors independent work or employment.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I get a career astrology reading on Om.AI?</h3>
+                    <p>
+                        Download Om.AI from the App Store or Google Play, enter your date, time, and place of birth to generate your Kundli, then ask any career question in the AI chat. The AI analyzes your 10th house, Dashamsa chart, current Dasha period, and transits to give you a personalized career reading. You get an initial question included, and can earn more through daily reading streaks or purchase question packs and Premium.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dcareer%26utm_campaign%3Dseo_page" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_career&mt=8" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

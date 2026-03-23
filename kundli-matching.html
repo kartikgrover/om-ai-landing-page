@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Kundli Matching — Ashtakoot Compatibility Analysis | Om.AI</title>
+    <meta name="description" content="AI-powered Kundli matching with Ashtakoot compatibility analysis. Check marriage compatibility with 36-point matching, Manglik Dosha, Nadi Dosha, Navamsa D9 analysis & Dasha compatibility.">
+    <meta name="keywords" content="kundli matching online, ai kundli matching, ashtakoot matching, marriage compatibility astrology, kundli milan, gun milan, horoscope matching, vedic compatibility, manglik dosha check, nadi dosha">
+
+    <meta property="og:title" content="AI Kundli Matching — Ashtakoot Compatibility Analysis | Om.AI">
+    <meta property="og:description" content="AI-powered Kundli matching with Ashtakoot compatibility analysis. Check marriage compatibility with 36-point matching, Manglik Dosha, Nadi Dosha & more.">
+    <meta property="og:url" content="https://omai.app/kundli-matching.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - AI Kundli Matching">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/kundli-matching.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .koot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        .koot-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .koot-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+        }
+        .koot-card .koot-points {
+            font-size: 0.8rem;
+            color: #D97757;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .koot-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+        .beyond-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 100%;
+        }
+        .beyond-card .beyond-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.75rem;
+        }
+        .pricing-highlight {
+            background: rgba(217,119,87,0.08);
+            border: 1px solid rgba(217,119,87,0.25);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .pricing-highlight .price {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            color: #D97757;
+        }
+        .pricing-highlight .price-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "AI Kundli Matching — Ashtakoot Compatibility Analysis | Om.AI",
+                "description": "AI-powered Kundli matching with Ashtakoot compatibility analysis. Check marriage compatibility with 36-point matching, Manglik Dosha, Nadi Dosha, Navamsa D9 analysis & Dasha compatibility.",
+                "url": "https://omai.app/kundli-matching.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is Ashtakoot Kundli matching?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Ashtakoot Kundli matching (also called Gun Milan) is the traditional Vedic method of assessing marriage compatibility. It evaluates 8 aspects (koots) of compatibility between two birth charts: Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, and Nadi. Each koot carries a specific number of points, totaling 36. A score of 18 or above is generally considered favorable for marriage."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How many points are needed for a good Kundli match?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "In Ashtakoot matching, a score of 18 out of 36 is considered the minimum for a compatible match. Scores between 18-24 are average, 25-32 are very good, and 33-36 are excellent. However, Om.AI goes beyond just the score — it also checks for critical doshas like Nadi Dosha and Bhakoot Dosha, which can override a high score if present."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is Manglik Dosha and does Om.AI check for it?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Manglik Dosha (Mangal Dosha) occurs when Mars is placed in the 1st, 2nd, 4th, 7th, 8th, or 12th house of the birth chart. It is considered important for marriage compatibility in Vedic astrology. Om.AI checks Manglik Dosha for both partners and analyzes whether any cancellation conditions apply, such as Mars being in its own sign or aspected by benefic planets."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How much does Kundli matching cost on Om.AI?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Compatibility reports on Om.AI start at just ₹49 for a single report. Multi-report packs are also available: 3 reports for ₹89 and 5 reports for ₹149. These are one-time purchases with no subscription required. Premium subscribers get additional benefits across all Om.AI features."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What does Om.AI check beyond the 36-point Ashtakoot score?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Beyond the standard 36-point Ashtakoot score, Om.AI analyzes Manglik Dosha (with cancellation conditions), Nadi Dosha severity, Navamsa (D9) chart compatibility for deeper marital harmony, Dasha period alignment to assess timing compatibility, and 7th house lord strength in both charts. This multi-layered analysis gives a more complete picture than basic score-based matching."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I match Kundlis if I don't know exact birth time?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Accurate birth time is important for precise Kundli matching because it determines the Ascendant (Lagna), house placements, and Navamsa chart. If you have an approximate birth time, Om.AI will still generate a report, but the accuracy of house-based analysis and Navamsa compatibility may be affected. For the most reliable results, use the exact birth time from your birth certificate or hospital records."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is Kundli matching only for arranged marriages?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. Kundli matching is useful for any couple considering marriage, regardless of how they met. It assesses fundamental compatibility across temperament, emotional bonding, physical compatibility, mutual respect, and long-term harmony. Many couples in love marriages use Kundli matching to understand their relationship dynamics better and identify areas that may need attention."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is Nadi Dosha and why is it important?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Nadi Dosha occurs when both partners have the same Nadi (Aadi, Madhya, or Antya). It carries the highest weight in Ashtakoot matching (8 points) and is considered a serious compatibility concern in traditional Vedic astrology. Om.AI checks for Nadi Dosha and also evaluates whether any classical cancellation conditions apply, providing a nuanced assessment rather than a simple pass/fail."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Kundli Matching", "item": "https://omai.app/kundli-matching.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI Kundli Matching</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    Ashtakoot compatibility analysis powered by classical Vedic astrology. Get a detailed 36-point matching report with Manglik Dosha check, Nadi analysis, and Navamsa compatibility — all computed by AI from both partners' birth charts.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dkundli_matching%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_kundli_matching&mt=8" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Ashtakoot 8 Koots Explained -->
+        <section class="content-section">
+            <div class="container" style="max-width:960px;">
+                <h2 class="text-center mb-2">How Ashtakoot Matching Works</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:700px; margin:0 auto;">
+                    The Ashtakoot system evaluates 8 dimensions of compatibility between two birth charts, scoring a total of 36 points. A score of 18+ is considered favorable for marriage.
+                </p>
+
+                <div class="koot-grid">
+                    <div class="koot-card">
+                        <h4>1. Varna</h4>
+                        <div class="koot-points">1 Point</div>
+                        <p>Spiritual and ego compatibility. Assesses the natural temperament and work ethic alignment between partners.</p>
+                    </div>
+                    <div class="koot-card">
+                        <h4>2. Vashya</h4>
+                        <div class="koot-points">2 Points</div>
+                        <p>Mutual attraction and influence. Measures the natural dominance and control dynamics in the relationship.</p>
+                    </div>
+                    <div class="koot-card">
+                        <h4>3. Tara</h4>
+                        <div class="koot-points">3 Points</div>
+                        <p>Birth star compatibility. Evaluates health, well-being, and destiny alignment based on Nakshatra positions.</p>
+                    </div>
+                    <div class="koot-card">
+                        <h4>4. Yoni</h4>
+                        <div class="koot-points">4 Points</div>
+                        <p>Physical and intimate compatibility. Based on the animal symbol of each partner's birth Nakshatra.</p>
+                    </div>
+                    <div class="koot-card">
+                        <h4>5. Graha Maitri</h4>
+                        <div class="koot-points">5 Points</div>
+                        <p>Mental compatibility. Compares the Moon sign lords to assess intellectual and emotional wavelength alignment.</p>
+                    </div>
+                    <div class="koot-card">
+                        <h4>6. Gana</h4>
+                        <div class="koot-points">6 Points</div>
+                        <p>Temperament match. Classifies each person as Deva (divine), Manushya (human), or Rakshasa (demon) based on Nakshatra.</p>
+                    </div>
+                    <div class="koot-card">
+                        <h4>7. Bhakoot</h4>
+                        <div class="koot-points">7 Points</div>
+                        <p>Emotional bonding and financial prosperity. Evaluates the Moon sign relationship between partners for long-term harmony.</p>
+                    </div>
+                    <div class="koot-card">
+                        <h4>8. Nadi</h4>
+                        <div class="koot-points">8 Points</div>
+                        <p>Health and genetic compatibility. The most critical koot — same Nadi for both partners (Nadi Dosha) is a major concern.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Beyond Basic Matching -->
+        <section class="content-section">
+            <div class="container" style="max-width:960px;">
+                <h2 class="text-center mb-2">What Om.AI Checks Beyond Basic Matching</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:680px; margin:0 auto;">
+                    Most apps stop at the 36-point score. Om.AI goes deeper with a multi-layered compatibility analysis.
+                </p>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="beyond-card">
+                            <div class="beyond-icon"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></div>
+                            <h3 style="font-size:1.15rem;">Manglik Dosha Analysis</h3>
+                            <p style="font-size:0.95rem;">Checks Mars placement in the 1st, 2nd, 4th, 7th, 8th, and 12th houses for both partners. Also evaluates classical cancellation conditions — such as Mars in its own sign, Jupiter's aspect, or both partners being Manglik.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="beyond-card">
+                            <div class="beyond-icon"><i class="fas fa-dna" aria-hidden="true"></i></div>
+                            <h3 style="font-size:1.15rem;">Nadi Dosha Severity</h3>
+                            <p style="font-size:0.95rem;">Goes beyond a simple same-Nadi flag. Analyzes the specific Nakshatra padas involved, checks for cancellation yogas, and assesses the actual severity level rather than giving a binary pass/fail result.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="beyond-card">
+                            <div class="beyond-icon"><i class="fas fa-chart-pie" aria-hidden="true"></i></div>
+                            <h3 style="font-size:1.15rem;">Navamsa (D9) Compatibility</h3>
+                            <p style="font-size:0.95rem;">The Navamsa chart reveals the deeper reality of marriage. Om.AI cross-references both partners' D9 charts to assess Venus placement, 7th house strength, and the Navamsa Lagna lord — factors that indicate long-term marital happiness.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="beyond-card">
+                            <div class="beyond-icon"><i class="fas fa-sync-alt" aria-hidden="true"></i></div>
+                            <h3 style="font-size:1.15rem;">Dasha Period Compatibility</h3>
+                            <p style="font-size:0.95rem;">Compares the Vimshottari Dasha timelines of both partners. If one person is running a challenging Saturn Mahadasha while the other is in a Venus period, the report flags potential timing mismatches in life priorities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How to Get Your Report -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Get Your Compatibility Report</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Three steps to a detailed Kundli matching report.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
+                        <p>Install the app from Google Play or the App Store. Create your profile by entering your birth date, time, and location to generate your Kundli.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Enter Both Partners' Birth Details</h3>
+                        <p>Navigate to the compatibility section and enter the second person's birth date, time, and location. Om.AI computes both Kundlis with precision and runs the full Ashtakoot matching algorithm.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Purchase & View Your Report</h3>
+                        <p>Get your detailed compatibility report with the full 36-point breakdown, dosha analysis, Navamsa compatibility, and Dasha alignment. Reports start at just ₹49.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Pricing -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Compatibility Report Pricing</h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mb-3">
+                        <div class="pricing-highlight">
+                            <div class="price-label">Single Report</div>
+                            <div class="price">&#8377;49</div>
+                            <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:0;">One detailed compatibility analysis</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="pricing-highlight">
+                            <div class="price-label">3-Report Pack</div>
+                            <div class="price">&#8377;89</div>
+                            <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:0;">~&#8377;30 per report</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="pricing-highlight">
+                            <div class="price-label">5-Report Pack</div>
+                            <div class="price">&#8377;149</div>
+                            <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:0;">~&#8377;30 per report</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center mt-3" style="color:rgba(255,255,255,0.5); font-size:0.9rem;">
+                    One-time purchase. No subscription required. Multi-report packs are ideal if you're comparing multiple matches.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Check Your Compatibility Now</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Download Om.AI, enter both birth details, and get your Ashtakoot compatibility report with Manglik Dosha check, Navamsa analysis, and more.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dkundli_matching%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_kundli_matching&mt=8" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/marriage-prediction.html" class="insight-link">
+                            <i class="fas fa-ring" aria-hidden="true"></i> Marriage Prediction by AI
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI Astrology Chat
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> Kundli & Birth Chart
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/what-is-kundli-matching-ashtakoot.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> Kundli Matching Guide
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/ai-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> How AI Vedic Astrology Works
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/horoscope.html" class="insight-link">
+                            <i class="fas fa-sun" aria-hidden="true"></i> Daily Horoscope
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>What is Ashtakoot Kundli matching?</h3>
+                    <p>
+                        Ashtakoot Kundli matching (also called Gun Milan) is the traditional Vedic method of assessing marriage compatibility. It evaluates 8 aspects (koots) of compatibility between two birth charts: Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, and Nadi. Each koot carries a specific number of points, totaling 36. A score of 18 or above is generally considered favorable for marriage.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How many points are needed for a good Kundli match?</h3>
+                    <p>
+                        In Ashtakoot matching, a score of 18 out of 36 is considered the minimum for a compatible match. Scores between 18-24 are average, 25-32 are very good, and 33-36 are excellent. However, Om.AI goes beyond just the score — it also checks for critical doshas like Nadi Dosha and Bhakoot Dosha, which can override a high score if present.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is Manglik Dosha and does Om.AI check for it?</h3>
+                    <p>
+                        Manglik Dosha (Mangal Dosha) occurs when Mars is placed in the 1st, 2nd, 4th, 7th, 8th, or 12th house of the birth chart. It is considered important for marriage compatibility in Vedic astrology. Om.AI checks Manglik Dosha for both partners and analyzes whether any cancellation conditions apply, such as Mars being in its own sign or aspected by benefic planets.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How much does Kundli matching cost on Om.AI?</h3>
+                    <p>
+                        Compatibility reports on Om.AI start at just &#8377;49 for a single report. Multi-report packs are also available: 3 reports for &#8377;89 and 5 reports for &#8377;149. These are one-time purchases with no subscription required. Multi-report packs are ideal if you're comparing multiple prospective matches.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What does Om.AI check beyond the 36-point Ashtakoot score?</h3>
+                    <p>
+                        Beyond the standard 36-point Ashtakoot score, Om.AI analyzes Manglik Dosha (with cancellation conditions), Nadi Dosha severity, Navamsa (D9) chart compatibility for deeper marital harmony, Dasha period alignment to assess timing compatibility, and 7th house lord strength in both charts. This multi-layered analysis gives a more complete picture than basic score-based matching.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I match Kundlis if I don't know exact birth time?</h3>
+                    <p>
+                        Accurate birth time is important for precise Kundli matching because it determines the Ascendant (Lagna), house placements, and Navamsa chart. If you have an approximate birth time, Om.AI will still generate a report, but the accuracy of house-based analysis and Navamsa compatibility may be affected. For the most reliable results, use the exact birth time from your birth certificate or hospital records.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is Kundli matching only for arranged marriages?</h3>
+                    <p>
+                        No. Kundli matching is useful for any couple considering marriage, regardless of how they met. It assesses fundamental compatibility across temperament, emotional bonding, physical compatibility, mutual respect, and long-term harmony. Many couples in love marriages use Kundli matching to understand their relationship dynamics and identify areas that may need attention.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is Nadi Dosha and why is it important?</h3>
+                    <p>
+                        Nadi Dosha occurs when both partners have the same Nadi (Aadi, Madhya, or Antya). It carries the highest weight in Ashtakoot matching (8 points) and is considered a serious compatibility concern in traditional Vedic astrology. Om.AI checks for Nadi Dosha and also evaluates whether any classical cancellation conditions apply, providing a nuanced assessment rather than a simple pass/fail.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dkundli_matching%26utm_campaign%3Dseo_page" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_kundli_matching&mt=8" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

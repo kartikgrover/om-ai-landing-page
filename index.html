@@ -126,6 +126,11 @@
                 "url": "https://omai.app/assets/logo.webp"
             }
         },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://omai.app/blog/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        },
         "inLanguage": ["en", "hi"]
     }
     </script>
@@ -1168,9 +1173,59 @@
         </div>
     </section>
 
-    <!-- Email Capture Section -->
-
-
+    <!-- Streak Rewards Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title">Earn Questions with Daily Streaks</h2>
+                    <p class="text-secondary">Read your horoscope or Gita verse daily and earn astrology questions as rewards — up to 35 per month.</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="row g-3 text-center">
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">3</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">day streak</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+1 question</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">7</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">day streak</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+2 questions</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">14</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">day streak</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+3 questions</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">30</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">day streak</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+5 questions</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(217,119,87,0.1); border:1px solid rgba(217,119,87,0.25); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">60</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">day streak</div>
+                                <div style="font-size:0.95rem; color:#D97757; margin-top:0.25rem; font-weight:600;">+10 questions</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-3" style="color:rgba(255,255,255,0.45); font-size:0.88rem;">Build a daily practice, get rewarded. Streaks reset monthly — milestones stack up to 35 questions/month.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- FAQ Section -->
     <section id="faq" class="py-5">
@@ -1293,10 +1348,12 @@
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h4 class="footer-heading">Features</h4>
                     <ul class="list-unstyled">
-                        <li><a href="#features" class="text-white-50">AI Astrology Chat</a></li>
-                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
-                        <li><a href="#features" class="text-white-50">Relationship Compatibility</a></li>
-                        <li><a href="#features" class="text-white-50">Mantras & Gita</a></li>
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/free-kundli-online.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/kundli-matching.html" class="text-white-50">Kundli Matching</a></li>
+                        <li><a href="/career-astrology.html" class="text-white-50">Career Astrology</a></li>
+                        <li><a href="/marriage-prediction.html" class="text-white-50">Marriage Prediction</a></li>
+                        <li><a href="/dasha-calculator.html" class="text-white-50">Dasha Calculator</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
@@ -1307,6 +1364,7 @@
                         <li><a href="/gita.html" class="text-white-50">Gita Verse of the Day</a></li>
                         <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
                         <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">

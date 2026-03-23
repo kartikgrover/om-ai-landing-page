@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marriage Prediction by AI — When Will You Get Married? | Om.AI</title>
+    <meta name="description" content="AI-powered marriage prediction based on Vedic astrology. Analyze your Dasha periods, 7th house, Venus & Jupiter transits to predict marriage timing from your birth chart.">
+    <meta name="keywords" content="marriage prediction ai, when will i get married astrology, marriage timing vedic astrology, ai marriage prediction, marriage prediction by date of birth, vivah yog in kundli, 7th house marriage, marriage dasha period">
+
+    <meta property="og:title" content="Marriage Prediction by AI — When Will You Get Married? | Om.AI">
+    <meta property="og:description" content="AI-powered marriage prediction based on Vedic astrology. Analyze your Dasha periods, 7th house, Venus & Jupiter transits to predict marriage timing.">
+    <meta property="og:url" content="https://omai.app/marriage-prediction.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - Marriage Prediction by AI">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/marriage-prediction.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .factor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .factor-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .factor-card .factor-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .factor-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .factor-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .example-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .example-box .example-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .example-box h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            background: #D97757;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+        .timeline-dot.dim {
+            background: rgba(255,255,255,0.2);
+        }
+        .timeline-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        .compat-callout {
+            background: linear-gradient(135deg, rgba(217,119,87,0.1), rgba(217,119,87,0.04));
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 14px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .compat-callout .callout-icon {
+            font-size: 2.5rem;
+            color: #D97757;
+            min-width: 50px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .compat-callout {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "Marriage Prediction by AI — When Will You Get Married? | Om.AI",
+                "description": "AI-powered marriage prediction based on Vedic astrology. Analyze your Dasha periods, 7th house, Venus & Jupiter transits to predict marriage timing from your birth chart.",
+                "url": "https://omai.app/marriage-prediction.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How does AI predict marriage timing from a birth chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI analyzes multiple Vedic astrology factors from your birth chart: the 7th house and its lord (the house of marriage), Venus and Jupiter placements, your active Vimshottari Dasha and Antardasha periods, and upcoming planetary transits. When the Dasha of a marriage-signifying planet aligns with favorable transits to your 7th house, the AI identifies those windows as probable marriage periods."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which planets indicate marriage in Vedic astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The primary marriage indicators are: the 7th house lord (the house of partnerships), Venus (natural significator of marriage and love), Jupiter (significator of marriage for women, and general benefic), the Navamsa (D9) Lagna lord, and planets placed in or aspecting the 7th house. The Dasha periods of these planets — especially when they interact with transiting Jupiter or Venus — often trigger marriage events."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is the role of Dasha periods in marriage prediction?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Dasha periods determine the broad timeline of life events. Marriage typically occurs during the Mahadasha or Antardasha of the 7th house lord, Venus, Jupiter, or planets connected to the 7th house in your birth chart. Om.AI maps your complete Vimshottari Dasha timeline and identifies which upcoming planetary periods are most likely to activate marriage in your chart."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can astrology predict the exact date of marriage?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vedic astrology can narrow down marriage timing to specific periods — typically windows of a few months — rather than an exact date. Om.AI identifies favorable Dasha-transit alignments and narrows the window further by analyzing sub-periods (Antardasha and Pratyantardasha) and major transit triggers. While an exact date depends on many factors including personal choice, the astrological windows indicate when conditions are most favorable."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is this marriage prediction free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You can ask Om.AI's AI about your marriage timing using your question credits. You get 1 initial question when you install the app, and can earn up to 35 questions per month through daily reading streaks. Question packs and Premium subscriptions (with unlimited questions) are also available. For a detailed compatibility report with a specific partner, those start at ₹49."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What if my chart shows delayed marriage?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Some chart configurations — such as Saturn's influence on the 7th house, a debilitated Venus, or Manglik Dosha — can indicate delayed marriage. Om.AI identifies these factors and explains the specific planetary reasons. It also looks for when these delays end — for example, when a favorable Dasha activates or when Jupiter transits your 7th house, opening a marriage window despite earlier delays."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How is the Navamsa (D9) chart used for marriage prediction?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The Navamsa chart (D9) is the divisional chart specifically associated with marriage and partnerships in Vedic astrology. Om.AI analyzes your D9 chart to assess: the strength of the Navamsa Lagna lord, Venus placement in D9, the 7th house of the Navamsa, and whether key planets improve or weaken from the birth chart to the D9. A strong D9 often indicates a fulfilling marriage, even if the birth chart has minor afflictions."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I also check compatibility with a specific person?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. Om.AI offers detailed Kundli matching with Ashtakoot compatibility analysis — a 36-point matching system that evaluates temperament, emotional bonding, physical compatibility, and more. Compatibility reports also include Manglik Dosha check, Nadi Dosha analysis, and Navamsa compatibility. Reports start at ₹49 for a single match."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Marriage Prediction", "item": "https://omai.app/marriage-prediction.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">Marriage Prediction by AI</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    When will you get married? Om.AI analyzes your Dasha periods, 7th house, Venus and Jupiter transits to identify your most favorable marriage windows — based on your actual birth chart, not generic predictions.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dmarriage%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_marriage&mt=8" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How Vedic Astrology Predicts Marriage -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How Vedic Astrology Predicts Marriage Timing</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    In Vedic astrology (Jyotish), marriage timing is determined by the interaction of specific houses, planets, and time periods in your birth chart. The AI analyzes all of these together to identify when conditions align for marriage.
+                </p>
+
+                <div class="factor-grid">
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-home" aria-hidden="true"></i></div>
+                        <h4>7th House</h4>
+                        <p>The house of marriage and partnerships. Its lord, occupants, and aspects reveal the nature and timing of marriage.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-venus" aria-hidden="true"></i></div>
+                        <h4>Venus (Shukra)</h4>
+                        <p>The natural significator of love, marriage, and relationships. Its strength, placement, and Dasha activation are key triggers.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-jupiter" aria-hidden="true"></i></div>
+                        <h4>Jupiter (Guru)</h4>
+                        <p>Significator of marriage for women and a general benefic. Jupiter's transit over the 7th house or its lord often triggers marriage.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+                        <h4>Dasha Periods</h4>
+                        <p>Vimshottari Dasha of the 7th lord, Venus, or connected planets activates marriage potential at specific life stages.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-exchange-alt" aria-hidden="true"></i></div>
+                        <h4>Transits (Gochar)</h4>
+                        <p>Current planetary movements over natal positions. Jupiter and Saturn transits to the 7th house are major marriage triggers.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-chart-pie" aria-hidden="true"></i></div>
+                        <h4>Navamsa (D9)</h4>
+                        <p>The divisional chart of marriage. D9 Lagna lord strength, Venus in D9, and 7th house condition reveal marital destiny.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What Om.AI Analyzes -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What Om.AI Analyzes in Your Chart</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    When you ask about marriage timing, the AI examines these specific factors in your birth chart.
+                </p>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-search" aria-hidden="true"></i></div>
+                            <h3>7th House Deep Dive</h3>
+                            <p>
+                                The AI checks which planet rules your 7th house, where it is placed, what aspects it receives, and whether it is strong (exalted, own sign) or weak (debilitated, combust). It also checks for planets sitting in the 7th house and their influence on marriage timing.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
+                            <h3>Dasha Timeline Mapping</h3>
+                            <p>
+                                Om.AI maps your complete Vimshottari Dasha timeline and identifies which upcoming Mahadasha and Antardasha periods belong to marriage-signifying planets. It then cross-references these with transit windows to pinpoint the most probable timing.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-arrows-alt" aria-hidden="true"></i></div>
+                            <h3>Transit Triggers</h3>
+                            <p>
+                                The AI tracks Jupiter and Saturn transits relative to your natal 7th house, 7th lord, Venus, and Navamsa Lagna. When a favorable transit aligns with an active marriage Dasha, it flags that period as a high-probability marriage window.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-gem" aria-hidden="true"></i></div>
+                            <h3>Navamsa Confirmation</h3>
+                            <p>
+                                The D9 (Navamsa) chart is the marriage-specific divisional chart. Om.AI checks your D9 for Venus dignity, 7th house condition, Lagna lord placement, and whether planets that promise marriage in D1 are confirmed or denied in D9.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Example: How Timing Works -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-2">How Marriage Timing Works: An Example</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:640px; margin:0 auto;">
+                    Here is a simplified example of how Dasha periods and transits combine to indicate a marriage window.
+                </p>
+
+                <div class="example-box">
+                    <div class="example-label">Example Scenario</div>
+                    <h4>A person with Taurus Ascendant, Venus Mahadasha starting 2026</h4>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Venus Mahadasha begins (2026)</strong> — Venus is the 7th lord for Taurus Ascendant, making this entire period marriage-favorable.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Venus-Jupiter Antardasha (mid-2027)</strong> — Jupiter is a natural benefic and signifies marriage. This sub-period narrows the window.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Jupiter transits 7th house (Sep-Dec 2027)</strong> — Transit Jupiter passes through Scorpio (the 7th house), activating the marriage promise. This is the peak marriage window.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot dim"></div>
+                        <div>
+                            <p style="color:rgba(255,255,255,0.5);">Without the Dasha alignment, the same Jupiter transit would not trigger marriage — the Dasha must activate the promise first.</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-3 mb-0" style="font-size:0.88rem; color:rgba(255,255,255,0.45);">
+                        This is a simplified illustration. Om.AI analyzes dozens of factors simultaneously for each chart.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Compatibility Check Callout -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="compat-callout">
+                    <div class="callout-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                    <div>
+                        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Already Found Someone? Check Compatibility</h2>
+                        <p style="margin-bottom:1rem;">
+                            If you have a prospective partner, get a detailed Ashtakoot Kundli matching report with 36-point compatibility score, Manglik Dosha check, Nadi analysis, and Navamsa compatibility.
+                        </p>
+                        <a href="/kundli-matching.html" class="btn btn-primary px-4">
+                            <i class="fas fa-ring me-2" aria-hidden="true"></i>Kundli Matching
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How to Ask -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Get Your Marriage Prediction</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Ask Om.AI's AI about your marriage timing using your question credits.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
+                        <p>Install the app from Google Play or the App Store. Enter your birth date, exact birth time, and birth location to generate your Kundli.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Ask the AI About Marriage Timing</h3>
+                        <p>Open the AI chat and ask your question — "When will I get married?", "What is my marriage timing?", or "Which year is best for marriage?" The AI analyzes your 7th house, Dasha periods, transits, and Navamsa to give you a specific answer.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Ask Follow-Up Questions</h3>
+                        <p>The AI remembers your conversation context. Ask follow-ups like "What kind of partner does my chart indicate?", "Is there Manglik Dosha in my chart?", or "What remedies can help with delayed marriage?" Each follow-up uses one question credit.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="background:rgba(217,119,87,0.06); border-color:rgba(217,119,87,0.2);">
+                    <h3 style="font-size:1.1rem;"><i class="fas fa-info-circle me-2" aria-hidden="true"></i>About Question Credits</h3>
+                    <p style="margin-bottom:0;">
+                        You get 1 initial question when you install Om.AI. Earn more through daily reading streaks — up to 35 questions per month. One-time question packs and Premium subscriptions (with unlimited questions) are also available.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Find Your Marriage Window</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Download Om.AI, enter your birth details, and ask the AI when the stars align for marriage. Your Dasha periods and transits hold the answer.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dmarriage%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_marriage&mt=8" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/kundli-matching.html" class="insight-link">
+                            <i class="fas fa-ring" aria-hidden="true"></i> AI Kundli Matching
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI Astrology Chat
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> Kundli & Birth Chart
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/what-is-kundli-matching-ashtakoot.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> Kundli Matching Guide
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> Mahadasha Explained
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/ai-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> How AI Vedic Astrology Works
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>How does AI predict marriage timing from a birth chart?</h3>
+                    <p>
+                        Om.AI analyzes multiple Vedic astrology factors from your birth chart: the 7th house and its lord (the house of marriage), Venus and Jupiter placements, your active Vimshottari Dasha and Antardasha periods, and upcoming planetary transits. When the Dasha of a marriage-signifying planet aligns with favorable transits to your 7th house, the AI identifies those windows as probable marriage periods.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Which planets indicate marriage in Vedic astrology?</h3>
+                    <p>
+                        The primary marriage indicators are: the 7th house lord (the house of partnerships), Venus (natural significator of marriage and love), Jupiter (significator of marriage for women, and general benefic), the Navamsa Lagna lord, and planets placed in or aspecting the 7th house. The Dasha periods of these planets — especially when they interact with transiting Jupiter or Venus — often trigger marriage events.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is the role of Dasha periods in marriage prediction?</h3>
+                    <p>
+                        Dasha periods determine the broad timeline of life events. Marriage typically occurs during the Mahadasha or Antardasha of the 7th house lord, Venus, Jupiter, or planets connected to the 7th house in your birth chart. Om.AI maps your complete Vimshottari Dasha timeline and identifies which upcoming planetary periods are most likely to activate marriage in your chart.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can astrology predict the exact date of marriage?</h3>
+                    <p>
+                        Vedic astrology can narrow down marriage timing to specific periods — typically windows of a few months — rather than an exact date. Om.AI identifies favorable Dasha-transit alignments and narrows the window further by analyzing sub-periods (Antardasha and Pratyantardasha) and major transit triggers. While an exact date depends on many factors including personal choice, the astrological windows indicate when conditions are most favorable.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is this marriage prediction free?</h3>
+                    <p>
+                        You can ask Om.AI's AI about your marriage timing using your question credits. You get 1 initial question when you install the app, and can earn up to 35 questions per month through daily reading streaks. Question packs and Premium subscriptions (with unlimited questions) are also available. For a detailed compatibility report with a specific partner, those start at &#8377;49.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What if my chart shows delayed marriage?</h3>
+                    <p>
+                        Some chart configurations — such as Saturn's influence on the 7th house, a debilitated Venus, or Manglik Dosha — can indicate delayed marriage. Om.AI identifies these factors and explains the specific planetary reasons. It also looks for when these delays end — for example, when a favorable Dasha activates or when Jupiter transits your 7th house, opening a marriage window despite earlier delays.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How is the Navamsa (D9) chart used for marriage prediction?</h3>
+                    <p>
+                        The Navamsa chart (D9) is the divisional chart specifically associated with marriage and partnerships in Vedic astrology. Om.AI analyzes your D9 chart to assess the strength of the Navamsa Lagna lord, Venus placement in D9, the 7th house condition, and whether key planets improve or weaken from the birth chart to the D9. A strong D9 often indicates a fulfilling marriage, even if the birth chart has minor afflictions.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I also check compatibility with a specific person?</h3>
+                    <p>
+                        Yes. Om.AI offers detailed Kundli matching with Ashtakoot compatibility analysis — a 36-point matching system that evaluates temperament, emotional bonding, physical compatibility, and more. Compatibility reports also include Manglik Dosha check, Nadi Dosha analysis, and Navamsa compatibility. Reports start at &#8377;49 for a single match. <a href="/kundli-matching.html" style="color:#D97757;">Learn more about Kundli Matching</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dmarriage%26utm_campaign%3Dseo_page" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_marriage&mt=8" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

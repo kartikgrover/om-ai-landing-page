@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasha Calculator — Vimshottari Mahadasha Periods | Om.AI</title>
+    <meta name="description" content="Calculate your Vimshottari Dasha timeline based on your Moon's Nakshatra. See your complete Mahadasha, Antardasha & Pratyantardasha periods with Om.AI's precise Dasha calculator.">
+    <meta name="keywords" content="mahadasha calculator, dasha prediction, vimshottari dasha calculator, current dasha period, mahadasha antardasha calculator, dasha calculator by date of birth, planetary period calculator, nakshatra dasha, vedic dasha system">
+
+    <meta property="og:title" content="Dasha Calculator — Vimshottari Mahadasha Periods | Om.AI">
+    <meta property="og:description" content="Calculate your Vimshottari Dasha timeline based on your Moon's Nakshatra. See your complete Mahadasha, Antardasha & Pratyantardasha periods.">
+    <meta property="og:url" content="https://omai.app/dasha-calculator.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - Dasha Calculator">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/dasha-calculator.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+        .dasha-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+        .dasha-table th {
+            background: rgba(217,119,87,0.15);
+            color: #D97757;
+            font-family: 'DM Serif Display', serif;
+            padding: 0.85rem 1.25rem;
+            text-align: left;
+            font-weight: normal;
+            font-size: 1.05rem;
+        }
+        .dasha-table td {
+            background: rgba(255,255,255,0.03);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 0.75rem 1.25rem;
+            color: rgba(255,255,255,0.78);
+            font-size: 1rem;
+        }
+        .dasha-table tr:hover td {
+            background: rgba(217,119,87,0.06);
+        }
+        .planet-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .planet-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+        .planet-card p {
+            margin-bottom: 0;
+            font-size: 0.98rem;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "Dasha Calculator — Vimshottari Mahadasha Periods | Om.AI",
+                "description": "Calculate your Vimshottari Dasha timeline based on your Moon's Nakshatra. See your complete Mahadasha, Antardasha & Pratyantardasha periods.",
+                "url": "https://omai.app/dasha-calculator.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is Vimshottari Dasha?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vimshottari Dasha is the most widely used planetary period system in Vedic astrology. It is a 120-year cycle divided among 9 planets (Sun, Moon, Mars, Rahu, Jupiter, Saturn, Mercury, Ketu, Venus), each ruling a specific number of years. The starting point of your Dasha cycle is determined by the Nakshatra (lunar mansion) your Moon occupied at the time of birth. Each Mahadasha is further divided into sub-periods called Antardasha and Pratyantardasha."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How is the starting Dasha calculated?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Your starting Dasha is determined by the Nakshatra (star) your Moon was in at birth. Each of the 27 Nakshatras is ruled by one of the 9 Dasha planets. The proportion of the Nakshatra already traversed by the Moon at your birth time determines how much of that planet's Mahadasha has already elapsed, giving you a precise starting point in the 120-year cycle."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How do I check my current Dasha period?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Download Om.AI from the App Store or Google Play, enter your date, time, and place of birth, and the app automatically calculates your complete Vimshottari Dasha timeline. You can see your current Mahadasha, Antardasha, and Pratyantardasha periods in the birth chart section of the app."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is the difference between Mahadasha and Antardasha?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Mahadasha is the major planetary period lasting several years (e.g., Jupiter Mahadasha lasts 16 years). Antardasha is a sub-period within the Mahadasha — each Mahadasha contains 9 Antardashas ruled by all 9 planets in sequence. The Antardasha modifies the Mahadasha's effects. For example, during Jupiter Mahadasha, a Venus Antardasha blends Jupiter's expansion with Venus's themes of relationships and luxury."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does Dasha alone determine life events?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. Dasha indicates the timing and planetary influence active in your life, but the actual results depend on how strong and well-placed those planets are in your birth chart. A Jupiter Mahadasha gives different results for someone with Jupiter exalted in Cancer versus Jupiter debilitated in Capricorn. Transits (gochar) also modify Dasha results. Om.AI considers all these factors together."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can Om.AI predict events during my current Dasha?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. You can ask the AI specific questions about your current or upcoming Dasha periods. The AI analyzes the Dasha lord's placement, strength, and house lordship in your birth chart, overlays current transits, and provides timing-specific insights about career, relationships, health, finances, and other life areas during that period."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Dasha Calculator", "item": "https://omai.app/dasha-calculator.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">Dasha Calculator</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    See your complete Vimshottari Dasha timeline based on your Moon's Nakshatra. Know which planetary period is active now and what lies ahead in your Mahadasha, Antardasha, and Pratyantardasha cycles.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Ddasha%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_dasha&mt=8" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What is Vimshottari Dasha -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What is Vimshottari Dasha?</h2>
+                <p>
+                    Vimshottari Dasha is the most widely used planetary period system in Vedic astrology. It maps out a 120-year cycle divided among the 9 Vedic planets (Navagraha), with each planet ruling a specific number of years. The system reveals which planet's energy dominates different phases of your life.
+                </p>
+                <p>
+                    The starting point of your Dasha cycle is determined by the <strong style="color:#D97757;">Nakshatra (lunar mansion)</strong> your Moon occupied at birth. Each of the 27 Nakshatras is ruled by one of the 9 Dasha planets. The exact degree of the Moon within that Nakshatra determines how much of the first Mahadasha has already elapsed at the time of your birth, giving you a precise starting point in the cycle.
+                </p>
+                <p>
+                    Unlike Western astrology's reliance on transits alone, the Dasha system provides a structured timeline of planetary influence unique to each individual — making it one of the most powerful predictive tools in Jyotish.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Mahadasha Periods Table -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Mahadasha Periods — The 120-Year Cycle</h2>
+                <p class="mb-3">Each planet rules a fixed number of years in the Vimshottari system. The sequence always follows this order:</p>
+
+                <div class="table-responsive">
+                    <table class="dasha-table">
+                        <thead>
+                            <tr>
+                                <th>Planet</th>
+                                <th>Duration</th>
+                                <th>Ruling Nakshatras</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sun (Surya)</td>
+                                <td>6 years</td>
+                                <td>Krittika, Uttara Phalguni, Uttara Ashadha</td>
+                            </tr>
+                            <tr>
+                                <td>Moon (Chandra)</td>
+                                <td>10 years</td>
+                                <td>Rohini, Hasta, Shravana</td>
+                            </tr>
+                            <tr>
+                                <td>Mars (Mangal)</td>
+                                <td>7 years</td>
+                                <td>Mrigashira, Chitra, Dhanishta</td>
+                            </tr>
+                            <tr>
+                                <td>Rahu</td>
+                                <td>18 years</td>
+                                <td>Ardra, Swati, Shatabhisha</td>
+                            </tr>
+                            <tr>
+                                <td>Jupiter (Guru)</td>
+                                <td>16 years</td>
+                                <td>Punarvasu, Vishakha, Purva Bhadrapada</td>
+                            </tr>
+                            <tr>
+                                <td>Saturn (Shani)</td>
+                                <td>19 years</td>
+                                <td>Pushya, Anuradha, Uttara Bhadrapada</td>
+                            </tr>
+                            <tr>
+                                <td>Mercury (Budh)</td>
+                                <td>17 years</td>
+                                <td>Ashlesha, Jyeshtha, Revati</td>
+                            </tr>
+                            <tr>
+                                <td>Ketu</td>
+                                <td>7 years</td>
+                                <td>Ashwini, Magha, Moola</td>
+                            </tr>
+                            <tr>
+                                <td>Venus (Shukra)</td>
+                                <td>20 years</td>
+                                <td>Bharani, Purva Phalguni, Purva Ashadha</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="color:rgba(255,255,255,0.55); font-size:0.92rem;">Total: 6 + 10 + 7 + 18 + 16 + 19 + 17 + 7 + 20 = 120 years</p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How Om.AI Calculates -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How Om.AI Calculates Your Dasha</h2>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Determines Your Birth Moon Nakshatra</h3>
+                        <p>Using your exact date, time, and place of birth, the app calculates the precise longitude of your Moon. This determines which of the 27 Nakshatras your Moon occupies and identifies the ruling planet that starts your Dasha cycle.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Computes the Balance of Dasha at Birth</h3>
+                        <p>The Moon's exact position within the Nakshatra determines how much of the first Mahadasha remains at birth. If your Moon is halfway through a Nakshatra ruled by Venus (20-year period), you start life with approximately 10 years of Venus Mahadasha remaining. This calculation requires arc-minute precision.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Generates Complete Timeline</h3>
+                        <p>From the starting balance, the app builds your full Dasha timeline — every Mahadasha, Antardasha (sub-period), and Pratyantardasha (sub-sub-period) with precise start and end dates. This gives you a complete map of planetary influences across your entire life.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What Each Mahadasha Means -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What Each Mahadasha Means for Your Life</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">Each planet's Mahadasha brings its own themes and energy. Results vary based on the planet's strength and placement in your specific birth chart.</p>
+
+                <div class="planet-card">
+                    <h4>Sun Mahadasha (6 years)</h4>
+                    <p>Themes of authority, leadership, government connections, father, vitality, and self-confidence. A well-placed Sun brings recognition and career advancement. An afflicted Sun may bring ego conflicts or health issues related to the heart or bones.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Moon Mahadasha (10 years)</h4>
+                    <p>Focus on emotions, mind, mother, public life, travel, and nurturing. Strong Moon periods bring mental peace, popularity, and good relationships. A weak Moon may bring emotional turbulence, anxiety, or instability.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Mars Mahadasha (7 years)</h4>
+                    <p>Energy, courage, property, siblings, technical skills, and competitive drive. Well-placed Mars brings success in real estate, sports, engineering, or military. Afflicted Mars can cause accidents, conflicts, or legal issues.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Rahu Mahadasha (18 years)</h4>
+                    <p>One of the longest periods. Rahu brings unconventional growth, foreign connections, technology, sudden gains or losses, and worldly ambitions. Results depend heavily on Rahu's house placement and the sign it occupies. This period often brings unexpected life changes.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Jupiter Mahadasha (16 years)</h4>
+                    <p>Expansion, wisdom, spirituality, children, wealth, and higher education. Jupiter is a natural benefic — its Mahadasha often brings prosperity, marriage, childbirth, and spiritual growth. Even a moderately placed Jupiter tends to give protective results.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Saturn Mahadasha (19 years)</h4>
+                    <p>The longest Mahadasha. Saturn brings discipline, hard work, karma, longevity, service, and delayed but lasting results. Well-placed Saturn rewards patience with career stability and authority. Poorly placed Saturn can bring hardship, delays, and chronic health issues.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Mercury Mahadasha (17 years)</h4>
+                    <p>Communication, intelligence, business acumen, education, and analytical thinking. Mercury periods favor learning, trading, writing, and networking. Strong Mercury brings commercial success and intellectual achievement.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Ketu Mahadasha (7 years)</h4>
+                    <p>Spirituality, detachment, sudden insights, past-life karma, and liberation. Ketu periods often bring introspection, spiritual breakthroughs, and a desire to let go of material attachments. It can also bring unexpected health issues or sudden changes in direction.</p>
+                </div>
+
+                <div class="planet-card">
+                    <h4>Venus Mahadasha (20 years)</h4>
+                    <p>The longest single Mahadasha. Venus governs love, marriage, luxury, arts, vehicles, and material comforts. A strong Venus period brings romance, wealth, creative success, and enjoyment of life. Afflicted Venus may bring relationship difficulties or overindulgence.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Antardasha & Pratyantardasha -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Antardasha and Pratyantardasha</h2>
+                <p>
+                    Each Mahadasha is divided into 9 <strong style="color:#D97757;">Antardasha</strong> (sub-periods), one for each of the 9 planets. The Antardasha modifies the Mahadasha's effects — blending two planetary energies. For example, during a Jupiter Mahadasha, a Saturn Antardasha brings a mix of expansion (Jupiter) and discipline (Saturn), often manifesting as structured growth or career consolidation.
+                </p>
+                <p>
+                    Each Antardasha further divides into 9 <strong style="color:#D97757;">Pratyantardasha</strong> (sub-sub-periods), adding a third layer of planetary influence. At any given moment, three planetary energies are active in your Dasha system — Mahadasha, Antardasha, and Pratyantardasha — creating a highly specific planetary signature for each phase of your life.
+                </p>
+                <p>
+                    Om.AI calculates all three levels and displays them in your birth chart section, so you can see exactly which planetary combination is active right now and what transitions are coming up.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How to Check Your Current Dasha -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Check Your Current Dasha</h2>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
+                        <p>Get the app from Google Play or the App Store.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Enter Your Birth Details</h3>
+                        <p>Provide your date of birth, exact time of birth, and place of birth. Accurate birth time is especially important for Dasha calculations, as even a few minutes can shift the balance of Dasha at birth.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">View Your Dasha Timeline</h3>
+                        <p>Your complete Vimshottari Dasha timeline appears in the birth chart section of the app. See your current Mahadasha, Antardasha, and Pratyantardasha along with start and end dates for each period. You can also ask the AI chat specific questions about what your current Dasha period means for career, relationships, health, or any other life area.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">See Your Dasha Timeline</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Download Om.AI, enter your birth details, and instantly see which planetary period is shaping your life right now — and what's coming next.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Ddasha%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_dasha&mt=8" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI Astrology Chat
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/career-astrology.html" class="insight-link">
+                            <i class="fas fa-briefcase" aria-hidden="true"></i> AI Career Astrology
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/birth-chart.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> AI Birth Chart Analysis
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> Mahadasha Explained
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/sade-sati-explained.html" class="insight-link">
+                            <i class="fas fa-moon" aria-hidden="true"></i> Sade Sati Guide
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> Kundli & Birth Chart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>What is Vimshottari Dasha?</h3>
+                    <p>
+                        Vimshottari Dasha is the most widely used planetary period system in Vedic astrology. It is a 120-year cycle divided among 9 planets, each ruling a specific number of years. The starting point of your Dasha cycle is determined by the Nakshatra your Moon occupied at the time of birth. Each Mahadasha is further divided into sub-periods called Antardasha and Pratyantardasha.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How is the starting Dasha calculated?</h3>
+                    <p>
+                        Your starting Dasha is determined by the Nakshatra (star) your Moon was in at birth. Each of the 27 Nakshatras is ruled by one of the 9 Dasha planets. The proportion of the Nakshatra already traversed by the Moon at your birth time determines how much of that planet's Mahadasha has already elapsed, giving you a precise starting point in the 120-year cycle.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I check my current Dasha period?</h3>
+                    <p>
+                        Download Om.AI from the App Store or Google Play, enter your date, time, and place of birth, and the app automatically calculates your complete Vimshottari Dasha timeline. You can see your current Mahadasha, Antardasha, and Pratyantardasha periods in the birth chart section of the app.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is the difference between Mahadasha and Antardasha?</h3>
+                    <p>
+                        Mahadasha is the major planetary period lasting several years (e.g., Jupiter Mahadasha lasts 16 years). Antardasha is a sub-period within the Mahadasha — each Mahadasha contains 9 Antardashas ruled by all 9 planets in sequence. The Antardasha modifies the Mahadasha's effects. For example, during Jupiter Mahadasha, a Venus Antardasha blends Jupiter's expansion with Venus's themes of relationships and luxury.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does Dasha alone determine life events?</h3>
+                    <p>
+                        No. Dasha indicates the timing and planetary influence active in your life, but the actual results depend on how strong and well-placed those planets are in your birth chart. A Jupiter Mahadasha gives different results for someone with Jupiter exalted in Cancer versus Jupiter debilitated in Capricorn. Transits (gochar) also modify Dasha results. Om.AI considers all these factors together.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can Om.AI predict events during my current Dasha?</h3>
+                    <p>
+                        Yes. You can ask the AI specific questions about your current or upcoming Dasha periods. The AI analyzes the Dasha lord's placement, strength, and house lordship in your birth chart, overlays current transits, and provides timing-specific insights. You get an initial question included, and can earn more through daily streaks (up to 35/month), purchase question packs, or subscribe to Premium for unlimited questions.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Ddasha%26utm_campaign%3Dseo_page" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_dasha&mt=8" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

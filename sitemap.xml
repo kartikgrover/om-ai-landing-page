@@ -82,6 +82,42 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://omai.app/free-kundli-online.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/kundli-matching.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/marriage-prediction.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/career-astrology.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/dasha-calculator.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/birth-chart.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
   <url>
     <loc>https://omai.app/kundli.html</loc>
@@ -255,22 +291,62 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://omai.app/blog/why-moon-sign-matters-vedic-astrology.html</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://omai.app/blog/vedic-remedies-by-weekday.html</loc>
-    <lastmod>2026-03-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://omai.app/blog/donation-remedies-vedic-astrology.html</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
+  <!-- Newly Published Blog Posts -->
+  <url><loc>https://omai.app/blog/jupiter-transit-cancer-2026.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/rahu-ketu-transit-2026.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/saturn-retrograde-july-2026.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/mercury-retrograde-june-2026.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/solar-eclipse-august-2026.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/saturn-in-pisces-transit-2026.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/career-indicators-vedic-astrology.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/marriage-timing-vedic-astrology.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/navamsha-d9-chart-guide.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/dasha-timing-predictions.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/what-is-transit-vedic-astrology.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/rahu-ketu-shadow-planets.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/retrograde-planets-birth-chart.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/planetary-aspects-vedic-astrology.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/nakshatra-pada-explained.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/functional-benefics-malefics.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/shadbala-planetary-strength.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/yogakaraka-planet-explained.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/atmakaraka-soul-planet.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/exaltation-debilitation-planets.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/four-life-areas-horoscope.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/combustion-planets-astanga.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/bhava-chart-vs-rashi-chart.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/why-moon-sign-matters-vedic-astrology.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/planet-colors-vedic-remedies.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/vedic-remedies-by-weekday.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/donation-remedies-vedic-astrology.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/remedies-weak-planets-overview.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/venus-retrograde-october-2026.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/gana-matching-compatibility.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-aries.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-taurus.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-gemini.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-cancer.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-leo.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-virgo.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-libra.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-scorpio.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-sagittarius.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-capricorn.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-aquarius.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://omai.app/blog/jupiter-cancer-transit-pisces.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Zodiac Sign Pages -->
+  <url><loc>https://omai.app/zodiac/aries.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/taurus.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/gemini.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/cancer.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/leo.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/virgo.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/libra.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/scorpio.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/sagittarius.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/capricorn.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/aquarius.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://omai.app/zodiac/pisces.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

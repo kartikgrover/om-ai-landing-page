@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Birth Chart Analysis — Vedic Natal Chart (Janam Kundli) | Om.AI</title>
+    <meta name="description" content="Get your Vedic birth chart (Janam Kundli) calculated and interpreted by AI. See your Rashi chart, Navamsa, planetary positions, yogas, doshas & Shadbala strength — all from your date of birth.">
+    <meta name="keywords" content="ai birth chart, birth chart analysis, natal chart vedic, janam kundli, vedic birth chart, kundli by date of birth, rashi chart, navamsa chart, ai kundli analysis, birth chart interpretation">
+
+    <meta property="og:title" content="AI Birth Chart Analysis — Vedic Natal Chart (Janam Kundli) | Om.AI">
+    <meta property="og:description" content="Get your Vedic birth chart (Janam Kundli) calculated and interpreted by AI. Rashi chart, Navamsa, yogas, doshas & more.">
+    <meta property="og:url" content="https://omai.app/birth-chart.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - AI Birth Chart Analysis">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/birth-chart.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .compare-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .compare-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+        .compare-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .compare-card ul li {
+            padding: 0.4rem 0;
+            font-size: 0.95rem;
+        }
+        .compare-card ul li i {
+            width: 20px;
+            margin-right: 0.5rem;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+        .house-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .house-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.15rem 1.35rem;
+        }
+        .house-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .house-card p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "AI Birth Chart Analysis — Vedic Natal Chart (Janam Kundli) | Om.AI",
+                "description": "Get your Vedic birth chart (Janam Kundli) calculated and interpreted by AI. Rashi chart, Navamsa, planetary positions, yogas, doshas & Shadbala strength.",
+                "url": "https://omai.app/birth-chart.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is a Vedic birth chart (Janam Kundli)?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "A Vedic birth chart or Janam Kundli is a map of the sky at the exact moment of your birth, as seen from your birthplace. It shows the positions of all 9 Vedic planets (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, Ketu) across the 12 houses and 12 zodiac signs. The chart is the foundation of all Vedic astrology predictions — your personality, career, relationships, health, and life timing are all read from it."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What information do I need to generate my birth chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You need three pieces of information: your date of birth, exact time of birth, and place of birth. The time of birth is especially critical — it determines your Ascendant (Lagna), house cusps, and Moon Nakshatra. Even a few minutes difference can change the Ascendant sign, which alters the entire chart interpretation. If you don't know your exact birth time, check your birth certificate or hospital records."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is the difference between Rashi chart and Navamsa chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The Rashi chart (D1) is your main birth chart showing planetary positions in the 12 signs and houses. It reveals your overall life blueprint. The Navamsa chart (D9) divides each sign into 9 parts (3°20' each) and is used to assess the deeper strength of planets, marriage prospects, and spiritual evolution. A planet strong in the Rashi chart but weak in Navamsa may not deliver its full promise. Vedic astrologers always read both charts together."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What are yogas and doshas in a birth chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yogas are specific planetary combinations that indicate good fortune or special abilities — like Rajayoga (power and success), Dhana Yoga (wealth), or Gajakesari Yoga (wisdom and fame). Doshas are challenging combinations — like Mangal Dosha (Mars affliction affecting marriage) or Kaal Sarpa Dosha (all planets between Rahu-Ketu axis). Om.AI identifies all significant yogas and doshas in your chart automatically."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I ask the AI questions about my birth chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. After your birth chart is generated, you can ask the AI specific questions about any placement — 'What does Jupiter in my 7th house mean for marriage?', 'Why is my 10th house lord debilitated?', or 'What yogas do I have in my chart?' The AI interprets your chart using classical Vedic texts and gives personalized answers. You get an initial question included, and can earn more through daily streaks, purchase question packs, or subscribe to Premium."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is viewing my birth chart free on Om.AI?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. Generating and viewing your complete birth chart — including the Rashi chart, Navamsa chart, planetary positions, house lords, and Dasha timeline — is included with the app. The AI chat for asking interpretive questions about your chart uses Om.AI's question system: you get an initial question included, can earn up to 35 questions per month through daily reading streaks, buy question packs, or subscribe to Premium for unlimited questions."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "AI Birth Chart Analysis", "item": "https://omai.app/birth-chart.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI Birth Chart Analysis</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    Your Vedic natal chart (Janam Kundli) calculated with precision and interpreted by AI. See your planetary positions, house lords, yogas, doshas, and Dasha timeline — then ask questions about any placement.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dbirth_chart%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_birth_chart&mt=8" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What's in a Vedic Birth Chart -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What's in a Vedic Birth Chart</h2>
+                <p>
+                    A Vedic birth chart (Janam Kundli) is a map of the sky at the exact moment and location of your birth. It captures the positions of all 9 Vedic planets across the 12 zodiac signs and 12 houses, forming the foundation of every Jyotish prediction about your life.
+                </p>
+
+                <h3 class="mt-4">The Key Components</h3>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-crosshairs" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem; font-size:1.2rem;">Ascendant (Lagna)</h3>
+                        <p>The zodiac sign rising on the eastern horizon at your birth time. The Ascendant determines the layout of all 12 houses in your chart and strongly influences your personality, physical appearance, and life approach. It is the most time-sensitive element — even a few minutes can change it.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-globe" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem; font-size:1.2rem;">9 Planets (Navagraha)</h3>
+                        <p>Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu. Each planet governs specific life areas and carries unique energy. Their sign placements, house positions, and mutual aspects create the unique blueprint of your life.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-th-large" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem; font-size:1.2rem;">12 Houses (Bhavas)</h3>
+                        <p>Each house governs a specific domain of life — from personality (1st) to finances (2nd), communication (3rd), home (4th), creativity (5th), health (6th), marriage (7th), transformation (8th), fortune (9th), career (10th), gains (11th), to spirituality and losses (12th).</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-eye" style="font-size:0.9rem;" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem; font-size:1.2rem;">Aspects (Drishti)</h3>
+                        <p>In Vedic astrology, planets cast aspects on other houses and planets. Unlike Western astrology where aspects are mutual, Vedic aspects are directional. Jupiter, Mars, and Saturn have special aspects that extend their influence across multiple houses, creating additional connections in your chart.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Rashi Chart vs Navamsa -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Rashi Chart vs Navamsa Chart</h2>
+
+                <div class="comparison-row">
+                    <div class="compare-card">
+                        <h3>Rashi Chart (D1)</h3>
+                        <ul>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Main birth chart — your life blueprint</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Shows planetary positions in 12 signs</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Reveals overall personality & life themes</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Used for career, health, general predictions</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Each sign spans 30 degrees</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card">
+                        <h3>Navamsa Chart (D9)</h3>
+                        <ul>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Divisional chart — deeper planetary strength</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Divides each sign into 9 parts (3°20')</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Key for marriage & spouse analysis</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Shows spiritual evolution & dharma</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Confirms or modifies D1 predictions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="mt-4" style="color:rgba(255,255,255,0.65);">
+                    A planet that is strong in the Rashi chart but weak in the Navamsa may not deliver its full promise. Conversely, a planet weak in D1 but strong in D9 can still produce good results over time. Classical Vedic astrologers always read both charts together — and so does Om.AI.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What Om.AI Calculates -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What Om.AI Calculates</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">From your date, time, and place of birth, Om.AI computes a comprehensive set of chart data.</p>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-calculator" aria-hidden="true"></i></div>
+                            <h3>Precise Planetary Positions</h3>
+                            <p>All 9 Vedic planets calculated with arc-second precision using the Lahiri Ayanamsa. Sign, degree, Nakshatra, and Nakshatra pada for each planet.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-crown" aria-hidden="true"></i></div>
+                            <h3>House Lords & Relationships</h3>
+                            <p>Which planet rules each house, where house lords are placed, and the resulting connections between different life areas in your chart.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-gem" aria-hidden="true"></i></div>
+                            <h3>Yogas & Doshas</h3>
+                            <p>Automatic detection of beneficial yogas (Rajayoga, Dhana Yoga, Gajakesari, etc.) and challenging doshas (Mangal Dosha, Kaal Sarpa, etc.) present in your chart.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-dumbbell" aria-hidden="true"></i></div>
+                            <h3>Shadbala Strength</h3>
+                            <p>Six-fold strength analysis for each planet — positional, directional, temporal, motional, natural, and aspectual strength — to determine which planets are most powerful in your chart.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-eye" aria-hidden="true"></i></div>
+                            <h3>Planetary Aspects</h3>
+                            <p>Full Vedic aspect analysis including special aspects of Jupiter (5th and 9th), Mars (4th and 8th), and Saturn (3rd and 10th), showing which planets influence which houses.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+                            <h3>Vimshottari Dasha Timeline</h3>
+                            <p>Your complete Mahadasha, Antardasha, and Pratyantardasha timeline with exact dates — showing which planetary period is active now and what lies ahead.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How to Get Your Birth Chart -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Get Your Birth Chart</h2>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
+                        <p>Get the app from Google Play or the App Store. Setup takes under a minute.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Enter Your Birth Details</h3>
+                        <p>Provide your date of birth, exact time of birth, and place of birth. The app uses your birth coordinates and time zone to compute precise planetary positions. For the most accurate chart, use the exact time from your birth certificate.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">View Your Complete Chart</h3>
+                        <p>Your Rashi chart (D1), Navamsa chart (D9), planetary positions, house lords, yogas, doshas, Shadbala strength, and Dasha timeline are all generated instantly. Viewing your birth chart data is included with the app.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- AI Interpretation -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>AI Interpretation — Ask About Your Chart</h2>
+                <p>
+                    Once your birth chart is generated, you can ask the AI any question about your placements. The AI reads your complete chart data — planetary positions, house lords, aspects, yogas, doshas, active Dasha periods, and current transits — to give you personalized interpretations based on classical Vedic texts.
+                </p>
+
+                <h3 class="mt-4 mb-3" style="font-size:1.2rem;">Example Questions</h3>
+                <div class="house-grid">
+                    <div class="house-card">
+                        <h4>"What does my Ascendant mean?"</h4>
+                        <p>The AI explains how your rising sign shapes your personality and life approach.</p>
+                    </div>
+                    <div class="house-card">
+                        <h4>"Why is my 7th house lord in the 12th?"</h4>
+                        <p>Get a detailed reading on what this placement means for marriage and partnerships.</p>
+                    </div>
+                    <div class="house-card">
+                        <h4>"What yogas are in my chart?"</h4>
+                        <p>The AI identifies and explains all significant yogas and their effects on your life.</p>
+                    </div>
+                    <div class="house-card">
+                        <h4>"Do I have Mangal Dosha?"</h4>
+                        <p>A precise analysis of Mars placement and its impact on marriage compatibility.</p>
+                    </div>
+                    <div class="house-card">
+                        <h4>"Which planet is strongest in my chart?"</h4>
+                        <p>Shadbala-based analysis of planetary strengths and what they mean for you.</p>
+                    </div>
+                    <div class="house-card">
+                        <h4>"What career suits my chart?"</h4>
+                        <p>Career analysis based on your 10th house, its lord, and Dashamsa chart.</p>
+                    </div>
+                </div>
+
+                <p class="mt-4" style="color:rgba(255,255,255,0.65); font-size:0.95rem;">
+                    AI chart interpretation uses Om.AI's question system: you get an initial question included, can earn up to 35 questions per month through daily reading streaks, buy question packs, or subscribe to Premium for unlimited questions.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">See Your Birth Chart</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Download Om.AI and generate your complete Vedic birth chart in seconds. Your Kundli holds the map of your life — let AI help you read it.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dbirth_chart%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_birth_chart&mt=8" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI Astrology Chat
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/dasha-calculator.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> Dasha Calculator
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/career-astrology.html" class="insight-link">
+                            <i class="fas fa-briefcase" aria-hidden="true"></i> AI Career Astrology
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> Kundli & Birth Chart
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/what-is-kundli-matching-ashtakoot.html" class="insight-link">
+                            <i class="fas fa-heart" aria-hidden="true"></i> Kundli Matching Guide
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> Mahadasha Explained
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>What is a Vedic birth chart (Janam Kundli)?</h3>
+                    <p>
+                        A Vedic birth chart or Janam Kundli is a map of the sky at the exact moment of your birth, as seen from your birthplace. It shows the positions of all 9 Vedic planets across the 12 houses and 12 zodiac signs. The chart is the foundation of all Vedic astrology predictions — your personality, career, relationships, health, and life timing are all read from it.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What information do I need to generate my birth chart?</h3>
+                    <p>
+                        You need three pieces of information: your date of birth, exact time of birth, and place of birth. The time of birth is especially critical — it determines your Ascendant (Lagna), house cusps, and Moon Nakshatra. Even a few minutes difference can change the Ascendant sign, which alters the entire chart interpretation. If you don't know your exact birth time, check your birth certificate or hospital records.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is the difference between Rashi chart and Navamsa chart?</h3>
+                    <p>
+                        The Rashi chart (D1) is your main birth chart showing planetary positions in the 12 signs and houses. It reveals your overall life blueprint. The Navamsa chart (D9) divides each sign into 9 parts (3 degrees 20 minutes each) and is used to assess the deeper strength of planets, marriage prospects, and spiritual evolution. A planet strong in the Rashi chart but weak in Navamsa may not deliver its full promise. Vedic astrologers always read both charts together.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What are yogas and doshas in a birth chart?</h3>
+                    <p>
+                        Yogas are specific planetary combinations that indicate good fortune or special abilities — like Rajayoga (power and success), Dhana Yoga (wealth), or Gajakesari Yoga (wisdom and fame). Doshas are challenging combinations — like Mangal Dosha (Mars affliction affecting marriage) or Kaal Sarpa Dosha (all planets between Rahu-Ketu axis). Om.AI identifies all significant yogas and doshas in your chart automatically.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I ask the AI questions about my birth chart?</h3>
+                    <p>
+                        Yes. After your birth chart is generated, you can ask the AI specific questions about any placement. The AI interprets your chart using classical Vedic texts like Brihat Parashara Hora Shastra and Lal Kitab, and gives personalized answers. You get an initial question included, and can earn more through daily streaks (up to 35/month), purchase question packs, or subscribe to Premium for unlimited questions.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is viewing my birth chart free on Om.AI?</h3>
+                    <p>
+                        Yes. Generating and viewing your complete birth chart — including the Rashi chart, Navamsa chart, planetary positions, house lords, and Dasha timeline — is included with the app. The AI chat for asking interpretive questions about your chart uses Om.AI's question system with the initial question included, streak rewards, question packs, and Premium options.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dbirth_chart%26utm_campaign%3Dseo_page" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_birth_chart&mt=8" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
