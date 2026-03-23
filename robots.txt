@@ -7,9 +7,6 @@ Allow: /
 # Sitemap location
 Sitemap: https://omai.app/sitemap.xml
 
-# Crawl delay (optional, helps prevent server overload)
-Crawl-delay: 1
-
 # Disallow certain file types (optional)
 Disallow: /*.pdf$
 Disallow: /*.zip$

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Astrology Chat — Ask Your Birth Chart Questions | Om.AI</title>
+    <meta name="description" content="Chat with an AI astrologer trained on classical Vedic texts. Ask about career, marriage, health & finances — get answers based on your actual birth chart, not generic horoscopes.">
+    <meta name="keywords" content="AI astrology chat, AI astrologer, free astrology chat, AI astrology, ask astrologer AI, AI kundli chat, vedic astrology AI chat, astrology chat free, AI jyotish, chat with astrologer AI">
+
+    <meta property="og:title" content="AI Astrology Chat — Ask Your Birth Chart Questions | Om.AI">
+    <meta property="og:description" content="Chat with an AI astrologer trained on classical Vedic texts. Ask about career, marriage, health & finances — get answers based on your actual birth chart.">
+    <meta property="og:url" content="https://omai.app/ai-astrology-chat.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - AI Astrology Chat">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/ai-astrology-chat.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .chat-demo {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 1.5rem;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+        .chat-bubble {
+            border-radius: 12px;
+            padding: 0.85rem 1.15rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 88%;
+        }
+        .chat-user {
+            background: rgba(217,119,87,0.18);
+            border: 1px solid rgba(217,119,87,0.3);
+            color: rgba(255,255,255,0.9);
+            margin-left: auto;
+            text-align: right;
+        }
+        .chat-ai {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.82);
+        }
+        .chat-ai .ai-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #D97757;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        .topic-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .topic-card .topic-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .topic-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .topic-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .compare-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .compare-card.highlight {
+            background: rgba(217,119,87,0.08);
+            border-color: rgba(217,119,87,0.25);
+        }
+        .compare-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+        .compare-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .compare-card ul li {
+            padding: 0.4rem 0;
+            font-size: 0.95rem;
+        }
+        .compare-card ul li i {
+            width: 20px;
+            margin-right: 0.5rem;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+        .lang-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .lang-badge {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 0.3rem 0.85rem;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.65);
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "AI Astrology Chat — Ask Your Birth Chart Questions | Om.AI",
+                "description": "Chat with an AI astrologer trained on classical Vedic texts. Ask about career, marriage, health & finances — get answers based on your actual birth chart.",
+                "url": "https://omai.app/ai-astrology-chat.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How does AI astrology chat work?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI's AI astrology chat analyzes your complete birth chart — planetary positions, house placements, active Dasha periods, and current transits — when you ask a question. The AI cross-references your chart data against rules from classical Vedic texts like Brihat Parashara Hora Shastra and Lal Kitab to generate a personalized answer. Every response is specific to your unique planetary configuration, not a generic sun-sign prediction."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What can I ask the AI astrologer?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You can ask about any life area: career prospects and job changes, marriage timing and compatibility, financial decisions and investments, health concerns, education and travel, relationships, and spiritual growth. You can also ask timing questions like 'When is the best time to start a business?' or 'Will this year be good for buying property?' The AI uses your Dasha periods and upcoming transits to give date-specific guidance."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is the AI astrology chat free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI gives you an initial astrology question when you first install the app. You can earn additional questions by maintaining a daily reading streak — up to 35 questions per month through streak rewards. For unlimited questions, Om.AI offers a Premium subscription with monthly and yearly plans. Question packs are also available as one-time purchases."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What languages does the AI astrologer support?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The app interface is available in English and Hindi. The AI chat responds in whatever language you type in — so you can ask questions and receive answers in Hindi, Tamil, Telugu, Bengali, Marathi, Kannada, Gujarati, or any other language. The AI adapts to your preferred language automatically."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How is this different from generic horoscope chatbots?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Most astrology chatbots generate responses based on your Sun sign or Moon sign alone. Om.AI calculates your complete Kundli — all 9 planets across 12 houses, Navamsa (D9) chart, Vimshottari Dasha timeline, active planetary periods, and real-time transits — then uses this full chart data to answer your specific question. The AI also remembers your previous conversations, so follow-up questions build on earlier readings rather than starting from scratch."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does the AI astrologer give remedies?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes, Om.AI provides personalized Vedic remedies based on your birth chart. These include gemstone recommendations, specific mantras for weak or afflicted planets, ritual suggestions, charitable acts (daan), and optimal timing for performing remedies. Remedies are drawn from classical texts including Lal Kitab and BPHS, and are tailored to your specific planetary configuration. Personalized remedies are available with Premium."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "AI Astrology Chat", "item": "https://omai.app/ai-astrology-chat.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI Astrology Chat</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    Ask questions about your career, marriage, health, or finances and get answers based on your actual birth chart — not a generic horoscope. Om.AI's AI reads your Kundli like a classical Jyotishi.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dai_chat%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_ai_chat&mt=8" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Chat Demo -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-2">See How It Works</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.6);">A real conversation with Om.AI's astrology chat.</p>
+
+                <div class="chat-demo">
+                    <div class="chat-bubble chat-user">
+                        Will this year be good for a career change?
+                    </div>
+                    <div class="chat-bubble chat-ai">
+                        <div class="ai-label">Om.AI</div>
+                        Your 10th house lord Mercury is currently in its Mahadasha, and Jupiter is transiting your 10th house starting June 2026. This is a strong window for career growth. The transit will be most favorable between June and October when Jupiter aspects your natal Sun in the 2nd house, supporting both recognition and income. However, avoid initiating changes during the Rahu-Mercury antardasha from August 15–September 22, as decision clarity may be lower during that period. The best muhurta for a career move falls in the first two weeks of July.
+                    </div>
+                    <div class="chat-bubble chat-user">
+                        What about my finances during that period?
+                    </div>
+                    <div class="chat-bubble chat-ai">
+                        <div class="ai-label">Om.AI</div>
+                        Since your 2nd house lord Venus is well-placed in the 11th house and Jupiter's transit aspects it, finances should remain stable even during a transition. Your Dhana Yoga (2nd–11th lord connection) activates strongly in July. One caution: Saturn aspects your 2nd house until April 2027, so avoid speculative investments — steady income sources are favored over high-risk bets.
+                    </div>
+                </div>
+
+                <p class="text-center mt-3" style="color:rgba(255,255,255,0.45); font-size:0.85rem;">
+                    Every response is personalized to your birth chart, Dasha periods, and current transits.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What You Can Ask -->
+        <section class="content-section">
+            <div class="container" style="max-width:960px;">
+                <h2 class="text-center mb-4">What You Can Ask</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-briefcase" aria-hidden="true"></i></div>
+                        <h4>Career</h4>
+                        <p>Job changes, promotions, business timing, ideal profession</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                        <h4>Love & Marriage</h4>
+                        <p>Marriage timing, partner traits, relationship outlook</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-wallet" aria-hidden="true"></i></div>
+                        <h4>Money & Wealth</h4>
+                        <p>Financial periods, investments, property decisions</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-heartbeat" aria-hidden="true"></i></div>
+                        <h4>Health</h4>
+                        <p>Health-sensitive periods, wellness focus areas</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                        <h4>Education</h4>
+                        <p>Study timing, exam prospects, higher education</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-plane" aria-hidden="true"></i></div>
+                        <h4>Travel & Relocation</h4>
+                        <p>Foreign travel, moving abroad, settlement</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-om" aria-hidden="true"></i></div>
+                        <h4>Spirituality</h4>
+                        <p>Spiritual growth, meditation, dharmic path</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+                        <h4>Timing & Muhurta</h4>
+                        <p>Best dates for events, auspicious windows</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How the AI Reads Your Chart -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How the AI Reads Your Chart</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Om.AI doesn't generate vague predictions from templates. Here's what happens when you ask a question.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Calculates Your Kundli</h3>
+                        <p>Using your birth date, time, and location, the app computes precise planetary positions for all 9 Vedic planets (Navagraha) across the 12 houses, including your Rashi chart (D1) and Navamsa chart (D9). Positions are calculated with arc-second precision using the Lahiri Ayanamsa.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Analyzes Your Dashas & Transits</h3>
+                        <p>The AI identifies your current Vimshottari Mahadasha and Antardasha periods, then overlays today's planetary transits on your birth chart. For timing questions, it scans upcoming transits to find significant dates relevant to your question.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Applies Classical Jyotish Rules</h3>
+                        <p>Your chart data is interpreted through rules from Brihat Parashara Hora Shastra, Lal Kitab, KP System, and Uttara Kalamrita. The AI checks for yogas, doshas, planetary strengths (Shadbala), house-lord relationships, and aspects — the same analysis a seasoned Jyotishi would perform.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">4</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Generates a Personalized Answer</h3>
+                        <p>The AI synthesizes all of this into a clear, specific answer to your question — with dates, planetary references, and practical guidance. It remembers your previous conversations, so follow-up questions build on earlier readings.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Om.AI vs Generic Apps -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">What Makes Om.AI Different</h2>
+
+                <div class="comparison-row">
+                    <div class="compare-card">
+                        <h3 style="color:rgba(255,255,255,0.5);">Generic Horoscope Apps</h3>
+                        <ul>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> Same prediction for millions of people</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> Based on Sun sign only</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> Pre-written template paragraphs</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> No chart calculation</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> Cannot ask follow-up questions</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> No timing predictions</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card highlight">
+                        <h3>Om.AI</h3>
+                        <ul>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Unique answer for every birth chart</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Full Kundli: 9 planets, 12 houses, D1 + D9</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> AI interprets classical Vedic texts</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Precision astronomical calculations</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Conversational — remembers context</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> Specific dates from Dasha + transits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Language Support -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-3">Ask in Any Language</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:600px; margin:0 auto;">
+                    The app interface is in English and Hindi. The AI chat responds in whatever language you write in.
+                </p>
+                <div class="lang-badges">
+                    <span class="lang-badge">English</span>
+                    <span class="lang-badge">हिन्दी</span>
+                    <span class="lang-badge">தமிழ்</span>
+                    <span class="lang-badge">తెలుగు</span>
+                    <span class="lang-badge">বাংলা</span>
+                    <span class="lang-badge">मराठी</span>
+                    <span class="lang-badge">ಕನ್ನಡ</span>
+                    <span class="lang-badge">ગુજરાતી</span>
+                    <span class="lang-badge">ਪੰਜਾਬੀ</span>
+                    <span class="lang-badge">മലയാളം</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Pricing / How to Get Questions -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">How to Get Started</h2>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-gift" aria-hidden="true"></i></div>
+                            <h3>Try It Out</h3>
+                            <p>
+                                Download Om.AI and get your first astrology question included. Enter your birth details, ask anything about your chart, and see how the AI analyzes your specific planetary positions. No credit card required.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
+                            <h3>Earn With Streaks</h3>
+                            <p>
+                                Read your daily horoscope or Gita verse to build a reading streak. Hit milestones at 3, 7, 14, 21, 30, 45, and 60 days to earn additional questions — up to 35 per month. A consistent daily practice rewards you with deeper chart insights.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-shopping-bag" aria-hidden="true"></i></div>
+                            <h3>Question Packs</h3>
+                            <p>
+                                Need a few more questions without a subscription? One-time question packs are available starting at just a few rupees per question. Buy what you need, no recurring charges.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-crown" aria-hidden="true"></i></div>
+                            <h3>Premium — Unlimited Questions</h3>
+                            <p>
+                                For serious seekers. Premium unlocks unlimited astrology and scripture questions, personalized daily remedies, tomorrow's horoscope, monthly forecasts, Lagna timing, and Dasha transition alerts. Monthly and yearly plans available.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Ask Your Chart a Question</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Download Om.AI, enter your birth details, and ask your first question. Your Kundli holds the answers — let AI help you read it.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dai_chat%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_ai_chat&mt=8" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/ai-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> How AI Vedic Astrology Works
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> Kundli & Birth Chart
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/horoscope.html" class="insight-link">
+                            <i class="fas fa-sun" aria-hidden="true"></i> Daily Horoscope
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/what-is-kundli-matching-ashtakoot.html" class="insight-link">
+                            <i class="fas fa-heart" aria-hidden="true"></i> Kundli Matching Guide
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> Mahadasha Explained
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/sade-sati-explained.html" class="insight-link">
+                            <i class="fas fa-moon" aria-hidden="true"></i> Sade Sati Guide
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>How does AI astrology chat work?</h3>
+                    <p>
+                        Om.AI's AI astrology chat analyzes your complete birth chart — planetary positions, house placements, active Dasha periods, and current transits — when you ask a question. The AI cross-references your chart data against rules from classical Vedic texts like Brihat Parashara Hora Shastra and Lal Kitab to generate a personalized answer. Every response is specific to your unique planetary configuration, not a generic sun-sign prediction.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What can I ask the AI astrologer?</h3>
+                    <p>
+                        You can ask about any life area: career prospects and job changes, marriage timing and compatibility, financial decisions, health concerns, education, travel, relationships, and spiritual growth. You can also ask timing questions like "When is the best time to start a business?" or "Will this year be good for buying property?" The AI uses your Dasha periods and upcoming transits to give date-specific guidance.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is the AI astrology chat free?</h3>
+                    <p>
+                        Om.AI includes an initial astrology question when you first install the app. You can earn additional questions through a daily reading streak — up to 35 questions per month by reading your horoscope or Gita verse daily. For unlimited questions, Om.AI offers Premium subscriptions (monthly or yearly). One-time question packs are also available.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What languages does the AI astrologer support?</h3>
+                    <p>
+                        The app interface is available in English and Hindi. The AI chat responds in whatever language you type in — Hindi, Tamil, Telugu, Bengali, Marathi, Kannada, Gujarati, Punjabi, Malayalam, or any other language. The AI adapts automatically.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How is this different from generic horoscope chatbots?</h3>
+                    <p>
+                        Most astrology chatbots generate responses based on your Sun sign or Moon sign alone — the same answer for millions of people born under the same sign. Om.AI calculates your complete Kundli: all 9 planets across 12 houses, Navamsa (D9) chart, Vimshottari Dasha timeline, active planetary periods, and real-time transits. It uses this full chart data to answer your specific question. The AI also remembers your conversation history, so follow-up questions build on earlier readings.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does the AI astrologer give remedies?</h3>
+                    <p>
+                        Yes. With Premium, Om.AI provides personalized Vedic remedies based on your birth chart — gemstone recommendations, specific mantras for weak or afflicted planets, ritual suggestions, charitable acts, and optimal timing for performing remedies. Remedies are drawn from classical texts including Lal Kitab and BPHS, tailored to your specific planetary configuration.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dai_chat%26utm_campaign%3Dseo_page" class="text-white-50">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_ai_chat&mt=8" class="text-white-50">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
