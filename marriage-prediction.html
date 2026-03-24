@@ -33,7 +33,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="/styles/styles.min.css?v=64">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -297,7 +298,7 @@
                         "name": "Is this marriage prediction free?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "You can ask Om.AI's AI about your marriage timing using your question credits. You get 1 initial question when you install the app, and can earn up to 35 questions per month through daily reading streaks. Question packs and Premium subscriptions (with unlimited questions) are also available. For a detailed compatibility report with a specific partner, those start at ₹49."
+                            "text": "You can ask Om.AI's AI about your marriage timing using your question credits. You get 1 initial question when you install the app, and can earn additional questions by maintaining a daily reading streak — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days. Question packs and Premium subscriptions (with unlimited questions) are also available. Detailed compatibility reports with a specific partner are free for all users."
                         }
                     },
                     {
@@ -321,7 +322,7 @@
                         "name": "Can I also check compatibility with a specific person?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. Om.AI offers detailed Kundli matching with Ashtakoot compatibility analysis — a 36-point matching system that evaluates temperament, emotional bonding, physical compatibility, and more. Compatibility reports also include Manglik Dosha check, Nadi Dosha analysis, and Navamsa compatibility. Reports start at ₹49 for a single match."
+                            "text": "Yes. Om.AI offers detailed Kundli matching with Ashtakoot compatibility analysis — a 36-point matching system that evaluates temperament, emotional bonding, physical compatibility, and more. Compatibility reports also include Manglik Dosha check, Nadi Dosha analysis, and Navamsa compatibility. Reports are free for all users."
                         }
                     }
                 ]
@@ -470,7 +471,7 @@
                     When you ask about marriage timing, the AI examines these specific factors in your birth chart.
                 </p>
 
-                <div class="row">
+                <div class="row g-4">
                     <div class="col-md-6">
                         <div class="feature-card">
                             <div class="feature-icon"><i class="fas fa-search" aria-hidden="true"></i></div>
@@ -614,7 +615,7 @@
                 <div class="feature-card" style="background:rgba(217,119,87,0.06); border-color:rgba(217,119,87,0.2);">
                     <h3 style="font-size:1.1rem;"><i class="fas fa-info-circle me-2" aria-hidden="true"></i>About Question Credits</h3>
                     <p style="margin-bottom:0;">
-                        You get 1 initial question when you install Om.AI. Earn more through daily reading streaks — up to 35 questions per month. One-time question packs and Premium subscriptions (with unlimited questions) are also available.
+                        You get 1 initial question when you install Om.AI. Earn additional questions through daily reading streaks — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days for bonus questions. One-time question packs and Premium subscriptions (with unlimited questions) are also available.
                     </p>
                 </div>
             </div>
@@ -722,7 +723,7 @@
                 <div class="faq-item">
                     <h3>Is this marriage prediction free?</h3>
                     <p>
-                        You can ask Om.AI's AI about your marriage timing using your question credits. You get 1 initial question when you install the app, and can earn up to 35 questions per month through daily reading streaks. Question packs and Premium subscriptions (with unlimited questions) are also available. For a detailed compatibility report with a specific partner, those start at &#8377;49.
+                        You can ask Om.AI's AI about your marriage timing using your question credits. You get 1 initial question when you install the app, and can earn additional questions by maintaining a daily reading streak — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days. Question packs and Premium subscriptions (with unlimited questions) are also available. Detailed compatibility reports with a specific partner are free for all users.
                     </p>
                 </div>
 
@@ -743,7 +744,7 @@
                 <div class="faq-item">
                     <h3>Can I also check compatibility with a specific person?</h3>
                     <p>
-                        Yes. Om.AI offers detailed Kundli matching with Ashtakoot compatibility analysis — a 36-point matching system that evaluates temperament, emotional bonding, physical compatibility, and more. Compatibility reports also include Manglik Dosha check, Nadi Dosha analysis, and Navamsa compatibility. Reports start at &#8377;49 for a single match. <a href="/kundli-matching.html" style="color:#D97757;">Learn more about Kundli Matching</a>.
+                        Yes. Om.AI offers detailed Kundli matching with Ashtakoot compatibility analysis — a 36-point matching system that evaluates temperament, emotional bonding, physical compatibility, and more. Compatibility reports also include Manglik Dosha check, Nadi Dosha analysis, and Navamsa compatibility. Reports are free for all users. <a href="/kundli-matching.html" style="color:#D97757;">Learn more about Kundli Matching</a>.
                     </p>
                 </div>
             </div>
@@ -813,7 +814,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 
 </html>

@@ -33,7 +33,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="/styles/styles.min.css?v=64">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -285,7 +286,7 @@
                         "name": "Is the Kundli chart free on Om.AI?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. Viewing your D1 Rashi chart (birth chart) with all planetary positions is completely free on Om.AI. You can see all 9 planets, their house placements, sign positions, and degree information at no cost. Today's planetary positions and daily horoscope scores are also free. AI-powered chart analysis questions start with 1 included question, and you can earn up to 35 additional questions per month through daily reading streaks."
+                            "text": "Yes. Viewing your D1 Rashi chart (birth chart) with all planetary positions is completely free on Om.AI. You can see all 9 planets, their house placements, sign positions, and degree information at no cost. Today's planetary positions and daily horoscope scores are also free. AI-powered chart analysis questions start with 1 included question, and you can earn additional questions through daily reading streaks — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days."
                         }
                     },
                     {
@@ -573,7 +574,7 @@
                     Seeing your chart is one thing. Understanding what it means for your career, relationships, health, and finances is another. That is where the AI comes in.
                 </p>
 
-                <div class="row">
+                <div class="row g-4">
                     <div class="col-md-6 mb-4">
                         <div class="feature-card">
                             <div class="feature-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
@@ -641,7 +642,7 @@
                         <div class="pricing-card">
                             <h3><i class="fas fa-fire me-2" style="color:#D97757;" aria-hidden="true"></i>Earn With Streaks</h3>
                             <p style="margin-top:0.75rem;">
-                                Read your daily horoscope or Gita verse to build a reading streak. Hit milestones at 3, 7, 14, 21, 30, 45, and 60 days to earn additional AI questions — up to <strong style="color:#fff;">35 questions per month</strong> through consistent daily reading.
+                                Read your daily horoscope or Gita verse to build a reading streak. Hit milestones at 3, 7, 14, 21, 30, 45, and 60 days to earn additional AI questions — <strong style="color:#fff;">each milestone rewards you with more questions</strong>.
                             </p>
                         </div>
                     </div>
@@ -768,7 +769,7 @@
                 <div class="faq-item">
                     <h3>Is the Kundli chart free on Om.AI?</h3>
                     <p>
-                        Yes. Viewing your D1 Rashi chart with all planetary positions is completely free. You can see all 9 planets, their house placements, sign positions, and degree information at no cost. Today's planetary positions and daily horoscope scores are also free. AI-powered chart analysis starts with 1 included question, and you can earn up to 35 more per month through daily reading streaks. For unlimited analysis, question packs and Premium subscriptions are available.
+                        Yes. Viewing your D1 Rashi chart with all planetary positions is completely free. You can see all 9 planets, their house placements, sign positions, and degree information at no cost. Today's planetary positions and daily horoscope scores are also free. AI-powered chart analysis starts with 1 included question, and you can earn additional questions through daily reading streaks — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days. For unlimited analysis, question packs and Premium subscriptions are available.
                     </p>
                 </div>
 
@@ -873,7 +874,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 
 </html>

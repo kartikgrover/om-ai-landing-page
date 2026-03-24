@@ -45,8 +45,9 @@
 
     <!-- Note: Video preload removed - 30MB is too large for preload -->
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS (non-blocking: load async, apply on load) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="/styles/styles.min.css?v=64">
@@ -170,7 +171,7 @@
                 "name": "What's included in Premium?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn up to 35 additional questions per month through a daily reading streak. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription."
+                    "text": "Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn additional questions through daily reading streaks — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days for bonus questions. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription."
                 }
             },
             {
@@ -742,7 +743,7 @@
                 <div class="col-lg-6 col-md-8">
                     <div class="demo-chat">
                         <div class="demo-chat-header">
-                            <img src="/assets/logo.webp" alt="Om.AI astrology chatbot" width="28" height="28">
+                            <img src="/assets/logo.webp" alt="Om.AI astrology chatbot" width="28" height="28" loading="lazy">
                             <span>Om.AI</span>
                             <span class="demo-badge">Demo</span>
                         </div>
@@ -1190,7 +1191,7 @@
             <div class="row justify-content-center mb-4">
                 <div class="col-lg-8 text-center">
                     <h2 class="section-title">Earn Questions with Daily Streaks</h2>
-                    <p class="text-secondary">Read your horoscope or Gita verse daily and earn astrology questions as rewards — up to 35 per month.</p>
+                    <p class="text-secondary">Build a daily practice, get rewarded with questions at each milestone.</p>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -1232,7 +1233,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-center mt-3" style="color:rgba(255,255,255,0.45); font-size:0.88rem;">Build a daily practice, get rewarded. Streaks reset monthly — milestones stack up to 35 questions/month.</p>
+                    <p class="text-center mt-3" style="color:rgba(255,255,255,0.45); font-size:0.88rem;">Build a daily practice, get rewarded. Read your horoscope or Gita verse daily to hit milestones and earn questions.</p>
                 </div>
             </div>
         </div>
@@ -1264,7 +1265,7 @@
                         </div>
                         <div class="faq-item" role="listitem">
                             <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-4">What's included in Premium?</button>
-                            <div class="faq-answer" id="faq-4" role="region">Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn up to 35 additional questions per month through a daily reading streak. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription.</div>
+                            <div class="faq-answer" id="faq-4" role="region">Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn additional questions through daily reading streaks — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days for bonus questions. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription.</div>
                         </div>
                         <div class="faq-item" role="listitem">
                             <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-5">How much does it cost? What's the refund policy?</button>
@@ -1422,18 +1423,28 @@
 
     <!-- FAQ Toggle Script -->
     <script>
-    // Use event delegation for FAQ — single listener instead of one per item
-    var faqSection = document.querySelector('.faq-section') || document.body;
+    // Use event delegation for FAQ — single listener, minimal DOM work
+    var faqSection = document.getElementById('faqAccordion') || document.body;
+    var currentOpenFaq = null;
     faqSection.addEventListener('click', function(e) {
         var btn = e.target.closest('[data-toggle="faq"]');
         if (!btn) return;
         var item = btn.parentElement;
         var isOpen = item.classList.contains('faq-open');
-        document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('faq-open'); });
-        document.querySelectorAll('[data-toggle="faq"]').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
+        // Close only the currently open item (avoid looping all items)
+        if (currentOpenFaq && currentOpenFaq !== item) {
+            currentOpenFaq.classList.remove('faq-open');
+            var prevBtn = currentOpenFaq.querySelector('[data-toggle="faq"]');
+            if (prevBtn) prevBtn.setAttribute('aria-expanded', 'false');
+        }
         if (!isOpen) {
             item.classList.add('faq-open');
             btn.setAttribute('aria-expanded', 'true');
+            currentOpenFaq = item;
+        } else {
+            item.classList.remove('faq-open');
+            btn.setAttribute('aria-expanded', 'false');
+            currentOpenFaq = null;
         }
     });
     </script>
@@ -1504,21 +1515,26 @@
                     }
                 });
 
-                // Track progress milestones
+                // Track progress milestones (throttled to avoid main thread jank)
+                var lastTimeCheck = 0;
                 heroVideo.addEventListener('timeupdate', () => {
-                    const progress = (heroVideo.currentTime / heroVideo.duration) * 100;
+                    // Only check every 2 seconds to reduce main thread work
+                    var now = heroVideo.currentTime;
+                    if (now - lastTimeCheck < 2) return;
+                    lastTimeCheck = now;
+                    // Stop listening once all milestones tracked
+                    if (videoTracked.threeQuarter) return;
+                    const progress = (now / heroVideo.duration) * 100;
 
-                    if (progress >= 25 && !videoTracked.quarter) {
-                        trackVideo('25_percent');
-                        videoTracked.quarter = true;
-                    }
-                    if (progress >= 50 && !videoTracked.half) {
-                        trackVideo('50_percent');
-                        videoTracked.half = true;
-                    }
                     if (progress >= 75 && !videoTracked.threeQuarter) {
                         trackVideo('75_percent');
                         videoTracked.threeQuarter = true;
+                    } else if (progress >= 50 && !videoTracked.half) {
+                        trackVideo('50_percent');
+                        videoTracked.half = true;
+                    } else if (progress >= 25 && !videoTracked.quarter) {
+                        trackVideo('25_percent');
+                        videoTracked.quarter = true;
                     }
                 });
             }

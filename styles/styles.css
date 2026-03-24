@@ -4921,3 +4921,24 @@ img[loading="lazy"] {
 .cross-link .cl-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
 
 .loading-state { text-align: center; padding: 3rem; color: rgba(255,255,255,0.6); }
+
+/* INP optimization: skip rendering for off-screen sections until they scroll near viewport */
+#features,
+#free-tools,
+#how-it-works,
+#try-demo,
+#comparison,
+#testimonials,
+#faq,
+#from-the-blog {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+}
+
+/* Feature card hover via CSS instead of JS (avoids forced style recalculation) */
+.feature-card {
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0.13, 1);
+}
+.feature-card:hover {
+    transform: translateY(-12px) scale(1.02);
+}

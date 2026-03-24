@@ -33,7 +33,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="/styles/styles.min.css?v=64">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -269,7 +270,7 @@
                         "name": "Is viewing my birth chart free on Om.AI?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. Generating and viewing your complete birth chart — including the Rashi chart, Navamsa chart, planetary positions, house lords, and Dasha timeline — is included with the app. The AI chat for asking interpretive questions about your chart uses Om.AI's question system: you get an initial question included, can earn up to 35 questions per month through daily reading streaks, buy question packs, or subscribe to Premium for unlimited questions."
+                            "text": "Yes. Generating and viewing your complete birth chart — including the Rashi chart, Navamsa chart, planetary positions, house lords, and Dasha timeline — is included with the app. The AI chat for asking interpretive questions about your chart uses Om.AI's question system: you get an initial question included, can earn additional questions through daily reading streaks (milestones at 3, 7, 14, 21, 30, 45, and 60 days), buy question packs, or subscribe to Premium for unlimited questions."
                         }
                     }
                 ]
@@ -453,7 +454,7 @@
                 <h2>What Om.AI Calculates</h2>
                 <p class="mb-4" style="color:rgba(255,255,255,0.65);">From your date, time, and place of birth, Om.AI computes a comprehensive set of chart data.</p>
 
-                <div class="row">
+                <div class="row g-4">
                     <div class="col-md-6">
                         <div class="feature-card">
                             <div class="feature-icon"><i class="fas fa-calculator" aria-hidden="true"></i></div>
@@ -572,7 +573,7 @@
                 </div>
 
                 <p class="mt-4" style="color:rgba(255,255,255,0.65); font-size:0.95rem;">
-                    AI chart interpretation uses Om.AI's question system: you get an initial question included, can earn up to 35 questions per month through daily reading streaks, buy question packs, or subscribe to Premium for unlimited questions.
+                    AI chart interpretation uses Om.AI's question system: you get an initial question included, can earn additional questions through daily reading streaks (milestones at 3, 7, 14, 21, 30, 45, and 60 days), buy question packs, or subscribe to Premium for unlimited questions.
                 </p>
             </div>
         </section>
@@ -679,7 +680,7 @@
                 <div class="faq-item">
                     <h3>Can I ask the AI questions about my birth chart?</h3>
                     <p>
-                        Yes. After your birth chart is generated, you can ask the AI specific questions about any placement. The AI interprets your chart using classical Vedic texts like Brihat Parashara Hora Shastra and Lal Kitab, and gives personalized answers. You get an initial question included, and can earn more through daily streaks (up to 35/month), purchase question packs, or subscribe to Premium for unlimited questions.
+                        Yes. After your birth chart is generated, you can ask the AI specific questions about any placement. The AI interprets your chart using classical Vedic texts like Brihat Parashara Hora Shastra and Lal Kitab, and gives personalized answers. You get an initial question included, and can earn additional questions through daily reading streaks. Question packs and Premium subscriptions (with unlimited questions) are also available.
                     </p>
                 </div>
 
@@ -756,7 +757,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 
 </html>

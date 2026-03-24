@@ -458,36 +458,44 @@ function updateCarouselDots(sectionId, row, originalCardCount) {
 }
 
 function initializeExistingFeatures() {
-    // Back to Top Button
+    // Back to Top Button + Navbar scroll effect (combined into single passive listener)
     const backToTopButton = document.getElementById('backToTop');
-    if (backToTopButton) {
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-
-        backToTopButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
-    // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
-    if (navbar) {
+    if (backToTopButton || navbar) {
+        let scrollTicking = false;
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+            if (!scrollTicking) {
+                requestAnimationFrame(function() {
+                    const scrollY = window.pageYOffset;
+                    if (backToTopButton) {
+                        if (scrollY > 300) {
+                            backToTopButton.classList.add('show');
+                        } else {
+                            backToTopButton.classList.remove('show');
+                        }
+                    }
+                    if (navbar) {
+                        if (scrollY > 50) {
+                            navbar.classList.add('scrolled');
+                        } else {
+                            navbar.classList.remove('scrolled');
+                        }
+                    }
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
             }
-        });
+        }, { passive: true });
+
+        if (backToTopButton) {
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
     }
 
     // Smooth scrolling for navigation links (exclude smart-download)
@@ -507,16 +515,7 @@ function initializeExistingFeatures() {
     // Modern Section Animation System
     initializeSectionAnimations();
 
-    // Feature card hover effects
-    document.querySelectorAll('.feature-card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-12px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
+    // Feature card hover effects — handled via CSS transitions to avoid JS style recalc
 
 
 }

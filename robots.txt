@@ -1,18 +1,16 @@
 # Om.AI Robots.txt
-# Updated: February 24, 2026
+# Updated: March 24, 2026
 
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://omai.app/sitemap.xml
-
-# Disallow certain file types (optional)
-Disallow: /*.pdf$
-Disallow: /*.zip$
+# Disallow non-public directories
+Disallow: /node_modules/
 Disallow: /blog/drafts/
 
-# Allow important directories
-Allow: /assets/
-Allow: /styles/
-Allow: /scripts/
+# Disallow certain file types
+Disallow: /*.pdf$
+Disallow: /*.zip$
+
+# Sitemap location
+Sitemap: https://omai.app/sitemap.xml

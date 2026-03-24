@@ -33,7 +33,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="/styles/styles.min.css?v=64">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -184,7 +185,7 @@
                         "name": "Is Om.AI free?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Om.AI offers daily horoscopes, Panchang, and Gita Verse of the Day on the website at no cost. The mobile app includes birth chart generation, today's planetary positions, daily horoscope scores, and an initial AI astrology question. You can earn up to 35 additional questions per month by maintaining a daily reading streak. Premium features like unlimited AI questions, personalized remedies, tomorrow's horoscope, month-ahead forecasts, Lagna timing, and Dasha transition alerts are available through a subscription. One-time question packs are also available."
+                            "text": "Om.AI offers daily horoscopes, Panchang, and Gita Verse of the Day on the website at no cost. The mobile app includes birth chart generation, today's planetary positions, daily horoscope scores, and an initial AI astrology question. You can earn additional questions by maintaining a daily reading streak — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days. Premium features like unlimited AI questions, personalized remedies, tomorrow's horoscope, month-ahead forecasts, Lagna timing, and Dasha transition alerts are available through a subscription. One-time question packs are also available."
                         }
                     },
                     {
@@ -479,7 +480,7 @@
                 <div class="faq-item">
                     <h3>Is Om.AI free?</h3>
                     <p>
-                        Om.AI offers daily Vedic horoscopes for all 12 Moon signs, today's Panchang with Tithi, Nakshatra, and Rahu Kalam, and the Gita Verse of the Day on the website at no cost. The mobile app includes birth chart generation, today's planetary positions, daily horoscope scores, and an initial AI astrology question. You can earn up to 35 additional questions per month through a daily reading streak. Premium features like unlimited AI questions, personalized remedies, tomorrow's horoscope, month-ahead forecasts, Lagna timing, and Dasha transition alerts are available through a subscription. One-time question packs are also available.
+                        Om.AI offers daily Vedic horoscopes for all 12 Moon signs, today's Panchang with Tithi, Nakshatra, and Rahu Kalam, and the Gita Verse of the Day on the website at no cost. The mobile app includes birth chart generation, today's planetary positions, daily horoscope scores, and an initial AI astrology question. You can earn additional questions by maintaining a daily reading streak — hit milestones at 3, 7, 14, 21, 30, 45, and 60 days. Premium features like unlimited AI questions, personalized remedies, tomorrow's horoscope, month-ahead forecasts, Lagna timing, and Dasha transition alerts are available through a subscription. One-time question packs are also available.
                     </p>
                 </div>
 
@@ -563,7 +564,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 
 </html>

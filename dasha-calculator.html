@@ -33,7 +33,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="/styles/styles.min.css?v=64">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -687,7 +688,7 @@
                 <div class="faq-item">
                     <h3>Can Om.AI predict events during my current Dasha?</h3>
                     <p>
-                        Yes. You can ask the AI specific questions about your current or upcoming Dasha periods. The AI analyzes the Dasha lord's placement, strength, and house lordship in your birth chart, overlays current transits, and provides timing-specific insights. You get an initial question included, and can earn more through daily streaks (up to 35/month), purchase question packs, or subscribe to Premium for unlimited questions.
+                        Yes. You can ask the AI specific questions about your current or upcoming Dasha periods. The AI analyzes the Dasha lord's placement, strength, and house lordship in your birth chart, overlays current transits, and provides timing-specific insights. You get an initial question included, and can earn additional questions through daily reading streaks. Question packs and Premium subscriptions (with unlimited questions) are also available.
                     </p>
                 </div>
             </div>
@@ -757,7 +758,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 
 </html>

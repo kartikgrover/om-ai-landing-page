@@ -33,7 +33,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="/styles/styles.min.css?v=64">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
@@ -254,7 +255,7 @@
                         "name": "How much does Kundli matching cost on Om.AI?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Compatibility reports on Om.AI start at just ₹49 for a single report. Multi-report packs are also available: 3 reports for ₹89 and 5 reports for ₹149. These are one-time purchases with no subscription required. Premium subscribers get additional benefits across all Om.AI features."
+                            "text": "Compatibility reports on Om.AI are completely free. Every user gets access to the full detailed report — including the 36-point Ashtakoot analysis, Manglik and Nadi Dosha checks, Navamsa compatibility, and Dasha alignment — at no cost. Just enter both partners' birth details and get your report instantly."
                         }
                     },
                     {
@@ -445,7 +446,7 @@
                     Most apps stop at the 36-point score. Om.AI goes deeper with a multi-layered compatibility analysis.
                 </p>
 
-                <div class="row">
+                <div class="row g-4">
                     <div class="col-md-6 mb-3">
                         <div class="beyond-card">
                             <div class="beyond-icon"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></div>
@@ -507,8 +508,8 @@
                 <div class="how-step">
                     <div class="step-num">3</div>
                     <div>
-                        <h3 style="margin-bottom:0.35rem;">Purchase & View Your Report</h3>
-                        <p>Get your detailed compatibility report with the full 36-point breakdown, dosha analysis, Navamsa compatibility, and Dasha alignment. Reports start at just ₹49.</p>
+                        <h3 style="margin-bottom:0.35rem;">Get Your Report</h3>
+                        <p>View your detailed compatibility report with the full 36-point breakdown, dosha analysis, Navamsa compatibility, and Dasha alignment — completely free.</p>
                     </div>
                 </div>
             </div>
@@ -516,36 +517,22 @@
 
         <hr class="divider">
 
-        <!-- Pricing -->
+        <!-- Free Report -->
         <section class="content-section">
             <div class="container" style="max-width:860px;">
-                <h2 class="text-center mb-4">Compatibility Report Pricing</h2>
+                <h2 class="text-center mb-4">Free Compatibility Report</h2>
 
                 <div class="row justify-content-center">
-                    <div class="col-md-4 mb-3">
-                        <div class="pricing-highlight">
-                            <div class="price-label">Single Report</div>
-                            <div class="price">&#8377;49</div>
-                            <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:0;">One detailed compatibility analysis</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="pricing-highlight">
-                            <div class="price-label">3-Report Pack</div>
-                            <div class="price">&#8377;89</div>
-                            <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:0;">~&#8377;30 per report</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="pricing-highlight">
-                            <div class="price-label">5-Report Pack</div>
-                            <div class="price">&#8377;149</div>
-                            <p style="font-size:0.9rem; color:rgba(255,255,255,0.6); margin-bottom:0;">~&#8377;30 per report</p>
+                    <div class="col-md-8">
+                        <div class="pricing-highlight text-center">
+                            <div class="price-label">Detailed Compatibility Report</div>
+                            <div class="price">Free</div>
+                            <p style="font-size:0.95rem; color:rgba(255,255,255,0.7); margin-bottom:0;">Full 36-point Ashtakoot analysis, Manglik & Nadi Dosha checks, Navamsa compatibility, and Dasha alignment — included free with the app.</p>
                         </div>
                     </div>
                 </div>
                 <p class="text-center mt-3" style="color:rgba(255,255,255,0.5); font-size:0.9rem;">
-                    One-time purchase. No subscription required. Multi-report packs are ideal if you're comparing multiple matches.
+                    No purchase required. Check compatibility with as many partners as you like.
                 </p>
             </div>
         </section>
@@ -645,7 +632,7 @@
                 <div class="faq-item">
                     <h3>How much does Kundli matching cost on Om.AI?</h3>
                     <p>
-                        Compatibility reports on Om.AI start at just &#8377;49 for a single report. Multi-report packs are also available: 3 reports for &#8377;89 and 5 reports for &#8377;149. These are one-time purchases with no subscription required. Multi-report packs are ideal if you're comparing multiple prospective matches.
+                        Compatibility reports on Om.AI are completely free. Every user gets access to the full detailed report — including the 36-point Ashtakoot analysis, Manglik and Nadi Dosha checks, Navamsa compatibility, and Dasha alignment — at no cost. Just enter both partners' birth details and get your report instantly.
                     </p>
                 </div>
 
@@ -743,7 +730,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 
 </html>
