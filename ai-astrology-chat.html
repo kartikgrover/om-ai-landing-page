@@ -888,14 +888,19 @@
         // Mark as animation-ready (hides bubbles via CSS)
         demo.classList.add('has-animation');
 
-        // Timing config: [delayBeforeTypingDots, delayBeforeBubble] in ms
-        // Bubble 1 (user): no dots, appears at 0.3s
-        // Bubble 2 (AI):   dots at 0.6s, bubble at 1.2s
-        // Bubble 3 (user): no dots, appears at 2.5s
-        // Bubble 4 (AI):   dots at 2.8s, bubble at 3.5s
-        var aiBubbleTimings = [
-            { dotsAt: 600, hideDotsAt: 1200 },   // 2nd bubble (1st AI)
-            { dotsAt: 2800, hideDotsAt: 3500 }    // 4th bubble (2nd AI)
+        // Animation delays per bubble (in seconds)
+        var delays = [0.3, 1.2, 2.5, 3.5];
+        var bubbles = demo.querySelectorAll('.chat-bubble');
+        bubbles.forEach(function(b, i) {
+            b.style.animationDelay = delays[i] + 's';
+        });
+
+        // Typing dots config for AI bubbles
+        // dotsAt: when to show dots (ms), hideAt: when to remove them (ms)
+        var aiBubbles = demo.querySelectorAll('.chat-ai');
+        var dotTimings = [
+            { dotsAt: 600, hideAt: 1200 },
+            { dotsAt: 2800, hideAt: 3500 }
         ];
 
         var observer = new IntersectionObserver(function(entries) {
@@ -903,23 +908,21 @@
                 if (!entry.isIntersecting) return;
                 observer.disconnect();
 
-                var aiBubbles = demo.querySelectorAll('.chat-ai');
-
+                // Show typing dots before each AI response
                 aiBubbles.forEach(function(bubble, i) {
-                    var timing = aiBubbleTimings[i];
-                    // Show typing dots before AI bubble appears
+                    var t = dotTimings[i];
                     setTimeout(function() {
                         var dots = document.createElement('div');
                         dots.className = 'typing-dots';
+                        dots.setAttribute('aria-hidden', 'true');
                         dots.innerHTML = '<span></span><span></span><span></span>';
                         bubble.parentNode.insertBefore(dots, bubble);
-                    }, timing.dotsAt);
+                    }, t.dotsAt);
 
-                    // Remove typing dots when AI bubble fades in
                     setTimeout(function() {
                         var dots = demo.querySelector('.typing-dots');
                         if (dots) dots.remove();
-                    }, timing.hideDotsAt);
+                    }, t.hideAt);
                 });
 
                 // Trigger the fade-in animations
