@@ -561,4 +561,10 @@
   <url><loc>https://omai.app/zodiac/capricorn.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://omai.app/zodiac/aquarius.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://omai.app/zodiac/pisces.html</loc><lastmod>2026-03-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url>
+    <loc>https://omai.app/blog/planet-colors-vedic-remedies.html</loc>
+    <lastmod>2026-03-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
