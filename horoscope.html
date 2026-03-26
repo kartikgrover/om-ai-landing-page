@@ -556,7 +556,7 @@
             var ds = data.day_score || {};
             var badgeEl = document.getElementById('day-badge');
             if (ds.label) {
-                badgeEl.innerHTML = '<span class="day-badge ' + (ds.level || 'moderate') + '">' + esc(ds.label) + ' (' + esc(String(ds.score)) + '\u002F100)</span>';
+                badgeEl.innerHTML = '<span class="day-badge ' + (ds.level || 'moderate') + '">' + esc(ds.label) + ' (' + esc(String(ds.score)) + '&#47;100)</span>';
             } else {
                 badgeEl.innerHTML = '';
             }
