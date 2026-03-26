@@ -49,9 +49,6 @@ GA4 data is exported to BigQuery and accessible via the `bq` CLI (already authen
 ### Meta Ads API
 Available via the backend project (`../om.ai-backend/server.js:3008`). Account `act_1704926593380350`, token in `META_ADS_ACCESS_TOKEN` env var. Read-only.
 
-### P&L Dashboard Data
-Daily P&L in Firestore `dailyPnlHistory` (keyed by `YYYY-MM-DD`). Access via `../om.ai-backend/firebase-config.js`.
-
 ## IMPORTANT: No Mention of Internal Tools/Vendors
 - **NEVER mention Swiss Ephemeris** on any public-facing page (no license yet)
 - **NEVER mention OpenAI** or any AI vendor/model names on public-facing pages

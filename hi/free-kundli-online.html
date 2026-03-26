@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मुफ़्त AI कुंडली — जन्म कुंडली विश्लेषण | Om.AI</title>
+    <meta name="description" content="AI द्वारा संचालित मुफ़्त कुंडली विश्लेषण। जन्म तिथि, समय और स्थान दर्ज करें — ग्रह स्थिति, योग, दोष, दशा, शडबल, अष्टकवर्ग और नवमांश चार्ट तुरंत देखें।">
+    <meta name="keywords" content="मुफ्त कुंडली, ऑनलाइन कुंडली, AI कुंडली, जन्म कुंडली, कुंडली विश्लेषण, कुंडली बनाएं, जन्मपत्री, राशि चार्ट, वैदिक कुंडली, ग्रह स्थिति, योग दोष">
+
+    <meta property="og:title" content="मुफ़्त AI कुंडली — जन्म कुंडली विश्लेषण | Om.AI">
+    <meta property="og:description" content="AI द्वारा संचालित कुंडली विश्लेषण। जन्म विवरण दर्ज करें — ग्रह स्थिति, योग, दोष, शडबल, अष्टकवर्ग और विमशोत्तरी दशा तुरंत देखें।">
+    <meta property="og:url" content="https://omai.app/hi/free-kundli-online.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI — मुफ़्त AI कुंडली">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/hi/free-kundli-online.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/free-kundli-online.html">
+    <link rel="alternate" hreflang="hi" href="https://omai.app/hi/free-kundli-online.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', 'Source Sans 3', sans-serif;
+        }
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', 'Noto Sans Devanagari', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', 'Noto Sans Devanagari', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .kundli-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        .kundli-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .kundli-card .kundli-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .kundli-card h4 {
+            font-family: 'Noto Sans Devanagari', 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .kundli-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .calc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .calc-list li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .calc-list li:last-child {
+            border-bottom: none;
+        }
+        .calc-list li i {
+            color: #D97757;
+            margin-top: 0.25rem;
+            min-width: 18px;
+        }
+        .pricing-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 100%;
+        }
+        .pricing-card.highlight {
+            background: rgba(217,119,87,0.08);
+            border-color: rgba(217,119,87,0.25);
+        }
+        .pricing-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+        .pricing-card p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "मुफ़्त AI कुंडली — जन्म कुंडली विश्लेषण | Om.AI",
+                "description": "AI द्वारा संचालित मुफ़्त कुंडली विश्लेषण। जन्म तिथि, समय और स्थान दर्ज करें — ग्रह स्थिति, योग, दोष, दशा, शडबल, अष्टकवर्ग और नवमांश चार्ट तुरंत देखें।",
+                "url": "https://omai.app/hi/free-kundli-online.html",
+                "inLanguage": "hi",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "कुंडली क्या होती है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "कुंडली (जन्म कुंडली या जन्मपत्री) आपके जन्म के ठीक समय आकाश का नक्शा है, जो आपके जन्मस्थान से देखा जाता है। इसमें सभी 9 वैदिक ग्रहों — सूर्य, चंद्र, मंगल, बुध, गुरु, शुक्र, शनि, राहु और केतु — की 12 भावों में स्थिति दिखाई जाती है। वैदिक ज्योतिष में कुंडली ही सभी भविष्यवाणियों का आधार है — इससे व्यक्तित्व, करियर, विवाह, स्वास्थ्य और जीवन के महत्वपूर्ण समय का पता चलता है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "कुंडली बनाने के लिए कौन सी जानकारी चाहिए?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "तीन चीज़ें चाहिए: जन्म तिथि, जन्म का समय (जितना सटीक हो उतना अच्छा), और जन्म स्थान। जन्म का समय सबसे महत्वपूर्ण है क्योंकि इससे आपका लग्न तय होता है, जो लगभग हर दो घंटे बदलता है। 15 मिनट का अंतर भी भाव स्थिति बदल सकता है। अगर सही समय नहीं पता तो जन्म प्रमाणपत्र या अस्पताल के रिकॉर्ड देखें।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या Om.AI पर कुंडली देखना मुफ़्त है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "हाँ। D1 राशि चार्ट (जन्म कुंडली) सभी ग्रह स्थितियों के साथ ऐप में शामिल है — कोई अतिरिक्त शुल्क नहीं। आज की ग्रह गोचर स्थिति और दैनिक राशिफल स्कोर भी शामिल हैं। AI विश्लेषण के लिए 1 प्रश्न शुरुआत में मिलता है, और दैनिक पठन स्ट्रीक से अतिरिक्त प्रश्न कमाए जा सकते हैं — 3, 7, 14, 21, 30, 45 और 60 दिनों के माइलस्टोन पर।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Om.AI की कुंडली गणना कितनी सटीक है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI ग्रह स्थितियों की गणना आर्क-सेकंड सटीकता से करता है और लाहिरी अयनांश का उपयोग करता है — जो भारत सरकार की आधिकारिक पंचांग समिति का मानक है। ऐप सभी 9 वैदिक ग्रहों की स्थिति, नक्षत्र, वर्गीय चार्ट और दशा समयरेखा की गणना शास्त्रीय एल्गोरिदम से करता है। गोचर गणना और मुहूर्त समय में भी यही खगोलीय सटीकता लागू होती है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "राशि चार्ट (D1) और नवमांश चार्ट (D9) में क्या अंतर है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "राशि चार्ट (D1) आपकी मूल जन्म कुंडली है जो जन्म के समय हर ग्रह की स्थिति दिखाती है। यह जीवन के सभी प्रमुख क्षेत्रों को कवर करती है। नवमांश चार्ट (D9) एक वर्गीय कुंडली है जो विवाह, साझेदारी, आध्यात्मिक विकास और ग्रहों की असली शक्ति की गहरी जानकारी देती है। जो ग्रह D1 में मज़बूत है लेकिन D9 में कमज़ोर, वह पूरा फल नहीं दे पाता। अनुभवी ज्योतिषी दोनों चार्ट साथ पढ़ते हैं।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "कुंडली में योग और दोष क्या होते हैं?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "योग विशेष ग्रह संयोजन हैं जो जीवन में निश्चित फल देते हैं — जैसे गज केसरी योग (गुरु-चंद्र की युति) ज्ञान और समृद्धि दर्शाता है, राज योग सफलता और प्रतिष्ठा का संकेत देता है। दोष ग्रह पीड़ा हैं जो चुनौतियाँ पैदा कर सकती हैं — मांगलिक दोष (विशेष भावों में मंगल) विवाह अनुकूलता प्रभावित करता है, काल सर्प दोष (राहु-केतु के बीच सभी ग्रह) बार-बार बाधाएँ ला सकता है। Om.AI आपकी कुंडली के सभी प्रमुख योग और दोष स्वचालित रूप से पहचानता है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या मैं अपनी कुंडली के बारे में प्रश्न पूछ सकता हूँ?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "हाँ। Om.AI में AI ज्योतिषी है जो आपकी कुंडली के आधार पर प्रश्नों का उत्तर देता है। करियर, विवाह, आर्थिक स्थिति, स्वास्थ्य, शिक्षा — किसी भी विषय पर पूछें। AI आपकी ग्रह स्थिति, चल रही दशा और गोचर का विश्लेषण करके शास्त्रीय ज्योतिष सिद्धांतों पर आधारित उत्तर देता है। पहला प्रश्न ऐप डाउनलोड के साथ मिलता है, और स्ट्रीक माइलस्टोन या प्रश्न पैक से अधिक प्रश्न प्राप्त कर सकते हैं।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "विमशोत्तरी दशा क्या है और यह क्यों महत्वपूर्ण है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "विमशोत्तरी दशा वैदिक ज्योतिष की सबसे प्रचलित समय प्रणाली है। यह जीवन को ग्रह अवधियों (महादशा) में बाँटती है — आपके जन्म के समय चंद्रमा की नक्षत्र स्थिति से तय होती है। हर महादशा एक निश्चित अवधि की होती है — शनि 19 वर्ष, शुक्र 20 वर्ष। इन्हें अंतर्दशा में उपविभाजित किया जाता है। दशा प्रणाली से ज्योतिषी बताते हैं कि जीवन की घटनाएँ कब घटित होंगी। Om.AI आपकी पूरी दशा समयरेखा गणित करता है और समय संबंधी प्रश्नों के उत्तर देने में इसका उपयोग करता है।"
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "होम", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "मुफ़्त कुंडली", "item": "https://omai.app/hi/free-kundli-online.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="नेविगेशन टॉगल करें">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">फ़ीचर्स</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI ज्योतिष चैट</a></li>
+                            <li><a class="dropdown-item" href="/hi/free-kundli-online.html">कुंडली और जन्म चार्ट</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">कुंडली मिलान</a></li>
+                            <li><a class="dropdown-item" href="/career-astrology.html">करियर ज्योतिष</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">विवाह भविष्यवाणी</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">दशा कैलकुलेटर</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">दैनिक जानकारी</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">दैनिक राशिफल</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">आज का पंचांग</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">गीता का श्लोक</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">आज का राहुकाल</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">ब्लॉग</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">सहायता</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">डाउनलोड</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'Noto Sans Devanagari','DM Serif Display',serif; font-weight:700;">AI कुंडली विश्लेषण</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    शास्त्रीय वैदिक ग्रंथों पर प्रशिक्षित AI द्वारा आपकी जन्म कुंडली का गहन विश्लेषण। सटीक ग्रह स्थिति, योग, दोष और दशा काल जानें — फिर AI से पूछें कि इसका आपके जीवन पर क्या प्रभाव है।
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_kundli%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_kundli&mt=8" class="btn btn-outline-light btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- कुंडली में क्या होता है -->
+        <section class="content-section">
+            <div class="container" style="max-width:960px;">
+                <h2 class="text-center mb-2">कुंडली में क्या होता है</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:680px; margin:0 auto;">
+                    कुंडली (जन्म कुंडली) आपके जन्म के ठीक समय आकाश का संपूर्ण नक्शा है। वैदिक ज्योतिष की हर भविष्यवाणी इसी पर आधारित होती है।
+                </p>
+
+                <div class="kundli-grid">
+                    <div class="kundli-card">
+                        <div class="kundli-icon"><i class="fas fa-chart-pie" aria-hidden="true"></i></div>
+                        <h4>D1 राशि चार्ट</h4>
+                        <p>आपकी मूल जन्म कुंडली — 12 राशियों और भावों में ग्रहों की स्थिति</p>
+                    </div>
+                    <div class="kundli-card">
+                        <div class="kundli-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
+                        <h4>9 वैदिक ग्रह</h4>
+                        <p>सूर्य, चंद्र, मंगल, बुध, गुरु, शुक्र, शनि, राहु और केतु (नवग्रह)</p>
+                    </div>
+                    <div class="kundli-card">
+                        <div class="kundli-icon"><i class="fas fa-th" aria-hidden="true"></i></div>
+                        <h4>12 भाव</h4>
+                        <p>हर भाव जीवन के एक क्षेत्र का स्वामी — करियर, विवाह, धन, स्वास्थ्य, शिक्षा</p>
+                    </div>
+                    <div class="kundli-card">
+                        <div class="kundli-icon"><i class="fas fa-star" aria-hidden="true"></i></div>
+                        <h4>27 नक्षत्र</h4>
+                        <p>चंद्र मंडल जो हर ग्रह के प्रभाव को परिष्कृत करते हैं और दशा काल निर्धारित करते हैं</p>
+                    </div>
+                    <div class="kundli-card">
+                        <div class="kundli-icon"><i class="fas fa-compass" aria-hidden="true"></i></div>
+                        <h4>लग्न (Ascendant)</h4>
+                        <p>जन्म के समय उदय राशि — यही पूरी कुंडली पढ़ने का आधार है</p>
+                    </div>
+                    <div class="kundli-card">
+                        <div class="kundli-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+                        <h4>विमशोत्तरी दशा</h4>
+                        <p>ग्रह काल की समयरेखा जो बताती है कि जीवन की प्रमुख घटनाएँ कब होंगी</p>
+                    </div>
+                </div>
+
+                <p class="mt-4" style="color:rgba(255,255,255,0.7); font-size:1rem;">
+                    वैदिक ज्योतिष में कोई भी दो कुंडलियाँ एक जैसी नहीं होतीं। मिनटों के अंतर से जन्मे जुड़वाँ बच्चों के लग्न और भाव संधि भी भिन्न हो सकती है, जिससे जीवन पथ में स्पष्ट अंतर आता है। इसीलिए सटीक जन्म समय और स्थान इतने महत्वपूर्ण हैं — यही वह सूक्ष्म विवरण है जो आपकी कुंडली को अनूठा बनाता है।
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Om.AI क्या गणना करता है -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Om.AI आपकी कुंडली में क्या गणना करता है</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Om.AI केवल कुंडली चित्र नहीं बनाता। आपके जन्म विवरण से यह सब कुछ गणित किया जाता है — आर्क-सेकंड सटीकता और लाहिरी अयनांश के साथ।
+                </p>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="calc-list">
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">ग्रह स्थिति</strong> — सभी 9 ग्रहों और लग्न की सटीक अंश, राशि, भाव और नक्षत्र स्थिति</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">भाव स्वामी</strong> — कौन सा ग्रह किस भाव का स्वामी है और वह कहाँ बैठा है — भविष्यवाणियों का मूल आधार</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">योग</strong> — राज योग, गज केसरी योग, धन योग, पंच महापुरुष योग और दर्जनों शुभ ग्रह संयोजन</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">दोष</strong> — मांगलिक दोष, काल सर्प दोष, नाड़ी दोष, पितृ दोष — गंभीरता के आकलन के साथ</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="calc-list">
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">शडबल</strong> — छह प्रकार की ग्रह शक्ति का विश्लेषण — कौन सा ग्रह बलवान है और किसे सहारा चाहिए</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">अष्टकवर्ग</strong> — बिंदु-आधारित गोचर शक्ति प्रणाली — हर ग्रह और भाव के लिए, समय भविष्यवाणी में सहायक</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">विमशोत्तरी दशा</strong> — जन्म से संपूर्ण महादशा और अंतर्दशा समयरेखा — जीवन के किस काल में कौन सा ग्रह प्रभावी है</div>
+                            </li>
+                            <li>
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <div><strong style="color:#fff;">नवमांश (D9) चार्ट</strong> — विवाह, साझेदारी और ग्रहों की गहन शक्ति विश्लेषण के लिए वर्गीय कुंडली</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="mt-3" style="color:rgba(255,255,255,0.6); font-size:0.95rem;">
+                    सभी गणनाएँ बृहत् पाराशर होरा शास्त्र (BPHS) — वैदिक ज्योतिष के मूल ग्रंथ — में वर्णित पद्धति पर आधारित हैं। गोचर ओवरले वास्तविक समय की ग्रह स्थिति दिखाते हैं ताकि आप जान सकें कि वर्तमान ब्रह्मांडीय गति आपकी जन्म कुंडली को कैसे प्रभावित कर रही है।
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- कुंडली कैसे प्राप्त करें -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Om.AI पर अपनी कुंडली कैसे देखें</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    तीन चरण। एक मिनट से भी कम। कोई रजिस्ट्रेशन की दीवार नहीं।
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Om.AI डाउनलोड करें</h3>
+                        <p>Google Play और App Store दोनों पर उपलब्ध। ऐप हल्का है और Android 8+ तथा iOS 16+ पर काम करता है। खोलें और "शुरू करें" पर टैप करें।</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">जन्म विवरण दर्ज करें</h3>
+                        <p>अपनी जन्म तिथि, जन्म का समय और जन्म स्थान दर्ज करें। ऐप इनसे आपका सटीक लग्न, ग्रह देशांतर और नक्षत्र स्थिति गणित करता है। अगर जन्म का समय याद नहीं है तो जन्म प्रमाणपत्र या अस्पताल रिकॉर्ड देखें — सटीकता बहुत मायने रखती है।</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">अपनी जन्म कुंडली देखें</h3>
+                        <p>D1 राशि चार्ट तुरंत प्रकट होता है — सभी 9 ग्रह अपने भावों में। ग्रह अंश, राशि, नक्षत्र स्थिति और भाव विवरण देखें। स्वाइप करके आज का गोचर ओवरले, दशा समयरेखा और दैनिक राशिफल स्कोर देखें — सब आपकी व्यक्तिगत कुंडली से गणित।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- AI विश्लेषण -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>AI से अपनी कुंडली के बारे में पूछें</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    कुंडली देखना एक बात है। यह समझना कि इसका आपके करियर, रिश्तों, स्वास्थ्य और आर्थिक स्थिति पर क्या असर है — यह बिल्कुल अलग बात है। यहीं AI काम आता है।
+                </p>
+
+                <div class="row g-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
+                            <h3>बातचीत शैली में विश्लेषण</h3>
+                            <p>
+                                सीधी भाषा में प्रश्न पूछें — "क्या इस साल प्रमोशन मिलेगा?", "विवाह के लिए सही समय कब है?", "क्या अभी निवेश करना ठीक रहेगा?" AI आपकी कुंडली (ग्रह, भाव, दशा, गोचर) पढ़कर बृहत् पाराशर होरा शास्त्र और लाल किताब जैसे शास्त्रीय ग्रंथों के सिद्धांतों पर आधारित उत्तर देता है।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-memory" aria-hidden="true"></i></div>
+                            <h3>संदर्भ-सजग फ़ॉलो-अप</h3>
+                            <p>
+                                AI आपके पिछले प्रश्न और रीडिंग याद रखता है। "उसी अवधि में आर्थिक स्थिति कैसी रहेगी?" जैसा फ़ॉलो-अप पूछें — AI पिछले विश्लेषण पर आगे बढ़ता है, शुरू से नहीं। यही तरीका एक अनुभवी ज्योतिषी की परामर्श शैली जैसा है।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
+                            <h3>समय आधारित भविष्यवाणी</h3>
+                            <p>
+                                AI आपकी विमशोत्तरी दशा और आगामी गोचर को मिलाकर करियर, विवाह, यात्रा या आर्थिक निर्णयों के लिए विशेष समय खिड़कियाँ बताता है। आपको वास्तविक तारीख सीमाएँ मिलती हैं, अस्पष्ट "इस साल कभी" जैसे उत्तर नहीं।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-language" aria-hidden="true"></i></div>
+                            <h3>किसी भी भाषा में पूछें</h3>
+                            <p>
+                                AI उसी भाषा में उत्तर देता है जिसमें आप लिखते हैं — हिंदी, तमिल, तेलुगु, बंगाली, मराठी, कन्नड़, गुजराती या अंग्रेज़ी। अपनी पसंदीदा भाषा में पूछें और उसी भाषा में कुंडली विश्लेषण पाएँ।
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- मूल्य पारदर्शिता -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-2">क्या शामिल है और क्या प्रीमियम है</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:640px; margin:0 auto;">
+                    कोई छिपी पेवॉल नहीं। यहाँ स्पष्ट रूप से बताया गया है कि हर स्तर पर आपको क्या मिलता है।
+                </p>
+
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="pricing-card">
+                            <h3><i class="fas fa-gift me-2" style="color:#81C784;" aria-hidden="true"></i>ऐप में शामिल</h3>
+                            <ul style="list-style:none; padding:0; margin:0.75rem 0 0;">
+                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>D1 राशि चार्ट — सभी ग्रह स्थितियों के साथ</li>
+                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>आज की ग्रह गोचर स्थिति</li>
+                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>दैनिक राशिफल स्कोर (4 जीवन क्षेत्र)</li>
+                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>D9 नवमांश चार्ट</li>
+                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>1 AI विश्लेषण प्रश्न शामिल</li>
+                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>कुंडली मिलान रिपोर्ट — मुफ़्त</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="pricing-card">
+                            <h3><i class="fas fa-fire me-2" style="color:#D97757;" aria-hidden="true"></i>स्ट्रीक से कमाएँ</h3>
+                            <p style="margin-top:0.75rem;">
+                                रोज़ाना राशिफल या गीता श्लोक पढ़कर पठन स्ट्रीक बनाएँ। 3, 7, 14, 21, 30, 45 और 60 दिनों के माइलस्टोन पर अतिरिक्त AI प्रश्न कमाएँ — <strong style="color:#fff;">हर माइलस्टोन पर और प्रश्न मिलते हैं</strong>।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="pricing-card">
+                            <h3><i class="fas fa-shopping-bag me-2" style="color:#D97757;" aria-hidden="true"></i>प्रश्न पैक</h3>
+                            <p style="margin-top:0.75rem;">
+                                सब्सक्रिप्शन के बिना कुछ अतिरिक्त प्रश्न चाहिए? एक बार खरीदें, कभी भी उपयोग करें — कोई आवर्ती शुल्क नहीं। प्रश्न पैक से अपनी ज़रूरत के अनुसार AI विश्लेषण प्रश्न जोड़ें।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="pricing-card highlight">
+                            <h3><i class="fas fa-crown me-2" style="color:#D97757;" aria-hidden="true"></i>प्रीमियम</h3>
+                            <p style="margin-top:0.75rem;">
+                                असीमित AI प्रश्न, व्यक्तिगत दैनिक उपाय, कल का राशिफल, मासिक पूर्वानुमान, लग्न समय और दशा परिवर्तन अलर्ट। मासिक और वार्षिक योजनाएँ उपलब्ध।
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'Noto Sans Devanagari','DM Serif Display',serif; font-size:2rem; margin-bottom:1rem; font-weight:700;">अभी अपनी कुंडली देखें</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Om.AI डाउनलोड करें, जन्म विवरण दर्ज करें, और एक मिनट से कम में अपनी संपूर्ण जन्म कुंडली देखें। फिर AI से पूछें कि इसका आपके जीवन पर क्या अर्थ है।
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_kundli%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_kundli&mt=8" class="btn btn-outline-light btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- संबंधित सामग्री -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">कुंडली के बारे में और जानें</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/blog/12-houses-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-th" aria-hidden="true"></i> वैदिक ज्योतिष के 12 भाव
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/9-planets-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-globe" aria-hidden="true"></i> 9 ग्रह — विस्तृत गाइड
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/navamsha-d9-chart-guide.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> नवमांश (D9) चार्ट गाइड
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/raj-yoga-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-crown" aria-hidden="true"></i> राज योग — संपूर्ण जानकारी
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/manglik-dosha-truth-myths-remedies.html" class="insight-link">
+                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i> मांगलिक दोष गाइड
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> महादशा — विस्तृत गाइड
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/shadbala-planetary-strength.html" class="insight-link">
+                            <i class="fas fa-fist-raised" aria-hidden="true"></i> शडबल — ग्रह शक्ति गाइड
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/kaal-sarp-dosha-explained.html" class="insight-link">
+                            <i class="fas fa-moon" aria-hidden="true"></i> काल सर्प दोष
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/gaja-kesari-yoga-meaning-effects.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> गज केसरी योग
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- अक्सर पूछे जाने वाले प्रश्न -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">अक्सर पूछे जाने वाले प्रश्न</h2>
+
+                <div class="faq-item">
+                    <h3>कुंडली क्या होती है?</h3>
+                    <p>
+                        कुंडली (जन्म कुंडली या जन्मपत्री) आपके जन्म के ठीक समय आकाश का नक्शा है, जो आपके जन्मस्थान से देखा जाता है। इसमें सभी 9 वैदिक ग्रहों — सूर्य, चंद्र, मंगल, बुध, गुरु, शुक्र, शनि, राहु और केतु — की 12 भावों में स्थिति दिखाई जाती है। वैदिक ज्योतिष में कुंडली ही सभी भविष्यवाणियों का आधार है — इससे व्यक्तित्व, करियर क्षमता, रिश्तों की प्रवृत्ति, स्वास्थ्य संकेत और दशा काल के माध्यम से जीवन के महत्वपूर्ण समय का पता चलता है।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>कुंडली बनाने के लिए कौन सी जानकारी चाहिए?</h3>
+                    <p>
+                        तीन चीज़ें: जन्म तिथि, जन्म का समय (जितना सटीक हो उतना अच्छा), और जन्म स्थान। जन्म का समय सबसे महत्वपूर्ण है क्योंकि इससे आपका लग्न तय होता है, जो लगभग हर दो घंटे बदलता है। 15 मिनट का अंतर भी भाव स्थिति और फलादेश बदल सकता है। अगर सही समय याद नहीं है तो जन्म प्रमाणपत्र या अस्पताल के रिकॉर्ड अवश्य देखें।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या Om.AI पर कुंडली चार्ट देखना मुफ़्त है?</h3>
+                    <p>
+                        हाँ। D1 राशि चार्ट (जन्म कुंडली) सभी ग्रह स्थितियों के साथ ऐप में शामिल है। सभी 9 ग्रह, उनकी भाव स्थिति, राशि स्थान और अंश जानकारी — सब बिना किसी शुल्क के। आज की ग्रह गोचर स्थिति और दैनिक राशिफल स्कोर भी शामिल हैं। AI विश्लेषण शुरुआत में 1 प्रश्न के साथ मिलता है, और दैनिक पठन स्ट्रीक से अतिरिक्त प्रश्न कमाए जा सकते हैं — 3, 7, 14, 21, 30, 45 और 60 दिनों के माइलस्टोन पर। असीमित विश्लेषण के लिए प्रश्न पैक और प्रीमियम सब्सक्रिप्शन उपलब्ध हैं।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Om.AI की कुंडली गणना कितनी सटीक है?</h3>
+                    <p>
+                        Om.AI ग्रह स्थितियों की गणना आर्क-सेकंड सटीकता से करता है और लाहिरी अयनांश का उपयोग करता है — जो भारत सरकार की आधिकारिक पंचांग समिति का मानक है। ऐप सभी 9 वैदिक ग्रहों की स्थिति गणित करता है, नक्षत्र स्थान निर्धारित करता है, वर्गीय कुंडलियाँ बनाता है, और शास्त्रीय एल्गोरिदम से संपूर्ण दशा समयरेखा तैयार करता है। गोचर गणना और मुहूर्त समय में भी यही खगोलीय सटीकता लागू होती है।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>राशि चार्ट (D1) और नवमांश चार्ट (D9) में क्या अंतर है?</h3>
+                    <p>
+                        राशि चार्ट (D1) आपकी मूल जन्म कुंडली है जो जन्म के समय हर ग्रह की स्थिति दिखाती है। यह जीवन के सभी प्रमुख क्षेत्रों को कवर करती है। नवमांश चार्ट (D9) एक वर्गीय कुंडली है जो विवाह, साझेदारी, आध्यात्मिक विकास और ग्रहों की असली शक्ति की गहरी जानकारी देती है। जो ग्रह D1 में मज़बूत है लेकिन D9 में कमज़ोर, वह अपना पूरा फल नहीं दे पाता। अनुभवी वैदिक ज्योतिषी हमेशा दोनों चार्ट साथ में पढ़ते हैं।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>कुंडली में योग और दोष क्या होते हैं?</h3>
+                    <p>
+                        योग विशेष ग्रह संयोजन हैं जो जीवन में निश्चित फल देते हैं। उदाहरण के लिए, गज केसरी योग (गुरु और चंद्र की युति या दृष्टि) ज्ञान और समृद्धि का संकेत देता है, जबकि राज योग सफलता, अधिकार और प्रतिष्ठा दर्शाता है। दोष ग्रह पीड़ा हैं जो चुनौतियाँ पैदा कर सकती हैं — मांगलिक दोष (विशेष भावों में मंगल) विवाह अनुकूलता प्रभावित कर सकता है, काल सर्प दोष (राहु-केतु के बीच सभी ग्रह) बार-बार बाधाएँ ला सकता है। Om.AI आपकी कुंडली के सभी प्रमुख योग और दोष स्वचालित रूप से पहचानता और समझाता है।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या मैं अपनी कुंडली के बारे में प्रश्न पूछ सकता हूँ?</h3>
+                    <p>
+                        हाँ। Om.AI में AI ज्योतिषी है जो आपकी विशेष जन्म कुंडली के आधार पर प्रश्नों के उत्तर देता है। करियर का समय, विवाह की संभावना, आर्थिक काल, स्वास्थ्य, शिक्षा — किसी भी जीवन क्षेत्र पर पूछें। AI आपकी ग्रह स्थिति, सक्रिय दशा काल और वर्तमान गोचर का विश्लेषण करके शास्त्रीय ज्योतिष सिद्धांतों पर आधारित व्यक्तिगत उत्तर देता है। पहला प्रश्न ऐप के साथ मिलता है, और स्ट्रीक माइलस्टोन या प्रश्न पैक से अधिक प्रश्न पाएँ।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>विमशोत्तरी दशा क्या है और यह क्यों महत्वपूर्ण है?</h3>
+                    <p>
+                        विमशोत्तरी दशा वैदिक ज्योतिष की सबसे प्रचलित समय प्रणाली है। यह आपके जीवन को ग्रह अवधियों (महादशा) में बाँटती है, जो आपके जन्म के समय चंद्रमा की नक्षत्र स्थिति से निर्धारित होती है। हर महादशा की अवधि निश्चित है — शनि 19 वर्ष, शुक्र 20 वर्ष — और इन्हें अंतर्दशा में उपविभाजित किया जाता है। दशा प्रणाली से ज्योतिषी बताते हैं कि जीवन की घटनाएँ कब घटित होंगी। Om.AI आपकी संपूर्ण दशा समयरेखा गणित करता है और समय संबंधी प्रश्नों के उत्तर देने में इसका उपयोग करता है।
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>AI-संचालित वैदिक ज्योतिष, कुंडली विश्लेषण और आध्यात्मिक ज्ञान का आपका साथी।</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Facebook पर फ़ॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Instagram पर फ़ॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">फ़ीचर्स</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI ज्योतिष चैट</a></li>
+                        <li><a href="/hi/free-kundli-online.html" class="text-white-50">कुंडली और जन्म चार्ट</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI वैदिक ज्योतिष</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">लाल किताब उपाय</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">दैनिक जानकारी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">दैनिक पंचांग</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">दैनिक राशिफल</a></li>
+                        <li><a href="/gita.html" class="text-white-50">गीता श्लोक</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">आज का राहुकाल</a></li>
+                        <li><a href="/blog/" class="text-white-50">ब्लॉग</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">कानूनी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">गोपनीयता नीति</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">सेवा की शर्तें</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">रिफ़ंड नीति</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">डाउनलोड</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_kundli%26utm_campaign%3Dseo_page" class="text-white-50" rel="noopener noreferrer" target="_blank">Android ऐप</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_kundli&mt=8" class="text-white-50" rel="noopener noreferrer" target="_blank">iOS ऐप</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>वैदिक ज्योतिष एक पारंपरिक मान्यता प्रणाली है जो यहाँ सूचनात्मक और सांस्कृतिक उद्देश्यों के लिए प्रस्तुत है। यह पेशेवर चिकित्सा, कानूनी या वित्तीय सलाह का विकल्प नहीं है।</small>
+                <br><small>&copy; 2026 Om.AI. सर्वाधिकार सुरक्षित।</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>

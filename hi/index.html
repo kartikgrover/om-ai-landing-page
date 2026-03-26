@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <!-- Required Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Om.AI - AI वैदिक ज्योतिषी | मुफ़्त कुंडली और राशिफल</title>
+    <meta name="description" content="भारत का सबसे सटीक AI वैदिक ज्योतिष ऐप। तुरंत कुंडली, व्यक्तिगत राशिफल, अष्टकूट मिलान और भगवद्गीता। Android और iOS पर मुफ़्त डाउनलोड करें।">
+    <meta name="keywords" content="AI ज्योतिष, वैदिक ज्योतिष ऐप, कुंडली, राशिफल, जन्म कुंडली, कुंडली मिलान, भगवद्गीता, मंत्र, दशा कैलकुलेटर, AI ज्योतिषी, मुफ्त ज्योतिष ऐप, गायत्री मंत्र, हनुमान चालीसा">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Om.AI - AI वैदिक ज्योतिषी | मुफ़्त कुंडली और राशिफल">
+    <meta property="og:description" content="AI की शक्ति से वैदिक ज्योतिष — अपनी कुंडली का विश्लेषण करें, प्रेम-करियर-स्वास्थ्य के बारे में सवाल पूछें, और रोज़ाना राशिफल पाएँ। अभी डाउनलोड करें।">
+    <meta property="og:url" content="https://omai.app/hi/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - AI वैदिक ज्योतिष ऐप">
+    <meta property="og:site_name" content="Om.AI">
+    <meta property="og:locale" content="hi_IN">
+
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/hi/">
+    <link rel="alternate" hreflang="en" href="https://omai.app/">
+    <link rel="alternate" hreflang="hi" href="https://omai.app/hi/">
+
+    <!-- Enhanced Favicon and App Icons -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon/favicon-64x64.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+
+    <!-- Bootstrap CSS (non-blocking) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/styles/styles.min.css?v=65">
+
+    <!-- Font Awesome (non-blocking) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <!-- Google Fonts (non-blocking) -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Inline styles for content sections -->
+    <style>
+        .content-section { padding: 4rem 0; }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .hi-feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .hi-feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .hi-feature-card h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: #D97757;
+            margin-bottom: 0.75rem;
+        }
+        .hi-feature-card p {
+            color: rgba(255,255,255,0.75);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 { color: #fff; }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+    </style>
+
+    <!-- JSON-LD: WebPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Om.AI - AI वैदिक ज्योतिषी",
+        "description": "भारत का सबसे सटीक AI वैदिक ज्योतिष ऐप। तुरंत कुंडली, व्यक्तिगत राशिफल, अष्टकूट मिलान और भगवद्गीता।",
+        "url": "https://omai.app/hi/",
+        "inLanguage": "hi",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "Om.AI",
+            "url": "https://omai.app"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Om.AI",
+            "url": "https://omai.app",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://omai.app/assets/logo.webp"
+            }
+        }
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://omai.app/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "हिन्दी",
+                "item": "https://omai.app/hi/"
+            }
+        ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Om.AI क्या है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Om.AI एक AI-संचालित वैदिक ज्योतिष ऐप है जो Android और iOS दोनों पर उपलब्ध है। यह आपकी जन्म तिथि, समय और स्थान के आधार पर सटीक कुंडली बनाता है और शास्त्रीय वैदिक सिद्धांतों से विश्लेषण करता है। इसमें AI ज्योतिष चैट, कुंडली विश्लेषण, अष्टकूट मिलान, ग्रह गोचर ट्रैकिंग, संपूर्ण भगवद्गीता और गायत्री मंत्र-हनुमान चालीसा जैसे पवित्र मंत्र शामिल हैं।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "AI ज्योतिष कैसे काम करता है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Om.AI तीन चरणों में काम करता है। पहले आप अपनी जन्म तिथि, सही समय और जन्म स्थान दर्ज करें। ऐप आपकी पूरी कुंडली बनाता है — लग्न, सभी 9 ग्रहों की स्थिति, नवांश चार्ट और दशा काल। फिर AI बृहत् पराशर होरा शास्त्र, जातक पारिजात और लाल किताब के सिद्धांतों से विश्लेषण करता है। जब आप कोई सवाल पूछते हैं तो AI आपकी कुंडली और वर्तमान गोचर दोनों को मिलाकर व्यक्तिगत जवाब देता है।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "कुंडली मिलान कैसे होता है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Om.AI पारंपरिक अष्टकूट (8-कूट) मिलान पद्धति का उपयोग करता है जो 8 आयामों में अनुकूलता जाँचती है: वर्ण, वश्य, तारा, योनि, ग्रह मैत्री, गण, भकूट और नाड़ी। अधिकतम 36 अंक में से 18+ अंक विवाह के लिए शुभ माने जाते हैं। ऐप मांगलिक दोष और नाड़ी दोष की भी जाँच करता है और उपाय बताता है। दोनों साथियों की जन्म जानकारी दर्ज करें और तुरंत विस्तृत रिपोर्ट पाएँ।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Premium में क्या-क्या मिलता है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "नए उपयोगकर्ताओं को शुरू में एक ज्योतिष प्रश्न मिलता है। रोज़ाना पढ़ने की आदत बनाकर आप स्ट्रीक माइलस्टोन (3, 7, 14, 21, 30, 45, 60 दिन) पर बोनस प्रश्न कमा सकते हैं। Premium सदस्यों को मिलता है: असीमित ज्योतिष प्रश्न, कल का राशिफल एक दिन पहले, व्यक्तिगत शुभ समय, महीने भर का पूर्वानुमान, दशा परिवर्तन अलर्ट, ग्रह शक्ति विश्लेषण और व्यक्तिगत उपाय। प्रश्न पैक भी अलग से उपलब्ध हैं।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "ऐप की कीमत क्या है? रिफ़ंड पॉलिसी क्या है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Om.AI Premium में मासिक और वार्षिक दोनों योजनाएँ उपलब्ध हैं। वार्षिक योजना में काफ़ी बचत होती है। कीमत क्षेत्र के अनुसार अलग-अलग है और ऐप में दिखाई जाती है। कभी भी कैन्सल कर सकते हैं। दोनों प्लेटफ़ॉर्म पर 24 घंटे की मनी-बैक गारंटी है।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "क्या मेरा डेटा सुरक्षित है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "बिलकुल। Om.AI सिर्फ़ वही जानकारी लेता है जो कुंडली बनाने के लिए ज़रूरी है — जन्म तिथि, समय, शहर और ईमेल। सारा डेटा SSL/TLS और AES-256 एन्क्रिप्शन से सुरक्षित है। हम कभी भी आपकी जानकारी तीसरे पक्ष को नहीं बेचते। आपकी ज्योतिष परामर्श पूरी तरह निजी है। GDPR अनुपालित, और आप कभी भी अपना डेटा डिलीट करवा सकते हैं।"
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+
+        function trackDownload(platform) {
+            gtag('event', 'download_click', {
+                'event_category': 'App Downloads',
+                'event_label': platform,
+                'value': 1
+            });
+        }
+        function trackNavigation(linkName) {
+            gtag('event', 'navigation_click', {
+                'event_category': 'Navigation',
+                'event_label': linkName
+            });
+        }
+        function trackSocial(platform) {
+            gtag('event', 'social_click', {
+                'event_category': 'Social Media',
+                'event_label': platform
+            });
+        }
+    </script>
+
+    <!-- Meta Pixel Code (deferred) -->
+    <script>
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '819993440663760');
+            fbq('track', 'PageView');
+        }, 2000);
+    });
+    </script>
+    <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=819993440663760&ev=PageView&noscript=1"
+    /></noscript>
+</head>
+
+<body data-page="home">
+    <!-- Skip to Main Content -->
+    <a href="#main-content" class="skip-to-content">मुख्य सामग्री पर जाएँ</a>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/hi/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI लोगो" width="100" height="100" class="me-2" fetchpriority="high">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="नेविगेशन टॉगल करें">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">फीचर्स</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI ज्योतिष चैट</a></li>
+                            <li><a class="dropdown-item" href="/free-kundli-online.html">कुंडली और जन्म कुंडली</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">कुंडली मिलान</a></li>
+                            <li><a class="dropdown-item" href="/career-astrology.html">करियर ज्योतिष</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">विवाह भविष्यवाणी</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">दशा कैलकुलेटर</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">दैनिक जानकारी</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">दैनिक राशिफल</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">आज का पंचांग</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">गीता श्लोक</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">राहु काल</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/" onclick="trackNavigation('Blog')">ब्लॉग</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html" onclick="trackNavigation('Support')">सहायता</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="#download-section" onclick="trackNavigation('Download Nav Button')">डाउनलोड</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main id="main-content">
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center py-4">
+                <div class="col-12 col-lg-10 col-xl-9">
+                    <div class="hero-content">
+                        <p class="hero-badge"><i aria-hidden="true" class="fas fa-om me-1"></i> प्राचीन वैदिक ज्ञान + आधुनिक AI की शक्ति</p>
+                        <h1 class="hero-title" data-animate-words>
+                            AI वैदिक ज्योतिष — अपनी कुंडली से तुरंत जवाब पाएँ
+                        </h1>
+                        <p class="hero-subtitle">
+                            प्रेम, करियर और जीवन के हर सवाल का जवाब — आपकी असली कुंडली के आधार पर, सामान्य राशिफल नहीं।
+                        </p>
+                        <div class="hero-features">
+                            <div class="feature-item">
+                                <i aria-hidden="true" class="fas fa-comments text-primary"></i>
+                                <span>AI ज्योतिष चैट</span>
+                            </div>
+                            <div class="feature-item">
+                                <i aria-hidden="true" class="fas fa-heart text-primary"></i>
+                                <span>कुंडली मिलान</span>
+                            </div>
+                            <div class="feature-item">
+                                <i aria-hidden="true" class="fas fa-om text-primary"></i>
+                                <span>मंत्र और गीता</span>
+                            </div>
+                        </div>
+                        <div class="hero-cta" id="hero-cta">
+                            <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_landing%26utm_campaign%3Dseo_page%26utm_content%3Dhero" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg store-btn store-btn-android" onclick="trackDownload('android')">
+                                <i aria-hidden="true" class="fab fa-google-play me-2"></i>Google Play पर डाउनलोड करें
+                            </a>
+                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_hero&mt=8" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg store-btn store-btn-ios" onclick="trackDownload('ios')">
+                                <i aria-hidden="true" class="fab fa-apple me-2"></i>App Store पर डाउनलोड करें
+                            </a>
+                            <p class="cta-subtext">
+                                <i aria-hidden="true" class="fas fa-gift text-primary me-1"></i>
+                                पहला सवाल मुफ़्त &bull; Premium योजनाएँ उपलब्ध
+                            </p>
+                            <div class="hero-trust">
+                                <span class="trust-item"><i aria-hidden="true" class="fas fa-star text-warning"></i> 4.5★ रेटिंग</span>
+                                <span class="trust-divider">|</span>
+                                <span class="trust-item"><i aria-hidden="true" class="fas fa-download text-primary"></i> 20,000+ डाउनलोड</span>
+                                <span class="trust-divider">|</span>
+                                <span class="trust-item"><i aria-hidden="true" class="fas fa-shield-alt text-success"></i> 100% निजी और सुरक्षित</span>
+                            </div>
+                        </div>
+
+                        <div class="hero-media">
+                            <video autoplay muted loop playsinline preload="none" poster="/assets/om-ai-demo-poster.jpg" class="hero-video" id="hero-video">
+                                <source data-src="/assets/om-ai-demo.webm" type="video/webm">
+                                <source data-src="/assets/om-ai-demo.mp4" type="video/mp4">
+                            </video>
+                            <button class="video-sound-toggle" id="video-sound-toggle" aria-label="ध्वनि टॉगल करें">
+                                <i aria-hidden="true" class="fas fa-volume-mute"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title" data-animate-words>सम्पूर्ण ज्योतिष और आध्यात्मिक सुविधाएँ</h2>
+                <p class="section-subtitle fade-in">आपकी ज्योतिषीय और आध्यात्मिक यात्रा के लिए सब कुछ एक ऐप में</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <!-- AI Chat -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card h-100 featured-card">
+                        <div class="feature-icon">
+                            <i aria-hidden="true" class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="feature-title">AI ज्योतिष चैट</h3>
+                        <p>आपका निजी वैदिक ज्योतिषी — पिछली रीडिंग याद रखता है, कार्य करने का सर्वोत्तम समय बताता है, और प्रश्न कुंडली विश्लेषण से जवाब देता है। करियर, प्रेम, परिवार, स्वास्थ्य — कुछ भी पूछें।</p>
+                        <div class="feature-highlights">
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-gift"></i> पहला सवाल मुफ़्त</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-clock"></i> शुभ समय (होरा)</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-brain"></i> सत्र याद रखता है</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kundli -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i aria-hidden="true" class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="feature-title">जन्म कुंडली (Birth Chart)</h3>
+                        <p>अपनी सम्पूर्ण वैदिक जन्म कुंडली तुरंत बनवाएँ — राशि चार्ट, नवांश, ग्रहों की स्थिति और भाव विश्लेषण। उन्नत वैदिक गणनाओं पर आधारित।</p>
+                        <div class="feature-highlights">
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-gift"></i> हमेशा के लिए मुफ़्त</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-clock"></i> 60 सेकंड में तैयार</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-sun"></i> विस्तृत ग्रह विश्लेषण</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compatibility -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i aria-hidden="true" class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="feature-title">कुंडली मिलान (Compatibility)</h3>
+                        <p>अष्टकूट मिलान, क्रॉस-चार्ट विश्लेषण, नवांश तुलना और दोनों साथियों की दशा टाइमिंग। संबंध के बारे में फ़ॉलो-अप सवाल भी पूछ सकते हैं — AI आपकी मिलान हिस्ट्री याद रखता है।</p>
+                        <div class="feature-highlights">
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-star"></i> अष्टकूट 36 अंक</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-heart"></i> निःशुल्क रिपोर्ट</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-calendar-check"></i> विवाह मुहूर्त</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horoscope -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i aria-hidden="true" class="fas fa-sun"></i>
+                        </div>
+                        <h3 class="feature-title">दैनिक राशिफल</h3>
+                        <p>आपकी वैदिक चंद्र राशि और वर्तमान ग्रह गोचर के आधार पर व्यक्तिगत दैनिक भविष्यवाणी। करियर, प्रेम, स्वास्थ्य और धन — हर क्षेत्र का दैनिक मार्गदर्शन।</p>
+                        <div class="feature-highlights">
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-globe"></i> गोचर आधारित</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-chart-line"></i> व्यक्तिगत अंक</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-bell"></i> रोज़ सुबह अपडेट</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gita -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i aria-hidden="true" class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="feature-title">भगवद्गीता</h3>
+                        <p>सम्पूर्ण 18 अध्याय, 700 श्लोक — मूल संस्कृत, हिन्दी अनुवाद और ऑडियो के साथ। रोज़ एक श्लोक पढ़ें और प्राचीन ज्ञान को दैनिक जीवन में अपनाएँ।</p>
+                        <div class="feature-highlights">
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-infinity"></i> असीमित और मुफ़्त</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-volume-up"></i> ऑडियो सहित</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-bullseye"></i> व्यावहारिक मार्गदर्शन</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mantras -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i aria-hidden="true" class="fas fa-om"></i>
+                        </div>
+                        <h3 class="feature-title">पवित्र मंत्र</h3>
+                        <p>गायत्री मंत्र, हनुमान चालीसा, ग्रह शांति मंत्र — सभी ऑडियो और अर्थ सहित। अपनी कुंडली के अनुसार व्यक्तिगत मंत्र सुझाव पाएँ।</p>
+                        <div class="feature-highlights">
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-om"></i> गायत्री मंत्र</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-praying-hands"></i> हनुमान चालीसा</span>
+                            <span class="highlight"><i aria-hidden="true" class="fas fa-volume-up"></i> ऑडियो प्लेबैक</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Screenshots -->
+            <div class="col-12 mt-5">
+                <h3 class="text-center mb-4">ऐप की एक झलक</h3>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-4 col-md-3"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/home-screen.webp" type="image/webp"><img src="/assets/screenshots/home-screen.png" alt="Om.AI होम स्क्रीन - दैनिक राशिफल" class="screenshot-image" loading="lazy" decoding="async" width="300" height="650"></picture></div></div></div>
+                    <div class="col-4 col-md-3"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/ai-chat.webp" type="image/webp"><img src="/assets/screenshots/ai-chat.png" alt="AI ज्योतिष चैट - व्यक्तिगत कुंडली विश्लेषण" class="screenshot-image" loading="lazy" decoding="async" width="300" height="650"></picture></div></div></div>
+                    <div class="col-4 col-md-3"><div class="screenshot-card"><div class="screenshot-container"><picture><source srcset="/assets/screenshots/birth-chart.webp" type="image/webp"><img src="/assets/screenshots/birth-chart.png" alt="वैदिक जन्म कुंडली - ग्रह स्थिति" class="screenshot-image" loading="lazy" decoding="async" width="300" height="650"></picture></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title" data-animate-words>Om.AI कैसे काम करता है?</h2>
+                <p class="section-subtitle fade-in">बस तीन आसान कदमों में शुरू करें</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="step-card text-center">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">जन्म विवरण दर्ज करें</h3>
+                        <p>अपनी जन्म तिथि, सही जन्म समय और जन्म स्थान (शहर) दर्ज करें। जितना सटीक समय होगा, उतनी सटीक कुंडली बनेगी।</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="step-card text-center">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">कुंडली तैयार हो जाएगी</h3>
+                        <p>AI तुरंत आपकी सम्पूर्ण कुंडली बनाएगा — लग्न, ग्रह स्थिति, नवांश, दशा काल, और योग-दोष का विश्लेषण।</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="step-card text-center">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">AI ज्योतिषी से सवाल पूछें</h3>
+                        <p>करियर, विवाह, स्वास्थ्य, धन — कोई भी सवाल पूछें। AI आपकी कुंडली और वर्तमान ग्रह गोचर के आधार पर व्यक्तिगत जवाब देगा।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Streak Rewards Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title">रोज़ पढ़ें, सवाल कमाएँ</h2>
+                    <p class="text-secondary">रोज़ाना राशिफल या गीता श्लोक पढ़कर स्ट्रीक बनाएँ — हर माइलस्टोन पर बोनस सवाल पाएँ।</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="row g-3 text-center">
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">3</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+1 सवाल</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">7</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+2 सवाल</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">14</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+3 सवाल</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">21</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+4 सवाल</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">30</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+5 सवाल</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">45</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
+                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+7 सवाल</div>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md">
+                            <div style="background:rgba(217,119,87,0.1); border:1px solid rgba(217,119,87,0.25); border-radius:12px; padding:1.25rem 0.75rem;">
+                                <div style="font-family:'DM Serif Display',serif; font-size:1.5rem; color:#D97757;">60</div>
+                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
+                                <div style="font-size:0.95rem; color:#D97757; margin-top:0.25rem; font-weight:600;">+10 सवाल</div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-3" style="color:rgba(255,255,255,0.45); font-size:0.88rem;">रोज़ राशिफल या गीता श्लोक पढ़ें — आदत बनाएँ, इनाम पाएँ। कोई पैसा नहीं लगता।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title">अक्सर पूछे जाने वाले सवाल</h2>
+                    <p class="text-secondary">Om.AI के बारे में सब कुछ जानें</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion" role="list">
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-1">Om.AI क्या है?</button>
+                            <div class="faq-answer" id="faq-1" role="region">Om.AI एक AI-संचालित वैदिक ज्योतिष ऐप है जो Android और iOS दोनों पर उपलब्ध है। यह सामान्य राशिफल ऐप से बिल्कुल अलग है — यह आपकी सही जन्म तिथि, समय और स्थान के आधार पर सटीक कुंडली बनाता है और शास्त्रीय वैदिक सिद्धांतों से विश्लेषण करता है। इसमें AI ज्योतिष चैट, विस्तृत कुंडली, अष्टकूट मिलान, ग्रह गोचर ट्रैकिंग, सम्पूर्ण भगवद्गीता (संस्कृत, अनुवाद और ऑडियो सहित), तथा गायत्री मंत्र और हनुमान चालीसा जैसे पवित्र मंत्र शामिल हैं। ऐप हिन्दी और अंग्रेज़ी दोनों में उपलब्ध है।</div>
+                        </div>
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-2">AI ज्योतिष कैसे काम करता है?</button>
+                            <div class="faq-answer" id="faq-2" role="region">Om.AI तीन चरणों में काम करता है। पहले, आप अपनी जन्म तिथि, सही समय और जन्म स्थान दर्ज करते हैं। ऐप तुरंत आपकी पूरी कुंडली बनाता है — लग्न (Ascendant), सभी 9 वैदिक ग्रहों (नवग्रह) की 12 भावों में स्थिति, नवांश (D9) चार्ट, और चल रही दशा-अंतर्दशा। दूसरे चरण में, AI बृहत् पराशर होरा शास्त्र, जातक पारिजात और लाल किताब जैसे प्रामाणिक ग्रंथों के सिद्धांतों से आपकी कुंडली का विश्लेषण करता है — योग, दोष (मांगलिक, काल सर्प आदि) और ग्रह बल की पहचान करता है। तीसरे चरण में, जब आप कोई सवाल पूछते हैं — जैसे "मेरी शादी कब होगी?" या "क्या नौकरी बदलने का सही समय है?" — तो AI आपकी जन्म कुंडली और वर्तमान ग्रह गोचर दोनों को मिलाकर व्यक्तिगत जवाब देता है।</div>
+                        </div>
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-3">कुंडली मिलान कैसे होता है?</button>
+                            <div class="faq-answer" id="faq-3" role="region">Om.AI में पारंपरिक अष्टकूट (8-कूट) मिलान पद्धति का उपयोग होता है, जो 8 आयामों में अनुकूलता जाँचती है: वर्ण (आध्यात्मिक अनुकूलता), वश्य (पारस्परिक आकर्षण), तारा (स्वास्थ्य), योनि (शारीरिक अनुकूलता), ग्रह मैत्री (मानसिक अनुकूलता), गण (स्वभाव), भकूट (प्रेम और वित्त), और नाड़ी (आनुवंशिक अनुकूलता)। अधिकतम 36 अंक में से 18+ अंक विवाह के लिए शुभ माने जाते हैं। इसके अलावा मांगलिक दोष और नाड़ी दोष की भी जाँच होती है और वैदिक उपाय बताए जाते हैं। दोनों साथियों की जन्म जानकारी दर्ज करें और तुरंत विस्तृत रिपोर्ट पाएँ — यह पूरी तरह मुफ़्त है।</div>
+                        </div>
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-4">Premium में क्या-क्या शामिल है?</button>
+                            <div class="faq-answer" id="faq-4" role="region">नए उपयोगकर्ताओं को शुरू में एक ज्योतिष प्रश्न मुफ़्त मिलता है। इसके बाद रोज़ाना राशिफल या गीता पढ़कर स्ट्रीक बनाएँ — 3, 7, 14, 21, 30, 45 और 60 दिन के माइलस्टोन पर बोनस सवाल मिलते हैं। Premium सदस्यों को मिलता है: असीमित ज्योतिष प्रश्न (करियर, प्रेम, स्वास्थ्य, धन); असीमित भगवद्गीता प्रश्न; कल का राशिफल एक दिन पहले; व्यक्तिगत शुभ समय (करियर, धन, प्रेम के लिए); महीने भर का व्यक्तिगत पूर्वानुमान; दशा परिवर्तन अलर्ट; विस्तृत ग्रह शक्ति विश्लेषण (षड्बल); और व्यक्तिगत उपाय — रत्न, मंत्र और अनुष्ठान। जिन्हें सदस्यता नहीं चाहिए, उनके लिए प्रश्न पैक भी उपलब्ध हैं।</div>
+                        </div>
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-5">ऐप की कीमत क्या है?</button>
+                            <div class="faq-answer" id="faq-5" role="region">Om.AI Premium में मासिक और वार्षिक दोनों योजनाएँ उपलब्ध हैं — वार्षिक योजना में काफ़ी बचत होती है। कीमत आपके क्षेत्र के अनुसार अलग-अलग है और ऐप में दिखाई जाती है। दोनों योजनाओं में सभी Premium सुविधाएँ बिना किसी प्रतिबंध के शामिल हैं। कभी भी अपग्रेड या कैन्सल कर सकते हैं। Android और iOS दोनों पर 24 घंटे की मनी-बैक गारंटी है — कोई सवाल नहीं पूछा जाएगा।</div>
+                        </div>
+                        <div class="faq-item" role="listitem">
+                            <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-6">क्या मेरा डेटा सुरक्षित है?</button>
+                            <div class="faq-answer" id="faq-6" role="region">बिल्कुल सुरक्षित। Om.AI सिर्फ़ वही जानकारी लेता है जो कुंडली बनाने के लिए ज़रूरी है — जन्म तिथि, समय, शहर और ईमेल। सारा डेटा SSL/TLS और AES-256 एन्क्रिप्शन से सुरक्षित रहता है। हम कभी भी आपकी निजी जानकारी तीसरे पक्ष को नहीं बेचते और न ही साझा करते हैं। आपकी ज्योतिष परामर्श और चैट हिस्ट्री पूरी तरह गोपनीय है। ऐप GDPR अनुपालित है, और आप कभी भी अपना सारा डेटा डिलीट करवा सकते हैं। अधिक जानकारी के लिए हमारी <a href="/privacy-policy.html" class="text-primary">गोपनीयता नीति</a> पढ़ें।</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA Section -->
+    <section id="download-section" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="cta-box">
+                        <h2 class="section-title mb-3">अपनी कुंडली का विश्लेषण करें</h2>
+                        <p style="color:rgba(255,255,255,0.75); font-size:1.1rem; margin-bottom:2rem;">AI ज्योतिषी से पूछें — करियर, विवाह, स्वास्थ्य, धन — कोई भी सवाल। पहला सवाल मुफ़्त है।</p>
+                        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                            <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_landing%26utm_campaign%3Dseo_page%26utm_content%3Dbottom_cta" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg" onclick="trackDownload('android')">
+                                <i aria-hidden="true" class="fab fa-google-play me-2"></i>Google Play पर डाउनलोड करें
+                            </a>
+                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_bottom&mt=8" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-lg" onclick="trackDownload('ios')">
+                                <i aria-hidden="true" class="fab fa-apple me-2"></i>App Store पर डाउनलोड करें
+                            </a>
+                        </div>
+                        <p class="mt-3" style="color:rgba(255,255,255,0.5); font-size:0.88rem;">Android और iOS पर मुफ़्त उपलब्ध &bull; 4.5★ रेटिंग &bull; 20,000+ डाउनलोड</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI लोगो" width="70" height="70" loading="lazy" decoding="async">
+                        </picture>
+                    </div>
+                    <p>AI-संचालित वैदिक ज्योतिष, कुंडली विश्लेषण और आध्यात्मिक ज्ञान — आपका निजी ज्योतिषी। सवाल पूछें, तुरंत जवाब पाएँ, और अपने ब्रह्मांडीय मानचित्र को समझें।</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" onclick="trackSocial('Facebook')" aria-label="Facebook पर फ़ॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" onclick="trackSocial('Instagram')" aria-label="Instagram पर फ़ॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">फीचर्स</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI ज्योतिष चैट</a></li>
+                        <li><a href="/free-kundli-online.html" class="text-white-50">कुंडली और जन्म कुंडली</a></li>
+                        <li><a href="/kundli-matching.html" class="text-white-50">कुंडली मिलान</a></li>
+                        <li><a href="/career-astrology.html" class="text-white-50">करियर ज्योतिष</a></li>
+                        <li><a href="/marriage-prediction.html" class="text-white-50">विवाह भविष्यवाणी</a></li>
+                        <li><a href="/dasha-calculator.html" class="text-white-50">दशा कैलकुलेटर</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">दैनिक जानकारी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/horoscope.html" class="text-white-50">दैनिक राशिफल</a></li>
+                        <li><a href="/panchang.html" class="text-white-50">आज का पंचांग</a></li>
+                        <li><a href="/gita.html" class="text-white-50">गीता श्लोक</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">राहु काल</a></li>
+                        <li><a href="/blog/" class="text-white-50">ब्लॉग</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">संसाधन</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/blog/" class="text-white-50">ब्लॉग</a></li>
+                        <li><a href="/support.html" class="text-white-50">सहायता केंद्र</a></li>
+                        <li><a href="/feedback.html" class="text-white-50">प्रतिक्रिया</a></li>
+                        <li><a href="/privacy-policy.html" class="text-white-50">गोपनीयता नीति</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">सेवा की शर्तें</a></li>
+                        <li><a href="/" class="text-white-50">English Version</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">डाउनलोड</h4>
+                    <ul class="list-unstyled">
+                      <li>
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_landing%26utm_campaign%3Dseo_page"
+                           class="text-white-50" onclick="trackDownload('android')">Android ऐप</a>
+                      </li>
+                      <li>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_footer&mt=8"
+                           class="text-white-50" onclick="trackDownload('ios')">iOS ऐप</a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <p class="text-center text-white-50 mb-3"><small>वैदिक ज्योतिष एक पारंपरिक विश्वास प्रणाली है जो यहाँ सांस्कृतिक और सूचनात्मक उद्देश्यों से प्रस्तुत है। यह पेशेवर चिकित्सा, कानूनी या वित्तीय सलाह का विकल्प नहीं है।</small></p>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2026 Om.AI. सर्वाधिकार सुरक्षित।</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">भारत के आध्यात्मिक साधकों के लिए <i aria-hidden="true" class="fas fa-heart"></i> से बनाया गया</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button type="button" class="back-to-top" id="backToTop" aria-label="ऊपर जाएँ">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- FAQ Toggle Script -->
+    <script>
+    var faqSection = document.getElementById('faqAccordion') || document.body;
+    var currentOpenFaq = null;
+    faqSection.addEventListener('click', function(e) {
+        var btn = e.target.closest('[data-toggle="faq"]');
+        if (!btn) return;
+        var item = btn.parentElement;
+        var isOpen = item.classList.contains('faq-open');
+        if (currentOpenFaq && currentOpenFaq !== item) {
+            currentOpenFaq.classList.remove('faq-open');
+            var prevBtn = currentOpenFaq.querySelector('[data-toggle="faq"]');
+            if (prevBtn) prevBtn.setAttribute('aria-expanded', 'false');
+        }
+        if (!isOpen) {
+            item.classList.add('faq-open');
+            btn.setAttribute('aria-expanded', 'true');
+            currentOpenFaq = item;
+        } else {
+            item.classList.remove('faq-open');
+            btn.setAttribute('aria-expanded', 'false');
+            currentOpenFaq = null;
+        }
+    });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.feature-card, .step-card, .screenshot-card');
+            animateElements.forEach(el => {
+                el.classList.add('fade-in-on-scroll');
+                observer.observe(el);
+            });
+
+            // Lazy-load video sources
+            const heroVideo = document.querySelector('.hero-video');
+            if (heroVideo) {
+                heroVideo.querySelectorAll('source[data-src]').forEach(function(source) {
+                    source.src = source.getAttribute('data-src');
+                    source.removeAttribute('data-src');
+                });
+                heroVideo.load();
+            }
+        });
+    </script>
+</body>
+</html>

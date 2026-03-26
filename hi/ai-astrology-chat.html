@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI ज्योतिष चैट — अपनी कुंडली से सवाल पूछें | Om.AI</title>
+    <meta name="description" content="AI ज्योतिषी से चैट करें — करियर, विवाह, स्वास्थ्य और धन से जुड़े सवाल पूछें। आपकी असली कुंडली के आधार पर व्यक्तिगत उत्तर पाएं, सामान्य राशिफल नहीं।">
+    <meta name="keywords" content="AI ज्योतिष चैट, AI ज्योतिषी, मुफ्त ज्योतिष चैट, AI कुंडली, ज्योतिष चैट हिंदी, वैदिक ज्योतिष AI, कुंडली विश्लेषण, राशिफल AI, ज्योतिष सवाल जवाब">
+
+    <meta property="og:title" content="AI ज्योतिष चैट — अपनी कुंडली से सवाल पूछें | Om.AI">
+    <meta property="og:description" content="AI ज्योतिषी से चैट करें — करियर, विवाह, स्वास्थ्य और धन से जुड़े सवाल पूछें। आपकी असली कुंडली के आधार पर व्यक्तिगत उत्तर पाएं।">
+    <meta property="og:url" content="https://omai.app/hi/ai-astrology-chat.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - AI ज्योतिष चैट">
+    <meta property="og:site_name" content="Om.AI">
+    <meta property="og:locale" content="hi_IN">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/hi/ai-astrology-chat.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/ai-astrology-chat.html">
+    <link rel="alternate" hreflang="hi" href="https://omai.app/hi/ai-astrology-chat.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="/styles/styles.min.css?v=64">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .content-section {
+            padding: 4rem 0;
+        }
+        .content-section h2 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .content-section h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #D97757;
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section li {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+        .topic-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .topic-card .topic-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .topic-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .topic-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .compare-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .compare-card.highlight {
+            background: rgba(217,119,87,0.08);
+            border-color: rgba(217,119,87,0.25);
+        }
+        .compare-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+        .compare-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .compare-card ul li {
+            padding: 0.4rem 0;
+            font-size: 0.95rem;
+        }
+        .compare-card ul li i {
+            width: 20px;
+            margin-right: 0.5rem;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .insight-link {
+            display: block;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .insight-link:hover {
+            background: rgba(217,119,87,0.12);
+            border-color: #D97757;
+            color: #fff;
+        }
+        .insight-link i {
+            color: #D97757;
+            margin-right: 0.75rem;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            margin: 0;
+        }
+        .lang-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .lang-badge {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 0.3rem 0.85rem;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.65);
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "AI ज्योतिष चैट — अपनी कुंडली से सवाल पूछें | Om.AI",
+                "description": "AI ज्योतिषी से चैट करें — करियर, विवाह, स्वास्थ्य और धन से जुड़े सवाल पूछें। आपकी असली कुंडली के आधार पर व्यक्तिगत उत्तर पाएं।",
+                "url": "https://omai.app/hi/ai-astrology-chat.html",
+                "inLanguage": "hi",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "AI ज्योतिष चैट कैसे काम करता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI का AI ज्योतिष चैट आपकी पूरी कुंडली का विश्लेषण करता है — ग्रहों की स्थिति, भाव स्थान, सक्रिय दशा काल और वर्तमान गोचर — जब आप कोई सवाल पूछते हैं। AI आपकी कुंडली के आँकड़ों को बृहत् पाराशर होरा शास्त्र और लाल किताब जैसे शास्त्रीय ग्रंथों के नियमों से मिलाकर व्यक्तिगत उत्तर देता है। हर जवाब आपकी अनूठी ग्रह स्थिति के अनुसार होता है, सामान्य राशिफल नहीं।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "AI ज्योतिषी से क्या-क्या पूछ सकते हैं?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "आप जीवन के किसी भी क्षेत्र के बारे में पूछ सकते हैं: करियर और नौकरी, विवाह का समय और अनुकूलता, आर्थिक निर्णय, स्वास्थ्य, शिक्षा, यात्रा, रिश्ते और आध्यात्मिक विकास। आप समय संबंधी प्रश्न भी पूछ सकते हैं जैसे 'व्यापार शुरू करने का सबसे अच्छा समय कब है?' या 'क्या इस साल प्रॉपर्टी खरीदना ठीक रहेगा?' AI आपकी दशा और आगामी गोचर के आधार पर तारीख-विशिष्ट मार्गदर्शन देता है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या AI ज्योतिष चैट मुफ्त है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI ऐप इंस्टॉल करते ही आपको शुरुआती ज्योतिष प्रश्न मिलता है। आप दैनिक पठन स्ट्रीक बनाकर अतिरिक्त प्रश्न कमा सकते हैं — 3, 7, 14, 21, 30, 45 और 60 दिन के माइलस्टोन पर बोनस प्रश्न मिलते हैं। असीमित प्रश्नों के लिए Om.AI Premium सब्सक्रिप्शन (मासिक या वार्षिक) उपलब्ध है। प्रश्न पैक भी वन-टाइम खरीद के रूप में उपलब्ध हैं।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "AI ज्योतिषी कौन-कौन सी भाषाएँ समझता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "ऐप का इंटरफेस अंग्रेजी और हिंदी में उपलब्ध है। AI चैट आप जिस भी भाषा में लिखें उसी में जवाब देता है — हिंदी, तमिल, तेलुगु, बंगाली, मराठी, कन्नड़, गुजराती, पंजाबी, मलयालम या कोई भी अन्य भाषा। AI अपने आप आपकी भाषा में जवाब देता है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "यह सामान्य राशिफल चैटबॉट्स से कैसे अलग है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "ज़्यादातर ज्योतिष चैटबॉट सिर्फ सूर्य राशि या चंद्र राशि के आधार पर जवाब देते हैं — करोड़ों लोगों को एक जैसा जवाब। Om.AI आपकी पूरी कुंडली बनाता है: सभी 9 ग्रह 12 भावों में, नवांश (D9) चार्ट, विंशोत्तरी दशा टाइमलाइन, सक्रिय ग्रह काल और वास्तविक समय के गोचर। यह पूरे कुंडली डेटा से आपके विशिष्ट प्रश्न का उत्तर देता है। AI आपकी पिछली बातचीत भी याद रखता है, इसलिए फॉलो-अप प्रश्न पहले की रीडिंग पर आधारित होते हैं।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या AI ज्योतिषी उपाय भी बताता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "हाँ। Premium के साथ Om.AI आपकी कुंडली के आधार पर व्यक्तिगत वैदिक उपाय बताता है — रत्न सुझाव, कमज़ोर या पीड़ित ग्रहों के लिए विशेष मंत्र, अनुष्ठान सुझाव, दान, और उपाय करने का सर्वोत्तम समय। उपाय लाल किताब और बृहत् पाराशर होरा शास्त्र जैसे शास्त्रीय ग्रंथों से लिए गए हैं और आपकी विशिष्ट ग्रह स्थिति के अनुसार हैं।"
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "होम", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "AI ज्योतिष चैट", "item": "https://omai.app/hi/ai-astrology-chat.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="नेविगेशन टॉगल करें">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">फीचर्स</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/hi/ai-astrology-chat.html">AI ज्योतिष चैट</a></li>
+                            <li><a class="dropdown-item" href="/free-kundli-online.html">कुंडली</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">कुंडली मिलान</a></li>
+                            <li><a class="dropdown-item" href="/career-astrology.html">करियर ज्योतिष</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">विवाह भविष्यवाणी</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">दशा कैलकुलेटर</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">दैनिक जानकारी</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">दैनिक राशिफल</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">आज का पंचांग</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">गीता श्लोक</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">राहु काल</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">ब्लॉग</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">सहायता</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">डाउनलोड</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI ज्योतिष चैट</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    करियर, विवाह, स्वास्थ्य या आर्थिक स्थिति के बारे में सवाल पूछें और अपनी असली कुंडली के आधार पर जवाब पाएं — सामान्य राशिफल नहीं। Om.AI का AI आपकी कुंडली को एक शास्त्रीय ज्योतिषी की तरह पढ़ता है।
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_ai_chat%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_ai_chat&mt=8" class="btn btn-outline-light btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Interactive Chat Demo -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-2">आज़माएँ — एक सवाल पूछें</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.6);">नीचे किसी सवाल पर टैप करें और देखें AI आपकी कुंडली कैसे पढ़ता है।</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-md-10">
+                        <div class="demo-chat">
+                            <div class="demo-chat-header">
+                                <img src="/assets/logo.webp" alt="Om.AI ज्योतिष चैटबॉट" width="28" height="28">
+                                <span>Om.AI</span>
+                                <span class="demo-badge">डेमो</span>
+                            </div>
+                            <div class="demo-chat-body" id="demo-chat-body">
+                                <div class="demo-msg demo-msg-bot">
+                                    <p>नमस्ते! नीचे किसी सवाल पर टैप करें और देखें Om.AI कैसे कुंडली का विश्लेषण करके व्यक्तिगत जवाब देता है। अपनी कुंडली की रीडिंग के लिए ऐप डाउनलोड करें।</p>
+                                </div>
+                            </div>
+                            <div class="demo-chat-prompts" id="demo-prompts">
+                                <button class="demo-prompt-btn" data-q="क्या इस साल करियर बदलना सही रहेगा?" data-a="आपके दसवें भाव के स्वामी बुध अभी अपनी महादशा में हैं, और गुरु जून 2026 से आपके दसवें भाव में गोचर कर रहे हैं। यह करियर में बदलाव के लिए एक मजबूत समय है। जून से अक्टूबर के बीच यह गोचर सबसे अनुकूल रहेगा जब गुरु आपके दूसरे भाव में स्थित सूर्य पर दृष्टि डालेंगे, जिससे पहचान और आय दोनों में सहायता मिलेगी। हालांकि, 15 अगस्त से 22 सितंबर के बीच राहु-बुध अंतर्दशा में कोई बड़ा फैसला लेने से बचें, क्योंकि इस दौरान निर्णय क्षमता प्रभावित हो सकती है। करियर बदलने का सबसे अच्छा मुहूर्त जुलाई के पहले दो सप्ताह में है।">करियर बदलने का समय</button>
+                                <button class="demo-prompt-btn" data-q="मेरी शादी कब होगी?" data-a="आपकी कुंडली में रिश्तों के लिए ऊर्जा का अच्छा मिश्रण दिख रहा है। चंद्रमा मित्र स्थिति में और अच्छी जगह पर है, जो आपको सहज और खुले स्वभाव का बनाता है। शुक्र, जो प्रेम और विवाह का मुख्य ग्रह है, मिश्रित संकेत दे रहा है — जन्म कुंडली में चुनौतीपूर्ण लेकिन नवांश चार्ट में अनुकूल — जिसका मतलब है प्रेम मामलों में कुछ उतार-चढ़ाव। अभी शनि की महादशा में शुक्र का अंतर्दशा चल रहा है, जो रिश्तों में धैर्य और परिपक्वता का पाठ लाता है। विवाह के लिए सबसे अनुकूल समय फरवरी 2028 के आसपास है, जब शनि का गोचर आपकी कुंडली से शक्तिशाली रूप से जुड़ेगा।">शादी कब होगी?</button>
+                                <button class="demo-prompt-btn" data-q="इस साल आर्थिक स्थिति कैसी रहेगी?" data-a="आपके दूसरे भाव के स्वामी शुक्र ग्यारहवें भाव में अच्छी स्थिति में हैं और गुरु का गोचर उन पर दृष्टि डाल रहा है, इसलिए आर्थिक स्थिति स्थिर रहेगी। आपका धन योग (दूसरे-ग्यारहवें भाव के स्वामी का संबंध) जुलाई में प्रबल रूप से सक्रिय होगा। एक सावधानी: शनि अप्रैल 2027 तक आपके दूसरे भाव पर दृष्टि डाल रहे हैं, इसलिए सट्टेबाज़ी वाले निवेश से बचें — स्थिर आय के स्रोत ज़्यादा फायदेमंद रहेंगे।">आर्थिक स्थिति</button>
+                                <button class="demo-prompt-btn" data-q="पूरी कुंडली विश्लेषण दें" data-a="आपकी वृषभ लग्न की कुंडली नेतृत्व और सम्मान के लिए मज़बूत आधार दिखाती है। आपकी स्वाभाविक आकर्षण शक्ति और रचनात्मकता को धन, गृह और सामाजिक क्षेत्र में अच्छे भाव बल से समर्थन मिलता है। अभी शनि और गुरु की दशा चल रही है, जो अनुशासित विकास को प्रोत्साहित करती है। प्रेम के लिए सबसे अच्छा समय जून 2026 है, जब गुरु कर्क राशि में आकर आपके सातवें भाव को सक्रिय करेंगे। स्वास्थ्य की दृष्टि से दिसंबर के अंत में तनाव और पाचन संबंधी समस्याओं पर ध्यान दें। आर्थिक रूप से सुधार जारी है, लेकिन सबसे अच्छी वृद्धि 2026 के मध्य के बाद आएगी जब आपके नेतृत्व और धन-निर्माण गुण पूरी तरह सक्रिय होंगे।">पूरी कुंडली विश्लेषण</button>
+                                <button class="demo-prompt-btn" data-q="आत्मविश्वास बढ़ाने के लिए कौन सा मंत्र?" data-a="इस राहु-मंगल दशा में आत्मविश्वास और स्पष्टता बढ़ाने के लिए मंगल मंत्र जपें: 'ॐ अंगारकाय नमः'। यह मंत्र साहस, ऊर्जा और एकाग्रता को मज़बूत करता है, जिससे बाधाओं को पार करने और प्रभावशाली ढंग से बात करने में सहायता मिलती है। आपकी कुंडली में नेतृत्व और बुद्धि के प्रबल योग हैं, इसलिए यह मंत्र आपकी स्वाभाविक प्रतिभाओं को और निखारेगा। रोज़ 108 बार जपें, विशेषकर किसी महत्वपूर्ण मीटिंग या कॉल से पहले।">आत्मविश्वास का मंत्र</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-center mt-3" style="color:rgba(255,255,255,0.45); font-size:0.85rem;">
+                    हर जवाब आपकी कुंडली, दशा काल और वर्तमान गोचर के अनुसार व्यक्तिगत होता है।
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What You Can Ask -->
+        <section class="content-section">
+            <div class="container" style="max-width:960px;">
+                <h2 class="text-center mb-4">आप क्या पूछ सकते हैं</h2>
+                <div class="topic-grid">
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-briefcase" aria-hidden="true"></i></div>
+                        <h4>करियर</h4>
+                        <p>नौकरी बदलना, प्रमोशन, व्यापार का समय, आदर्श पेशा</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                        <h4>प्रेम और विवाह</h4>
+                        <p>शादी का समय, जीवनसाथी के गुण, रिश्तों की स्थिति</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-wallet" aria-hidden="true"></i></div>
+                        <h4>धन</h4>
+                        <p>आर्थिक काल, निवेश, संपत्ति के फैसले</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-heartbeat" aria-hidden="true"></i></div>
+                        <h4>स्वास्थ्य</h4>
+                        <p>स्वास्थ्य संवेदनशील काल, कल्याण के मुख्य क्षेत्र</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                        <h4>शिक्षा</h4>
+                        <p>पढ़ाई का समय, परीक्षा संभावनाएँ, उच्च शिक्षा</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-plane" aria-hidden="true"></i></div>
+                        <h4>यात्रा</h4>
+                        <p>विदेश यात्रा, स्थानांतरण, बसावट</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-om" aria-hidden="true"></i></div>
+                        <h4>आध्यात्मिकता</h4>
+                        <p>आध्यात्मिक विकास, ध्यान, धार्मिक मार्ग</p>
+                    </div>
+                    <div class="topic-card">
+                        <div class="topic-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+                        <h4>मुहूर्त</h4>
+                        <p>शुभ तारीखें, कार्यों के लिए सर्वोत्तम समय</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How the AI Reads Your Chart -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>AI आपकी कुंडली कैसे पढ़ता है</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Om.AI टेम्पलेट से अस्पष्ट भविष्यवाणियाँ नहीं बनाता। जब आप सवाल पूछते हैं तो यह प्रक्रिया होती है।
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">आपकी कुंडली की गणना</h3>
+                        <p>आपकी जन्म तिथि, समय और स्थान से ऐप सभी 9 वैदिक ग्रहों (नवग्रह) की 12 भावों में सटीक स्थिति की गणना करता है — जिसमें राशि चार्ट (D1) और नवांश चार्ट (D9) शामिल हैं। लहिरी अयनांश का उपयोग करके अत्यंत सटीक गणना की जाती है।</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">दशा और गोचर का विश्लेषण</h3>
+                        <p>AI आपकी वर्तमान विंशोत्तरी महादशा और अंतर्दशा की पहचान करता है, फिर आज के ग्रह गोचर को आपकी जन्म कुंडली पर दिखाता है। समय संबंधी प्रश्नों के लिए, यह आगामी गोचर को स्कैन करके आपके सवाल से जुड़ी महत्वपूर्ण तारीखें बताता है।</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">शास्त्रीय ज्योतिष नियमों का प्रयोग</h3>
+                        <p>आपकी कुंडली के आँकड़ों की व्याख्या बृहत् पाराशर होरा शास्त्र, लाल किताब, KP पद्धति और उत्तर कालामृत के नियमों से की जाती है। AI योग, दोष, ग्रह बल (षड्बल), भाव-स्वामी संबंध और दृष्टि की जाँच करता है — वही विश्लेषण जो एक अनुभवी ज्योतिषी करते हैं।</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">4</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">व्यक्तिगत उत्तर तैयार करना</h3>
+                        <p>AI इन सबको मिलाकर आपके सवाल का स्पष्ट और विशिष्ट उत्तर देता है — तारीखों, ग्रह संदर्भों और व्यावहारिक मार्गदर्शन के साथ। यह आपकी पिछली बातचीत भी याद रखता है, इसलिए अगले सवाल पहले की रीडिंग पर आधारित होते हैं।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Om.AI vs Generic Apps -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Om.AI में क्या खास है</h2>
+
+                <div class="comparison-row">
+                    <div class="compare-card">
+                        <h3 style="color:rgba(255,255,255,0.5);">सामान्य राशिफल ऐप्स</h3>
+                        <ul>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> करोड़ों लोगों को एक जैसी भविष्यवाणी</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> सिर्फ सूर्य राशि के आधार पर</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> पहले से लिखे टेम्पलेट पैराग्राफ</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> कुंडली गणना नहीं</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> फॉलो-अप सवाल नहीं पूछ सकते</li>
+                            <li><i class="fas fa-times" style="color:#666;" aria-hidden="true"></i> समय-विशिष्ट भविष्यवाणी नहीं</li>
+                        </ul>
+                    </div>
+                    <div class="compare-card highlight">
+                        <h3>Om.AI</h3>
+                        <ul>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> हर कुंडली के लिए अनूठा जवाब</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> पूरी कुंडली: 9 ग्रह, 12 भाव, D1 + D9</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> AI शास्त्रीय वैदिक ग्रंथों की व्याख्या करता है</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> सटीक खगोलीय गणनाएँ</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> बातचीत शैली — संदर्भ याद रखता है</li>
+                            <li><i class="fas fa-check" style="color:#D97757;" aria-hidden="true"></i> दशा + गोचर से विशिष्ट तारीखें</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Language Support -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-3">किसी भी भाषा में पूछें</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:600px; margin:0 auto;">
+                    ऐप का इंटरफेस अंग्रेजी और हिंदी में है। AI चैट आप जिस भी भाषा में लिखें, उसी में जवाब देता है।
+                </p>
+                <div class="lang-badges">
+                    <span class="lang-badge">English</span>
+                    <span class="lang-badge">हिन्दी</span>
+                    <span class="lang-badge">தமிழ்</span>
+                    <span class="lang-badge">తెలుగు</span>
+                    <span class="lang-badge">বাংলা</span>
+                    <span class="lang-badge">मराठी</span>
+                    <span class="lang-badge">ಕನ್ನಡ</span>
+                    <span class="lang-badge">ગુજરાતી</span>
+                    <span class="lang-badge">ਪੰਜਾਬੀ</span>
+                    <span class="lang-badge">മലയാളം</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Pricing / How to Get Questions -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">कैसे शुरू करें</h2>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-gift" aria-hidden="true"></i></div>
+                            <h3>पहले आज़माएँ</h3>
+                            <p>
+                                Om.AI डाउनलोड करें और शुरुआती ज्योतिष प्रश्न पाएं। अपनी जन्म जानकारी डालें, कुंडली के बारे में कुछ भी पूछें, और देखें AI कैसे आपकी ग्रह स्थिति का विश्लेषण करता है। किसी क्रेडिट कार्ड की ज़रूरत नहीं।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
+                            <h3>स्ट्रीक से कमाएँ</h3>
+                            <p>
+                                रोज़ अपना राशिफल या गीता श्लोक पढ़कर पठन स्ट्रीक बनाएँ। 3, 7, 14, 21, 30, 45 और 60 दिन के माइलस्टोन पर अतिरिक्त प्रश्न कमाएँ। नियमित दैनिक अभ्यास आपको गहरी कुंडली जानकारी का इनाम देता है।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-shopping-bag" aria-hidden="true"></i></div>
+                            <h3>प्रश्न पैक</h3>
+                            <p>
+                                सब्सक्रिप्शन के बिना कुछ और सवाल चाहिए? वन-टाइम प्रश्न पैक उपलब्ध हैं — बस कुछ रुपये प्रति प्रश्न। जितने चाहिए उतने खरीदें, कोई recurring चार्ज नहीं।
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-crown" aria-hidden="true"></i></div>
+                            <h3>Premium — असीमित प्रश्न</h3>
+                            <p>
+                                गंभीर जिज्ञासुओं के लिए। Premium में असीमित ज्योतिष और शास्त्र प्रश्न, व्यक्तिगत दैनिक उपाय, कल का राशिफल, मासिक पूर्वानुमान, लग्न समय, और दशा परिवर्तन अलर्ट — सब कुछ शामिल। मासिक और वार्षिक प्लान उपलब्ध हैं।
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">अपनी कुंडली से सवाल पूछें</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Om.AI डाउनलोड करें, अपनी जन्म जानकारी डालें, और पहला सवाल पूछें। आपकी कुंडली में जवाब छिपे हैं — AI उन्हें पढ़ने में मदद करता है।
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_ai_chat%26utm_campaign%3Dseo_page" class="btn btn-primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_ai_chat&mt=8" class="btn btn-outline-light btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">और जानें</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/ai-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> AI वैदिक ज्योतिष कैसे काम करता है
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> कुंडली और जन्म चार्ट
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/horoscope.html" class="insight-link">
+                            <i class="fas fa-sun" aria-hidden="true"></i> दैनिक राशिफल
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/what-is-kundli-matching-ashtakoot.html" class="insight-link">
+                            <i class="fas fa-heart" aria-hidden="true"></i> कुंडली मिलान गाइड
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> महादशा विस्तार से
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/sade-sati-explained.html" class="insight-link">
+                            <i class="fas fa-moon" aria-hidden="true"></i> साढ़े साती गाइड
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">अक्सर पूछे जाने वाले सवाल</h2>
+
+                <div class="faq-item">
+                    <h3>AI ज्योतिष चैट कैसे काम करता है?</h3>
+                    <p>
+                        Om.AI का AI ज्योतिष चैट आपकी पूरी कुंडली का विश्लेषण करता है — ग्रहों की स्थिति, भाव स्थान, सक्रिय दशा काल और वर्तमान गोचर — जब आप कोई सवाल पूछते हैं। AI आपकी कुंडली के आँकड़ों को बृहत् पाराशर होरा शास्त्र और लाल किताब जैसे शास्त्रीय वैदिक ग्रंथों के नियमों से मिलाकर व्यक्तिगत उत्तर देता है। हर जवाब आपकी अनूठी ग्रह स्थिति के अनुसार होता है, सामान्य सूर्य-राशि भविष्यवाणी नहीं।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>AI ज्योतिषी से क्या-क्या पूछ सकते हैं?</h3>
+                    <p>
+                        जीवन के किसी भी क्षेत्र के बारे में पूछ सकते हैं: करियर और नौकरी बदलना, विवाह का समय और अनुकूलता, आर्थिक फैसले, स्वास्थ्य, शिक्षा, यात्रा, रिश्ते और आध्यात्मिक विकास। समय संबंधी प्रश्न भी पूछ सकते हैं जैसे "व्यापार शुरू करने का सबसे अच्छा समय कब है?" या "क्या इस साल प्रॉपर्टी खरीदना ठीक रहेगा?" AI आपकी दशा और आगामी गोचर से तारीख-विशिष्ट मार्गदर्शन देता है।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या AI ज्योतिष चैट मुफ्त है?</h3>
+                    <p>
+                        Om.AI ऐप इंस्टॉल करने पर शुरुआती ज्योतिष प्रश्न शामिल है। दैनिक पठन स्ट्रीक से अतिरिक्त प्रश्न कमा सकते हैं — रोज़ राशिफल या गीता श्लोक पढ़ें और 3, 7, 14, 21, 30, 45 और 60 दिन के माइलस्टोन पर बोनस प्रश्न पाएं। असीमित प्रश्नों के लिए Premium सब्सक्रिप्शन (मासिक या वार्षिक) उपलब्ध है। वन-टाइम प्रश्न पैक भी खरीद सकते हैं।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>AI ज्योतिषी कौन-कौन सी भाषाएँ समझता है?</h3>
+                    <p>
+                        ऐप का इंटरफेस अंग्रेजी और हिंदी में उपलब्ध है। AI चैट आप जिस भी भाषा में लिखें उसी में जवाब देता है — हिंदी, तमिल, तेलुगु, बंगाली, मराठी, कन्नड़, गुजराती, पंजाबी, मलयालम या कोई भी अन्य भाषा। AI अपने आप आपकी पसंदीदा भाषा में ढल जाता है।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>यह सामान्य राशिफल चैटबॉट्स से कैसे अलग है?</h3>
+                    <p>
+                        ज़्यादातर ज्योतिष चैटबॉट सिर्फ सूर्य या चंद्र राशि के आधार पर जवाब देते हैं — एक ही राशि के करोड़ों लोगों को एक जैसा जवाब। Om.AI आपकी पूरी कुंडली बनाता है: सभी 9 ग्रह 12 भावों में, नवांश (D9) चार्ट, विंशोत्तरी दशा टाइमलाइन, सक्रिय ग्रह काल, और वास्तविक समय के गोचर — फिर इस पूरे डेटा से आपके विशिष्ट प्रश्न का उत्तर देता है। AI आपकी बातचीत का इतिहास भी याद रखता है, इसलिए फॉलो-अप सवाल पहले की रीडिंग पर आधारित होते हैं।
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या AI ज्योतिषी उपाय भी बताता है?</h3>
+                    <p>
+                        हाँ। Premium के साथ Om.AI आपकी कुंडली के आधार पर व्यक्तिगत वैदिक उपाय बताता है — रत्न सुझाव, कमज़ोर या पीड़ित ग्रहों के लिए विशेष मंत्र, अनुष्ठान सुझाव, दान, और उपाय करने का सर्वोत्तम समय। उपाय लाल किताब और बृहत् पाराशर होरा शास्त्र जैसे शास्त्रीय ग्रंथों से लिए गए हैं और आपकी विशिष्ट ग्रह स्थिति के अनुरूप हैं।
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>वैदिक ज्योतिष, कुंडली विश्लेषण और आध्यात्मिक ज्ञान के लिए आपका AI-संचालित साथी।</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Facebook पर फॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Instagram पर फॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">फीचर्स</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/hi/ai-astrology-chat.html" class="text-white-50">AI ज्योतिष चैट</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">कुंडली और जन्म चार्ट</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI वैदिक ज्योतिष</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">लाल किताब उपाय</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">दैनिक जानकारी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">दैनिक पंचांग</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">दैनिक राशिफल</a></li>
+                        <li><a href="/gita.html" class="text-white-50">गीता श्लोक</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">राहु काल</a></li>
+                        <li><a href="/blog/" class="text-white-50">ब्लॉग</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">कानूनी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">गोपनीयता नीति</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">सेवा की शर्तें</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">रिफंड नीति</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">डाउनलोड</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dhindi_ai_chat%26utm_campaign%3Dseo_page" class="text-white-50" rel="noopener noreferrer" target="_blank">Android ऐप</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_ai_chat&mt=8" class="text-white-50" rel="noopener noreferrer" target="_blank">iOS ऐप</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>वैदिक ज्योतिष एक पारंपरिक विश्वास प्रणाली है जिसे यहाँ सूचनात्मक और सांस्कृतिक उद्देश्यों के लिए प्रस्तुत किया गया है। यह पेशेवर चिकित्सा, कानूनी या वित्तीय सलाह का विकल्प नहीं है।</small>
+                <br><small>&copy; 2026 Om.AI. सर्वाधिकार सुरक्षित।</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Demo Chat Script -->
+    <script>
+    (function() {
+        var body = document.getElementById('demo-chat-body');
+        var prompts = document.getElementById('demo-prompts');
+        if (!body || !prompts) return;
+        var isStreaming = false;
+
+        function typewriter(el, text, cb) {
+            var i = 0;
+            isStreaming = true;
+            var tick = function() {
+                if (i < text.length) {
+                    el.textContent += text[i];
+                    i++;
+                    body.scrollTop = body.scrollHeight;
+                    setTimeout(tick, 8);
+                } else {
+                    isStreaming = false;
+                    prompts.querySelectorAll('.demo-prompt-btn').forEach(function(b) { b.disabled = false; b.style.opacity = '1'; });
+                    if (cb) cb();
+                }
+            };
+            tick();
+        }
+
+        prompts.addEventListener('click', function(e) {
+            var btn = e.target.closest('.demo-prompt-btn');
+            if (!btn || btn.disabled || isStreaming) return;
+            var q = btn.getAttribute('data-q');
+            var a = btn.getAttribute('data-a');
+            prompts.querySelectorAll('.demo-prompt-btn').forEach(function(b) { b.disabled = true; b.style.opacity = '0.4'; });
+            var userMsg = document.createElement('div');
+            userMsg.className = 'demo-msg demo-msg-user';
+            var userP = document.createElement('p');
+            userP.textContent = q;
+            userMsg.appendChild(userP);
+            body.appendChild(userMsg);
+            body.scrollTop = body.scrollHeight;
+            body.insertAdjacentHTML('beforeend', '<div class="demo-msg demo-msg-bot" id="demo-loading"><div class="demo-spinner"><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div></div><p class="demo-loading-text">आपकी कुंडली का विश्लेषण हो रहा है</p></div>');
+            body.scrollTop = body.scrollHeight;
+            setTimeout(function() {
+                var loading = document.getElementById('demo-loading');
+                if (loading) loading.remove();
+                var msgDiv = document.createElement('div');
+                msgDiv.className = 'demo-msg demo-msg-bot';
+                var p = document.createElement('p');
+                msgDiv.appendChild(p);
+                body.appendChild(msgDiv);
+                typewriter(p, a);
+            }, 2000);
+        });
+    })();
+    </script>
+</body>
+
+</html>
