@@ -149,17 +149,10 @@ function handleElegantStaggeredAnimation(container, childSelector) {
     }, 150);
 }
 
-// Add subtle hover effect for refined interaction
+// Hover effect handled entirely via CSS :hover rules (no JS needed)
+// Removed JS mouseenter/mouseleave to avoid inline style writes that force style recalc
 function addSubtleHoverEffect(element) {
-    element.addEventListener('mouseenter', () => {
-        element.style.transform = 'translateY(-2px)';
-        element.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0.13, 1)';
-    });
-    
-    element.addEventListener('mouseleave', () => {
-        element.style.transform = 'translateY(0)';
-        element.style.transition = 'all 0.3s cubic-bezier(0.2, 0, 0.13, 1)';
-    });
+    // no-op: CSS handles .feature-card:hover, .step-card:hover, etc.
 }
 
 
@@ -255,18 +248,21 @@ function initializeHeroVideo() {
                     // Autoplay was prevented - this is normal on some browsers
                     // Add a one-time click/touch listener to start video on first interaction
                     const startVideoOnInteraction = () => {
-                        heroVideo.play()
-                            .then(() => {
-                                hasPlayed = true;
-                                hideLoadingState();
-                            })
-                            .catch(() => {});
+                        // Yield to browser so the user's click paints first
+                        setTimeout(() => {
+                            heroVideo.play()
+                                .then(() => {
+                                    hasPlayed = true;
+                                    hideLoadingState();
+                                })
+                                .catch(() => {});
+                        }, 0);
                         document.removeEventListener('click', startVideoOnInteraction);
                         document.removeEventListener('touchstart', startVideoOnInteraction);
                     };
 
                     document.addEventListener('click', startVideoOnInteraction, { once: true });
-                    document.addEventListener('touchstart', startVideoOnInteraction, { once: true });
+                    document.addEventListener('touchstart', startVideoOnInteraction, { once: true, passive: true });
                 });
         }
     };
@@ -430,12 +426,14 @@ function createCarouselDots(sectionId, row, originalCardCount) {
 // Update carousel dots based on current position
 function updateCarouselDots(sectionId, row, originalCardCount) {
     const dotsContainer = document.querySelector(`.carousel-dots[data-section="${sectionId}"]`);
-    
+
     if (dotsContainer) {
+        // Cache dots NodeList at init time to avoid querySelectorAll in scroll handler
+        const dots = dotsContainer.querySelectorAll('.carousel-dot');
+        let lastActiveIndex = 0;
         row.addEventListener('scroll', throttle(() => {
             const cardWidth = row.children[0]?.offsetWidth || 0;
-            const cardSpacing = 20;
-            const cardWithSpacing = cardWidth + cardSpacing;
+            const cardWithSpacing = cardWidth + 20;
             const scrollPosition = row.scrollLeft;
 
             // Calculate active index based on scroll position (no clones)
@@ -443,17 +441,14 @@ function updateCarouselDots(sectionId, row, originalCardCount) {
 
             // Ensure activeIndex is within bounds
             activeIndex = Math.max(0, Math.min(activeIndex, originalCardCount - 1));
-            
-            // Update active dot
-            const dots = dotsContainer.querySelectorAll('.carousel-dot');
-            dots.forEach((dot, index) => {
-                if (index === activeIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }, 50));
+
+            // Only update DOM if active dot changed
+            if (activeIndex !== lastActiveIndex) {
+                dots[lastActiveIndex]?.classList.remove('active');
+                dots[activeIndex]?.classList.add('active');
+                lastActiveIndex = activeIndex;
+            }
+        }, 50), { passive: true });
     }
 }
 
@@ -499,17 +494,19 @@ function initializeExistingFeatures() {
     }
 
     // Smooth scrolling for navigation links (exclude smart-download)
+    // Cache targets at init time to avoid querySelector in click handler
     document.querySelectorAll('a[href^="#"]:not([href="#smart-download"])').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
+        const href = anchor.getAttribute('href');
+        const target = document.querySelector(href);
+        if (target) {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-            }
-        });
+            });
+        }
     });
 
     // Modern Section Animation System
@@ -549,7 +546,10 @@ document.addEventListener('keydown', function(e) {
 });
 
 document.addEventListener('mousedown', function() {
-    document.body.classList.remove('keyboard-navigation');
+    // Only remove if present, to avoid unnecessary style invalidation on every tap
+    if (document.body.classList.contains('keyboard-navigation')) {
+        document.body.classList.remove('keyboard-navigation');
+    }
 });
 
 // Export functions for testing or external use

@@ -557,17 +557,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .faq-answer {
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+  transition: grid-template-rows 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.7;
   opacity: 0;
 }
 
+.faq-answer > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
 .faq-open .faq-answer {
-  max-height: 600px;
+  grid-template-rows: 1fr;
   padding-bottom: 1.1rem;
   opacity: 1;
 }
@@ -4926,11 +4932,13 @@ img[loading="lazy"] {
 #features,
 #free-tools,
 #how-it-works,
+#screenshots,
 #try-demo,
 #comparison,
 #testimonials,
 #faq,
-#from-the-blog {
+#from-the-blog,
+#download {
     content-visibility: auto;
     contain-intrinsic-size: auto 800px;
 }

@@ -1427,26 +1427,35 @@
     // Use event delegation for FAQ — single listener, minimal DOM work
     var faqSection = document.getElementById('faqAccordion') || document.body;
     var currentOpenFaq = null;
+    // Pre-cache FAQ button references to avoid querySelector in click handler
+    var faqBtnMap = new WeakMap();
+    faqSection.querySelectorAll('.faq-item').forEach(function(item) {
+        var btn = item.querySelector('[data-toggle="faq"]');
+        if (btn) faqBtnMap.set(item, btn);
+    });
     faqSection.addEventListener('click', function(e) {
         var btn = e.target.closest('[data-toggle="faq"]');
         if (!btn) return;
         var item = btn.parentElement;
         var isOpen = item.classList.contains('faq-open');
-        // Close only the currently open item (avoid looping all items)
-        if (currentOpenFaq && currentOpenFaq !== item) {
-            currentOpenFaq.classList.remove('faq-open');
-            var prevBtn = currentOpenFaq.querySelector('[data-toggle="faq"]');
-            if (prevBtn) prevBtn.setAttribute('aria-expanded', 'false');
-        }
-        if (!isOpen) {
-            item.classList.add('faq-open');
-            btn.setAttribute('aria-expanded', 'true');
-            currentOpenFaq = item;
-        } else {
-            item.classList.remove('faq-open');
-            btn.setAttribute('aria-expanded', 'false');
-            currentOpenFaq = null;
-        }
+        // Yield to browser: split read (isOpen check above) from writes (class changes below)
+        requestAnimationFrame(function() {
+            // Close only the currently open item (avoid looping all items)
+            if (currentOpenFaq && currentOpenFaq !== item) {
+                currentOpenFaq.classList.remove('faq-open');
+                var prevBtn = faqBtnMap.get(currentOpenFaq);
+                if (prevBtn) prevBtn.setAttribute('aria-expanded', 'false');
+            }
+            if (!isOpen) {
+                item.classList.add('faq-open');
+                btn.setAttribute('aria-expanded', 'true');
+                currentOpenFaq = item;
+            } else {
+                item.classList.remove('faq-open');
+                btn.setAttribute('aria-expanded', 'false');
+                currentOpenFaq = null;
+            }
+        });
     });
     </script>
 
@@ -1549,6 +1558,8 @@
         var prompts = document.getElementById('demo-prompts');
         if (!body || !prompts) return;
         var isStreaming = false;
+        // Cache prompt buttons once to avoid querySelectorAll in click/typewriter handlers
+        var promptBtns = prompts.querySelectorAll('.demo-prompt-btn');
 
         function typewriter(el, text, cb) {
             var i = 0;
@@ -1561,11 +1572,31 @@
                     setTimeout(tick, 8);
                 } else {
                     isStreaming = false;
-                    prompts.querySelectorAll('.demo-prompt-btn').forEach(function(b) { b.disabled = false; b.style.opacity = '1'; });
+                    promptBtns.forEach(function(b) { b.disabled = false; b.style.opacity = '1'; });
                     if (cb) cb();
                 }
             };
             tick();
+        }
+
+        // Pre-build loading spinner DOM to avoid insertAdjacentHTML parsing in click handler
+        function createLoadingEl() {
+            var loadDiv = document.createElement('div');
+            loadDiv.className = 'demo-msg demo-msg-bot';
+            loadDiv.id = 'demo-loading';
+            var spinner = document.createElement('div');
+            spinner.className = 'demo-spinner';
+            for (var d = 0; d < 3; d++) {
+                var dot = document.createElement('div');
+                dot.className = 'demo-spinner-dot';
+                spinner.appendChild(dot);
+            }
+            loadDiv.appendChild(spinner);
+            var loadText = document.createElement('p');
+            loadText.className = 'demo-loading-text';
+            loadText.textContent = 'Analyzing your birth chart';
+            loadDiv.appendChild(loadText);
+            return loadDiv;
         }
 
         prompts.addEventListener('click', function(e) {
@@ -1573,16 +1604,20 @@
             if (!btn || btn.disabled || isStreaming) return;
             var q = btn.getAttribute('data-q');
             var a = btn.getAttribute('data-a');
-            prompts.querySelectorAll('.demo-prompt-btn').forEach(function(b) { b.disabled = true; b.style.opacity = '0.4'; });
-            var userMsg = document.createElement('div');
-            userMsg.className = 'demo-msg demo-msg-user';
-            var userP = document.createElement('p');
-            userP.textContent = q;
-            userMsg.appendChild(userP);
-            body.appendChild(userMsg);
-            body.scrollTop = body.scrollHeight;
-            body.insertAdjacentHTML('beforeend', '<div class="demo-msg demo-msg-bot" id="demo-loading"><div class="demo-spinner"><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div><div class="demo-spinner-dot"></div></div><p class="demo-loading-text">Analyzing your birth chart</p></div>');
-            body.scrollTop = body.scrollHeight;
+            // Disable buttons using cached NodeList (no DOM query in handler)
+            promptBtns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.4'; });
+            // Yield to browser before DOM mutations so the click paint happens first
+            requestAnimationFrame(function() {
+                var userMsg = document.createElement('div');
+                userMsg.className = 'demo-msg demo-msg-user';
+                var userP = document.createElement('p');
+                userP.textContent = q;
+                userMsg.appendChild(userP);
+                body.appendChild(userMsg);
+                body.scrollTop = body.scrollHeight;
+                body.appendChild(createLoadingEl());
+                body.scrollTop = body.scrollHeight;
+            });
             setTimeout(function() {
                 var loading = document.getElementById('demo-loading');
                 if (loading) loading.remove();
@@ -1697,15 +1732,22 @@
             });
             dotsContainer.appendChild(dot);
         });
-        // Update active dot on scroll
+        // Update active dot on scroll (throttled via rAF to avoid blocking main thread)
         var dots = dotsContainer.querySelectorAll('.dot');
+        var scrollTicking = false;
         wrapper.addEventListener('scroll', function() {
-            var scrollLeft = wrapper.scrollLeft;
-            var cardWidth = cards[0].offsetWidth + 12;
-            var activeIndex = Math.round(scrollLeft / cardWidth);
-            dots.forEach(function(d, i) {
-                d.classList.toggle('active', i === activeIndex);
-            });
+            if (!scrollTicking) {
+                requestAnimationFrame(function() {
+                    var scrollLeft = wrapper.scrollLeft;
+                    var cardWidth = cards[0].offsetWidth + 12;
+                    var activeIndex = Math.round(scrollLeft / cardWidth);
+                    dots.forEach(function(d, i) {
+                        d.classList.toggle('active', i === activeIndex);
+                    });
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
         }, { passive: true });
     })();
     </script>
@@ -1717,11 +1759,17 @@
         var btn = document.getElementById('video-sound-toggle');
         if (!video || !btn) return;
 
+        // Cache icon elements to avoid innerHTML parsing on every click
+        var muteIcon = document.createElement('i');
+        muteIcon.className = 'fas fa-volume-mute';
+        muteIcon.setAttribute('aria-hidden', 'true');
+        var unmuteIcon = document.createElement('i');
+        unmuteIcon.className = 'fas fa-volume-up';
+        unmuteIcon.setAttribute('aria-hidden', 'true');
+
         btn.addEventListener('click', function() {
             video.muted = !video.muted;
-            btn.innerHTML = video.muted
-                ? '<i class="fas fa-volume-mute"></i>'
-                : '<i class="fas fa-volume-up"></i>';
+            btn.replaceChildren(video.muted ? muteIcon : unmuteIcon);
         });
 
         // Mute when video scrolls out of view
@@ -1729,7 +1777,7 @@
             entries.forEach(function(entry) {
                 if (!entry.isIntersecting && !video.muted) {
                     video.muted = true;
-                    btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    btn.replaceChildren(muteIcon);
                 }
             });
         }, { threshold: 0.3 });
