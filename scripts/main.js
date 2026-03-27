@@ -495,8 +495,9 @@ function initializeExistingFeatures() {
 
     // Smooth scrolling for navigation links (exclude smart-download)
     // Cache targets at init time to avoid querySelector in click handler
-    document.querySelectorAll('a[href^="#"]:not([href="#smart-download"])').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]:not([href="#smart-download"]):not([href="#"])').forEach(anchor => {
         const href = anchor.getAttribute('href');
+        if (!href || href === '#') return;
         const target = document.querySelector(href);
         if (target) {
             anchor.addEventListener('click', function (e) {
