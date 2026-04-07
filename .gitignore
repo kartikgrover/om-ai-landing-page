@@ -39,4 +39,7 @@ vendor/
 .env.test.local
 .env.production.local
 
+# Playwright MCP artifacts
+.playwright-mcp/
+
 # Ignore any other files or directories that are not relevant to version control
