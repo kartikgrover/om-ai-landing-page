@@ -55,15 +55,13 @@
     <link rel="dns-prefetch" href="https://static.hotjar.com">
     <link rel="dns-prefetch" href="https://www.facebook.com">
 
-    <!-- Preload LCP image (hero video poster) -->
-    <link rel="preload" href="/assets/om-ai-demo-poster.jpg" as="image" fetchpriority="high">
 
     <!-- Bootstrap CSS (non-blocking: load async, apply on load) -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
 
     <!-- Custom Styles (render-critical) -->
-    <link rel="stylesheet" href="/styles/styles.min.css?v=65">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=66">
 
     <!-- Font Awesome (non-blocking) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -218,8 +216,6 @@
     }
     </script>
 
-    <!-- Canonical URL enforcement (inline, minimal — only fires on /index.html) -->
-    <script>window.location.pathname==='/index.html'&&window.location.replace(window.location.origin+window.location.search+window.location.hash);</script>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
@@ -264,13 +260,6 @@
             });
         }
 
-        // Track video engagement
-        function trackVideo(action) {
-            gtag('event', 'video_' + action, {
-                'event_category': 'Video Engagement',
-                'event_label': 'Hero Video'
-            });
-        }
     </script>
 
     <!-- Meta Pixel Code (deferred to avoid blocking render) -->
@@ -448,14 +437,27 @@
                         </div>
 
                         <div class="hero-media">
-                            <video autoplay muted loop playsinline preload="none" poster="/assets/om-ai-demo-poster.jpg" class="hero-video" id="hero-video">
-                                <source data-src="/assets/om-ai-demo.webm" type="video/webm">
-                                <source data-src="/assets/om-ai-demo.mp4" type="video/mp4">
-                                <track kind="captions" src="/assets/om-ai-demo.vtt" srclang="en" label="English">
-                            </video>
-                            <button class="video-sound-toggle" id="video-sound-toggle" aria-label="Toggle sound">
-                                <i aria-hidden="true" class="fas fa-volume-mute"></i>
-                            </button>
+                            <div class="demo-chat">
+                                <div class="demo-chat-header">
+                                    <img src="/assets/logo.webp" alt="Om.AI astrology chatbot" width="28" height="28" loading="eager" decoding="async">
+                                    <span>Om.AI</span>
+                                    <span class="demo-badge">Demo</span>
+                                </div>
+                                <div class="demo-chat-body" id="demo-chat-body">
+                                    <div class="demo-msg demo-msg-bot">
+                                        <p>Namaste! This is a sample of real responses from Om.AI. Tap a question to see how our AI astrologer responds. Download the app for personalized readings based on your birth chart.</p>
+                                    </div>
+                                </div>
+                                <div class="demo-chat-prompts" id="demo-prompts">
+                                    <button class="demo-prompt-btn" data-q="I'm confused about my career, I want to start freelancing but not getting high paying clients" data-a="For your Aries rising with Saturn Mahadasha and Venus Antardasha, focus on skills related to leadership, discipline, and practical work. Aries rules action and courage, so fields like management, entrepreneurship, or any role requiring initiative suit you well. Saturn's influence favors structured industries like manufacturing or logistics. Venus encourages creativity and diplomacy, so combining practical skills with communication or design can be powerful. Since you want financial stability without a typical job, consider developing skills in real estate, project management, or creative freelancing that allow independence but steady income. Start by deepening expertise in your current work, then gradually add new skills after mid-2026 when Jupiter's support enhances growth. Would you like simple daily practices to boost your focus and confidence?">I'm confused about my career path</button>
+                                    <button class="demo-prompt-btn" data-q="When will I find love? My parents are also looking for marriage proposals" data-a="Your chart shows a strong mix of energies for relationships. The Moon is friendly and well-placed, giving you warmth and openness. Venus, the key planet for love and marriage, has mixed signals — challenged in your main chart but friendly in your deeper relationship chart — indicating some ups and downs in love matters. Currently, you are in a Venus phase within Saturn's longer cycle, which brings lessons in patience and maturity in relationships. Your chart leans toward a love marriage because Venus's influence encourages personal choice, but family and tradition also play a part. The best timing for significant relationship progress is around February 2028, when Saturn's movement aligns powerfully with your chart. Would you like simple remedies to strengthen Venus and smooth your love path?">When will I find love?</button>
+                                    <button class="demo-prompt-btn" data-q="Give me full chart analysis — love, health issues to watch, and when will my finances improve?" data-a="Your Taurus rising chart shows a strong foundation for leadership and respect, thanks to powerful qualities that bring wisdom and status. Your natural charm and creativity are supported by good house strengths in wealth, home, and social circles. Currently, you are in a phase ruled by Saturn and Jupiter, which encourages disciplined growth. Love will find you best around June 2026, when Jupiter moves into Cancer activating your house of relationships — an excellent period for new romantic beginnings. Health-wise, watch for stress-related issues and digestive concerns, especially around late December. Financially, steady improvement is underway, but the best growth comes after mid-2026 when your leadership and wealth-building qualities fully activate. What would you like to explore next?">Full chart analysis</button>
+                                    <button class="demo-prompt-btn" data-q="Tell me more about my health" data-a="Your chart shows a focus on health, particularly influenced by your Moon in Scorpio. This placement can lead to emotional fluctuations and stress, impacting your overall well-being. The Moon's position in the 9th house suggests that nurturing your mental health through spiritual practices or travel can be beneficial. During the current Mahadasha of Venus, you may experience a heightened awareness of your health and wellness. Prioritize emotional balance and self-care routines to support your vitality.">Tell me about my health</button>
+                                    <button class="demo-prompt-btn" data-q="Is this a good year for investments?" data-a="2026 is a favorable year for your finances. Early in the year, Mercury's transit urges careful management of expenses. By June, Jupiter's strong presence boosts income through communication and networking. Saturn's influence on your 2nd and 11th houses supports steady, long-term wealth accumulation. Focus on disciplined, research-backed investments rather than speculation, and you will see solid returns by year-end.">Is this a good year for investments?</button>
+                                    <button class="demo-prompt-btn" data-q="Which mantra can enhance my personality and confidence?" data-a="To boost your confidence and clarity during this Rahu-Mars phase, chant the Mars mantra: 'Om Angarakaya Namaha.' This mantra strengthens courage, energy, and focus, helping you overcome obstacles and communicate effectively. Your chart shows strong leadership and wisdom, so this mantra will support your natural talents and help you navigate current challenges smoothly. Repeat it 108 times daily, ideally before important calls or meetings.">Which mantra boosts confidence?</button>
+                                    <button class="demo-prompt-btn" data-q="I am financially stable now but having family issues" data-a="You are unlikely to face major family issues this year. Venus entering your 2nd house in early March 2026 is highly auspicious, boosting wealth, communication, and overall harmony — Venus is exalted here, bringing smooth progress. While Mars entering your 1st house in February can bring challenges, these relate to personal energy and drive, not family conflict. Jupiter's movement further supports harmony at home. Practice patience and open communication with loved ones during this transit period.">Having family issues</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -728,44 +730,6 @@
                         <h3 class="step-title">Receive Guidance</h3>
                         <p>Personalized predictions and wisdom</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Try Demo Section -->
-    <section id="try-demo" class="py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 text-center mb-4">
-                    <h2 class="section-title">See Om.AI in Action</h2>
-                    <p class="text-secondary">Ask a question and watch our AI astrologer respond instantly.</p>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8">
-                    <div class="demo-chat">
-                        <div class="demo-chat-header">
-                            <img src="/assets/logo.webp" alt="Om.AI astrology chatbot" width="28" height="28" loading="lazy" decoding="async">
-                            <span>Om.AI</span>
-                            <span class="demo-badge">Demo</span>
-                        </div>
-                        <div class="demo-chat-body" id="demo-chat-body">
-                            <div class="demo-msg demo-msg-bot">
-                                <p>Namaste! This is a sample of real responses from Om.AI. Tap a question to see how our AI astrologer responds. Download the app for personalized readings based on your birth chart.</p>
-                            </div>
-                        </div>
-                        <div class="demo-chat-prompts" id="demo-prompts">
-                            <button class="demo-prompt-btn" data-q="I'm confused about my career, I want to start freelancing but not getting high paying clients" data-a="For your Aries rising with Saturn Mahadasha and Venus Antardasha, focus on skills related to leadership, discipline, and practical work. Aries rules action and courage, so fields like management, entrepreneurship, or any role requiring initiative suit you well. Saturn's influence favors structured industries like manufacturing or logistics. Venus encourages creativity and diplomacy, so combining practical skills with communication or design can be powerful. Since you want financial stability without a typical job, consider developing skills in real estate, project management, or creative freelancing that allow independence but steady income. Start by deepening expertise in your current work, then gradually add new skills after mid-2026 when Jupiter's support enhances growth. Would you like simple daily practices to boost your focus and confidence?">I'm confused about my career path</button>
-                            <button class="demo-prompt-btn" data-q="When will I find love? My parents are also looking for marriage proposals" data-a="Your chart shows a strong mix of energies for relationships. The Moon is friendly and well-placed, giving you warmth and openness. Venus, the key planet for love and marriage, has mixed signals — challenged in your main chart but friendly in your deeper relationship chart — indicating some ups and downs in love matters. Currently, you are in a Venus phase within Saturn's longer cycle, which brings lessons in patience and maturity in relationships. Your chart leans toward a love marriage because Venus's influence encourages personal choice, but family and tradition also play a part. The best timing for significant relationship progress is around February 2028, when Saturn's movement aligns powerfully with your chart. Would you like simple remedies to strengthen Venus and smooth your love path?">When will I find love?</button>
-                            <button class="demo-prompt-btn" data-q="Give me full chart analysis — love, health issues to watch, and when will my finances improve?" data-a="Your Taurus rising chart shows a strong foundation for leadership and respect, thanks to powerful qualities that bring wisdom and status. Your natural charm and creativity are supported by good house strengths in wealth, home, and social circles. Currently, you are in a phase ruled by Saturn and Jupiter, which encourages disciplined growth. Love will find you best around June 2026, when Jupiter moves into Cancer activating your house of relationships — an excellent period for new romantic beginnings. Health-wise, watch for stress-related issues and digestive concerns, especially around late December. Financially, steady improvement is underway, but the best growth comes after mid-2026 when your leadership and wealth-building qualities fully activate. What would you like to explore next?">Full chart analysis</button>
-                            <button class="demo-prompt-btn" data-q="Tell me more about my health" data-a="Your chart shows a focus on health, particularly influenced by your Moon in Scorpio. This placement can lead to emotional fluctuations and stress, impacting your overall well-being. The Moon's position in the 9th house suggests that nurturing your mental health through spiritual practices or travel can be beneficial. During the current Mahadasha of Venus, you may experience a heightened awareness of your health and wellness. Prioritize emotional balance and self-care routines to support your vitality.">Tell me about my health</button>
-                            <button class="demo-prompt-btn" data-q="Is this a good year for investments?" data-a="2026 is a favorable year for your finances. Early in the year, Mercury's transit urges careful management of expenses. By June, Jupiter's strong presence boosts income through communication and networking. Saturn's influence on your 2nd and 11th houses supports steady, long-term wealth accumulation. Focus on disciplined, research-backed investments rather than speculation, and you will see solid returns by year-end.">Is this a good year for investments?</button>
-                            <button class="demo-prompt-btn" data-q="Which mantra can enhance my personality and confidence?" data-a="To boost your confidence and clarity during this Rahu-Mars phase, chant the Mars mantra: 'Om Angarakaya Namaha.' This mantra strengthens courage, energy, and focus, helping you overcome obstacles and communicate effectively. Your chart shows strong leadership and wisdom, so this mantra will support your natural talents and help you navigate current challenges smoothly. Repeat it 108 times daily, ideally before important calls or meetings.">Which mantra boosts confidence?</button>
-                            <button class="demo-prompt-btn" data-q="I am financially stable now but having family issues" data-a="You are unlikely to face major family issues this year. Venus entering your 2nd house in early March 2026 is highly auspicious, boosting wealth, communication, and overall harmony — Venus is exalted here, bringing smooth progress. While Mars entering your 1st house in February can bring challenges, these relate to personal energy and drive, not family conflict. Jupiter's movement further supports harmony at home. Practice patience and open communication with loved ones during this transit period.">Having family issues</button>
-                        </div>
-                    </div>
-                    <p class="text-center mt-3"><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dlanding%26utm_campaign%3Dapp_download%26utm_content%3Dmid_cta" target="_blank" class="btn btn-primary btn-sm">Try the Full App Free <i aria-hidden="true" class="fas fa-arrow-right ms-1"></i></a></p>
                 </div>
             </div>
         </div>
@@ -1489,67 +1453,6 @@
                 observer.observe(el);
             });
 
-            // Lazy-load video sources (avoids 1.4MB download before page renders)
-            const heroVideo = document.querySelector('.hero-video');
-            if (heroVideo) {
-                heroVideo.querySelectorAll('source[data-src]').forEach(function(source) {
-                    source.src = source.getAttribute('data-src');
-                    source.removeAttribute('data-src');
-                });
-                heroVideo.load();
-            }
-
-            // Video tracking
-            if (heroVideo) {
-                let videoTracked = {
-                    play: false,
-                    quarter: false,
-                    half: false,
-                    threeQuarter: false,
-                    complete: false
-                };
-
-                heroVideo.addEventListener('play', () => {
-                    if (!videoTracked.play) {
-                        trackVideo('play');
-                        videoTracked.play = true;
-                    }
-                });
-
-                heroVideo.addEventListener('pause', () => {
-                    trackVideo('pause');
-                });
-
-                heroVideo.addEventListener('ended', () => {
-                    if (!videoTracked.complete) {
-                        trackVideo('complete');
-                        videoTracked.complete = true;
-                    }
-                });
-
-                // Track progress milestones (throttled to avoid main thread jank)
-                var lastTimeCheck = 0;
-                heroVideo.addEventListener('timeupdate', () => {
-                    // Only check every 2 seconds to reduce main thread work
-                    var now = heroVideo.currentTime;
-                    if (now - lastTimeCheck < 2) return;
-                    lastTimeCheck = now;
-                    // Stop listening once all milestones tracked
-                    if (videoTracked.threeQuarter) return;
-                    const progress = (now / heroVideo.duration) * 100;
-
-                    if (progress >= 75 && !videoTracked.threeQuarter) {
-                        trackVideo('75_percent');
-                        videoTracked.threeQuarter = true;
-                    } else if (progress >= 50 && !videoTracked.half) {
-                        trackVideo('50_percent');
-                        videoTracked.half = true;
-                    } else if (progress >= 25 && !videoTracked.quarter) {
-                        trackVideo('25_percent');
-                        videoTracked.quarter = true;
-                    }
-                });
-            }
         });
     </script>
 
@@ -1754,38 +1657,6 @@
     })();
     </script>
 
-    <!-- Video sound toggle + mute on scroll -->
-    <script>
-    (function() {
-        var video = document.getElementById('hero-video');
-        var btn = document.getElementById('video-sound-toggle');
-        if (!video || !btn) return;
-
-        // Cache icon elements to avoid innerHTML parsing on every click
-        var muteIcon = document.createElement('i');
-        muteIcon.className = 'fas fa-volume-mute';
-        muteIcon.setAttribute('aria-hidden', 'true');
-        var unmuteIcon = document.createElement('i');
-        unmuteIcon.className = 'fas fa-volume-up';
-        unmuteIcon.setAttribute('aria-hidden', 'true');
-
-        btn.addEventListener('click', function() {
-            video.muted = !video.muted;
-            btn.replaceChildren(video.muted ? muteIcon : unmuteIcon);
-        });
-
-        // Mute when video scrolls out of view
-        var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (!entry.isIntersecting && !video.muted) {
-                    video.muted = true;
-                    btn.replaceChildren(muteIcon);
-                }
-            });
-        }, { threshold: 0.3 });
-        observer.observe(video);
-    })();
-    </script>
 
     <!-- Custom JavaScript -->
     <script src="/scripts/main.min.js?v=1" defer></script>
