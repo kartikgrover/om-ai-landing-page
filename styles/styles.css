@@ -460,8 +460,6 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  max-height: 120px;
-  overflow-y: auto;
 }
 
 .demo-prompt-btn {
