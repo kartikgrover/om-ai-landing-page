@@ -8,6 +8,9 @@ Allow: /
 Disallow: /node_modules/
 Disallow: /blog/drafts/
 
+# Disallow URLs with query parameters (static site — no server-side params)
+Disallow: /*?
+
 # Disallow certain file types
 Disallow: /*.pdf$
 Disallow: /*.zip$
