@@ -54,3 +54,18 @@ Available via the backend project (`../om.ai-backend/server.js:3008`). Account `
 - **NEVER mention OpenAI** or any AI vendor/model names on public-facing pages
 - Use generic terms like "AI-powered", "advanced calculations", "classical algorithms" instead
 - This applies to landing pages, blog posts, meta tags, structured data, and any user-visible content
+
+## FAQ Schema Sync
+`index.html` has a JSON-LD `FAQPage` block at the top AND a visible FAQ section near the bottom. They must stay in sync — updating one without the other creates a mismatch Google Search Console flags. When adding / editing a Q&A, update both.
+
+## SEO Context (Apr 2026 GSC snapshot)
+Use these numbers to anchor SEO decisions rather than guessing:
+- **Clicks: 11.7K (+43% YoY). Impressions: 333K (+59%).**
+- Top pages: `/` (home) → `marriage-prediction.html` → `kundli.html` (+8,400% growth) → `ai-vedic-astrology.html` → `career-astrology.html`.
+- Query clusters: `ai astrology` (5.2K), `ai kundali` (937), `free astrology chat` (915, **+445%** — fastest grower, "24/7" / "unlimited" phrasings), branded `om ai` (638), `ai astrology app` (150).
+- Geo: 90% India, 2% US. 92% non-branded.
+- Hindi queries appearing (`ऐ ज्योतिष`, `एआई कुंडली निःशुल्क`) — `/hi/` pages exist with `hreflang`.
+- Topic landing pages that started at 0 clicks and are now top-5 (marriage-prediction, career-astrology) suggest the pattern works — worth building more (health-astrology, love-astrology, wealth-astrology).
+
+## Existing Analysis Docs
+- `AUDIT_FINDINGS.md` — prior site audit.
