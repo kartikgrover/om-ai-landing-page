@@ -442,18 +442,6 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom-left-radius: 4px;
 }
 
-.demo-msg-user {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.demo-msg-user p {
-  background: var(--brand-primary);
-  color: #000;
-  font-weight: 500;
-  border-bottom-right-radius: 4px;
-}
-
 .demo-chat-prompts {
   padding: 0.6rem 0.85rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -578,70 +566,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* Comparison Table */
-.comparison-table-wrapper {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.comparison-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 0.95rem;
-}
-
-.comparison-table th,
-.comparison-table td {
-  padding: 0.85rem 1.2rem;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.comparison-table th {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding-bottom: 1rem;
-}
-
-.comparison-table td:first-child {
-  text-align: left;
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.comparison-table td {
-  color: var(--text-secondary);
-}
-
-.comparison-table .highlight-col {
-  background: rgba(217, 119, 87, 0.06);
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.comparison-table th.highlight-col {
-  color: var(--brand-primary);
-  font-size: 1rem;
-  text-transform: none;
-}
-
-@media (max-width: 576px) {
-  .comparison-table {
-    font-size: 0.72rem;
-    min-width: 360px;
-  }
-  .comparison-table th,
-  .comparison-table td {
-    padding: 0.45rem 0.4rem;
-  }
-  .comparison-table td:first-child {
-    min-width: 90px;
-  }
-}
 
 .hero-badge {
   display: inline-block;
@@ -1359,158 +1283,14 @@ i.fas.fa-info-circle,
   transform: scale(1.05);
 }
 
-
-/* Testimonials Container - Fixed height with internal scroll */
-.testimonials-scroll-wrapper {
-  max-height: 600px; /* Fixed height */
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 10px; /* Space for scrollbar */
-
-  /* Custom scrollbar styling */
-  scrollbar-width: thin;
-  scrollbar-color: var(--brand-primary) var(--bg-subtle);
-}
-
-.testimonials-scroll-wrapper::-webkit-scrollbar {
-  width: 8px;
-}
-
-.testimonials-scroll-wrapper::-webkit-scrollbar-track {
-  background: var(--bg-subtle);
-  border-radius: 4px;
-}
-
-.testimonials-scroll-wrapper::-webkit-scrollbar-thumb {
-  background: var(--brand-primary);
-  border-radius: 4px;
-}
-
-.testimonials-scroll-wrapper::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-primary-dark);
-}
-
-/* Testimonial Cards - Enhanced with backdrop for better readability */
-.testimonial-card {
-  background: transparent !important; /* Cardless design */
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border: none !important;
-  border-radius: 0;
-  padding: var(--spacing-xl);
-  transition: transform var(--transition-fast), opacity var(--transition-fast);
-  height: 100%;
-  min-height: 200px; /* Ensure minimum card height */
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-}
-
-.testimonial-card:hover {
-  /* No lift animation */
-}
-
-.testimonial-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-  width: 100%;
-}
-
 .stars {
   display: flex;
   gap: 2px;
 }
 
-.testimonial-card p {
-  color: var(--text-secondary);
-  font-style: italic;
-  margin-bottom: var(--spacing-md);
-  line-height: 1.7;
-  width: 100%;
-}
-
-.testimonial-author {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-sm);
-  width: 100%;
-}
-
-.author-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.testimonial-author strong {
-  color: var(--text-primary);
-  display: block;
-  margin-bottom: 2px;
-}
-
-.testimonial-author span {
-  color: var(--text-light);
-  font-size: 0.9rem;
-}
-
-.store-icon {
-  font-size: 1.2rem;
-  color: var(--primary-color);
-  opacity: 0.8;
-}
-
-.store-icon i {
-  transition: all 0.3s ease;
-}
-
-.store-icon:hover i {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
 
 /* Mobile: Horizontal testimonial carousel */
 @media (max-width: 768px) {
-  .testimonials-scroll-wrapper {
-    max-height: none;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 0 0 1.5rem 0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-  }
-  .testimonials-scroll-wrapper::-webkit-scrollbar {
-    display: none;
-  }
-  .testimonials-scroll-wrapper > .row {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    padding: 0 1rem;
-  }
-  .testimonials-scroll-wrapper > .row > .col-lg-4,
-  .testimonials-scroll-wrapper > .row > .col-md-6 {
-    flex: 0 0 80vw !important;
-    max-width: 80vw !important;
-    margin-right: 20px;
-    scroll-snap-align: center;
-  }
-  .testimonials-scroll-wrapper > .row > .col-lg-4:first-child,
-  .testimonials-scroll-wrapper > .row > .col-md-6:first-child {
-    scroll-snap-align: start;
-  }
-  .testimonials-scroll-wrapper .testimonial-card {
-    min-width: unset !important;
-    max-width: unset !important;
-    min-height: auto !important;
-  }
 
   /* Testimonial scroll dots */
   .testimonial-dots {
@@ -1889,8 +1669,7 @@ footer p {
   }
 
   .feature-card,
-  .step-card,
-  .testimonial-card {
+.step-card {
     padding: var(--spacing-lg);
   }
 
@@ -1976,8 +1755,7 @@ footer p {
 
 
   .feature-card,
-  .step-card,
-  .testimonial-card {
+.step-card {
     background: transparent;
   }
 
@@ -2014,11 +1792,6 @@ footer p {
     min-width: 100% !important;
   }
 
-  /* Testimonial cards narrower */
-  .testimonial-card {
-    min-width: 280px !important;
-  }
-
   /* Back to top button smaller */
   .back-to-top {
     width: 36px !important;
@@ -2043,12 +1816,6 @@ footer p {
   .feature-highlights {
     flex-direction: column !important;
     align-items: flex-start !important;
-  }
-
-  /* Testimonials even narrower */
-  .testimonial-card {
-    min-width: 260px !important;
-    padding: 1rem !important;
   }
 
   /* Step cards stack tighter */
@@ -2224,10 +1991,6 @@ footer p {
     background: var(--background-light) !important;
   }
   
-  section.bg-primary {
-    background: var(--primary-color) !important;
-  }
-  
   /* Subtle hover enhancement for animated elements */
   .animate-item.visible:hover,
   .fade-in.visible:hover {
@@ -2357,34 +2120,6 @@ footer p {
   html {
           scroll-behavior: auto;
     }
-}
-
-/* Consistent header styling across all pages */
-/* Page Header Sections (Support, Legal Pages) */
-.bg-primary {
-  background: var(--gradient-brand) !important;
-  color: var(--text-on-brand) !important;
-  padding: var(--space-16) 0 !important;
-}
-
-.bg-primary h1,
-.bg-primary h2,
-.bg-primary h3,
-.bg-primary p,
-.bg-primary .lead,
-.bg-primary .display-4 {
-  color: var(--text-on-brand) !important;
-  text-shadow: none !important;
-}
-
-.bg-primary .display-4 {
-  font-family: var(--font-family-heading);
-  font-weight: var(--font-weight-normal);
-}
-
-.bg-primary .lead {
-  font-size: var(--font-size-lg);
-  opacity: 0.9;
 }
 
 /* Apply card-like animation to all main containers */
@@ -2818,9 +2553,7 @@ section a:not(.btn):not(.nav-link):hover {
   color: var(--brand-primary);
 }
 
-/* Small text/captions */
-small,
-.small {
+small {
   color: var(--text-tertiary);
   font-size: var(--font-size-sm);
 }
@@ -3273,19 +3006,11 @@ a:not(.btn):not(.nav-link):not(.navbar-brand):not(footer a):hover {
   color: var(--text-secondary) !important;
 }
 
-.text-dark {
-  color: var(--text-primary) !important;
-}
-
-/* Ensure white text on brand backgrounds */
-.bg-primary,
-.bg-primary *,
 .feedback-hero,
 .feedback-hero * {
   color: var(--text-on-brand) !important;
 }
 
-.bg-primary a:not(.btn),
 .feedback-hero a:not(.btn) {
   color: var(--text-on-brand) !important;
   text-decoration: underline;
@@ -3308,9 +3033,7 @@ textarea {
   color: var(--text-tertiary) !important;
 }
 
-/* Small text */
-small,
-.small {
+small {
   color: var(--text-tertiary) !important;
 }
 
@@ -3547,14 +3270,6 @@ footer a.text-white-50:hover {
     max-width: 100%;
   }
 
-  /* --- Comparison table: horizontal scroll hint --- */
-  .comparison-table-wrapper {
-    position: relative;
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
-    padding: 0 0.5rem;
-  }
-
   /* --- FAQ: readable text on mobile --- */
   .faq-question {
     font-size: 0.92rem;
@@ -3633,45 +3348,11 @@ footer a.text-white-50:hover {
     font-size: 0.78rem;
   }
 
-  /* Comparison table smaller font for 320px */
-  .comparison-table {
-    font-size: 0.72rem;
-    min-width: 420px;
-  }
-
-  .comparison-table th,
-  .comparison-table td {
-    padding: 0.45rem 0.4rem;
-  }
-
   /* Screenshot grid stays 2 cols but tighter */
   #screenshots .row.g-4 {
     gap: 0.5rem;
   }
 
-}
-
-/* ============================================
-   UI/UX Improvements
-   ============================================ */
-
-/* === #1: Sticky Mobile CTA === */
-.sticky-mobile-cta {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  padding: 0.75rem 1rem;
-  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-  background: var(--bg-emphasis);
-  border-top: 1px solid rgba(217, 119, 87, 0.3);
-}
-
-.sticky-cta-btn {
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 14px 24px;
 }
 
 /* Add bottom padding on mobile to prevent content from hiding behind sticky CTA */
@@ -3681,11 +3362,7 @@ footer a.text-white-50:hover {
   }
 }
 
-@media (min-width: 768px) {
-  .sticky-mobile-cta {
-    display: none !important;
-  }
-}
+
 
 /* === #3: Platform Smart Detection === */
 .store-btn-primary {
@@ -3726,34 +3403,6 @@ footer a.text-white-50:hover {
 
 /* === #10: Mobile Testimonial Horizontal Carousel === */
 @media (max-width: 767px) {
-  .testimonials-scroll-wrapper {
-    max-height: none;
-    overflow-y: visible;
-    overflow-x: auto;
-    padding-right: 0;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .testimonials-scroll-wrapper::-webkit-scrollbar {
-    display: none;
-  }
-
-  .testimonials-scroll-wrapper > .row {
-    flex-wrap: nowrap;
-    gap: 20px;
-  }
-
-  .testimonials-scroll-wrapper > .row > * {
-    flex: 0 0 80%;
-    max-width: 80%;
-    scroll-snap-align: center;
-  }
-
-  .testimonials-scroll-wrapper .testimonial-card {
-    min-height: 180px;
-  }
 
   /* Scroll indicator - removed, using dots instead */
   #testimonials .container::after {
@@ -3941,94 +3590,6 @@ footer a.text-white-50:hover {
   box-shadow: 0 0 20px rgba(217, 119, 87, 0.2);
 }
 
-/* --- Testimonial Cards: Glass Treatment --- */
-.testimonial-card {
-  background: var(--glass-bg) !important;
-  border: 1px solid var(--glass-border) !important;
-  border-radius: var(--radius-lg) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease !important;
-}
-
-.testimonial-card:hover {
-  background: var(--glass-bg-hover) !important;
-  border-color: rgba(217, 119, 87, 0.12) !important;
-  transform: translateY(-2px);
-}
-
-/* --- Inline Testimonial Quote (between feature cards) --- */
-.inline-testimonial {
-  text-align: center;
-  padding: var(--space-8) var(--space-6);
-  margin: var(--space-4) auto;
-  max-width: 600px;
-  position: relative;
-  border: none;
-  background: transparent;
-}
-
-.inline-testimonial::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
-  height: 1px;
-  background: var(--gradient-section-divider-subtle);
-}
-
-.inline-testimonial::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 20%;
-  right: 20%;
-  height: 1px;
-  background: var(--gradient-section-divider-subtle);
-}
-
-.inline-testimonial p {
-  font-family: var(--font-family-heading);
-  font-size: clamp(1.1rem, 2vw, 1.35rem) !important;
-  font-style: italic;
-  color: var(--text-secondary) !important;
-  line-height: 1.6;
-  margin-bottom: var(--space-3);
-}
-
-.inline-testimonial cite {
-  font-size: var(--font-size-sm);
-  color: var(--text-tertiary) !important;
-  font-style: normal;
-  letter-spacing: 0.02em;
-}
-
-/* --- Aggregate Rating Section --- */
-.aggregate-rating {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-3);
-}
-
-.aggregate-stars i {
-  color: #f5a623 !important;
-  font-size: 1.1rem;
-}
-
-.aggregate-score {
-  font-size: var(--font-size-lg) !important;
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-primary) !important;
-}
-
-.aggregate-count {
-  font-size: var(--font-size-sm) !important;
-  color: var(--text-tertiary) !important;
-}
-
 /* --- Buttons: Enhanced hover states and micro-interactions --- */
 .btn-primary {
   box-shadow: 0 2px 8px rgba(217, 119, 87, 0.2);
@@ -4183,15 +3744,13 @@ img[loading="lazy"] {
 /* --- Mobile: Disable glass for performance --- */
 @media (max-width: 768px) {
   .feature-card,
-  .step-card,
-  .testimonial-card {
+.step-card {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
 
   .feature-card:hover,
-  .step-card:hover,
-  .testimonial-card:hover {
+.step-card:hover {
     transform: none;
     box-shadow: none;
   }
@@ -4214,14 +3773,13 @@ img[loading="lazy"] {
 /* --- Reduced motion: disable all new effects --- */
 @media (prefers-reduced-motion: reduce) {
   .feature-card,
-  .step-card,
-  .testimonial-card,
-  .screenshot-container,
-  .demo-chat,
-  .btn-primary,
-  .btn-outline-primary,
-  .hero-badge,
-  .back-to-top {
+.step-card,
+.screenshot-container,
+.demo-chat,
+.btn-primary,
+.btn-outline-primary,
+.hero-badge,
+.back-to-top {
     transition: none !important;
   }
 
@@ -4317,23 +3875,19 @@ img[loading="lazy"] {
     line-height: 1.55 !important;
   }
 
-  /* General card paragraph text */
   .feature-card p,
-  .step-card p,
-  .testimonial-card p {
+.step-card p {
     font-size: 0.95rem !important;
     line-height: 1.6 !important;
   }
 
-  /* Button text */
   .btn,
-  .btn-primary,
-  .btn-outline-primary,
-  .btn-lg,
-  .store-btn,
-  .hero-cta .btn,
-  .store-btn-primary,
-  .sticky-cta-btn {
+.btn-primary,
+.btn-outline-primary,
+.btn-lg,
+.store-btn,
+.hero-cta .btn,
+.store-btn-primary {
     font-size: 1rem !important;
   }
 }
@@ -4422,11 +3976,9 @@ img[loading="lazy"] {
     line-height: 1.6 !important;
   }
 
-  /* Card paragraph text */
   .feature-card p,
-  .step-card p,
-  .testimonial-card p,
-  .highlight {
+.step-card p,
+.highlight {
     font-size: 1rem !important;
     line-height: 1.6 !important;
   }
@@ -4443,33 +3995,20 @@ img[loading="lazy"] {
     line-height: 1.65 !important;
   }
 
-  /* Inline testimonials */
-  .inline-testimonial p {
-    font-size: 1rem !important;
-  }
-
-  .inline-testimonial cite {
-    font-size: 0.85rem !important;
-  }
-
-  /* Button text */
   .btn,
-  .btn-primary,
-  .btn-outline-primary,
-  .btn-lg,
-  .store-btn,
-  .hero-cta .btn,
-  .store-btn-primary,
-  .store-btn-secondary,
-  .sticky-cta-btn {
+.btn-primary,
+.btn-outline-primary,
+.btn-lg,
+.store-btn,
+.hero-cta .btn,
+.store-btn-primary,
+.store-btn-secondary {
     font-size: 1rem !important;
   }
 
-  /* Small UI chrome — badges, captions, trust line, security items */
   .hero-trust,
-  .hero-badge,
-  small,
-  .small {
+.hero-badge,
+small {
     font-size: 0.85rem !important;
   }
 
@@ -4477,11 +4016,6 @@ img[loading="lazy"] {
   .demo-msg p {
     font-size: 0.8125rem !important;
     line-height: 1.5 !important;
-  }
-
-  /* Comparison table — compact due to horizontal scroll layout */
-  .comparison-table {
-    font-size: 0.75rem !important;
   }
 }
 
@@ -4816,6 +4350,54 @@ img[loading="lazy"] {
 
 .loading-state { text-align: center; padding: 3rem; color: rgba(255,255,255,0.6); }
 
+.content-section {
+    padding: 4rem 0;
+}
+.content-section h2 {
+    font-family: 'DM Serif Display', serif;
+    color: #D97757;
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+}
+.content-section h3 {
+    font-family: 'DM Serif Display', serif;
+    color: #D97757;
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+}
+.content-section p, .content-section li {
+    color: rgba(255,255,255,0.82);
+    font-size: 1.08rem;
+    line-height: 1.8;
+}
+
+.insight-link {
+    display: block;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(217,119,87,0.2);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 0.75rem;
+}
+.insight-link:hover {
+    background: rgba(217,119,87,0.12);
+    border-color: #D97757;
+    color: #fff;
+}
+.insight-link i {
+    color: #D97757;
+    margin-right: 0.75rem;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 0;
+}
+
 /* INP optimization: skip rendering for off-screen sections until they scroll near viewport */
 #features,
 #free-tools,
@@ -4837,4 +4419,34 @@ img[loading="lazy"] {
 }
 .feature-card:hover {
     transform: translateY(-12px) scale(1.02);
+}
+
+/* Shared brand buttons — used on home and all SEO landing pages for App Store/Play Store CTAs */
+.btn--primary,
+.btn--outline {
+    border: 1.5px solid var(--brand-primary);
+    transition: transform 0.15s, filter 0.15s, background 0.15s;
+    text-decoration: none;
+}
+.btn--primary {
+    background: var(--brand-primary);
+    color: #fff;
+}
+.btn--primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    color: #fff;
+}
+.btn--outline {
+    background: transparent;
+    color: #fff;
+}
+.btn--outline:hover {
+    background: var(--brand-primary-transparent);
+    transform: translateY(-1px);
+    color: #fff;
+}
+.btn--primary:active,
+.btn--outline:active {
+    transform: translateY(0);
 }

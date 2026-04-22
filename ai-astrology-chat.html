@@ -44,34 +44,14 @@
 
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="/styles/styles.min.css?v=65">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
     <style>
-        .content-section {
-            padding: 4rem 0;
-        }
-        .content-section h2 {
-            font-family: 'DM Serif Display', serif;
-            color: #D97757;
-            font-size: 2rem;
-            margin-bottom: 1.25rem;
-        }
-        .content-section h3 {
-            font-family: 'DM Serif Display', serif;
-            color: #D97757;
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
-        }
-        .content-section p, .content-section li {
-            color: rgba(255,255,255,0.82);
-            font-size: 1.08rem;
-            line-height: 1.8;
-        }
-        .feature-card {
+.feature-card {
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(217,119,87,0.2);
             border-radius: 12px;
@@ -199,32 +179,7 @@
             margin-bottom: 0;
             font-size: 1rem;
         }
-        .insight-link {
-            display: block;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(217,119,87,0.2);
-            border-radius: 10px;
-            padding: 1.25rem 1.5rem;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.2s;
-            margin-bottom: 0.75rem;
-        }
-        .insight-link:hover {
-            background: rgba(217,119,87,0.12);
-            border-color: #D97757;
-            color: #fff;
-        }
-        .insight-link i {
-            color: #D97757;
-            margin-right: 0.75rem;
-        }
-        .divider {
-            border: 0;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            margin: 0;
-        }
-        .lang-badges {
+.lang-badges {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
@@ -389,10 +344,10 @@
                     Ask questions about your career, marriage, health, or finances and get answers based on your actual birth chart — not a generic horoscope. Om.AI's AI reads your Kundli like a classical Jyotishi.
                 </p>
                 <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
-                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dai_chat" class="btn btn-primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dai_chat" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
                         <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
                     </a>
-                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_ai_chat&mt=8" class="btn btn-outline-light btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_ai_chat&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
                         <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
                     </a>
                 </div>
@@ -421,11 +376,11 @@
                                 </div>
                             </div>
                             <div class="demo-chat-prompts" id="demo-prompts">
-                                <button class="demo-prompt-btn" data-q="Will this year be good for a career change?" data-a="Your 10th house lord Mercury is currently in its Mahadasha, and Jupiter is transiting your 10th house starting June 2026. This is a strong window for career growth. The transit will be most favorable between June and October when Jupiter aspects your natal Sun in the 2nd house, supporting both recognition and income. However, avoid initiating changes during the Rahu-Mercury antardasha from August 15–September 22, as decision clarity may be lower during that period. The best muhurta for a career move falls in the first two weeks of July.">Career change timing</button>
-                                <button class="demo-prompt-btn" data-q="When will I find love? My parents are also looking for marriage proposals" data-a="Your chart shows a strong mix of energies for relationships. The Moon is friendly and well-placed, giving you warmth and openness. Venus, the key planet for love and marriage, has mixed signals — challenged in your main chart but friendly in your deeper relationship chart — indicating some ups and downs in love matters. Currently, you are in a Venus phase within Saturn's longer cycle, which brings lessons in patience and maturity in relationships. The best timing for significant relationship progress is around February 2028, when Saturn's movement aligns powerfully with your chart.">When will I find love?</button>
-                                <button class="demo-prompt-btn" data-q="What about my finances this year?" data-a="Since your 2nd house lord Venus is well-placed in the 11th house and Jupiter's transit aspects it, finances should remain stable even during a transition. Your Dhana Yoga (2nd–11th lord connection) activates strongly in July. One caution: Saturn aspects your 2nd house until April 2027, so avoid speculative investments — steady income sources are favored over high-risk bets.">Finance outlook</button>
-                                <button class="demo-prompt-btn" data-q="Give me a full chart analysis — love, health, and career" data-a="Your Taurus rising chart shows a strong foundation for leadership and respect. Your natural charm and creativity are supported by good house strengths in wealth, home, and social circles. Currently, you are in a phase ruled by Saturn and Jupiter, which encourages disciplined growth. Love will find you best around June 2026, when Jupiter moves into Cancer activating your house of relationships. Health-wise, watch for stress-related issues and digestive concerns, especially around late December. Financially, steady improvement is underway, but the best growth comes after mid-2026 when your leadership and wealth-building qualities fully activate.">Full chart analysis</button>
-                                <button class="demo-prompt-btn" data-q="Which mantra can enhance my confidence?" data-a="To boost your confidence and clarity during this Rahu-Mars phase, chant the Mars mantra: 'Om Angarakaya Namaha.' This mantra strengthens courage, energy, and focus, helping you overcome obstacles and communicate effectively. Your chart shows strong leadership and wisdom, so this mantra will support your natural talents. Repeat it 108 times daily, ideally before important calls or meetings.">Best mantra for confidence</button>
+                                <button class="demo-prompt-btn" data-q="When will I land my first real job? I've been applying for months." data-a="Mid-2027 is your strongest window — especially around July 2027. Your Libra lagna with Venus in the 4th and active Raj/Dhana yoga favors roles in education, communications, real estate, or content work. Moon exalted in the 8th combined with your running Rahu dasha pushes you toward research, digital communications, or tele-counselling. Finish your course in July 2027, then use that transit window to apply aggressively — accept roles that build real experience over titles.">First job timing</button>
+                                <button class="demo-prompt-btn" data-q="Will I have an arranged marriage or a love marriage?" data-a="Most likely arranged — families or social/career networks bring the match, with introductions and negotiations in late-2027 and the marriage itself culminating in late-2028. Your Mercury Antardasha now strengthens career and social channels (7th and 10th houses), and Rahu sits in your 7th as Vargottama — a deep, persistent partnership theme favoring external matchmakers. Venus Mahadasha with Neecha Bhanga Raj Yoga gives attraction and reputation, but Venus is debilitated and Mercury functional for the 7th, which means practical, negotiated unions work better than romantic chase.">Arranged or love?</button>
+                                <button class="demo-prompt-btn" data-q="Should I marry my partner? Our parents are pushing but I'm unsure" data-a="Yes, you have real compatibility and a supportive timing window — but go in with open eyes. Both charts show strong 7th-house energy, and Vargottama Jupiter supports deeper bonding in the Navamsa. You're both in affirming planetary periods for commitment, with several benefic cross-aspects between your Moon, Venus, and Jupiter that build warmth. Caution: your Ashtakoot score is low (13.5 out of 36) and seven challenging cross-aspects from Saturn, Mars, and Rahu/Ketu can delay affection and create recurring obstacles. Practical read: proceed — the potential is real, but needs steady communication and conscious work to soften the frictions.">Are we compatible?</button>
+                                <button class="demo-prompt-btn" data-q="Which gemstone should I wear?" data-a="Red Coral (Mars) — strongly recommended. Mars is the yogakaraka in your chart (benefic for your 5th and 10th houses), activates your Raj Yoga, and will rule your upcoming Mars Antardasha inside a strong Jupiter Mahadasha. Red Coral amplifies career drive, creative power, and courage while stabilizing action — obstacles convert into gains. Wear a minimum 5-carat stone on the ring finger of your right hand, set in gold or copper, on a Tuesday after proper cleansing. Yellow Sapphire (Jupiter) is also supportive for long-term fortune, but Red Coral is the most powerful immediate support for your ambitions.">Gemstone for me</button>
+                                <button class="demo-prompt-btn" data-q="What kind of person am I? What are my strengths?" data-a="You're a bold, restless truth-seeker with warm confidence and a quick mind — direct in speech, driven by creative risk, and drawn to adventure. Sagittarius rising with Moon in the 1st gives you optimistic independence and a philosophical bent; Ketu in the 1st and Rahu in the 7th push you from inner spiritual focus toward intense partnerships and public roles. Mars as your Mahadasha lord (of the 5th and 12th) fuels courageous creativity, foreign or behind-the-scenes projects, and magnetic charisma. Venus and Mercury in Taurus (6th), with Saturn strong in Taurus, add practical grit, disciplined work ethic, and an ability to recover from setbacks. You lead, speak up, and pursue meaning over comfort.">My personality</button>
                             </div>
                         </div>
                     </div>
@@ -650,10 +605,10 @@
                     </p>
 
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
-                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dai_chat" class="btn btn-primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dai_chat" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
                             <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
                         </a>
-                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_ai_chat&mt=8" class="btn btn-outline-light btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_ai_chat&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
                             <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
                         </a>
                     </div>
