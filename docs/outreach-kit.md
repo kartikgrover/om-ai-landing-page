@@ -100,7 +100,7 @@ For inclusion in articles, reviews, partnership inquiries, or press:
 
 Hi [Name],
 
-I came across your article "[Article Title]" and noticed Om.AI isn't listed. We're an AI Vedic astrology app with 20K+ downloads and a 4.4-star rating on Google Play.
+I came across your article "[Article Title]" and noticed Om.AI isn't listed. We're an AI Vedic astrology app with 30K+ downloads and a 4.8-star rating on Google Play.
 
 What makes us different from the apps you've listed: Om.AI's AI is trained on classical Sanskrit texts (Brihat Parashara Hora Shastra, Lal Kitab, KP System) and calculates birth charts with precision astronomical data. Users can ask questions about their career, marriage, or finances and get answers specific to their unique planetary configuration — with specific dates, not generic predictions.
 
