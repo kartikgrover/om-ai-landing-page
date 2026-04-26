@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Love Astrology — Will You Find Love? | Om.AI</title>
+    <meta name="description" content="AI love astrology based on Vedic principles. Read your 5th house, Venus, and Dasha periods to know when love arrives, whether it's love marriage, and if your current relationship will last.">
+    <meta name="keywords" content="love astrology, ai love astrology, love marriage prediction, love compatibility by date of birth, when will i find love astrology, venus astrology, 5th house love, soulmate astrology, love marriage yog">
+
+    <meta property="og:title" content="AI Love Astrology — Will You Find Love? | Om.AI">
+    <meta property="og:description" content="AI love astrology based on Vedic principles. Read your 5th house, Venus, and Dasha periods to know when love arrives and whether your current relationship will last.">
+    <meta property="og:url" content="https://omai.app/love-astrology.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - AI Love Astrology">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/love-astrology.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/love-astrology.html">
+    <link rel="alternate" hreflang="x-default" href="https://omai.app/love-astrology.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+.feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .factor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .factor-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .factor-card .factor-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .factor-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .factor-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .example-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .example-box .example-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .example-box h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            background: #D97757;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+        .timeline-dot.dim {
+            background: rgba(255,255,255,0.2);
+        }
+        .timeline-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        .compat-callout {
+            background: linear-gradient(135deg, rgba(217,119,87,0.1), rgba(217,119,87,0.04));
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 14px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .compat-callout .callout-icon {
+            font-size: 2.5rem;
+            color: #D97757;
+            min-width: 50px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .compat-callout {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .question-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        .question-list .q-chip {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 999px;
+            padding: 0.7rem 1.1rem;
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.78);
+        }
+        .question-list .q-chip i {
+            color: #D97757;
+            margin-right: 0.45rem;
+        }
+</style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "AI Love Astrology — Will You Find Love? | Om.AI",
+                "description": "AI love astrology based on Vedic principles. Read your 5th house, Venus, and Dasha periods to know when love arrives, whether it's love marriage, and if your current relationship will last.",
+                "url": "https://omai.app/love-astrology.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How does AI love astrology work?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI reads your birth chart through the lens of Vedic astrology — focusing on the 5th house (romance and affection), the 7th house (committed partnership), Venus (the karaka of love), and the Moon (emotional life). It then layers your active Vimshottari Dasha periods and current transits on top. When a love-signifying planet's Dasha is running and a benefic transit activates the 5th or 7th house, the AI flags that as a love window."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What's the difference between the 5th house and the 7th house in love astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The 5th house governs romance, courtship, dating, affection, and love affairs — the spark and the chase. The 7th house governs committed partnership, marriage, and long-term union. A strong 5th house with a weak 7th can show many crushes but few lasting bonds. A connection between the 5th and 7th lords — through exchange, conjunction, or aspect — is one of the classical signatures of love marriage in Vedic astrology, as described in Brihat Parashara Hora Shastra and Phaladeepika."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Will I have a love marriage or an arranged marriage?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Classical Vedic astrology looks for specific love-marriage signatures: an exchange or conjunction between the 5th and 7th lords, Venus connected to the 7th house, Rahu in or aspecting the 7th house (often associated with unconventional unions), and Mars-Venus contact. When these factors are weak and the 7th lord is influenced only by Jupiter or family-significator planets, an arranged-style match is more likely. Om.AI checks all of these together rather than relying on a single rule."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "When will I meet my soulmate, according to astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vedic astrology narrows this to windows, not dates. Love typically enters during the Mahadasha or Antardasha of Venus, the Moon, the 5th lord, the 7th lord, or Rahu when it sits in the 5th or 7th. Om.AI maps your full Vimshottari Dasha timeline, identifies which upcoming periods carry romantic potential, and cross-references them with Jupiter and Venus transits to your 5th and 7th houses to highlight the most probable months."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Will my crush like me back?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "From your chart alone, Om.AI cannot read another person's feelings — but it can tell you whether the period you are in is generally favorable for romantic reciprocation: the strength of your Venus, whether the 5th house is currently activated by transit or Dasha, and whether Mars-Venus dynamics in your chart support attraction. For a fuller picture, share both birth details and run a synastry-style comparison through the AI."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is my current relationship long-term?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The longevity of a relationship depends on the strength of the 7th house and its lord, the dignity of Venus, and the Navamsa (D9) — the divisional chart of marriage. A relationship that started in a Venus or 5th-lord Dasha but lacks 7th-house support often stays romantic without converting to commitment. If you share both partners' birth details with Om.AI, the AI can run a compatibility analysis covering Ashtakoot points, Manas Kuta (mind compatibility), Manglik Dosha, and Navamsa overlay."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What role does Venus play in love astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Venus (Shukra) is the natural significator of love, romance, beauty, and the spouse. Phaladeepika and other classical texts describe Venus as the karaka of marital happiness, sensual pleasure, vehicles, ornaments, and love affairs. The dignity of Venus in your birth chart — exalted, own sign, debilitated, or combust — sets the baseline tone of your love life. A well-placed Venus in a kendra or trikona, especially in its own sign or Pisces (its exaltation), is one of the strongest indicators of a fulfilling love story."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is the AI love reading free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You get 1 free question on install, and you earn additional questions through daily reading streaks — with milestones at 3, 7, 14, 21, 30, 45, and 60 days. One-time question packs and Premium subscriptions (with unlimited questions) are also available. Compatibility reports, your full birth chart, Dasha timeline, and Panchang are free for everyone."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Love Astrology", "item": "https://omai.app/love-astrology.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Features</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI Astrology Chat</a></li>
+                            <li><a class="dropdown-item" href="/free-kundli-online.html">Kundli & Birth Chart</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">Kundli Matching</a></li>
+                            <li><a class="dropdown-item" href="/career-astrology.html">Career Astrology</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">Marriage Prediction</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">Dasha Calculator</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI Love Astrology — Will You Find Love?</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    Om.AI reads your 5th house, Venus, and Dasha periods to tell you when love arrives, whether your chart points to a love marriage, and if the relationship you're in now is built to last — based on your birth chart, not generic Sun-sign advice.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dlove" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_love&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How AI Reads Your Love Story -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How AI Reads Your Love Story</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Vedic astrology treats love and marriage as two related but distinct domains. The 5th house and Venus describe romance and attraction; the 7th house describes the committed partnership. The AI looks at all of these together — along with your active Dasha and current transits — to read where you are in your love story.
+                </p>
+
+                <div class="factor-grid">
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                        <h4>5th House</h4>
+                        <p>Romance, courtship, affection, and love affairs. The 5th lord's strength shows your capacity to attract and feel love.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+                        <h4>7th House</h4>
+                        <p>Committed partnership and marriage — Kalatra Bhava. Bridges romance into long-term union.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-venus" aria-hidden="true"></i></div>
+                        <h4>Venus (Shukra)</h4>
+                        <p>The karaka of love, beauty, and the spouse. Phaladeepika lists Venus's domain as wife, ornaments, scents, flowers, and amorous expertise.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-moon" aria-hidden="true"></i></div>
+                        <h4>Moon (Manas)</h4>
+                        <p>Emotional life and Manas Kuta — mind compatibility. A Venus-Moon connection shows feelings that engage both heart and head.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
+                        <h4>Mars (Kuja)</h4>
+                        <p>Passion, desire, and the physical pull. Mars-Venus contact in any form is one of the classical attraction signatures.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+                        <h4>Dasha &amp; Transits</h4>
+                        <p>Vimshottari Dasha of Venus, Moon, Rahu, or the 5th/7th lord activates love windows. Jupiter and Venus transits trigger them.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Love Marriage vs Arranged Indicators -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Love Marriage vs. Arranged: What Your Chart Says</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Classical Vedic astrology has specific signatures for a love marriage — what astrologers call <em>prem vivah yog</em>. These come from Brihat Parashara Hora Shastra's treatment of Kalatra Bhava (the 7th house) and Phaladeepika's chapters on the 5th and 7th houses. None of them is decisive alone; the AI weighs them together.
+                </p>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-exchange-alt" aria-hidden="true"></i></div>
+                            <h3>5th-7th Lord Connection</h3>
+                            <p>
+                                When the lord of the 5th house (romance) and the lord of the 7th house (marriage) exchange signs, conjoin, or aspect each other, the same person you fell for tends to become the person you commit to. This is the cleanest classical signature of love marriage.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-bolt" aria-hidden="true"></i></div>
+                            <h3>Rahu in the 7th</h3>
+                            <p>
+                                Rahu in or aspecting the 7th house — especially in connection with Venus — often shows an unconventional union: across community, language, distance, or family expectation. It points to a bond chosen by you rather than arranged for you.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-fire-flame-curved" aria-hidden="true"></i></div>
+                            <h3>Mars-Venus Contact</h3>
+                            <p>
+                                Mars and Venus in conjunction, mutual aspect, or trine bring magnetic attraction — desire that converts into action. When this contact also touches the 5th or 7th lord, romance has the energy to become a full relationship.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-people-arrows" aria-hidden="true"></i></div>
+                            <h3>Arranged-Style Indicators</h3>
+                            <p>
+                                A 7th lord influenced primarily by Jupiter or the 9th lord (father, family wisdom), with no 5th-house spillover, leans arranged. So does a quiet, well-aspected Venus that never connects to the 5th lord. Neither is "worse" — just a different path to the same destination.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Compatibility Beyond Ashtakoot -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Compatibility Beyond Ashtakoot</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    The 36-point Ashtakoot system is the most well-known compatibility framework in Vedic astrology, but it was designed primarily for arranged matches. For a love relationship — where attraction, emotional rhythm, and shared values matter as much as ritual fit — you need a fuller read.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-brain" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Manas Kuta — Mind Compatibility</h3>
+                        <p>Among the eight Kutas, Manas Kuta (mind) and Bhakuta (emotional bonding) carry the most weight for everyday partnership. The AI reads both partners' Moon signs and Nakshatras to assess the emotional rhythm of the relationship — whether you regulate together or wear each other out.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-venus-mars" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Venus-Mars Synastry</h3>
+                        <p>Your Venus against your partner's Mars (and the reverse) shows attraction. Same element brings ease; opposite signs bring polarity and pull. This is what classical texts call the chemistry layer — independent of the Kutas and often the reason a "low-points" match feels great anyway.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-chart-pie" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Navamsa (D9) Overlay</h3>
+                        <p>The Navamsa is the divisional chart of marriage. The AI compares both partners' D9 charts: Lagna lord placements, Venus dignity in D9, and how each person's 7th house interacts with the other's planets. A strong D9 match often outlasts a weak Ashtakoot score.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num"><i class="fas fa-shield-halved" aria-hidden="true"></i></div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Manglik &amp; Dosha Check</h3>
+                        <p>Manglik Dosha (Mars in the 1st, 4th, 7th, 8th, or 12th from Lagna or Moon) gets the most attention, but Nadi Dosha and Bhakuta Dosha matter just as much for long-term ease. The AI flags each, explains the severity, and notes the classical cancellations — many doshas neutralize automatically and don't need any remedy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Sample Reading -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-2">A Sample Reading</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:640px; margin:0 auto;">
+                    Here is a simplified walkthrough of how a love-window read comes together. Real readings layer many more factors.
+                </p>
+
+                <div class="example-box">
+                    <div class="example-label">Example Scenario</div>
+                    <h4>A Libra Ascendant native, Venus Mahadasha already running, Rahu Antardasha begins late 2026</h4>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Venus is Lagna lord and a strong significator.</strong> Sitting in the 5th house gives romance and creativity an outlet — the chart wants love.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Venus-Rahu Antardasha (late 2026 to mid-2028)</strong> activates the unconventional, sudden quality of Rahu inside Venus's romantic theme — a meeting that surprises, often outside the usual social circle.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Jupiter transits the 5th house in 2027</strong> — adds expansion and meaning to whatever is forming. This is the peak romance window of the cycle.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">5th lord Saturn aspects the 7th lord Mars</strong> in this chart — a 5th-7th connection. Romance from this period has a real chance of becoming marriage rather than staying a fling.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot dim"></div>
+                        <div>
+                            <p style="color:rgba(255,255,255,0.5);">Without the 5th-7th link, the same window would still bring romance — but the chart wouldn't promise the bridge into commitment.</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-3 mb-0" style="font-size:0.88rem; color:rgba(255,255,255,0.45);">
+                        Simplified illustration. Om.AI evaluates dozens of factors per chart, including divisional charts and dasha sub-periods.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What You Can Ask -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What You Can Ask the AI</h2>
+                <p class="mb-2" style="color:rgba(255,255,255,0.65);">
+                    Real questions people ask Om.AI about love. The AI reads your actual chart — no two answers are the same.
+                </p>
+                <div class="question-list">
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>Will I have a love marriage?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>When will I meet my soulmate?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>Will my crush like me back?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>Is my current relationship long-term?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>Why does love keep getting delayed?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>Will I get back with my ex?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>Is there Manglik Dosha in my chart?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>What kind of partner suits my chart?</div>
+                    <div class="q-chip"><i class="fas fa-comment" aria-hidden="true"></i>Does my chart show heartbreak this year?</div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Compatibility Callout -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="compat-callout">
+                    <div class="callout-icon"><i class="fas fa-heart-circle-check" aria-hidden="true"></i></div>
+                    <div>
+                        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Already in Love? Run a Compatibility Report</h2>
+                        <p style="margin-bottom:1rem;">
+                            If you're already with someone, the strongest read comes from comparing both birth charts. Get an Ashtakoot 36-point score, Manglik Dosha check, Nadi analysis, and Navamsa overlay — free for all users.
+                        </p>
+                        <a href="/kundli-matching.html" class="btn btn-primary px-4">
+                            <i class="fas fa-ring me-2" aria-hidden="true"></i>Kundli Matching
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How To -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Get Your Love Reading</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Three steps from install to a reading that's specific to your chart.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
+                        <p>Install from Google Play or the App Store. Enter your date, exact time, and place of birth so the AI can build your Kundli, Navamsa, and full Vimshottari Dasha timeline.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Ask About Love</h3>
+                        <p>Open the AI chat. Ask anything — "Will I have a love marriage?", "When is my next love window?", "Is this relationship long-term?" The AI references your 5th house, 7th house, Venus, Moon, and active Dasha to answer specifically.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Go Deeper</h3>
+                        <p>Follow up. The AI keeps your chart context across messages. Ask about remedies for a weak Venus, what Nakshatra partner suits you, or run a compatibility analysis with someone specific.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="background:rgba(217,119,87,0.06); border-color:rgba(217,119,87,0.2);">
+                    <h3 style="font-size:1.1rem;"><i class="fas fa-info-circle me-2" aria-hidden="true"></i>About Question Credits</h3>
+                    <p style="margin-bottom:0;">
+                        Your first chat is free on install. Earn additional questions through daily reading streaks — milestones at 3, 7, 14, 21, 30, 45, and 60 days. Question packs and Premium (with unlimited questions) are also available. Compatibility reports, Kundli, Dasha, and Panchang are free for everyone.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Read Your Love Story</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Download Om.AI, enter your birth details, and ask the AI when love arrives, who it arrives with, and whether the chart is pointing to forever.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dlove" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_love&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/marriage-prediction.html" class="insight-link">
+                            <i class="fas fa-rings-wedding" aria-hidden="true"></i> Marriage Prediction
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli-matching.html" class="insight-link">
+                            <i class="fas fa-ring" aria-hidden="true"></i> Kundli Matching
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> Free Kundli
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI Astrology Chat
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/career-astrology.html" class="insight-link">
+                            <i class="fas fa-briefcase" aria-hidden="true"></i> Career Astrology
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/ai-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> How AI Vedic Astrology Works
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>How does AI love astrology work?</h3>
+                    <p>
+                        Om.AI reads your birth chart through the lens of Vedic astrology — focusing on the 5th house (romance and affection), the 7th house (committed partnership), Venus (the karaka of love), and the Moon (emotional life). It then layers your active Vimshottari Dasha periods and current transits on top. When a love-signifying planet's Dasha is running and a benefic transit activates the 5th or 7th house, the AI flags that as a love window.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What's the difference between the 5th house and the 7th house in love astrology?</h3>
+                    <p>
+                        The 5th house governs romance, courtship, dating, affection, and love affairs — the spark and the chase. The 7th house governs committed partnership, marriage, and long-term union. A strong 5th house with a weak 7th can show many crushes but few lasting bonds. A connection between the 5th and 7th lords — through exchange, conjunction, or aspect — is one of the classical signatures of love marriage in Vedic astrology, as described in Brihat Parashara Hora Shastra and Phaladeepika.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Will I have a love marriage or an arranged marriage?</h3>
+                    <p>
+                        Classical Vedic astrology looks for specific love-marriage signatures: an exchange or conjunction between the 5th and 7th lords, Venus connected to the 7th house, Rahu in or aspecting the 7th house (often associated with unconventional unions), and Mars-Venus contact. When these factors are weak and the 7th lord is influenced only by Jupiter or family-significator planets, an arranged-style match is more likely. Om.AI checks all of these together rather than relying on a single rule.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>When will I meet my soulmate, according to astrology?</h3>
+                    <p>
+                        Vedic astrology narrows this to windows, not dates. Love typically enters during the Mahadasha or Antardasha of Venus, the Moon, the 5th lord, the 7th lord, or Rahu when it sits in the 5th or 7th. Om.AI maps your full Vimshottari Dasha timeline, identifies which upcoming periods carry romantic potential, and cross-references them with Jupiter and Venus transits to your 5th and 7th houses to highlight the most probable months.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Will my crush like me back?</h3>
+                    <p>
+                        From your chart alone, Om.AI cannot read another person's feelings — but it can tell you whether the period you are in is generally favorable for romantic reciprocation: the strength of your Venus, whether the 5th house is currently activated by transit or Dasha, and whether Mars-Venus dynamics in your chart support attraction. For a fuller picture, share both birth details and run a synastry-style comparison through the AI.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is my current relationship long-term?</h3>
+                    <p>
+                        The longevity of a relationship depends on the strength of the 7th house and its lord, the dignity of Venus, and the Navamsa (D9) — the divisional chart of marriage. A relationship that started in a Venus or 5th-lord Dasha but lacks 7th-house support often stays romantic without converting to commitment. If you share both partners' birth details with Om.AI, the AI can run a compatibility analysis covering Ashtakoot points, Manas Kuta (mind compatibility), Manglik Dosha, and Navamsa overlay.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What role does Venus play in love astrology?</h3>
+                    <p>
+                        Venus (Shukra) is the natural significator of love, romance, beauty, and the spouse. Phaladeepika and other classical texts describe Venus as the karaka of marital happiness, sensual pleasure, vehicles, ornaments, and love affairs. The dignity of Venus in your birth chart — exalted, own sign, debilitated, or combust — sets the baseline tone of your love life. A well-placed Venus in a kendra or trikona, especially in its own sign or Pisces (its exaltation), is one of the strongest indicators of a fulfilling love story.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is the AI love reading free?</h3>
+                    <p>
+                        You get 1 free question on install, and you earn additional questions through daily reading streaks — with milestones at 3, 7, 14, 21, 30, 45, and 60 days. One-time question packs and Premium subscriptions (with unlimited questions) are also available. Compatibility reports, your full birth chart, Dasha timeline, and Panchang are free for everyone. <a href="/kundli-matching.html" style="color:#D97757;">Run a free compatibility report</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dlove" class="text-white-50" rel="noopener noreferrer" target="_blank">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_love&mt=8" class="text-white-50" rel="noopener noreferrer" target="_blank">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+
+</html>

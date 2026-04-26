@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wealth Astrology by AI — When Will You Become Rich? | Om.AI</title>
+    <meta name="description" content="AI-powered wealth astrology based on Vedic principles. Analyze Dhana Yogas, the 2nd, 5th, 9th, and 11th houses, Jupiter and Venus to understand money, gains, and prosperity in your birth chart.">
+    <meta name="keywords" content="wealth astrology, money astrology by date of birth, dhana yoga, ai wealth prediction, rich in astrology, lakshmi yoga, when will i become rich, 2nd house wealth, 11th house gains, financial astrology">
+
+    <meta property="og:title" content="Wealth Astrology by AI — When Will You Become Rich? | Om.AI">
+    <meta property="og:description" content="AI-powered wealth astrology based on Vedic principles. Analyze Dhana Yogas, the 2nd, 5th, 9th, and 11th houses, Jupiter and Venus to understand money in your birth chart.">
+    <meta property="og:url" content="https://omai.app/wealth-astrology.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - Wealth Astrology by AI">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/wealth-astrology.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/wealth-astrology.html">
+    <link rel="alternate" hreflang="x-default" href="https://omai.app/wealth-astrology.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+.feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .factor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .factor-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .factor-card .factor-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .factor-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .factor-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .example-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .example-box .example-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .example-box h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            background: #D97757;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+        .timeline-dot.dim {
+            background: rgba(255,255,255,0.2);
+        }
+        .timeline-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        .compat-callout {
+            background: linear-gradient(135deg, rgba(217,119,87,0.1), rgba(217,119,87,0.04));
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 14px;
+            padding: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .compat-callout .callout-icon {
+            font-size: 2.5rem;
+            color: #D97757;
+            min-width: 50px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .compat-callout {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .disclaimer-banner {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-left: 3px solid #D97757;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.72);
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .disclaimer-banner i {
+            color: #D97757;
+            margin-right: 0.5rem;
+        }
+        .yoga-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .yoga-list { grid-template-columns: 1fr 1fr; }
+        }
+        .yoga-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .yoga-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .yoga-card p {
+            font-size: 0.92rem;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+        .question-pill {
+            display: inline-block;
+            background: rgba(217,119,87,0.08);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 999px;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.92rem;
+        }
+</style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "Wealth Astrology by AI — When Will You Become Rich? | Om.AI",
+                "description": "AI-powered wealth astrology based on Vedic principles. Analyze Dhana Yogas, the 2nd, 5th, 9th, and 11th houses, Jupiter and Venus to understand money, gains, and prosperity in your birth chart.",
+                "url": "https://omai.app/wealth-astrology.html",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How does AI predict wealth from a birth chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI examines the Vedic wealth indicators in your birth chart: the 2nd house (accumulated wealth), the 11th house (gains and income), the 5th house (speculation and purva punya), the 9th house (fortune), and the placements of Jupiter, Venus, and Mercury. It checks for Dhana Yogas — combinations such as the 2nd lord and 11th lord conjunct, in mutual aspect, or in sign exchange — and maps them against your active Vimshottari Dasha to highlight when wealth potential is most likely to activate."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is a Dhana Yoga?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Dhana Yoga is a category of planetary combinations in Vedic astrology traditionally associated with wealth. It typically forms when the lords of wealth-related houses — the 2nd, 5th, 9th, and 11th — connect through conjunction, mutual aspect, or sign exchange. Classical texts such as Brihat Parashara Hora Shastra and Phaladeepika describe several variations, including the 2nd–11th lord Dhana Yoga and the 5th–9th lord Dhana Yoga."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which houses indicate wealth in Vedic astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The 2nd house represents accumulated wealth, savings, and family money. The 11th house represents gains, income, and the fulfillment of desires. The 5th house represents speculative gains and purva punya (past-life merit). The 9th house represents fortune, blessings, and inheritance. Strong connections between the lords of these houses are traditionally considered the foundation of wealth in a chart."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "When will I become rich according to my birth chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vedic astrology associates wealth events with specific Dasha and Antardasha periods — typically the periods of planets involved in your Dhana Yogas, the 2nd or 11th lord, or strong benefics like Jupiter or Venus. Om.AI maps your full Vimshottari Dasha timeline and flags the windows where wealth-signifying planets become active. Astrological insights are for spiritual guidance and self-reflection, not financial advice."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is Lakshmi Yoga?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Lakshmi Yoga is a wealth yoga named after Goddess Lakshmi, the deity of abundance. Classical texts describe it as forming when the 9th lord is placed in a Kendra (1st, 4th, 7th, or 10th house) in its own sign or exaltation, while the Lagna lord is also strong. An alternate formation involves Venus in its own sign or exalted in a Kendra or Trikona. It is traditionally associated with lasting prosperity and material comfort."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can astrology indicate the best business or career for wealth?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. Om.AI analyzes the 10th house (career), the 2nd house (income source), and the strongest planet in your chart to suggest business directions aligned with your chart. Mercury favors trade and communication, Venus favors luxury and creative fields, Jupiter favors advisory and education, and Saturn favors structured long-term industries. The AI explains which signification fits your chart most strongly."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What are Daridra Yogas and how do I mitigate them?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Daridra Yogas are combinations classical texts describe as obstructing wealth — for example, the 11th lord placed in the 6th, 8th, or 12th house, or the 2nd lord afflicted by malefics. They are not absolute and can be mitigated by other strong combinations in the chart. Traditional remedies include charity (especially during the Dasha of the afflicted planet), specific mantras, and disciplined financial habits. These are spiritual practices, not financial guarantees."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is the wealth reading free on Om.AI?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "You can ask Om.AI's AI about wealth, money, and Dhana Yogas using your question credits. You get 1 initial question when you install the app, and earn additional questions through daily reading streaks — milestones at 3, 7, 14, 21, 30, 45, and 60 days. Question packs and Premium subscriptions with unlimited questions are also available."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Wealth Astrology", "item": "https://omai.app/wealth-astrology.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Features</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI Astrology Chat</a></li>
+                            <li><a class="dropdown-item" href="/free-kundli-online.html">Kundli & Birth Chart</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">Kundli Matching</a></li>
+                            <li><a class="dropdown-item" href="/career-astrology.html">Career Astrology</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">Marriage Prediction</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">Dasha Calculator</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">Wealth Astrology by AI</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    When will you become rich? Om.AI reads the wealth signature of your birth chart — the 2nd, 5th, 9th, and 11th houses, Dhana Yogas, and the Dasha periods that activate them — to explain how money, gains, and prosperity may unfold in your life.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dwealth" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_wealth&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Disclaimer Banner (top) -->
+        <section style="padding: 0 0 2rem;">
+            <div class="container">
+                <div class="disclaimer-banner">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    <strong>Not financial advice.</strong> Astrological insights on this page and inside Om.AI are intended for spiritual guidance, self-reflection, and educational purposes. They are not a substitute for professional financial, investment, tax, or legal advice. Please consult qualified financial professionals before making investment or money decisions.
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How AI reads your wealth chart -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How AI Reads Your Wealth Chart</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Vedic astrology (Jyotish) treats wealth as a multi-house phenomenon — money is earned, accumulated, gained, inherited, and spent through different houses. The AI reads all of these together rather than looking at one factor in isolation.
+                </p>
+
+                <div class="factor-grid">
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-coins" aria-hidden="true"></i></div>
+                        <h4>2nd House</h4>
+                        <p>Accumulated wealth, savings, family money, and your relationship with material resources.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                        <h4>11th House</h4>
+                        <p>Gains, income, network, and the fulfillment of material desires — the most direct house of earning.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-dice" aria-hidden="true"></i></div>
+                        <h4>5th House</h4>
+                        <p>Speculation, investments, and purva punya — past-life merit that traditionally fuels lucky financial breaks.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-sun" aria-hidden="true"></i></div>
+                        <h4>9th House</h4>
+                        <p>Fortune, blessings, dharma, and inheritance — the broader luck factor that supports lasting prosperity.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-jupiter" aria-hidden="true"></i></div>
+                        <h4>Jupiter (Guru)</h4>
+                        <p>Natural significator of wealth and wisdom-driven expansion. Its strength shapes how money grows.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-venus" aria-hidden="true"></i></div>
+                        <h4>Venus (Shukra)</h4>
+                        <p>Significator of luxury, comfort, and Lakshmi-style prosperity. Strong Venus indicates ease with money.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-balance-scale" aria-hidden="true"></i></div>
+                        <h4>Mercury (Budha)</h4>
+                        <p>Trade, commerce, calculation, and business intelligence — the planet behind entrepreneurial wealth.</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon"><i class="fas fa-moon" aria-hidden="true"></i></div>
+                        <h4>Moon (Chandra)</h4>
+                        <p>Cash flow, liquidity, and the public-facing demand for what you offer. Strong Moon supports steady income.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Dhana Yogas Explained -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Dhana Yogas Explained</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Classical texts such as Brihat Parashara Hora Shastra, Phaladeepika, and Uttara Kalamrita describe specific planetary combinations called <em>Dhana Yogas</em> — wealth combinations. They are formed when the lords of wealth-related houses connect through conjunction, mutual aspect, or sign exchange (parivartana).
+                </p>
+
+                <div class="yoga-list">
+                    <div class="yoga-card">
+                        <h4>2nd–11th Lord Dhana Yoga</h4>
+                        <p>Conjunction, mutual aspect, or exchange between the 2nd and 11th lords. Traditionally tied to steady earning combined with the ability to save and accumulate.</p>
+                    </div>
+                    <div class="yoga-card">
+                        <h4>5th–9th Lord Dhana Yoga</h4>
+                        <p>Connection between the 5th (purva punya) and 9th (fortune) lords. Often associated with wealth that arrives through luck, inheritance, blessings, or speculative gains.</p>
+                    </div>
+                    <div class="yoga-card">
+                        <h4>Lakshmi Yoga</h4>
+                        <p>The 9th lord placed in a Kendra (1st, 4th, 7th, 10th) in its own sign or exaltation, with a strong Lagna lord. Traditionally associated with lasting, dignified prosperity.</p>
+                    </div>
+                    <div class="yoga-card">
+                        <h4>Gaja-Kesari Yoga</h4>
+                        <p>Jupiter in a Kendra from the Moon. A general benefic combination linked to good standing, sustained income, and wisdom-supported financial decisions.</p>
+                    </div>
+                    <div class="yoga-card">
+                        <h4>Chandra-Mangala Yoga</h4>
+                        <p>Conjunction of Moon and Mars. Classical texts associate it with the capacity to convert effort into earnings, often through trade, real estate, or active enterprise.</p>
+                    </div>
+                    <div class="yoga-card">
+                        <h4>Dhana-Karaka Jupiter Combinations</h4>
+                        <p>Jupiter conjoined with or aspecting wealth-house lords. As the natural karaka of Dhana, a well-placed Jupiter strengthens almost every other wealth signature in the chart.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:2.5rem; font-size:1.35rem;">Daridra Yogas — and how to read them</h3>
+                <p style="color:rgba(255,255,255,0.7);">
+                    Classical texts also describe <em>Daridra Yogas</em> — combinations that may obstruct wealth, such as the 11th lord placed in the 6th, 8th, or 12th house, or the 2nd lord heavily afflicted by malefics. These are not deterministic. A chart with one Daridra Yoga can still produce wealth if other Dhana Yogas, a strong Lagna lord, or favorable Dashas are present. Om.AI weighs both sides rather than reading any single combination as a final verdict.
+                </p>
+
+                <h3 style="margin-top:2rem; font-size:1.35rem;">Dasha-based wealth windows</h3>
+                <p style="color:rgba(255,255,255,0.7);">
+                    A Dhana Yoga is a <em>promise</em> in the chart. The Vimshottari Dasha system tells you <em>when</em> that promise activates. Wealth events tend to appear during the Mahadasha or Antardasha of planets that form the yoga, or of the 2nd or 11th lord. Om.AI maps your full Dasha timeline and flags the periods most likely to switch a wealth combination on.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What you can ask -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What You Can Ask the AI</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Wealth questions are some of the most common ones people bring to a Vedic chart. Here are sample prompts the AI is set up to answer using your own birth details.
+                </p>
+
+                <div>
+                    <span class="question-pill">When will I become rich?</span>
+                    <span class="question-pill">Do I have Dhana Yoga in my chart?</span>
+                    <span class="question-pill">Best business for me astrologically?</span>
+                    <span class="question-pill">Will I have a stable income?</span>
+                    <span class="question-pill">Inherited wealth in my chart?</span>
+                    <span class="question-pill">Am I lucky with money?</span>
+                    <span class="question-pill">Is my Lakshmi Yoga active?</span>
+                    <span class="question-pill">Why is money slow in my life right now?</span>
+                    <span class="question-pill">Which Dasha will bring financial growth?</span>
+                    <span class="question-pill">Should I invest or save in this period?</span>
+                    <span class="question-pill">Real estate or gold for me?</span>
+                    <span class="question-pill">What does my 11th house say?</span>
+                </div>
+
+                <p class="mt-4" style="color:rgba(255,255,255,0.55); font-size:0.9rem;">
+                    The AI answers based on your chart's signatures and active periods. It explains the <em>why</em> — which house, lord, or yoga supports the answer — so you can understand the reasoning, not just the conclusion.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Sample Reading -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-2">Sample Reading: A Wealth Window</h2>
+                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:640px; margin:0 auto;">
+                    A simplified example of how a Dhana Yoga and the Dasha timeline combine to indicate a wealth-favorable phase.
+                </p>
+
+                <div class="example-box">
+                    <div class="example-label">Example Scenario</div>
+                    <h4>Cancer Ascendant, Jupiter Mahadasha beginning 2027</h4>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Chart promise</strong> — Jupiter rules the 6th and 9th and is placed in the 2nd house with the 11th lord Venus. This forms a 2nd–11th Dhana Yoga, supported by the 9th lord (fortune).</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Jupiter Mahadasha begins (2027)</strong> — Jupiter is one of the two planets forming the Dhana Yoga, so the entire 16-year Mahadasha may activate this wealth signature.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Jupiter–Venus Antardasha (within Jupiter MD)</strong> — Both planets of the Dhana Yoga run together. Classical texts treat this as a peak window for income growth and wealth accumulation.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div>
+                            <p><strong style="color:#D97757;">Transit Jupiter over the 2nd or 11th house</strong> — A favorable transit during the Jupiter–Venus sub-period further sharpens the timing.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot dim"></div>
+                        <div>
+                            <p style="color:rgba(255,255,255,0.5);">A weak Lagna lord, or the 11th lord placed in the 12th, would soften this picture — Om.AI weighs supporting and contradicting factors before answering.</p>
+                        </div>
+                    </div>
+
+                    <p class="mt-3 mb-0" style="font-size:0.88rem; color:rgba(255,255,255,0.45);">
+                        Illustrative only. The AI analyzes dozens of factors simultaneously for any real chart.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Career callout -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="compat-callout">
+                    <div class="callout-icon"><i class="fas fa-briefcase" aria-hidden="true"></i></div>
+                    <div>
+                        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Wealth Comes Through Work — Check Your Career Chart</h2>
+                        <p style="margin-bottom:1rem;">
+                            Most income flows through the 10th house (career) and into the 2nd and 11th. If you want to understand the source of your wealth, start with your career signature — the planet ruling your 10th, the strongest planet in your chart, and your professional Dasha sequence.
+                        </p>
+                        <a href="/career-astrology.html" class="btn btn-primary px-4">
+                            <i class="fas fa-briefcase me-2" aria-hidden="true"></i>Career Astrology
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How to ask -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Get Your Wealth Reading</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Three steps to a personalized wealth reading from your birth chart.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
+                        <p>Install the app from Google Play or the App Store. Enter your birth date, exact birth time, and birth location to generate your Kundli.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Ask About Wealth, Money, or Business</h3>
+                        <p>Open the AI chat and ask anything from "Do I have Dhana Yoga?" to "When will my income increase?" The AI examines your 2nd, 5th, 9th, and 11th houses, Dhana Yogas, and active Dasha to answer specifically.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Follow Up With Specifics</h3>
+                        <p>Ask "What kind of business suits me?", "Is this a good period to invest?", or "How can I strengthen my Dhana Yoga?" The AI keeps conversation context, so each follow-up builds on the previous answer.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="background:rgba(217,119,87,0.06); border-color:rgba(217,119,87,0.2);">
+                    <h3 style="font-size:1.1rem;"><i class="fas fa-info-circle me-2" aria-hidden="true"></i>About Question Credits</h3>
+                    <p style="margin-bottom:0;">
+                        You get 1 initial question when you install Om.AI. Earn additional questions through daily reading streaks — milestones at 3, 7, 14, 21, 30, 45, and 60 days. One-time question packs and Premium subscriptions (with unlimited questions) are also available.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Disclaimer banner before remedies -->
+        <section style="padding: 0 0 2rem;">
+            <div class="container">
+                <div class="disclaimer-banner">
+                    <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+                    <strong>A reminder before the remedies section.</strong> The practices below are part of Vedic spiritual tradition. They are intended for self-reflection, devotion, and cultural practice — not as financial strategies. They are not a substitute for professional financial, investment, tax, or legal advice. Please consult qualified financial professionals for any money decision.
+                </div>
+            </div>
+        </section>
+
+        <!-- Remedies -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>Traditional Remedies for Wealth Houses</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Classical texts including Lal Kitab and Phaladeepika describe simple remedial practices when wealth-related planets are weak or afflicted. These are supportive spiritual practices, not guaranteed outcomes.
+                </p>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-pray" aria-hidden="true"></i></div>
+                            <h3>Lakshmi Mantra</h3>
+                            <p>
+                                Devotional chanting of the Mahalakshmi mantra (<em>Om Shreem Mahalakshmiyei Namaha</em>) is a traditional Friday practice associated with Venus and Goddess Lakshmi, the deity of abundance.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-gem" aria-hidden="true"></i></div>
+                            <h3>Gemstones</h3>
+                            <p>
+                                Yellow sapphire (Jupiter), diamond or white sapphire (Venus), and emerald (Mercury) are traditionally suggested when those planets are well-placed but weak by strength. Always consult a qualified astrologer before wearing a gemstone.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-hand-holding-heart" aria-hidden="true"></i></div>
+                            <h3>Donations (Daan)</h3>
+                            <p>
+                                Donations during the Dasha of an afflicted planet — such as yellow items for Jupiter, white items for Venus, or feeding the needy on Saturdays for Saturn — are a traditional way to soften malefic influences.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-leaf" aria-hidden="true"></i></div>
+                            <h3>Lal Kitab Practices</h3>
+                            <p>
+                                Lal Kitab offers simple household remedies — such as keeping a silver vessel, planting specific trees, or feeding cows — tied to specific planetary placements in wealth houses.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Read the Wealth Story in Your Chart</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Download Om.AI, generate your Kundli, and ask the AI about your Dhana Yogas, your earning years, and the source of money in your chart. Start with one free question.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dwealth" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_wealth&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/career-astrology.html" class="insight-link">
+                            <i class="fas fa-briefcase" aria-hidden="true"></i> Career Astrology
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> Kundli & Birth Chart
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/marriage-prediction.html" class="insight-link">
+                            <i class="fas fa-ring" aria-hidden="true"></i> Marriage Prediction
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/dasha-calculator.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> Dasha Calculator
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/dhana-yoga-wealth-astrology.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> Dhana Yoga Guide
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/lakshmi-yoga-vedic-astrology.html" class="insight-link">
+                            <i class="fas fa-star" aria-hidden="true"></i> Lakshmi Yoga Explained
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>How does AI predict wealth from a birth chart?</h3>
+                    <p>
+                        Om.AI examines the Vedic wealth indicators in your birth chart: the 2nd house (accumulated wealth), the 11th house (gains and income), the 5th house (speculation and purva punya), the 9th house (fortune), and the placements of Jupiter, Venus, and Mercury. It checks for Dhana Yogas — combinations such as the 2nd lord and 11th lord conjunct, in mutual aspect, or in sign exchange — and maps them against your active Vimshottari Dasha to highlight when wealth potential is most likely to activate.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is a Dhana Yoga?</h3>
+                    <p>
+                        Dhana Yoga is a category of planetary combinations in Vedic astrology traditionally associated with wealth. It typically forms when the lords of wealth-related houses — the 2nd, 5th, 9th, and 11th — connect through conjunction, mutual aspect, or sign exchange. Classical texts such as Brihat Parashara Hora Shastra and Phaladeepika describe several variations, including the 2nd–11th lord Dhana Yoga and the 5th–9th lord Dhana Yoga. <a href="/blog/dhana-yoga-wealth-astrology.html" style="color:#D97757;">Read the full Dhana Yoga guide</a>.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Which houses indicate wealth in Vedic astrology?</h3>
+                    <p>
+                        The 2nd house represents accumulated wealth, savings, and family money. The 11th house represents gains, income, and the fulfillment of desires. The 5th house represents speculative gains and purva punya (past-life merit). The 9th house represents fortune, blessings, and inheritance. Strong connections between the lords of these houses are traditionally considered the foundation of wealth in a chart.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>When will I become rich according to my birth chart?</h3>
+                    <p>
+                        Vedic astrology associates wealth events with specific Dasha and Antardasha periods — typically the periods of planets involved in your Dhana Yogas, the 2nd or 11th lord, or strong benefics like Jupiter or Venus. Om.AI maps your full Vimshottari Dasha timeline and flags the windows where wealth-signifying planets become active. Astrological insights are for spiritual guidance and self-reflection, not financial advice.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is Lakshmi Yoga?</h3>
+                    <p>
+                        Lakshmi Yoga is a wealth yoga named after Goddess Lakshmi, the deity of abundance. Classical texts describe it as forming when the 9th lord is placed in a Kendra (1st, 4th, 7th, or 10th house) in its own sign or exaltation, while the Lagna lord is also strong. An alternate formation involves Venus in its own sign or exalted in a Kendra or Trikona. It is traditionally associated with lasting prosperity and material comfort. <a href="/blog/lakshmi-yoga-vedic-astrology.html" style="color:#D97757;">Read the full Lakshmi Yoga guide</a>.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can astrology indicate the best business or career for wealth?</h3>
+                    <p>
+                        Yes. Om.AI analyzes the 10th house (career), the 2nd house (income source), and the strongest planet in your chart to suggest business directions aligned with your chart. Mercury favors trade and communication, Venus favors luxury and creative fields, Jupiter favors advisory and education, and Saturn favors structured long-term industries. The AI explains which signification fits your chart most strongly.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What are Daridra Yogas and how do I mitigate them?</h3>
+                    <p>
+                        Daridra Yogas are combinations classical texts describe as obstructing wealth — for example, the 11th lord placed in the 6th, 8th, or 12th house, or the 2nd lord afflicted by malefics. They are not absolute and can be mitigated by other strong combinations in the chart. Traditional remedies include charity (especially during the Dasha of the afflicted planet), specific mantras, and disciplined financial habits. These are spiritual practices, not financial guarantees.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is the wealth reading free on Om.AI?</h3>
+                    <p>
+                        You can ask Om.AI's AI about wealth, money, and Dhana Yogas using your question credits. You get 1 initial question when you install the app, and earn additional questions through daily reading streaks — milestones at 3, 7, 14, 21, 30, 45, and 60 days. Question packs and Premium subscriptions with unlimited questions are also available.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI Vedic Astrology</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">Lal Kitab Remedies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dwealth" class="text-white-50" rel="noopener noreferrer" target="_blank">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_wealth&mt=8" class="text-white-50" rel="noopener noreferrer" target="_blank">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+
+</html>
