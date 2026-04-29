@@ -297,17 +297,21 @@
         gtag('config', 'G-EPT0NFE087');
         gtag('config', 'AW-16691222744');
 
+        function _idle(fn) {
+            if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1000 });
+            else setTimeout(fn, 0);
+        }
         function trackDownload(platform) {
-            gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 });
+            _idle(function(){ gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 }); });
         }
         function trackFeature(featureName) {
-            gtag('event', 'feature_interest', { 'event_category': 'Features', 'event_label': featureName, 'value': 1 });
+            _idle(function(){ gtag('event', 'feature_interest', { 'event_category': 'Features', 'event_label': featureName, 'value': 1 }); });
         }
         function trackNavigation(linkName) {
-            gtag('event', 'navigation_click', { 'event_category': 'Navigation', 'event_label': linkName });
+            _idle(function(){ gtag('event', 'navigation_click', { 'event_category': 'Navigation', 'event_label': linkName }); });
         }
         function trackSocial(platform) {
-            gtag('event', 'social_click', { 'event_category': 'Social Media', 'event_label': platform });
+            _idle(function(){ gtag('event', 'social_click', { 'event_category': 'Social Media', 'event_label': platform }); });
         }
     </script>
 
@@ -392,6 +396,8 @@
     /* ───── Layout ───── */
     /* .container width comes from styles.min.css (1200px max, matches other pages) */
     .section { padding: clamp(64px, 9vw, 96px) 0; border-top: 1px solid var(--hair); }
+    footer { content-visibility: auto; contain-intrinsic-size: 1px 600px; }
+    @media print { footer { content-visibility: visible; } }
     .section:first-of-type { border-top: none; }
 
     /* ───── Nav ───── */
@@ -844,13 +850,13 @@
                 <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2" fetchpriority="high">
             </picture>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Features</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">Features</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI Astrology Chat</a></li>
                         <li><a class="dropdown-item" href="/free-kundli-online.html">Kundli & Birth Chart</a></li>
@@ -865,7 +871,7 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false">Daily Insights</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
                         <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
@@ -1449,22 +1455,68 @@
         if (!btn || isStreaming || btn.disabled) return;
         var q = btn.getAttribute('data-q') || btn.textContent;
         var a = btn.getAttribute('data-a') || '';
-        chips.forEach(function (c) { c.disabled = true; });
-        btn.style.opacity = '0.4';
-
-        appendMsg('msg--out', q);
-        var typing = appendTyping();
-        setTimeout(function () {
-            typing.remove();
-            var reply = appendMsg('msg--in', '');
-            typewriter(reply, a);
-        }, 1400);
+        // Defer DOM work off the click so the interaction returns immediately (INP win)
+        requestAnimationFrame(function () {
+            chips.forEach(function (c) { c.disabled = true; });
+            btn.style.opacity = '0.4';
+            appendMsg('msg--out', q);
+            var typing = appendTyping();
+            setTimeout(function () {
+                typing.remove();
+                var reply = appendMsg('msg--in', '');
+                typewriter(reply, a);
+            }, 1400);
+        });
     });
 })();
 </script>
 
-<!-- Bootstrap JS (for navbar dropdowns + collapse) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<!-- ============ Vanilla navbar (replaces Bootstrap JS bundle for INP) ============ -->
+<script>
+(function () {
+    var toggler = document.querySelector('.navbar-toggler');
+    var nav = document.getElementById('navbarNav');
+    if (toggler && nav) {
+        toggler.addEventListener('click', function () {
+            var open = nav.classList.toggle('show');
+            toggler.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    }
+
+    function closeAllDropdowns(except) {
+        document.querySelectorAll('.dropdown.show').forEach(function (d) {
+            if (d === except) return;
+            d.classList.remove('show');
+            var m = d.querySelector('.dropdown-menu');
+            if (m) m.classList.remove('show');
+            var t = d.querySelector('.dropdown-toggle');
+            if (t) t.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    document.querySelectorAll('.dropdown-toggle').forEach(function (t) {
+        t.addEventListener('click', function (e) {
+            e.preventDefault();
+            var parent = t.closest('.dropdown');
+            if (!parent) return;
+            var menu = parent.querySelector('.dropdown-menu');
+            var willOpen = !parent.classList.contains('show');
+            closeAllDropdowns(parent);
+            parent.classList.toggle('show', willOpen);
+            if (menu) menu.classList.toggle('show', willOpen);
+            t.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        });
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.dropdown')) closeAllDropdowns(null);
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeAllDropdowns(null);
+    });
+})();
+</script>
 
 </body>
 </html>
