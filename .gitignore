@@ -43,3 +43,9 @@ vendor/
 .playwright-mcp/
 
 # Ignore any other files or directories that are not relevant to version control
+
+# Internal audit / strategy / archive docs — not for the public repo
+/AUDIT_FINDINGS.md
+/TODO.md
+docs/internal/
+docs/archive/
