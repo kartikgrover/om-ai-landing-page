@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Navamsa (D9) Chart Analysis — Marriage, Spouse & Destiny | Om.AI</title>
+    <meta name="description" content="Free AI Navamsa (D9) chart analysis. Understand your spouse, marriage timing, planetary strength, and life destiny — read the way a classical Vedic Jyotishi reads the D9, in plain language.">
+    <meta name="keywords" content="navamsa chart, d9 chart, navamsa d9 chart analysis, ai navamsa chart, ai d9 chart, d9 chart analysis ai, navamsa chart calculator, free navamsa chart, navamsha chart, ai navamsa, d9 navamsa reading, ai navamsha analysis, navamsa marriage, navamsa spouse prediction, navamsa lagna, vedic d9 chart">
+
+    <meta property="og:title" content="Free AI Navamsa (D9) Chart Analysis — Marriage, Spouse & Destiny | Om.AI">
+    <meta property="og:description" content="Free AI Navamsa (D9) analysis. Marriage, spouse, planetary strength — read like a classical Jyotishi, in plain language.">
+    <meta property="og:url" content="https://omai.app/navamsa-chart.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/blog/wedding-rings.jpg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="600">
+    <meta property="og:image:alt" content="Navamsa D9 chart analysis">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/navamsa-chart.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/navamsa-chart.html">
+    <link rel="alternate" hreflang="x-default" href="https://omai.app/navamsa-chart.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+        .feature-card .feature-icon {
+            font-size: 2rem;
+            color: #D97757;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+        }
+        .factor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+        .factor-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .factor-card .factor-icon {
+            font-size: 1.5rem;
+            color: #D97757;
+            margin-bottom: 0.5rem;
+        }
+        .factor-card h4 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .factor-card p {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+        .how-step {
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: rgba(217,119,87,0.15);
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: #D97757;
+        }
+        .answer-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(217,119,87,0.04));
+            border: 1px solid rgba(217,119,87,0.25);
+            border-radius: 14px;
+            padding: 1.75rem 2rem;
+            margin: 1rem 0 2rem;
+        }
+        .answer-box h3 {
+            color: #D97757;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box h2 {
+            color: #fff;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 {
+            font-size: 1.15rem;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .pillar {
+            background: rgba(255,255,255,0.04);
+            border-left: 3px solid #D97757;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .pillar h3 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .pillar p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": "Free AI Navamsa (D9) Chart Analysis — Marriage, Spouse & Destiny | Om.AI",
+                "description": "Free AI Navamsa (D9) chart analysis. Understand your spouse, marriage timing, planetary strength, and life destiny.",
+                "url": "https://omai.app/navamsa-chart.html",
+                "inLanguage": "en-IN",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is the Navamsa (D9) chart in Vedic astrology?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The Navamsa, or D9, is the most important divisional chart in Vedic astrology. It is created by dividing each 30° zodiac sign into 9 equal parts of 3°20' each. The Navamsa magnifies your birth chart 9 times, allowing closer analysis of marriage, dharma, planetary strength, and the second half of life. Classical Jyotish texts treat the D9 as second only to the birth chart (D1) in importance — and the only divisional chart used to confirm or deny the promises of the D1."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How is the Navamsa chart used for marriage prediction?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The Navamsa is the divisional chart of marriage. To analyze marriage from the D9, an astrologer checks: the Navamsa Lagna and its lord (overall strength of the chart), Venus in D9 (love and partnership), the 7th house of the D9 and its lord (the spouse), and whether key planets from the D1 improve, stay equal, or weaken in the D9. A planet that is strong in D1 but weak in D9 — a loss of dignity from D1 to D9 — often fails to deliver its promise, including marriage."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What does Vargottama mean in the Navamsa chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Vargottama means a planet occupies the same sign in both the D1 (birth chart) and the D9 (Navamsa). A Vargottama planet is significantly stronger because its placement is consistent across both charts. Vargottama Venus, Jupiter, or the 7th lord typically indicates a strong, stable marriage. Vargottama Lagna lord indicates strong overall destiny and clarity of purpose."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can the Navamsa chart describe my spouse?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes — the D9 is the primary tool for spouse analysis. The 7th house of the Navamsa, the planet placed there, and the 7th lord's location reveal your spouse's temperament, profession, family background, distance from your birthplace, and physical features. Venus in D9 adds detail about how love manifests in your marriage. Om.AI's AI synthesizes all of these signals into a plain-language description."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How does the Navamsa chart relate to dharma and the second half of life?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Classical Jyotish (notably Brihat Parashara Hora Shastra) describes the Navamsa as the chart of dharma — your path of right action and your soul's purpose. It is also said to govern the second half of life (post-36), making it especially relevant for understanding career stability, family life, spiritual progress, and long-term planetary strength."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is the AI Navamsa analysis free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes — your first AI reading on Om.AI is free. Generating your Navamsa chart and viewing the planetary positions is free for all users. Detailed AI interpretation through chat works on the same question credit system as marriage prediction: 1 free question, plus more from daily reading streaks, or unlimited via Premium."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How does AI analyze the Navamsa chart?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Om.AI calculates your D9 chart from your birth data using classical algorithms. The AI then reads the chart the way a classical Jyotishi would: it checks dignity changes (exalted in D1 but debilitated in D9, for example), Vargottama placements, Navamsa Lagna lord strength, the condition of Venus and Jupiter in D9, and the 7th house. It then synthesizes these signals in plain English or Hindi — focusing on what the placements practically mean for your marriage and dharma."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Should I look at the D1 (Rashi chart) or the D9 first?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Always start with the D1 — it shows the promise. Then look at the D9 to confirm or deny that promise. A planet that is strong in D1 makes a promise; the D9 tells you whether the planet has the strength to actually deliver it. Marriage analysis especially requires both charts read together — never the D9 alone."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Navamsa Chart", "item": "https://omai.app/navamsa-chart.html"}
+                ]
+            },
+            {
+                "@type": "SoftwareApplication",
+                "name": "Om.AI — AI Navamsa Chart Analysis",
+                "applicationCategory": "LifestyleApplication",
+                "operatingSystem": "Android, iOS",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "INR"
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.7",
+                    "ratingCount": "1240"
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Features</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI Astrology Chat</a></li>
+                            <li><a class="dropdown-item" href="/free-kundli-online.html">Kundli & Birth Chart</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">Kundli Matching</a></li>
+                            <li><a class="dropdown-item" href="/career-astrology.html">Career Astrology</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">Marriage Prediction</a></li>
+                            <li><a class="dropdown-item" href="/navamsa-chart.html">Navamsa Chart (D9)</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">Dasha Calculator</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
+            <div class="container">
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI Navamsa (D9) Chart Analysis</h1>
+                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    The Navamsa is the most important divisional chart in Vedic astrology — the chart of marriage, dharma, and the second half of life. Om.AI generates your D9 chart and reads it the way a classical Jyotishi would, in plain language.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dnavamsa" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Generate D9 Free — Android
+                    </a>
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_navamsa&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                        <i class="fab fa-apple me-2" aria-hidden="true"></i>Generate D9 Free — iOS
+                    </a>
+                </div>
+                <p style="color:rgba(255,255,255,0.55); margin-top:1.5rem; font-size:0.95rem;">
+                    Chart generation is free. First AI reading is free.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What is the D9 -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What Is the Navamsa Chart?</h2>
+                <p style="color:rgba(255,255,255,0.75); font-size:1.05rem;">
+                    The Navamsa, or D9, is created by dividing each 30° zodiac sign into <strong>9 equal parts of 3°20' each</strong>. Each of those parts maps to a sign in a parallel chart — the D9. This 9-fold subdivision <strong>magnifies your birth chart 9 times</strong>, letting you see degree-level detail that the D1 (Rashi chart) alone cannot show.
+                </p>
+
+                <div class="answer-box">
+                    <h3>Why It Matters</h3>
+                    <p style="margin-bottom:0; font-size:1.05rem;">
+                        Classical Jyotish (Brihat Parashara Hora Shastra, Jaimini, and others) treats the D9 as <strong>second only to the D1 in importance</strong>. Two planets in the same D1 sign can have very different fates depending on their D9 placement. The D9 tells you whether the promises of the D1 will <em>actually deliver</em> — especially for marriage.
+                    </p>
+                </div>
+
+                <p style="color:rgba(255,255,255,0.75);">
+                    The D9 governs three things specifically: <strong>marriage and the spouse</strong>, <strong>dharma</strong> (your path of right action), and the <strong>second half of life</strong> (after age 36). Anyone who is serious about marriage prediction looks at the D9 — it is non-negotiable in classical Vedic practice.
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- The 4 Pillars -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>The 4 Pillars of Navamsa Analysis</h2>
+                <p class="mb-2" style="color:rgba(255,255,255,0.65);">
+                    Every accurate D9 reading rests on these four pillars. Om.AI's AI checks all of them.
+                </p>
+
+                <div class="pillars-grid">
+                    <div class="pillar">
+                        <h3>1. Navamsa Lagna & Its Lord</h3>
+                        <p>The Navamsa Lagna shows your inner nature and core dharma. A strong Navamsa Lagna lord (well-placed, not afflicted) indicates clarity of purpose and stable destiny. A weak or debilitated Navamsa Lagna lord points to confusion or scattered energy in the second half of life.</p>
+                    </div>
+                    <div class="pillar">
+                        <h3>2. Venus in the D9</h3>
+                        <p>Venus is the natural significator of marriage. Venus's sign, dignity (exalted, own sign, debilitated, combust), and house in the D9 reveal how love and partnership actually unfold. A Venus that is strong in D1 but weak in D9 typically delivers infatuation without follow-through.</p>
+                    </div>
+                    <div class="pillar">
+                        <h3>3. The 7th House of the D9</h3>
+                        <p>The D9 7th house, the planet sitting in it, and the 7th lord of the D9 describe your spouse — temperament, family, profession, distance from your hometown. They also confirm whether marriage will be smooth or troubled, regardless of what the D1 7th house promises.</p>
+                    </div>
+                    <div class="pillar">
+                        <h3>4. Vargottama Status</h3>
+                        <p>A planet is Vargottama when it occupies the same sign in both D1 and D9. Vargottama planets are significantly more powerful — their D1 promise is reinforced by the D9. Vargottama Venus, Jupiter, or the 7th lord is one of the strongest classical indicators of stable marriage.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What Om.AI Analyzes -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>What Om.AI Reads in Your D9</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    When you ask the AI to analyze your Navamsa chart, here's what it actually does.
+                </p>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-chart-pie" aria-hidden="true"></i></div>
+                            <h3>Dignity Changes from D1 to D9</h3>
+                            <p>
+                                Every planet has a dignity in D1 and a dignity in D9. The AI flags planets that change dignity — exalted in D1 but debilitated in D9, or vice versa. A planet that gains dignity in D9 outperforms its D1 promise; a planet that loses dignity often disappoints.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-link" aria-hidden="true"></i></div>
+                            <h3>Vargottama Detection</h3>
+                            <p>
+                                The AI identifies every planet that is Vargottama — same sign in D1 and D9. It flags Vargottama Lagna lord, Venus, Jupiter, and 7th lord as especially significant. Vargottama planets are the foundation of long-term success and stable marriage.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+                            <h3>Spouse Description</h3>
+                            <p>
+                                From the 7th house of D9, the planet placed there, the 7th lord's location, and Venus's condition, the AI builds a description of your future or current spouse — temperament, profession, family background, and physical traits.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-balance-scale" aria-hidden="true"></i></div>
+                            <h3>Marriage Confirmation</h3>
+                            <p>
+                                If the D1 promises an early or smooth marriage, the AI checks the D9 to confirm or contradict. A weak D9 7th house can override a strong D1 promise. A strong D9 7th house can rescue a chart that looks weak in D1 alone.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-route" aria-hidden="true"></i></div>
+                            <h3>Dharma & Life Purpose</h3>
+                            <p>
+                                The Navamsa Lagna and its lord, plus the 9th house of the D9, point to your soul's purpose. The AI explains what your dharmic path looks like in practical, modern terms — the kind of work or service that will feel aligned in the second half of life.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-arrows-alt-h" aria-hidden="true"></i></div>
+                            <h3>D1 vs D9 Comparison</h3>
+                            <p>
+                                Throughout the analysis, the AI presents D1 and D9 readings side-by-side. This is how classical Jyotishis work — never the D9 alone, always D1 first then D9 confirmation. You see exactly which D1 promises are confirmed in D9 and which are weakened.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- How to Get Reading -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2>How to Get Your D9 Analysis</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
+                    Three steps. Free Navamsa chart. First AI reading on us.
+                </p>
+
+                <div class="how-step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Generate Your Navamsa Chart</h3>
+                        <p>Install Om.AI free on Android or iOS. Enter your birth date, exact birth time, and birth city. The app calculates your D1 (Rashi) and D9 (Navamsa) charts using classical algorithms — instantly, accurately.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Open the AI Chat</h3>
+                        <p>Ask in plain language: "Analyze my D9 chart", "What does my Navamsa say about my spouse?", "Is my Venus Vargottama?", "Does my D9 confirm my marriage timing?" — the AI reads your specific chart and answers based on the actual placements.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Go Deeper with Follow-Ups</h3>
+                        <p>Once the AI has your Navamsa context, ask narrower questions — "What house is Venus in my D9?", "Is my 7th lord well-placed in D9?", "What kind of spouse does my D9 indicate?" The AI keeps the chart in memory and answers each follow-up in context.</p>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="background:rgba(217,119,87,0.06); border-color:rgba(217,119,87,0.2);">
+                    <h3 style="font-size:1.1rem;"><i class="fas fa-info-circle me-2" aria-hidden="true"></i>About Free Questions</h3>
+                    <p style="margin-bottom:0;">
+                        Generating your Navamsa chart and viewing planetary positions is always free. Your first AI reading on Om.AI is free; earn more questions through daily reading streaks (3, 7, 14, 21, 30, 60, 90, 180, 365-day milestones) or get unlimited questions with Premium.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Read Your D9 the Classical Way</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Generate your Navamsa instantly. Ask Om.AI's AI what your D9 actually says about marriage, spouse, and dharma — based on classical Jyotish principles, not generic interpretations.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dnavamsa" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_navamsa&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore More</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/marriage-prediction.html" class="insight-link">
+                            <i class="fas fa-heart" aria-hidden="true"></i> Marriage Prediction by AI
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/shadi-kab-hogi.html" class="insight-link">
+                            <i class="fas fa-ring" aria-hidden="true"></i> Shadi Kab Hogi (Free Tool)
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> Free AI Kundli
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli-matching.html" class="insight-link">
+                            <i class="fas fa-link" aria-hidden="true"></i> Kundli Matching
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/navamsha-d9-chart-guide.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> D9 Guide (Blog)
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/blog/bhava-chart-vs-rashi-chart.html" class="insight-link">
+                            <i class="fas fa-balance-scale" aria-hidden="true"></i> Bhava vs Rashi Chart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>What is the Navamsa (D9) chart in Vedic astrology?</h3>
+                    <p>
+                        The Navamsa, or D9, is the most important divisional chart in Vedic astrology. It is created by dividing each 30° zodiac sign into 9 equal parts of 3°20' each. The Navamsa magnifies your birth chart 9 times, allowing closer analysis of marriage, dharma, planetary strength, and the second half of life. Classical Jyotish texts treat the D9 as second only to the birth chart (D1) in importance — and the only divisional chart used to confirm or deny the promises of the D1.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How is the Navamsa chart used for marriage prediction?</h3>
+                    <p>
+                        The Navamsa is the divisional chart of marriage. To analyze marriage from the D9, an astrologer checks: the Navamsa Lagna and its lord (overall strength of the chart), Venus in D9 (love and partnership), the 7th house of the D9 and its lord (the spouse), and whether key planets from the D1 improve, stay equal, or weaken in the D9. A planet that is strong in D1 but weak in D9 — a loss of dignity from D1 to D9 — often fails to deliver its promise, including marriage.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What does Vargottama mean in the Navamsa chart?</h3>
+                    <p>
+                        Vargottama means a planet occupies the same sign in both the D1 (birth chart) and the D9 (Navamsa). A Vargottama planet is significantly stronger because its placement is consistent across both charts. Vargottama Venus, Jupiter, or the 7th lord typically indicates a strong, stable marriage. Vargottama Lagna lord indicates strong overall destiny and clarity of purpose.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can the Navamsa chart describe my spouse?</h3>
+                    <p>
+                        Yes — the D9 is the primary tool for spouse analysis. The 7th house of the Navamsa, the planet placed there, and the 7th lord's location reveal your spouse's temperament, profession, family background, distance from your birthplace, and physical features. Venus in D9 adds detail about how love manifests in your marriage. Om.AI's AI synthesizes all of these signals into a plain-language description.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the Navamsa chart relate to dharma and the second half of life?</h3>
+                    <p>
+                        Classical Jyotish (notably Brihat Parashara Hora Shastra) describes the Navamsa as the chart of dharma — your path of right action and your soul's purpose. It is also said to govern the second half of life (post-36), making it especially relevant for understanding career stability, family life, spiritual progress, and long-term planetary strength.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is the AI Navamsa analysis free?</h3>
+                    <p>
+                        Yes — your first AI reading on Om.AI is free. Generating your Navamsa chart and viewing the planetary positions is free for all users. Detailed AI interpretation through chat works on the same question credit system as marriage prediction: 1 free question, plus more from daily reading streaks, or unlimited via Premium.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does AI analyze the Navamsa chart?</h3>
+                    <p>
+                        Om.AI calculates your D9 chart from your birth data using classical algorithms. The AI then reads the chart the way a classical Jyotishi would: it checks dignity changes (exalted in D1 but debilitated in D9, for example), Vargottama placements, Navamsa Lagna lord strength, the condition of Venus and Jupiter in D9, and the 7th house. It then synthesizes these signals in plain English or Hindi — focusing on what the placements practically mean for your marriage and dharma.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Should I look at the D1 (Rashi chart) or the D9 first?</h3>
+                    <p>
+                        Always start with the D1 — it shows the promise. Then look at the D9 to confirm or deny that promise. A planet that is strong in D1 makes a promise; the D9 tells you whether the planet has the strength to actually deliver it. Marriage analysis especially requires both charts read together — never the D9 alone.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/marriage-prediction.html" class="text-white-50">Marriage Prediction</a></li>
+                        <li><a href="/navamsa-chart.html" class="text-white-50">Navamsa Chart (D9)</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dnavamsa" class="text-white-50" rel="noopener noreferrer" target="_blank">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_navamsa&mt=8" class="text-white-50" rel="noopener noreferrer" target="_blank">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+
+</html>

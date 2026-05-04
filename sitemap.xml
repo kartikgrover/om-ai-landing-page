@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://omai.app/</loc>
-    <lastmod>2026-04-25</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -72,7 +72,7 @@
   <!-- AI Feature Pages -->
   <url>
     <loc>https://omai.app/ai-astrology-chat.html</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -96,13 +96,25 @@
   </url>
   <url>
     <loc>https://omai.app/marriage-prediction.html</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://omai.app/shadi-kab-hogi.html</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/navamsa-chart.html</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://omai.app/career-astrology.html</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -159,7 +171,7 @@
   <!-- SEO Content Pages -->
   <url>
     <loc>https://omai.app/rahu-kaal-today.html</loc>
-    <lastmod>2026-03-23</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
@@ -577,7 +589,7 @@
   <!-- Hindi Pages -->
   <url>
     <loc>https://omai.app/hi/</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -596,6 +608,12 @@
   <url>
     <loc>https://omai.app/hi/marriage-prediction.html</loc>
     <lastmod>2026-04-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://omai.app/hi/shadi-kab-hogi.html</loc>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
