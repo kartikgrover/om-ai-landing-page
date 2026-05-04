@@ -15,7 +15,9 @@ This is part of a multi-project VS Code workspace:
 
 ## CRITICAL: Deployment Safety
 
-**NEVER push to GitHub or deploy without explicit user permission.** This site is live and serves:
+**Push = deploy.** GitHub Pages serves directly from the repo, so any `git push` to the default branch goes live immediately — there is no staging step and no Action gate. This means **`git commit` + `git push` is a production deploy** and needs explicit user permission every time. Local edits and `git commit` (without push) are fine.
+
+This site is live and serves:
 - App Store / Play Store listing links
 - Privacy policy, terms of service
 - Delete account page
@@ -37,14 +39,7 @@ This is part of a multi-project VS Code workspace:
 ## Analytics & Ad Data Access
 
 ### Google Analytics (GA4) via BigQuery
-GA4 data is exported to BigQuery and accessible via the `bq` CLI (already authenticated via gcloud as `groverkartik25@gmail.com`).
-- **GCP Project:** `omai-1ea53`
-- **Dataset:** `analytics_498597496`
-- **Tables:** `events_YYYYMMDD` (daily export, data from 2026-01-17 onward)
-- **Key fields:** `event_name`, `event_date`, `user_pseudo_id`, `geo.country`, `traffic_source.{source,medium,name}`, `device`, `platform`, `event_value_in_usd`, `collected_traffic_source` (gclid for Google Ads)
-- **Key events:** `first_open` (installs), `session_start`, `in_app_purchase`, `page_view`, `user_engagement`
-- **Usage:** `bq query --use_legacy_sql=false --format=json 'SELECT ... FROM \`omai-1ea53.analytics_498597496.events_*\` WHERE _TABLE_SUFFIX BETWEEN "YYYYMMDD" AND "YYYYMMDD"'`
-- **Landing page traffic:** Filter by `event_dimensions.hostname` or `traffic_source.source = 'website'` / `traffic_source.medium = 'landing'`
+`bq` CLI is authed as `groverkartik25@gmail.com`. Tables: `` `omai-1ea53.analytics_498597496.events_YYYYMMDD` `` (daily export, data from 2026-01-17). Standard GA4 schema — `event_name`, `event_date`, `user_pseudo_id`, `geo.country`, `traffic_source.*`, `device`, `platform`, `event_value_in_usd`, plus `collected_traffic_source` (gclid for Google Ads). Common events: `first_open`, `session_start`, `in_app_purchase`, `page_view`, `user_engagement`. For landing-page-only traffic, filter by `event_dimensions.hostname` or `traffic_source.source = 'website'` / `medium = 'landing'`. Query with `bq query --use_legacy_sql=false --format=json 'SELECT … FROM \`omai-1ea53.analytics_498597496.events_*\` WHERE _TABLE_SUFFIX BETWEEN "YYYYMMDD" AND "YYYYMMDD"'`.
 
 ### Meta Ads API
 Available via the backend project (`../om.ai-backend/server.js:3008`). Account `act_1704926593380350`, token in `META_ADS_ACCESS_TOKEN` env var. Read-only.
