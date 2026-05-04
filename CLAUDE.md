@@ -66,7 +66,7 @@ Use these numbers to anchor SEO decisions rather than guessing:
 - **Living reference** (updated over time): `<ALLCAPS_NAME>.md` at repo root (small project — no `docs/` folder yet), or kebab-case if you want.
 - **Point-in-time snapshot** (frozen at write): `YYYY-MM-DD_TOPIC.md`. Don't edit after the date — write a new dated doc instead.
 - **Stale docs**: `git mv` to an `archive/` folder (create if needed) with a one-liner explaining why. Don't delete.
-- **Pricing decisions**: canonical in `om/om1/docs/pricing/PRICING_TIMELINE.md` — reference, don't duplicate.
+- **Pricing decisions**: canonical in `om-ai-ops/docs/pricing/PRICING_TIMELINE.md` — reference, don't duplicate.
 
 ## Existing Analysis Docs
 - `AUDIT_FINDINGS.md` — prior site audit.
