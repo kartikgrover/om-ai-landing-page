@@ -62,5 +62,11 @@ Use these numbers to anchor SEO decisions rather than guessing:
 - Hindi queries appearing (`ऐ ज्योतिष`, `एआई कुंडली निःशुल्क`) — `/hi/` pages exist with `hreflang`.
 - Topic landing pages that started at 0 clicks and are now top-5 (marriage-prediction, career-astrology) suggest the pattern works — worth building more (health-astrology, love-astrology, wealth-astrology).
 
+## Doc Conventions (when creating a new doc)
+- **Living reference** (updated over time): `<ALLCAPS_NAME>.md` at repo root (small project — no `docs/` folder yet), or kebab-case if you want.
+- **Point-in-time snapshot** (frozen at write): `YYYY-MM-DD_TOPIC.md`. Don't edit after the date — write a new dated doc instead.
+- **Stale docs**: `git mv` to an `archive/` folder (create if needed) with a one-liner explaining why. Don't delete.
+- **Pricing decisions**: canonical in `om/om1/docs/pricing/PRICING_TIMELINE.md` — reference, don't duplicate.
+
 ## Existing Analysis Docs
 - `AUDIT_FINDINGS.md` — prior site audit.
