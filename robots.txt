@@ -1,5 +1,5 @@
 # Om.AI Robots.txt
-# Updated: March 24, 2026
+# Updated: May 7, 2026
 
 User-agent: *
 Allow: /
@@ -7,6 +7,10 @@ Allow: /
 # Disallow non-public directories
 Disallow: /node_modules/
 Disallow: /blog/drafts/
+
+# Backend API paths (referenced from inline JS, not site routes)
+Disallow: /daily-horoscope/v2/
+Disallow: /daily-verse
 
 # Disallow URLs with query parameters (static site — no server-side params)
 Disallow: /*?
