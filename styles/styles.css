@@ -640,7 +640,8 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   color: var(--text-on-dark) !important;
   margin: 0 var(--spacing-xs);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
 }
 
