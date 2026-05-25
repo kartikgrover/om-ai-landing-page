@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>आज का पंचांग — तिथि, नक्षत्र और समय | Om.AI</title>
+    <meta name="description" content="आज का मुफ्त दैनिक पंचांग — तिथि, नक्षत्र, योग, सूर्योदय, सूर्यास्त, राहु काल और ग्रह गोचर। सटीक वैदिक हिंदू कैलेंडर, रोज़ अपडेट होता है।">
+    <meta name="keywords" content="आज का पंचांग, दैनिक पंचांग, आज की तिथि, आज का नक्षत्र, राहु काल आज, हिंदू कैलेंडर, पंचांग 2026, आज सूर्योदय सूर्यास्त, शुभ मुहूर्त">
+
+    <meta property="og:title" content="आज का पंचांग — तिथि, नक्षत्र और समय | Om.AI">
+    <meta property="og:description" content="आज का मुफ्त दैनिक पंचांग — तिथि, नक्षत्र, सूर्योदय/सूर्यास्त, राहु काल और ग्रह गोचर। रोज़ अपडेट होता है।">
+    <meta property="og:url" content="https://omai.app/hi/panchang.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Om.AI - वैदिक ज्योतिष और आध्यात्मिक ज्ञान ऐप">
+    <meta property="og:site_name" content="Om.AI">
+    <meta property="og:locale" content="hi_IN">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/hi/panchang.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/panchang.html">
+    <link rel="alternate" hreflang="hi" href="https://omai.app/hi/panchang.html">
+    <link rel="alternate" hreflang="x-default" href="https://omai.app/panchang.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .panchang-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .panchang-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .panchang-card .p-icon { font-size: 1.5rem; margin-bottom: 0.5rem; color: #D97757; }
+        .panchang-card .p-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em; }
+        .panchang-card .p-value { font-size: 1.1rem; color: #fff; font-weight: 600; margin-top: 0.25rem; }
+        .panchang-card .p-sub { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 0.15rem; }
+        .transit-planet {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .transit-planet:last-child { border-bottom: none; }
+        .transit-planet .planet-name { font-weight: 600; min-width: 70px; color: #D97757; }
+        .transit-planet .planet-pos { color: rgba(255,255,255,0.8); }
+        .transit-planet .planet-retro { color: #f87171; font-size: 0.8rem; margin-left: 0.5rem; }
+        .rahu-box {
+            background: rgba(248,113,113,0.08);
+            border: 1px solid rgba(248,113,113,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .rahu-box .rahu-icon { font-size: 1.5rem; color: #f87171; }
+        .rahu-box .rahu-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+        .rahu-box .rahu-time { font-size: 1.1rem; font-weight: 600; color: #f87171; }
+        .rahu-box .rahu-note { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "आज का पंचांग — दैनिक तिथि, नक्षत्र और राहु काल",
+        "description": "आज का मुफ्त दैनिक पंचांग — तिथि, नक्षत्र, सूर्योदय/सूर्यास्त, राहु काल और ग्रह गोचर।",
+        "url": "https://omai.app/hi/panchang.html",
+        "inLanguage": "hi",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Om.AI",
+            "url": "https://omai.app"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "होम", "item": "https://omai.app/"},
+            {"@type": "ListItem", "position": 2, "name": "आज का पंचांग", "item": "https://omai.app/hi/panchang.html"}
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": "hi",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "पंचांग क्या है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "पंचांग (पंचांगम् भी कहते हैं) पारंपरिक वैदिक हिंदू कैलेंडर है जो हर दिन के पाँच मुख्य तत्वों का हिसाब रखता है। संस्कृत में 'पंच-अंग' का शाब्दिक अर्थ है 'पाँच अंग'। हिंदू हर दिन पंचांग देखकर महत्वपूर्ण कार्यों — जैसे नया व्यापार आरंभ करना, यात्रा, विवाह संस्कार और धार्मिक अनुष्ठान — के लिए शुभ मुहूर्त निकालते हैं।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "पंचांग के 5 अंग कौन-से हैं?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "पंचांग के पाँच अंग हैं: तिथि (चंद्र दिवस, जो सूर्य और चंद्र के बीच कोणीय दूरी पर आधारित है), नक्षत्र (चंद्र भवन, जिनमें से एक से चंद्रमा गुजरता है — कुल 27 नक्षत्र), योग (सूर्य-चंद्र का कोणीय संबंध), करण (तिथि का आधा भाग), और वार (सप्ताह का दिन)। ये पाँचों मिलकर हर दिन की गुणवत्ता और शुभता तय करते हैं।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "राहु काल क्या है?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "राहु काल (राहु कालम भी कहते हैं) हर दिन का लगभग डेढ़ घंटे का अशुभ समय है जिस पर छाया ग्रह राहु का प्रभाव रहता है। राहु काल में परंपरागत रूप से नया कार्य शुरू करने, अनुबंध पर हस्ताक्षर करने या यात्रा आरंभ करने से बचने की सलाह दी जाती है। यह समय वार के अनुसार बदलता है और आपके स्थान के सूर्योदय व सूर्यास्त के आधार पर निकाला जाता है।"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "दैनिक पंचांग का उपयोग कैसे करें?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "हर सुबह दैनिक पंचांग देखकर वैदिक मार्गदर्शन के अनुसार अपना दिन तय करें। दिन की चंद्र ऊर्जा समझने के लिए तिथि देखें, नक्षत्र के गुण जानें, और महत्वपूर्ण कार्य आरंभ करने से बचने के लिए राहु काल का समय नोट करें। बहुत-से लोग यह समझने के लिए ग्रह गोचर भी देखते हैं कि वर्तमान ग्रह स्थितियाँ उनके दिन को कैसे प्रभावित कर सकती हैं।"
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+        gtag('config', 'AW-16691222744');
+    </script>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-to-content">मुख्य सामग्री पर जाएँ</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo.webp" type="image/webp">
+                    <img src="/assets/logo.png" alt="Om.AI Logo" width="100" height="100" class="me-2">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="नेविगेशन टॉगल करें">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">फीचर्स</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/hi/ai-astrology-chat.html">AI ज्योतिष चैट</a></li>
+                            <li><a class="dropdown-item" href="/free-kundli-online.html">कुंडली</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">कुंडली मिलान</a></li>
+                            <li><a class="dropdown-item" href="/career-astrology.html">करियर ज्योतिष</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">विवाह भविष्यवाणी</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">दशा कैलकुलेटर</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">दैनिक जानकारी</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">दैनिक राशिफल</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">आज का पंचांग</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">गीता श्लोक</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">राहु काल</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">ब्लॉग</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">सहायता</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#smart-download">डाउनलोड</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section class="page-header">
+            <div class="container text-center">
+                <h1 class="display-4 mb-3">आज का पंचांग</h1>
+                <p class="lead">तिथि, नक्षत्र और शुभ मुहूर्त सहित दैनिक वैदिक हिंदू कैलेंडर</p>
+                <p style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:#D97757;" id="panchang-date"></p>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+
+                <!-- Loading -->
+                <div id="loading" class="loading-state">
+                    <i class="fas fa-om fa-spin fa-2x mb-3" aria-hidden="true"></i>
+                    <p>आज का पंचांग लोड हो रहा है...</p>
+                </div>
+
+                <!-- Panchang Content -->
+                <div id="panchang-content" style="display:none">
+
+                    <!-- Panchang Elements -->
+                    <div class="card-section">
+                        <h2 style="font-size:1.3rem; margin-bottom:1.25rem;"><i class="fas fa-calendar-day me-2" aria-hidden="true"></i>आज का पंचांग</h2>
+                        <div class="panchang-grid" id="panchang-grid"></div>
+                    </div>
+
+                    <!-- Rahu Kalam -->
+                    <div id="rahu-section" style="display:none" class="mb-4">
+                        <div class="rahu-box" id="rahu-box"></div>
+                    </div>
+
+                    <!-- Planetary Transits -->
+                    <div class="card-section" id="section-transits">
+                        <h3 style="font-size:1.2rem; margin-bottom:1rem;"><i class="fas fa-globe me-2" aria-hidden="true"></i>आज की ग्रह स्थिति</h3>
+                        <div id="transits-list"></div>
+                    </div>
+                </div>
+
+                <!-- Error State -->
+                <div id="error-state" style="display:none" class="card-section text-center">
+                    <i class="fas fa-exclamation-circle fa-2x mb-3" style="color:#f87171;" aria-hidden="true"></i>
+                    <p>आज का पंचांग लोड नहीं हो सका। कृपया कुछ देर बाद फिर प्रयास करें।</p>
+                </div>
+
+                <!-- Cross Links -->
+                <div class="cross-links mt-4">
+                    <a href="/horoscope.html" class="cross-link">
+                        <div class="cl-title"><i class="fas fa-star me-1" aria-hidden="true"></i> दैनिक राशिफल</div>
+                        <div class="cl-desc">अपनी चंद्र राशि के लिए आज का राशिफल पाएँ</div>
+                    </a>
+                    <a href="/gita.html" class="cross-link">
+                        <div class="cl-title"><i class="fas fa-book-open me-1" aria-hidden="true"></i> आज का गीता श्लोक</div>
+                        <div class="cl-desc">भगवद् गीता से दैनिक ज्ञान</div>
+                    </a>
+                </div>
+
+                <!-- CTA -->
+                <div class="cta-box mt-4">
+                    <h2 style="font-size:1.3rem;">आज का पंचांग आपकी कुंडली के लिए क्या कहता है?</h2>
+                    <p class="text-secondary mb-3">Om.AI विश्लेषण करता है कि आज की तिथि, नक्षत्र और गोचर आपकी व्यक्तिगत कुंडली के साथ कैसे जुड़ते हैं — ताकि आपको वास्तव में व्यक्तिगत दैनिक मार्गदर्शन मिले।</p>
+                    <a href="/#smart-download" class="btn btn--primary btn-lg">
+                        <i class="fas fa-download me-2" aria-hidden="true"></i>व्यक्तिगत विश्लेषण पाएँ
+                    </a>
+                    <p class="mt-2" style="font-size:0.85rem; color: rgba(255,255,255,0.5);">पहला सवाल मुफ्त। किसी क्रेडिट कार्ड की ज़रूरत नहीं।</p>
+                </div>
+
+                <!-- SEO Content -->
+                <div class="mt-5">
+                    <h2>पंचांग क्या है?</h2>
+                    <p>पंचांग (पंचांगम् भी कहते हैं) पारंपरिक वैदिक हिंदू कैलेंडर है जो हर दिन के पाँच मुख्य तत्वों का हिसाब रखता है: तिथि (चंद्र दिवस), नक्षत्र (चंद्र भवन), योग (सूर्य-चंद्र का कोणीय संबंध), करण (तिथि का आधा भाग) और वार (सप्ताह का दिन)। संस्कृत में "पंच-अंग" का शाब्दिक अर्थ है "पाँच अंग"। हिंदू हर दिन पंचांग देखकर महत्वपूर्ण कार्यों — जैसे नया व्यापार आरंभ करना, यात्रा, विवाह संस्कार और धार्मिक अनुष्ठान — के लिए शुभ मुहूर्त निकालते हैं।</p>
+
+                    <h2>तिथि और नक्षत्र को समझना</h2>
+                    <p>तिथि वह चंद्र दिवस है जो सूर्य और चंद्र के बीच की कोणीय दूरी से तय होता है। एक चंद्र मास में 30 तिथियाँ होती हैं — 15 शुक्ल पक्ष (बढ़ते चंद्र) में और 15 कृष्ण पक्ष (घटते चंद्र) में। हर तिथि का अपना गुण होता है: कुछ नए आरंभ के लिए शुभ मानी जाती हैं (जैसे द्वितीया, पंचमी, सप्तमी) तो कुछ आध्यात्मिक साधना के लिए अधिक उपयुक्त (जैसे एकादशी, अमावस्या)। नक्षत्र चंद्र भवन है — 27 नक्षत्रों में से एक, जिनसे होकर चंद्रमा गुजरता है — और हर नक्षत्र की अपनी ऊर्जा तथा शासक देवता होते हैं।</p>
+
+                    <h2>राहु काल क्या है?</h2>
+                    <p>राहु काल (राहु कालम भी कहते हैं) हर दिन का लगभग डेढ़ घंटे का अशुभ समय है जिस पर छाया ग्रह राहु का प्रभाव रहता है। राहु काल में परंपरागत रूप से नया कार्य शुरू करने, अनुबंध पर हस्ताक्षर करने या यात्रा आरंभ करने से बचने की सलाह दी जाती है। यह समय वार के अनुसार बदलता है और सूर्योदय व सूर्यास्त के समय से निकाला जाता है। Om.AI दिल्ली (IST) के खगोलीय सूर्योदय/सूर्यास्त के आधार पर राहु काल की सटीक गणना करता है।</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container py-4">
+            <h2>अक्सर पूछे जाने वाले सवाल</h2>
+            <h3 style="font-size:1.15rem; margin-top:1.5rem;">पंचांग क्या है?</h3>
+            <p>पंचांग (पंचांगम् भी कहते हैं) पारंपरिक वैदिक हिंदू कैलेंडर है जो हर दिन के पाँच मुख्य तत्वों का हिसाब रखता है। संस्कृत में 'पंच-अंग' का शाब्दिक अर्थ है 'पाँच अंग'। हिंदू हर दिन पंचांग देखकर महत्वपूर्ण कार्यों — जैसे नया व्यापार आरंभ करना, यात्रा, विवाह संस्कार और धार्मिक अनुष्ठान — के लिए शुभ मुहूर्त निकालते हैं।</p>
+            <h3 style="font-size:1.15rem; margin-top:1.5rem;">पंचांग के 5 अंग कौन-से हैं?</h3>
+            <p>पंचांग के पाँच अंग हैं: तिथि (चंद्र दिवस, जो सूर्य और चंद्र के बीच कोणीय दूरी पर आधारित है), नक्षत्र (चंद्र भवन, जिनमें से एक से चंद्रमा गुजरता है — कुल 27 नक्षत्र), योग (सूर्य-चंद्र का कोणीय संबंध), करण (तिथि का आधा भाग), और वार (सप्ताह का दिन)। ये पाँचों मिलकर हर दिन की गुणवत्ता और शुभता तय करते हैं।</p>
+            <h3 style="font-size:1.15rem; margin-top:1.5rem;">राहु काल क्या है?</h3>
+            <p>राहु काल (राहु कालम भी कहते हैं) हर दिन का लगभग डेढ़ घंटे का अशुभ समय है जिस पर छाया ग्रह राहु का प्रभाव रहता है। राहु काल में परंपरागत रूप से नया कार्य शुरू करने, अनुबंध पर हस्ताक्षर करने या यात्रा आरंभ करने से बचने की सलाह दी जाती है। यह समय वार के अनुसार बदलता है और आपके स्थान के सूर्योदय व सूर्यास्त के आधार पर निकाला जाता है।</p>
+            <h3 style="font-size:1.15rem; margin-top:1.5rem;">दैनिक पंचांग का उपयोग कैसे करें?</h3>
+            <p>हर सुबह दैनिक पंचांग देखकर वैदिक मार्गदर्शन के अनुसार अपना दिन तय करें। दिन की चंद्र ऊर्जा समझने के लिए तिथि देखें, नक्षत्र के गुण जानें, और महत्वपूर्ण कार्य आरंभ करने से बचने के लिए राहु काल का समय नोट करें। बहुत-से लोग यह समझने के लिए ग्रह गोचर भी देखते हैं कि वर्तमान ग्रह स्थितियाँ उनके दिन को कैसे प्रभावित कर सकती हैं।</p>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>वैदिक ज्योतिष, कुंडली विश्लेषण और आध्यात्मिक ज्ञान के लिए आपका AI-संचालित साथी।</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Facebook पर फॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/om.ai_app/" class="text-white me-3" aria-label="Instagram पर फॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">फीचर्स</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/hi/ai-astrology-chat.html" class="text-white-50">AI ज्योतिष चैट</a></li>
+                        <li><a href="/hi/kundli.html" class="text-white-50">कुंडली और जन्म चार्ट</a></li>
+                        <li><a href="/ai-vedic-astrology.html" class="text-white-50">AI वैदिक ज्योतिष</a></li>
+                        <li><a href="/lal-kitab-remedies.html" class="text-white-50">लाल किताब उपाय</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">दैनिक जानकारी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">दैनिक पंचांग</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">दैनिक राशिफल</a></li>
+                        <li><a href="/gita.html" class="text-white-50">गीता श्लोक</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">राहु काल</a></li>
+                        <li><a href="/blog/" class="text-white-50">ब्लॉग</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">कानूनी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">गोपनीयता नीति</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">सेवा की शर्तें</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">रिफंड नीति</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">डाउनलोड</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dfree_tools%26utm_content%3Dpanchang" class="text-white-50">Android ऐप</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_panchang&mt=8" class="text-white-50">iOS ऐप</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>वैदिक ज्योतिष एक पारंपरिक विश्वास प्रणाली है जिसे यहाँ सूचनात्मक और सांस्कृतिक उद्देश्यों के लिए प्रस्तुत किया गया है। यह पेशेवर चिकित्सा, कानूनी या वित्तीय सलाह का विकल्प नहीं है।</small>
+                <br><small>&copy; 2026 Om.AI. सर्वाधिकार सुरक्षित।</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script>
+    (function() {
+        function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+        var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+
+        // Display date
+        var now = new Date();
+        document.getElementById('panchang-date').textContent = now.toLocaleDateString('hi-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        function formatIST(isoStr) {
+            if (!isoStr) return '';
+            if (/^\d{2}:\d{2}(:\d{2})?$/.test(isoStr)) return isoStr.substring(0, 5);
+            try {
+                var d = new Date(isoStr);
+                var h = d.getUTCHours(), m = d.getUTCMinutes();
+                return h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0');
+            } catch(e) { return isoStr; }
+        }
+
+        // Cache key uses IST date (UTC+5:30) to match backend's daily cycle
+        var istNow = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+        var today = istNow.toISOString().split('T')[0];
+        var cached = null;
+        try {
+            var stored = JSON.parse(sessionStorage.getItem('omai_panchang') || '{}');
+            if (stored.date === today && stored.data) cached = stored.data;
+        } catch(e) {}
+
+        if (cached) {
+            renderPanchang(cached);
+        } else {
+            loadPanchang();
+        }
+
+        function loadPanchang() {
+        // Fetch metadata only (no sign data needed)
+        fetch(API + '/daily-horoscope/v2/metadata')
+            .then(function(r) {
+                if (!r.ok) throw new Error('metadata failed');
+                return r.json();
+            })
+            .catch(function() {
+                // Fallback: fetch any sign and extract metadata
+                return fetch(API + '/daily-horoscope/aries').then(function(r) { return r.json(); });
+            })
+            .then(function(data) {
+                // Cache it
+                try { sessionStorage.setItem('omai_panchang', JSON.stringify({ date: today, data: data })); } catch(e) {}
+                renderPanchang(data);
+            })
+            .catch(function() {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error-state').style.display = 'block';
+            });
+        } // end loadPanchang
+
+        function renderPanchang(data) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('panchang-content').style.display = 'block';
+
+                var meta = data.metadata || {};
+                var panchang = meta.panchang || {};
+                var tw = meta.timingWindows || {};
+                var pp = data.planetaryPositions || {};
+
+                // Build panchang grid
+                var grid = document.getElementById('panchang-grid');
+                var items = [
+                    { icon: 'fa-moon', label: 'तिथि', value: panchang.tithi || '—', sub: panchang.paksha || '' },
+                    { icon: 'fa-star', label: 'नक्षत्र', value: panchang.nakshatra || '—', sub: panchang.pada ? 'पाद ' + panchang.pada : '' },
+                    { icon: 'fa-check-circle', label: 'तिथि गुणवत्ता', value: panchang.tithiQuality || '—', sub: '' }
+                ];
+
+                if (pp.Moon && pp.Moon.zodiac) {
+                    items.push({ icon: 'fa-circle', label: 'चंद्र राशि', value: pp.Moon.zodiac, sub: pp.Moon.nakshatra || '' });
+                }
+
+                items.forEach(function(it) {
+                    grid.innerHTML += '<div class="panchang-card"><div class="p-icon"><i class="fas ' + it.icon + '" aria-hidden="true"></i></div><div class="p-label">' + esc(it.label) + '</div><div class="p-value">' + esc(it.value) + '</div>' + (it.sub ? '<div class="p-sub">' + esc(it.sub) + '</div>' : '') + '</div>';
+                });
+
+                // Rahu Kalam
+                var rk = tw.rahuKalam || meta.rahuKalam;
+                if (rk) {
+                    document.getElementById('rahu-section').style.display = 'block';
+                    document.getElementById('rahu-box').innerHTML =
+                        '<div class="rahu-icon"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></div>' +
+                        '<div><div class="rahu-label">राहु काल</div><div class="rahu-time">' + formatIST(rk.start) + ' — ' + formatIST(rk.end) + '</div><div class="rahu-note">इस अवधि में नए आरंभ, अनुबंध और यात्रा से बचें</div></div>';
+                }
+
+                // Planetary transits
+                var list = document.getElementById('transits-list');
+                var order = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Rahu', 'Ketu'];
+                var planetNames = { Sun: 'सूर्य', Moon: 'चंद्र', Mars: 'मंगल', Mercury: 'बुध', Jupiter: 'गुरु', Venus: 'शुक्र', Saturn: 'शनि', Rahu: 'राहु', Ketu: 'केतु' };
+                order.forEach(function(planet) {
+                    var p = pp[planet];
+                    if (!p) return;
+                    var retro = p.retrograde ? '<span class="planet-retro">(वक्री)</span>' : '';
+                    var nak = p.nakshatra ? ' · ' + esc(p.nakshatra) + (p.pada ? ' पाद ' + esc(String(p.pada)) : '') : '';
+                    list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + esc(planetNames[planet] || planet) + '</span><span class="planet-pos">' + esc(p.zodiac || '') + nak + retro + '</span></div>';
+                });
+
+                gtag('event', 'panchang_view', { 'event_category': 'Free Tools' });
+        }
+    })();
+    </script>
+</body>
+
+</html>
