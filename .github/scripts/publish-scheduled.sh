@@ -54,23 +54,35 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
   # Build blog card HTML and insert before end marker using awk (sed-safe)
   CARD_HTML="                    <article class=\"blog-card\"><a href=\"/blog/$FILE\">${IMG_HTML}<div class=\"blog-card-tag\">$TAG</div><h2>$TITLE</h2><p class=\"blog-card-excerpt\">$EXCERPT</p><span class=\"blog-card-date\">$DISPLAY_DATE</span></a></article>"
 
-  awk -v card="$CARD_HTML" '{
-    if ($0 ~ /<\/div><!-- end blog-grid -->/) {
-      print card
-    }
-    print
-  }' blog/index.html > blog/index.html.tmp && mv blog/index.html.tmp blog/index.html
+  # Insert blog card (skip if a card for this post already exists)
+  if ! grep -q "href=\"/blog/$FILE\"" blog/index.html; then
+    awk -v card="$CARD_HTML" '{
+      if ($0 ~ /<\/div><!-- end blog-grid -->/) {
+        print card
+      }
+      print
+    }' blog/index.html > blog/index.html.tmp && mv blog/index.html.tmp blog/index.html
+  fi
 
-  # Add to sitemap.xml using awk (safe from special characters)
-  awk -v file="$FILE" -v date="$DATE_RAW" '{
-    if ($0 ~ /<\/urlset>/) {
-      printf "  <url>\n    <loc>https://omai.app/blog/%s</loc>\n    <lastmod>%s</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>\n", file, date
-    }
-    print
-  }' sitemap.xml > sitemap.xml.tmp && mv sitemap.xml.tmp sitemap.xml
+  # Add to sitemap.xml — idempotent: refresh <lastmod> if the URL is already listed, else append
+  SITEMAP_LOC="<loc>https://omai.app/blog/$FILE</loc>"
+  if grep -qF "$SITEMAP_LOC" sitemap.xml; then
+    awk -v loc="$SITEMAP_LOC" -v date="$DATE_RAW" '
+      index($0, loc) { found=1 }
+      found && /<lastmod>/ { sub(/<lastmod>[^<]*<\/lastmod>/, "<lastmod>" date "</lastmod>"); found=0 }
+      { print }
+    ' sitemap.xml > sitemap.xml.tmp && mv sitemap.xml.tmp sitemap.xml
+  else
+    awk -v file="$FILE" -v date="$DATE_RAW" '{
+      if ($0 ~ /<\/urlset>/) {
+        printf "  <url>\n    <loc>https://omai.app/blog/%s</loc>\n    <lastmod>%s</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>\n", file, date
+      }
+      print
+    }' sitemap.xml > sitemap.xml.tmp && mv sitemap.xml.tmp sitemap.xml
+  fi
 
-  # Add to RSS feed if it exists (with proper RFC 822 date format)
-  if [ -f "blog/feed.xml" ]; then
+  # Add to RSS feed if it exists (skip if an item for this post is already present)
+  if [ -f "blog/feed.xml" ] && ! grep -q "<link>https://omai.app/blog/$FILE</link>" blog/feed.xml; then
     RFC_DATE=$(date -d "$DATE_RAW" -u +"%a, %d %b %Y 00:00:00 +0000" 2>/dev/null || echo "$DATE_RAW")
     awk -v title="$TITLE" -v file="$FILE" -v excerpt="$EXCERPT" -v pubdate="$RFC_DATE" '{
       if ($0 ~ /<\/channel>/) {
@@ -81,11 +93,13 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
   fi
 
   # Add to ItemList schema in blog/index.html (only the first itemListElement, not BreadcrumbList)
-  NEXT_POS=$(grep -c '"@type": "ListItem"' blog/index.html)
-  # Subtract 2 for the BreadcrumbList items (Home + Blog), then add 1 for next position
-  NEXT_POS=$((NEXT_POS - 2 + 1))
-  JSON_TITLE=$(echo "$TITLE" | sed 's/"/\\"/g')
-  NEW_ITEM=$(cat <<ITEMEOF
+  # Skip if this post is already in the ItemList to avoid duplicate schema entries
+  if ! grep -q "\"item\": \"https://omai.app/blog/$FILE\"" blog/index.html; then
+    NEXT_POS=$(grep -c '"@type": "ListItem"' blog/index.html)
+    # Subtract 2 for the BreadcrumbList items (Home + Blog), then add 1 for next position
+    NEXT_POS=$((NEXT_POS - 2 + 1))
+    JSON_TITLE=$(echo "$TITLE" | sed 's/"/\\"/g')
+    NEW_ITEM=$(cat <<ITEMEOF
 ,
                 {
                     "@type": "ListItem",
@@ -95,12 +109,13 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
                 }
 ITEMEOF
 )
-  # Use awk to insert new ListItem before the ] that closes the FIRST itemListElement only
-  awk -v item="$NEW_ITEM" '
-    /itemListElement/ && !done_list { in_list=1 }
-    in_list && /\]/ { printf "%s\n", item; in_list=0; done_list=1 }
-    { print }
-  ' blog/index.html > blog/index.html.tmp && mv blog/index.html.tmp blog/index.html
+    # Use awk to insert new ListItem before the ] that closes the FIRST itemListElement only
+    awk -v item="$NEW_ITEM" '
+      /itemListElement/ && !done_list { in_list=1 }
+      in_list && /\]/ { printf "%s\n", item; in_list=0; done_list=1 }
+      { print }
+    ' blog/index.html > blog/index.html.tmp && mv blog/index.html.tmp blog/index.html
+  fi
 
   # Remove published entry from schedule.json
   jq "del(.[\"$FILE\"])" "$SCHEDULE_FILE" > tmp_schedule.json && mv tmp_schedule.json "$SCHEDULE_FILE"
