@@ -70,3 +70,6 @@ Use these numbers to anchor SEO decisions rather than guessing:
 
 ## Existing Analysis Docs
 - `AUDIT_FINDINGS.md` — prior site audit.
+
+## macOS Reminders
+When adding a macOS Reminder (recheck/follow-up TODOs), always create it under the **Om.AI** list (create the list if missing) — never the default Reminders list.
