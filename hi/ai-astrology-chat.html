@@ -325,6 +325,15 @@
         gtag('config', 'G-EPT0NFE087');
         gtag('config', 'AW-16691222744');
     </script>
+    <!-- App store CTA tracking (download_click) -->
+    <script>
+    document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a[href*="play.google.com"], a[href*="apps.apple.com"]');
+        if(!a || typeof gtag !== 'function') return;
+        var platform = a.href.indexOf('apps.apple.com') > -1 ? 'ios' : 'android';
+        gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 });
+    }, true);
+    </script>
 </head>
 
 <body>

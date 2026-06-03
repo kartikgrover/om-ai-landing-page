@@ -254,6 +254,22 @@
                             "@type": "Answer",
                             "text": "Yes, Om.AI provides personalized Vedic remedies based on your birth chart. These include gemstone recommendations, specific mantras for weak or afflicted planets, ritual suggestions, charitable acts (daan), and optimal timing for performing remedies. Remedies are drawn from classical texts including Lal Kitab and BPHS, and are tailored to your specific planetary configuration. Personalized remedies are available with Premium."
                         }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I chat with an AI astrologer for free, 24/7?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. The app is available around the clock, so you can ask whenever a question comes up. Your first AI astrology reading is free, and you can earn more questions through daily reading streaks — no fixed schedule and no waiting for a human astrologer to be online. If you want unlimited 24/7 questions, Om.AI offers an optional Premium plan, but you can start and get real chart-based answers without paying."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Do I need to sign up or share my phone number to try the AI astrology chat?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. You can install Om.AI and get your first AI astrology reading without entering a phone number — just add your birth details so the AI can calculate your chart, and ask. This is different from many astrology apps that require a phone number and OTP before you can try anything. Your birth data is not shared with third-party astrologers or ad networks."
+                        }
                     }
                 ]
             },
@@ -276,6 +292,15 @@
         gtag('js', new Date());
         gtag('config', 'G-EPT0NFE087');
         gtag('config', 'AW-16691222744');
+    </script>
+    <!-- App store CTA tracking (download_click) -->
+    <script>
+    document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a[href*="play.google.com"], a[href*="apps.apple.com"]');
+        if(!a || typeof gtag !== 'function') return;
+        var platform = a.href.indexOf('apps.apple.com') > -1 ? 'ios' : 'android';
+        gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 });
+    }, true);
     </script>
 </head>
 
@@ -698,6 +723,20 @@
                     <h3>Does the AI astrologer give remedies?</h3>
                     <p>
                         Yes. With Premium, Om.AI provides personalized Vedic remedies based on your birth chart — gemstone recommendations, specific mantras for weak or afflicted planets, ritual suggestions, charitable acts, and optimal timing for performing remedies. Remedies are drawn from classical texts including Lal Kitab and BPHS, tailored to your specific planetary configuration.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I chat with an AI astrologer for free, 24/7?</h3>
+                    <p>
+                        Yes. The app is available around the clock, so you can ask whenever a question comes up. Your first AI astrology reading is free, and you can earn more questions through daily reading streaks — no fixed schedule and no waiting for a human astrologer to be online. For unlimited 24/7 questions there's an optional Premium plan, but you can start and get real chart-based answers without paying.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Do I need to sign up or share my phone number to try the AI astrology chat?</h3>
+                    <p>
+                        No. You can install Om.AI and get your first AI astrology reading without entering a phone number — just add your birth details so the AI can calculate your chart, and ask. That's different from many astrology apps that require a phone number and OTP before you can try anything. Your birth data is not shared with third-party astrologers or ad networks.
                     </p>
                 </div>
             </div>
