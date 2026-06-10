@@ -304,6 +304,255 @@
 
         <hr class="divider">
 
+        <!-- Interactive Vimshottari Dasha Calculator -->
+        <style>
+            #dasha-calc .dc-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.5rem;}
+            #dasha-calc .dc-label{display:block;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:0.35rem;}
+            #dasha-calc .dc-input{width:100%;background:rgba(0,0,0,0.28);border:1px solid rgba(255,255,255,0.18);border-radius:8px;color:#fff;padding:0.6rem 0.75rem;font-size:1rem;}
+            #dasha-calc .dc-input:focus{outline:none;border-color:#D97757;}
+            #dasha-calc .dc-check{display:flex;gap:0.5rem;align-items:flex-start;margin-top:1rem;font-size:0.85rem;color:rgba(255,255,255,0.6);}
+            #dasha-calc .dc-check input{margin-top:0.2rem;flex:0 0 auto;}
+            #dasha-calc .dc-err{color:#ff9b8a;margin-top:0.75rem;font-size:0.9rem;}
+            #dasha-calc .dc-disclaimer{font-size:0.8rem;color:rgba(255,255,255,0.45);margin-top:1.25rem;}
+            #dasha-calc .dc-now{background:linear-gradient(135deg,rgba(217,119,87,0.18),rgba(217,119,87,0.06));border:1px solid rgba(217,119,87,0.4);border-radius:14px;padding:1.25rem 1.5rem;margin:1.5rem 0;}
+            #dasha-calc .dc-now h3{font-family:'DM Serif Display',serif;margin-bottom:0.5rem;}
+            #dasha-calc .dc-pill{display:inline-block;background:rgba(217,119,87,0.2);color:#D97757;border-radius:999px;padding:0.15rem 0.7rem;font-size:0.8rem;margin:0 0.4rem 0.4rem 0;}
+            #dasha-calc .dc-hl{color:#D97757;font-weight:600;}
+            #dasha-calc .dc-sub{font-size:0.85rem;color:rgba(255,255,255,0.55);}
+            #dasha-calc tr.dc-active td{background:rgba(217,119,87,0.14);font-weight:600;}
+            #dasha-calc .dasha-table th,#dasha-calc .dasha-table td{white-space:nowrap;}
+        </style>
+        <section class="content-section" id="dasha-calc">
+            <div class="container" style="max-width:860px;">
+                <h2>Free Vimshottari Dasha Calculator</h2>
+                <p class="mb-4" style="color:rgba(255,255,255,0.75);">Enter your birth details to instantly calculate your Moon Nakshatra and your complete Vimshottari Mahadasha &amp; Antardasha timeline — including the planetary period running right now. No sign-up required.</p>
+
+                <div class="dc-card">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="dc-date" class="dc-label">Date of birth</label>
+                            <input type="date" id="dc-date" class="dc-input" min="1900-01-01" max="2099-12-31">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="dc-time" class="dc-label">Time of birth</label>
+                            <input type="time" id="dc-time" class="dc-input">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="dc-tz" class="dc-label">Birth timezone</label>
+                            <select id="dc-tz" class="dc-input">
+                                <option value="5.5" selected>India (IST, +5:30)</option>
+                                <option value="5.75">Nepal (+5:45)</option>
+                                <option value="6">Bangladesh (+6:00)</option>
+                                <option value="4">Gulf / UAE (+4:00)</option>
+                                <option value="0">UK / UTC (+0:00)</option>
+                                <option value="1">Central Europe (+1:00)</option>
+                                <option value="-5">US Eastern (-5:00)</option>
+                                <option value="-6">US Central (-6:00)</option>
+                                <option value="-7">US Mountain (-7:00)</option>
+                                <option value="-8">US Pacific (-8:00)</option>
+                                <option value="8">Singapore / China (+8:00)</option>
+                                <option value="9">Japan (+9:00)</option>
+                                <option value="10">Sydney (+10:00)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="dc-check">
+                        <input type="checkbox" id="dc-notime">
+                        <label for="dc-notime">I don't know my exact birth time (use 12:00 noon — your Nakshatra may shift if you were born near a boundary)</label>
+                    </div>
+                    <button type="button" class="btn btn--primary btn-lg px-4 mt-3" id="dc-go">Calculate My Dasha</button>
+                    <p id="dc-err" class="dc-err"></p>
+                </div>
+
+                <div id="dc-results" style="display:none;"></div>
+
+                <p class="dc-disclaimer">This calculator uses precise astronomical Moon-position calculations with the Lahiri (Chitrapaksha) Ayanamsa — the standard in Indian Jyotish. Positions are geocentric and intended for guidance. For a chart-accurate reading with Pratyantardasha levels, house analysis, and AI interpretation, open the Om.AI app.</p>
+            </div>
+        </section>
+        <script>
+        (function(){
+            var DEG = Math.PI/180;
+            var T_LON = [
+                [0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],
+                [0,1,0,0,-185116],[0,0,0,2,-114332],[2,0,-2,0,58793],[2,-1,-1,0,57066],
+                [2,0,1,0,53322],[2,-1,0,0,45758],[0,1,-1,0,-40923],[1,0,0,0,-34720],
+                [0,1,1,0,-30383],[2,0,0,-2,15327],[0,0,1,2,-12528],[0,0,1,-2,10980],
+                [4,0,-1,0,10675],[0,0,3,0,10034],[4,0,-2,0,8548],[2,1,-1,0,-7888],
+                [2,1,0,0,-6766],[1,0,-1,0,-5163],[1,1,0,0,4987],[2,-1,1,0,4036],
+                [2,0,2,0,3994],[4,0,0,0,3861],[2,0,-3,0,3665],[0,1,-2,0,-2689],
+                [2,0,-1,2,-2602],[2,-1,-2,0,2390],[1,0,1,0,-2348],[2,-2,0,0,2236],
+                [0,1,2,0,-2120],[0,2,0,0,-2069],[2,-2,-1,0,2048],[2,0,1,-2,-1773],
+                [2,0,0,2,-1595],[4,-1,-1,0,1215],[0,0,2,2,-1110],[3,0,-1,0,-892],
+                [2,1,1,0,-810],[4,-1,-2,0,759],[0,2,-1,0,-713],[2,2,-1,0,-700],
+                [2,1,-2,0,691],[2,-1,0,-2,596],[4,0,1,0,549],[0,0,4,0,537],
+                [4,-1,0,0,520],[1,0,-2,0,-487],[2,1,0,-2,-399],[0,0,2,-2,-381],
+                [1,1,1,0,351],[3,0,-2,0,-340],[4,0,-3,0,330],[2,-1,2,0,327],
+                [0,2,1,0,-323],[1,1,-1,0,299],[2,0,3,0,294]
+            ];
+            function norm360(x){ x = x % 360; return x < 0 ? x + 360 : x; }
+            function moonLon(jde){
+                var T = (jde - 2451545.0)/36525;
+                var Lp = norm360(218.3164477 + 481267.88123421*T - 0.0015786*T*T + T*T*T/538841 - T*T*T*T/65194000);
+                var D  = norm360(297.8501921 + 445267.1114034*T - 0.0018819*T*T + T*T*T/545868 - T*T*T*T/113065000);
+                var M  = norm360(357.5291092 + 35999.0502909*T - 0.0001536*T*T + T*T*T/24490000);
+                var Mp = norm360(134.9633964 + 477198.8675055*T + 0.0087414*T*T + T*T*T/69699 - T*T*T*T/14712000);
+                var F  = norm360(93.2720950 + 483202.0175233*T - 0.0036539*T*T - T*T*T/3526000 + T*T*T*T/863310000);
+                var A1 = norm360(119.75 + 131.849*T), A2 = norm360(53.09 + 479264.290*T);
+                var E = 1 - 0.002516*T - 0.0000074*T*T;
+                var s = 0;
+                for(var i=0;i<T_LON.length;i++){
+                    var t = T_LON[i];
+                    var arg = (t[0]*D + t[1]*M + t[2]*Mp + t[3]*F)*DEG, c = t[4];
+                    if(Math.abs(t[1])===1) c *= E; else if(Math.abs(t[1])===2) c *= E*E;
+                    s += c*Math.sin(arg);
+                }
+                s += 3958*Math.sin(A1*DEG) + 1962*Math.sin((Lp - F)*DEG) + 318*Math.sin(A2*DEG);
+                return norm360(Lp + s/1000000);
+            }
+            function jdFromUT(y,m,d,h){ if(m<=2){ y--; m+=12; } var A=Math.floor(y/100), B=2-A+Math.floor(A/4); return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5+h/24; }
+            // ΔT (TD − UT) in seconds — Espenak & Meeus polynomial expressions (1900–2150)
+            function deltaTsec(y){
+                var t, u;
+                if(y < 1920){ t = y-1900; return -2.79 + 1.494119*t - 0.0598939*t*t + 0.0061966*t*t*t - 0.000197*Math.pow(t,4); }
+                if(y < 1941){ t = y-1920; return 21.20 + 0.84493*t - 0.076100*t*t + 0.0020936*t*t*t; }
+                if(y < 1961){ t = y-1950; return 29.07 + 0.407*t - t*t/233 + t*t*t/2547; }
+                if(y < 1986){ t = y-1975; return 45.45 + 1.067*t - t*t/260 - t*t*t/718; }
+                if(y < 2005){ t = y-2000; return 63.86 + 0.3345*t - 0.060374*t*t + 0.0017275*t*t*t + 0.000651814*Math.pow(t,4) + 0.00002373599*Math.pow(t,5); }
+                if(y < 2050){ t = y-2000; return 62.92 + 0.32217*t + 0.005589*t*t; }
+                if(y < 2150){ return -20 + 32*Math.pow((y-1820)/100,2) - 0.5628*(2150 - y); }
+                u = (y-1820)/100; return -20 + 32*u*u;
+            }
+            // Lahiri (Chitrapaksha) ayanamsa: J2000 value + IAU general precession in longitude
+            function ayanamsa(jde){ var T = (jde - 2451545.0)/36525; return 23.85291792 + (5028.796195*T + 1.1054348*T*T)/3600; }
+
+            var NAK = ['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishta','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+            var RASHI = ['Aries (Mesha)','Taurus (Vrishabha)','Gemini (Mithuna)','Cancer (Karka)','Leo (Simha)','Virgo (Kanya)','Libra (Tula)','Scorpio (Vrishchika)','Sagittarius (Dhanu)','Capricorn (Makara)','Aquarius (Kumbha)','Pisces (Meena)'];
+            var SEQ = [['Ketu',7],['Venus',20],['Sun',6],['Moon',10],['Mars',7],['Rahu',18],['Jupiter',16],['Saturn',19],['Mercury',17]];
+            var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var YEAR = 365.25*86400000;
+            function fmt(t){ var d = new Date(t); return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear(); }
+            function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+
+            function lordIndexOf(name){ for(var i=0;i<SEQ.length;i++){ if(SEQ[i][0]===name) return i; } return -1; }
+
+            function run(){
+                var err = document.getElementById('dc-err');
+                var res = document.getElementById('dc-results');
+                err.style.display='none'; err.textContent='';
+                var dStr = document.getElementById('dc-date').value;
+                var noTime = document.getElementById('dc-notime').checked;
+                var tStr = document.getElementById('dc-time').value;
+                var offset = parseFloat(document.getElementById('dc-tz').value);
+                if(!dStr){ err.textContent='Please enter your date of birth.'; err.style.display='block'; res.style.display='none'; return; }
+                if(!tStr && !noTime){ err.textContent='Please enter your birth time, or tick "I don\'t know my exact birth time".'; err.style.display='block'; res.style.display='none'; return; }
+                if(noTime) tStr = '12:00';
+                var dp = dStr.split('-'), Y=+dp[0], Mo=+dp[1], Da=+dp[2];
+                var tp = tStr.split(':'), hh=+tp[0], mm=+tp[1];
+
+                var utMs = Date.UTC(Y, Mo-1, Da, hh, mm, 0) - offset*3600000;
+                var ut = new Date(utMs);
+                var jdUT = jdFromUT(ut.getUTCFullYear(), ut.getUTCMonth()+1, ut.getUTCDate(), ut.getUTCHours()+ut.getUTCMinutes()/60);
+                var jde = jdUT + deltaTsec(ut.getUTCFullYear())/86400; // UT → Terrestrial (Dynamical) Time
+                var sid = norm360(moonLon(jde) - ayanamsa(jde));
+                var nakSize = 360/27;
+                var nak = Math.floor(sid/nakSize);
+                var posIn = sid - nak*nakSize;
+                var frac = posIn/nakSize;
+                var pada = Math.min(4, Math.max(1, Math.floor(posIn/(nakSize/4)) + 1));
+                var lordIdx = nak % 9;
+                var elapsedYears = frac*SEQ[lordIdx][1];
+                var balanceYears = SEQ[lordIdx][1] - elapsedYears;
+                var birth = new Date(Y, Mo-1, Da, hh, mm).getTime();
+                var now = Date.now();
+
+                // Build one full Mahadasha cycle from the (partial) starting period
+                var periods = [], cursor = birth;
+                for(var i=0;i<9;i++){
+                    var li = (lordIdx+i)%9;
+                    var yrs = (i===0) ? balanceYears : SEQ[li][1];
+                    var end = cursor + yrs*YEAR;
+                    periods.push({ lord:SEQ[li][0], yrs:yrs, start:cursor, end:end });
+                    cursor = end;
+                }
+
+                // Running Mahadasha + its Antardasha breakdown
+                var runMaha = null;
+                for(var j=0;j<periods.length;j++){ if(now>=periods[j].start && now<periods[j].end){ runMaha = periods[j]; break; } }
+                var antars = [], runAntar = null;
+                if(runMaha){
+                    var mi = lordIndexOf(runMaha.lord);
+                    var fullYears = SEQ[mi][1];
+                    var fullStart = (periods.indexOf(runMaha)===0) ? (birth - elapsedYears*YEAR) : runMaha.start;
+                    var ac = fullStart;
+                    for(var k=0;k<9;k++){
+                        var ai = (mi+k)%9;
+                        var ay = fullYears*SEQ[ai][1]/120;
+                        var ae = ac + ay*YEAR;
+                        var a = { lord:SEQ[ai][0], start:ac, end:ae };
+                        antars.push(a);
+                        if(now>=ac && now<ae) runAntar = a;
+                        ac = ae;
+                    }
+                }
+
+                var html = '';
+                html += '<div class="dc-now">';
+                html += '<span class="dc-pill">Moon Nakshatra</span><span class="dc-pill">Pada '+pada+'</span>';
+                html += '<h3>Your Moon is in <span class="dc-hl">'+esc(NAK[nak])+'</span> Nakshatra</h3>';
+                html += '<p class="mb-1">Moon sign (Rashi): <strong>'+esc(RASHI[Math.floor(sid/30)])+'</strong> &middot; Sidereal Moon longitude: '+sid.toFixed(2)+'&deg; &middot; Nakshatra lord: <strong>'+esc(SEQ[lordIdx][0])+'</strong></p>';
+                if(runMaha && runAntar){
+                    html += '<p class="mb-0" style="font-size:1.1rem;margin-top:0.75rem;">Running now: <span class="dc-hl">'+esc(runMaha.lord)+' Mahadasha</span> &rarr; <span class="dc-hl">'+esc(runAntar.lord)+' Antardasha</span><br><span class="dc-sub">'+fmt(runAntar.start)+' &ndash; '+fmt(runAntar.end)+' (within '+esc(runMaha.lord)+' Mahadasha, '+fmt(runMaha.start)+' &ndash; '+fmt(runMaha.end)+')</span></p>';
+                }
+                html += '</div>';
+                if(noTime){ html += '<p class="dc-sub" style="margin-bottom:1rem;"><i class="fas fa-info-circle me-1" aria-hidden="true"></i>Calculated for 12:00 noon. If you were born near a Nakshatra boundary, your exact time could change the result.</p>'; }
+
+                // Mahadasha timeline
+                html += '<h3 style="margin-top:1.5rem;">Your Mahadasha Timeline</h3>';
+                html += '<div class="table-responsive"><table class="dasha-table"><thead><tr><th>Mahadasha</th><th>From</th><th>To</th><th>Age</th></tr></thead><tbody>';
+                for(var p=0;p<periods.length;p++){
+                    var per = periods[p];
+                    var age = Math.max(0, Math.round((per.start - birth)/YEAR));
+                    var active = (per===runMaha) ? ' class="dc-active"' : '';
+                    html += '<tr'+active+'><td>'+esc(per.lord)+'</td><td>'+fmt(per.start)+'</td><td>'+fmt(per.end)+'</td><td>'+age+'</td></tr>';
+                }
+                html += '</tbody></table></div>';
+
+                // Antardasha breakdown of current Mahadasha
+                if(runMaha && antars.length){
+                    html += '<h3 style="margin-top:1.5rem;">Antardasha within your current '+esc(runMaha.lord)+' Mahadasha</h3>';
+                    html += '<div class="table-responsive"><table class="dasha-table"><thead><tr><th>Antardasha</th><th>From</th><th>To</th></tr></thead><tbody>';
+                    for(var q=0;q<antars.length;q++){
+                        var an = antars[q];
+                        var act = (an===runAntar) ? ' class="dc-active"' : '';
+                        html += '<tr'+act+'><td>'+esc(runMaha.lord)+' &ndash; '+esc(an.lord)+'</td><td>'+fmt(an.start)+'</td><td>'+fmt(an.end)+'</td></tr>';
+                    }
+                    html += '</tbody></table></div>';
+                }
+
+                // CTA
+                html += '<div class="text-center" style="margin-top:1.75rem;">';
+                html += '<p style="font-family:\'DM Serif Display\',serif;font-size:1.25rem;color:rgba(255,255,255,0.92);margin-bottom:1rem;">Want to know what your '+esc(runMaha?runMaha.lord:'current')+' period means for your career, marriage and money?</p>';
+                html += '<div class="d-flex justify-content-center gap-3 flex-wrap">';
+                html += '<a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Ddasha_calc" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Read My Dasha — Android</a>';
+                html += '<a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_dasha_calc&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>Read My Dasha — iOS</a>';
+                html += '</div></div>';
+
+                res.innerHTML = html;
+                res.style.display = 'block';
+                res.scrollIntoView({ behavior:'smooth', block:'start' });
+            }
+
+            document.addEventListener('DOMContentLoaded', function(){
+                var btn = document.getElementById('dc-go');
+                if(btn) btn.addEventListener('click', run);
+                var nt = document.getElementById('dc-notime');
+                if(nt) nt.addEventListener('change', function(){ document.getElementById('dc-time').disabled = nt.checked; });
+            });
+        })();
+        </script>
+
+        <hr class="divider">
+
         <!-- What is Vimshottari Dasha -->
         <section class="content-section">
             <div class="container" style="max-width:860px;">
