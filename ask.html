@@ -314,6 +314,25 @@
     .tr-lord { font-size:.72rem; color:var(--accent); display:inline-flex; align-items:center; gap:.2rem; }
     .tr-dur { font-size:.72rem; color:var(--secondary); }
     .tr-empty { color:var(--secondary); font-size:.85rem; padding:1rem; text-align:center; }
+
+    /* ── Astro Hub (Today dashboard) ─────────────────────────────────────── */
+    .hub-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.15rem; margin-bottom:1rem; }
+    .hub-h { font-family:'DM Serif Display',serif; font-size:1.15rem; margin:0 0 .1rem; }
+    .hub-sub { font-size:.8rem; color:var(--secondary); margin-bottom:.7rem; }
+    .rings { display:flex; gap:.4rem; }
+    .ring { flex:1; text-align:center; }
+    .ring-circle { width:52px; height:52px; border-radius:50%; display:grid; place-items:center; margin:0 auto .25rem; font-weight:700; font-size:.95rem;
+      background:radial-gradient(closest-side, var(--card) 72%, transparent 73%), conic-gradient(var(--rc,var(--accent)) calc(var(--p,0)*1%), var(--border) 0); }
+    .ring-label { font-size:.7rem; color:var(--secondary); text-transform:capitalize; }
+    .lvl-good { --rc:var(--success); } .lvl-moderate { --rc:var(--accent); } .lvl-challenging { --rc:var(--error); } .lvl-poor { --rc:var(--error); } .lvl-strong { --rc:var(--success); }
+    .time-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:.9rem; }
+    .time-row:last-child { border-bottom:none; }
+    .time-row .t-area { text-transform:capitalize; font-weight:600; }
+    .time-row .t-win { color:var(--secondary); font-variant-numeric:tabular-nums; text-align:right; }
+    .time-row.active .t-win { color:var(--accent); font-weight:600; }
+    .rahu { margin-top:.6rem; font-size:.82rem; color:var(--error); }
+    .panchang { display:flex; flex-wrap:wrap; gap:.3rem .9rem; font-size:.82rem; color:var(--secondary); margin-bottom:.6rem; }
+    .fc-score { font-family:'DM Serif Display',serif; font-size:2rem; color:var(--accent); line-height:1; }
   </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- Markdown rendering for AI answers (parse + sanitize) -->
@@ -341,6 +360,7 @@
     </button>
     <div class="drawer-history" id="drawerHistory"></div>
     <div class="drawer-bottom">
+      <button class="drawer-item" id="diHub"><span class="ic">✨</span>Today</button>
       <button class="drawer-item" id="diChart"><span class="ic">🔯</span>Birth Chart</button>
       <button class="drawer-item" id="diBirth"><span class="ic">📅</span>Your Birth Details</button>
       <button class="drawer-item" id="diEdit"><span class="ic">✏️</span>Edit Profile</button>
@@ -613,6 +633,17 @@
     </div></div>
   </div>
 
+  <!-- ── ASTRO HUB (Today dashboard) ────────────────────────────────────── -->
+  <div id="hubView" class="view">
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;">
+        <button class="iconbtn" id="hubBack" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2 style="font-size:1.6rem;margin:0;">Today</h2>
+      </div>
+      <div id="hubBody"></div>
+    </div></div>
+  </div>
+
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
@@ -647,7 +678,7 @@
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
     const views = { auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
-                    chat: $('chatView'), chartScreen: $('chartScreenView'), paywall: $('paywallView'),
+                    chat: $('chatView'), chartScreen: $('chartScreenView'), hub: $('hubView'), paywall: $('paywallView'),
                     settings: $('settingsView'), profile: $('profileView') };
     let prevView = 'onboarding';
     const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
@@ -1391,12 +1422,136 @@
     function openChartScreen() { if (!state.chart) { show('onboarding'); return; } chartDiv = 'D1'; setChartDivUI('D1'); renderChartScreen(); show('chartScreen'); }
     $('chartBack').addEventListener('click', () => show('chat'));
 
+    // ── Astro Hub (Today dashboard — daily horoscope, timing, transits, etc.) ──
+    const lvlClass = (l) => 'lvl-' + String(l || 'moderate').toLowerCase();
+    function hubHoroscope(r) {
+      const ds = r.day_score || {}, ls = r.life_scores || {}, moon = r.moon_energy || {};
+      const ring = (key) => { const a = ls[key] || {}; const p = Math.max(0, Math.min(100, Number(a.score) || 0)); return `<div class="ring"><div class="ring-circle ${lvlClass(a.level)}" style="--p:${p}" title="${esc(a.insight || '')}">${p}</div><div class="ring-label">${key}</div></div>`; };
+      return `<div class="hub-card">
+        <div class="hub-h">Today · ${esc(r.sign || '')}</div>
+        <div class="hub-sub">${esc(ds.label || '')}${ds.score != null ? ' · ' + ds.score + '/100' : ''}</div>
+        <div class="rings">${['money','love','career','wellness'].map(ring).join('')}</div>
+        ${r.summary ? `<p class="hint" style="margin-top:.75rem;">${esc(r.summary)}</p>` : ''}
+        ${moon.nakshatra ? `<div class="hub-sub" style="margin-top:.55rem;"><b>Moon energy:</b> ${esc(moon.nakshatra)}${moon.theme ? ' — ' + esc(moon.theme) : ''}${moon.tip ? ' · ' + esc(moon.tip) : ''}</div>` : ''}
+      </div>`;
+    }
+    function hubTiming(t) {
+      const areas = t.areas || {};
+      const rows = ['career','money','love','wellness'].filter((a) => areas[a]).map((a) => { const d = areas[a]; return `<div class="time-row${d.rulerIsActive ? ' active' : ''}"><span class="t-area">${a}</span><span class="t-win">${esc(d.window || '')}</span></div>`; }).join('');
+      let rahu = ''; const rk = t.rahuKalam || {};
+      if (rk.start && rk.end) { const f = (s) => { try { return new Date(s).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); } catch (_) { return ''; } }; rahu = `<div class="rahu">⚠ Rahu Kalam ${f(rk.start)}–${f(rk.end)} — avoid new beginnings.</div>`; }
+      return `<div class="hub-card"><div class="hub-h">Your timing today</div><div class="hub-sub">Best windows by life area, from your lagna.</div>${rows}${rahu}</div>`;
+    }
+    function hubPlanets(meta) {
+      const pp = (meta && meta.planetaryPositions) || {}, pan = (meta && meta.panchang) || {};
+      const panStr = [pan.tithi && ('Tithi ' + pan.tithi), pan.paksha, pan.nakshatra && ('Nakshatra ' + pan.nakshatra)].filter(Boolean).map(esc).join(' · ');
+      const rows = PLANET_ORDER.filter((p) => pp[p]).map((p) => { const d = pp[p]; const deg = d.longitude != null ? (parseFloat(d.longitude) % 30).toFixed(1) + '°' : ''; return `<tr><td><b>${p}</b></td><td>${esc(d.zodiac || '')} ${deg}</td><td>${esc(d.nakshatra || '—')}</td></tr>`; }).join('');
+      if (!rows) return '';
+      return `<div class="hub-card"><div class="hub-h">Sky today</div>${panStr ? `<div class="panchang">${panStr}</div>` : ''}<table class="ptable"><thead><tr><th>Planet</th><th>Sign</th><th>Nakshatra</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+    function hubDasha() {
+      const add = state.chart?.additional || {};
+      const md = add.currentMahadasha || {}, ad = add.currentAntardasha || {};
+      const mdl = add.vimshottariDashaTimeline || [], adl = add.antardashaTimeline || [];
+      const now = Date.now();
+      const nextAd = adl.find((e) => new Date(e.start).getTime() > now);
+      const nextMd = mdl.find((e) => new Date(e.start).getTime() > now);
+      let html = `<div class="hub-card"><div class="hub-h">Your periods</div>
+        <div class="time-row"><span class="t-area">Mahadasha</span><span class="t-win">${esc(md.lord || '—')}${md.end ? ' · to ' + fmtDashaD(md.end) : ''}</span></div>
+        <div class="time-row"><span class="t-area">Antardasha</span><span class="t-win">${esc(ad.lord || '—')}${ad.end ? ' · to ' + fmtDashaD(ad.end) : ''}</span></div>`;
+      if (nextAd) html += `<div class="time-row"><span class="t-area">Next sub-period</span><span class="t-win">${esc(nextAd.lord)} · ${fmtDashaD(nextAd.start)}</span></div>`;
+      if (nextMd) html += `<div class="time-row"><span class="t-area">Next major period</span><span class="t-win">${esc(nextMd.lord)} · ${fmtDashaD(nextMd.start)}</span></div>`;
+      return html + '</div>';
+    }
+    function hubForecast(r) {
+      return `<div class="hub-card"><div class="hub-h">Monthly forecast${r.month ? ' · ' + esc(r.month) : ''}</div>
+        ${r.overall_score != null ? `<div class="fc-score">${Math.round(r.overall_score)}<span style="font-size:1rem;color:var(--secondary);">/100</span></div>` : ''}
+        ${r.summary ? `<p class="hint" style="margin-top:.5rem;">${esc(r.summary)}</p>` : ''}</div>`;
+    }
+    // Upcoming transits — global transitEvents feed, house-mapped to the user
+    // (Lagna + Moon) with Ashtakavarga bindus + dasha-lord confluence (from Pro).
+    let _transitFeed = null;
+    async function fetchTransitFeed() {
+      if (_transitFeed) return _transitFeed;
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const today = new Date(todayStr + 'T00:00:00Z');
+      const horizon = new Date(today.getTime() + 180 * 86400000);
+      const months = []; const cursor = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
+      const end = new Date(Date.UTC(horizon.getUTCFullYear(), horizon.getUTCMonth(), 1));
+      while (cursor <= end) { months.push(`${cursor.getUTCFullYear()}-${String(cursor.getUTCMonth() + 1).padStart(2, '0')}`); cursor.setUTCMonth(cursor.getUTCMonth() + 1); }
+      const horizonStr = horizon.toISOString().slice(0, 10);
+      try {
+        const snaps = await Promise.all(months.map((mk) => getDoc(doc(db, 'transitEvents', mk))));
+        _transitFeed = snaps.flatMap((s) => s.exists() ? (s.data().events || []) : [])
+          .filter((e) => e && e.planet && e.date >= todayStr && e.date <= horizonStr)
+          .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+      } catch (_) { _transitFeed = []; }
+      return _transitFeed;
+    }
+    const TR_SIG_COLOR = { CRITICAL: 'var(--error)', HIGH: 'var(--accent)', MEDIUM: 'var(--secondary)' };
+    function houseFromSign(sign, refSign) { const a = KUN_ZODIAC.indexOf(refSign), b = KUN_ZODIAC.indexOf(sign); if (a < 0 || b < 0) return null; return ((b - a + 12) % 12) + 1; }
+    function fmtTrDate(d) { try { return new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); } catch (_) { return d; } }
+    async function renderHubTransits() {
+      const host = $('hubTransits'); if (!host) return;
+      const feed = await fetchTransitFeed();
+      if (!feed.length) { host.innerHTML = '<div class="tr-empty">No major transits in the next 6 months.</div>'; return; }
+      const c = state.chart || {}; const lagna = c.lagna; const moonSign = c.birthChart?.Moon?.zodiac; const add = c.additional || {};
+      const mdLord = add.currentMahadasha?.lord, adLord = add.currentAntardasha?.lord;
+      const sav = c.ashtakavarga?.sarvashtakavarga || {}; const savBySign = {};
+      Object.values(sav).forEach((v) => { if (v && v.sign != null && v.points != null) savBySign[v.sign] = v.points; });
+      const rows = feed.slice(0, 12).map((e) => {
+        const sign = e.toSign || null;
+        const hL = sign ? houseFromSign(sign, lagna) : null;
+        const hM = (sign && moonSign) ? houseFromSign(sign, moonSign) : null;
+        const bindu = sign && savBySign[sign] != null ? savBySign[sign] : null;
+        const binduTier = bindu == null ? '' : (bindu >= 30 ? ' tr-bindu-hi' : bindu <= 24 ? ' tr-bindu-lo' : '');
+        let verb = 'enters';
+        if (e.type === 'retrograde_station') verb = sign ? 'goes retrograde in' : 'goes retrograde';
+        else if (e.type === 'direct_station') verb = sign ? 'turns direct in' : 'turns direct';
+        const confl = !!mdLord && (e.planet === mdLord || e.planet === adLord);
+        const sigCol = TR_SIG_COLOR[e.significance] || 'var(--secondary)';
+        const dur = e.durationDays ? `<span class="tr-dur">~${(e.durationDays / 30).toFixed(e.durationDays > 300 ? 1 : 0)} mo</span>` : '';
+        const chips = (hL ? `<span class="tr-h">${hL}H · Lagna</span>` : '') + (hM ? `<span class="tr-h tr-h-moon">${hM}H · Moon</span>` : '') + (bindu != null ? `<span class="tr-bindu${binduTier}">${bindu} bindus</span>` : '') + (confl ? `<span class="tr-lord">⚡ Dasha lord</span>` : '');
+        return `<div class="tr-row${confl ? ' tr-confl' : ''}"><div class="tr-date">${fmtTrDate(e.date)}</div><div class="tr-main"><div class="tr-evt"><span class="tr-dot" style="background:${sigCol}"></span><b>${esc(e.planet)}</b> ${verb} ${esc(sign || '')} ${dur}</div>${chips ? `<div class="tr-meta">${chips}</div>` : ''}</div></div>`;
+      }).join('');
+      host.innerHTML = rows;
+    }
+    async function renderHub() {
+      const host = $('hubBody');
+      host.innerHTML = '<div class="hint" style="text-align:center;padding:2rem;">Loading today…</div>';
+      const today = new Date().toISOString().slice(0, 10), ym = today.slice(0, 7);
+      const moonSign = (state.chart?.birthChart?.Moon?.zodiac || '').toLowerCase();
+      const lagna = (state.chart?.lagna || '').toLowerCase();
+      let horoSnap = null, timSnap = null, dhSnap = null, mfSnap = null;
+      try {
+        [horoSnap, timSnap, dhSnap, mfSnap] = await Promise.all([
+          moonSign ? getDoc(doc(db, `dailyHoroscopeV2/${today}/signs/${moonSign}`)) : Promise.resolve(null),
+          lagna ? getDoc(doc(db, `dailyHoroscopeV2/${today}/timing/${lagna}`)) : Promise.resolve(null),
+          getDoc(doc(db, `dailyHoroscopeV2/${today}`)),
+          getDoc(doc(db, `users/${state.uid}/monthly_forecasts/${ym}`)),
+        ]);
+      } catch (_) {}
+      const parse = (s) => { try { return typeof s === 'string' ? JSON.parse(s) : s; } catch (_) { return null; } };
+      let html = '';
+      if (horoSnap && horoSnap.exists()) { const r = parse(horoSnap.data().report); if (r) html += hubHoroscope(r); }
+      if (timSnap && timSnap.exists()) html += hubTiming(timSnap.data());
+      html += `<div class="hub-card"><div class="hub-h">Upcoming transits</div><div class="hub-sub">Next 6 months, mapped to your houses.</div><div id="hubTransits"><div class="tr-empty">Loading…</div></div></div>`;
+      if (dhSnap && dhSnap.exists()) html += hubPlanets(dhSnap.data().metadata);
+      html += hubDasha();
+      if (mfSnap && mfSnap.exists()) { const r = parse(mfSnap.data().report); if (r) html += hubForecast(r); }
+      host.innerHTML = html;
+      renderHubTransits();
+    }
+    function openHub() { if (!state.chart) { show('onboarding'); return; } show('hub'); renderHub(); }
+    $('hubBack').addEventListener('click', () => show('chat'));
+
     // ── Drawer (mirrors CustomAstroDrawerContent) ──────────────────────────
     const openDrawer = () => { $('drawer').classList.add('open'); $('drawerOverlay').classList.add('open'); fetchSessions(); };
     const closeDrawer = () => { $('drawer').classList.remove('open'); $('drawerOverlay').classList.remove('open'); };
     $('menuBtn').addEventListener('click', openDrawer);
     $('drawerOverlay').addEventListener('click', closeDrawer);
     $('drawerNewChat').addEventListener('click', () => { closeDrawer(); startNewChat(); });
+    $('diHub').addEventListener('click', () => { closeDrawer(); openHub(); });
     $('diChart').addEventListener('click', () => { closeDrawer(); openChartScreen(); });
     $('diBirth').addEventListener('click', () => { closeDrawer(); openBirthModal(); });
     $('diEdit').addEventListener('click', () => { closeDrawer(); editBirth(); });
