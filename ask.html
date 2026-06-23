@@ -259,6 +259,24 @@
     .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:.9rem; }
     .rep-list li { margin:.18rem 0; }
     .rep-h { font-size:.74rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
+
+    /* ── Chart view (D1/D9 South-Indian grid + planet table + dasha) ──────── */
+    .chart-grid { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); aspect-ratio:1/1; max-width:380px; margin:.25rem auto 0; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; background:var(--card); }
+    .chart-cell { border:.5px solid var(--border); padding:.28rem .3rem; position:relative; display:flex; flex-direction:column; min-height:0; overflow:hidden; }
+    .chart-cell .sign { color:var(--secondary); font-size:.6rem; text-transform:uppercase; letter-spacing:.03em; }
+    .chart-cell .planets { font-size:.82rem; font-weight:600; display:flex; flex-wrap:wrap; gap:.05rem .3rem; margin-top:.12rem; line-height:1.3; }
+    .chart-cell.asc { background:color-mix(in srgb,var(--accent) 13%, transparent); }
+    .chart-cell .asc-tag { position:absolute; top:2px; right:3px; font-size:.54rem; color:var(--accent); font-weight:700; }
+    .chart-center { grid-row:2/4; grid-column:2/4; display:flex; align-items:center; justify-content:center; color:var(--secondary); font-size:.72rem; text-align:center; border:.5px solid var(--border); }
+    .ptable { width:100%; border-collapse:collapse; font-size:.86rem; margin-top:1.1rem; }
+    .ptable th, .ptable td { text-align:left; padding:.42rem .3rem; border-bottom:1px solid var(--border); }
+    .ptable th { color:var(--secondary); font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.03em; }
+    .ptable td:first-child { font-weight:600; }
+    .dasha-row { display:flex; gap:.4rem; overflow-x:auto; padding:.35rem 0 .2rem; -webkit-overflow-scrolling:touch; }
+    .dasha-chip { flex:none; border:1px solid var(--border-strong); border-radius:10px; padding:.4rem .65rem; white-space:nowrap; }
+    .dasha-chip.cur { border-color:var(--accent); background:color-mix(in srgb,var(--accent) 11%, transparent); }
+    .dasha-chip b { display:block; font-size:.88rem; }
+    .dasha-chip span { color:var(--secondary); font-size:.72rem; }
   </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- Markdown rendering for AI answers (parse + sanitize) -->
@@ -286,6 +304,7 @@
     </button>
     <div class="drawer-history" id="drawerHistory"></div>
     <div class="drawer-bottom">
+      <button class="drawer-item" id="diChart"><span class="ic">🔯</span>Birth Chart</button>
       <button class="drawer-item" id="diBirth"><span class="ic">📅</span>Your Birth Details</button>
       <button class="drawer-item" id="diEdit"><span class="ic">✏️</span>Edit Profile</button>
       <button class="drawer-item" id="diPremium"><span class="ic">👑</span>Get Premium</button>
@@ -541,6 +560,26 @@
     </div></div>
   </div>
 
+  <!-- ── BIRTH CHART (D1/D9 grid + planet table + dasha timelines) ──────── -->
+  <div id="chartScreenView" class="view">
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;">
+        <button class="iconbtn" id="chartBack" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2 style="font-size:1.6rem;margin:0;">Birth Chart</h2>
+      </div>
+      <div class="seg" id="chartDivSeg" style="max-width:280px;margin:0 0 1rem;">
+        <button type="button" data-div="D1" class="active">Rasi (D1)</button>
+        <button type="button" data-div="D9">Navamsa (D9)</button>
+      </div>
+      <div id="chartDiagram"></div>
+      <div id="chartTable"></div>
+      <div class="section-label">Mahadasha</div>
+      <div class="dasha-row" id="mahaRow"></div>
+      <div class="section-label">Antardasha</div>
+      <div class="dasha-row" id="antarRow"></div>
+    </div></div>
+  </div>
+
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
@@ -575,7 +614,8 @@
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
     const views = { auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
-                    chat: $('chatView'), paywall: $('paywallView'), settings: $('settingsView'), profile: $('profileView') };
+                    chat: $('chatView'), chartScreen: $('chartScreenView'), paywall: $('paywallView'),
+                    settings: $('settingsView'), profile: $('profileView') };
     let prevView = 'onboarding';
     const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
     function show(name) {
@@ -1164,12 +1204,78 @@
       }
     }
 
+    // ── Birth chart view (D1/D9 South-Indian grid + planet table + dasha) ───
+    const PABBR = { Sun:'Su', Moon:'Mo', Mars:'Ma', Mercury:'Me', Jupiter:'Ju', Venus:'Ve', Saturn:'Sa', Rahu:'Ra', Ketu:'Ke' };
+    const PORDER = ['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+    // South-Indian fixed sign layout (1-indexed grid row/col).
+    const SI_LAYOUT = [
+      { sign:'Pisces', r:1, c:1 }, { sign:'Aries', r:1, c:2 }, { sign:'Taurus', r:1, c:3 }, { sign:'Gemini', r:1, c:4 },
+      { sign:'Aquarius', r:2, c:1 }, { sign:'Cancer', r:2, c:4 },
+      { sign:'Capricorn', r:3, c:1 }, { sign:'Leo', r:3, c:4 },
+      { sign:'Sagittarius', r:4, c:1 }, { sign:'Scorpio', r:4, c:2 }, { sign:'Libra', r:4, c:3 }, { sign:'Virgo', r:4, c:4 },
+    ];
+    let chartDiv = 'D1';
+
+    function buildChartDiagram(bChart, lagnaSign) {
+      const bySign = {};
+      Object.entries(bChart || {}).forEach(([planet, d]) => { const z = d && d.zodiac; if (!z) return; (bySign[z] = bySign[z] || []).push(PABBR[planet] || planet.slice(0, 2)); });
+      const grid = document.createElement('div'); grid.className = 'chart-grid';
+      SI_LAYOUT.forEach(({ sign, r, c }) => {
+        const cell = document.createElement('div'); cell.className = 'chart-cell' + (sign === lagnaSign ? ' asc' : '');
+        cell.style.gridRow = r; cell.style.gridColumn = c;
+        cell.innerHTML = `${sign === lagnaSign ? '<span class="asc-tag">Asc</span>' : ''}<span class="sign">${sign.slice(0, 3)}</span><span class="planets">${(bySign[sign] || []).join(' ')}</span>`;
+        grid.appendChild(cell);
+      });
+      const center = document.createElement('div'); center.className = 'chart-center'; center.textContent = lagnaSign ? `${lagnaSign} rising` : '';
+      grid.appendChild(center);
+      return grid;
+    }
+    function buildPlanetTable(bChart) {
+      const rows = PORDER.filter((p) => bChart && bChart[p]).map((p) => {
+        const d = bChart[p]; const deg = (d.longitude != null && !isNaN(parseFloat(d.longitude))) ? (parseFloat(d.longitude) % 30).toFixed(1) + '°' : '';
+        const nak = d.nakshatra ? esc(d.nakshatra) + (d.pada ? ' (' + d.pada + ')' : '') : '—';
+        return `<tr><td>${p}</td><td>${esc(d.zodiac || '')}${deg ? ' ' + deg : ''}</td><td>${d.house != null ? d.house : ''}</td><td>${nak}</td></tr>`;
+      }).join('');
+      return `<table class="ptable"><thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Nakshatra</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+    function dashaChips(timeline, curLord, hostId) {
+      const host = $(hostId); host.innerHTML = '';
+      const y = (s) => String(s || '').slice(0, 4);
+      if (!timeline || !timeline.length) { host.innerHTML = '<span class="hint">—</span>'; return; }
+      timeline.forEach((e) => { const el = document.createElement('div'); el.className = 'dasha-chip' + (e.lord === curLord ? ' cur' : ''); el.innerHTML = `<b>${esc(e.lord)}</b><span>${y(e.start)}–${y(e.end)}</span>`; host.appendChild(el); });
+      const cur = host.querySelector('.dasha-chip.cur'); if (cur) cur.scrollIntoView({ inline: 'center', block: 'nearest' });
+    }
+    function chartFor(div) {
+      if (div === 'D9') { const d9 = state.chart?.divisionalCharts?.D9; return { bChart: d9?.birthChart, lagna: d9?.lagna }; }
+      return { bChart: state.chart?.birthChart, lagna: state.chart?.lagna };
+    }
+    function renderChartScreen() {
+      const { bChart, lagna } = chartFor(chartDiv);
+      const diag = $('chartDiagram'); diag.innerHTML = '';
+      const has = bChart && Object.keys(bChart).length;
+      if (has) diag.appendChild(buildChartDiagram(bChart, lagna));
+      else diag.innerHTML = `<div class="hint" style="text-align:center;padding:1.5rem;">${chartDiv === 'D9' ? 'Navamsa' : 'Rasi'} chart not available — ask a question to regenerate it.</div>`;
+      $('chartTable').innerHTML = has ? buildPlanetTable(bChart) : '';
+      const add = state.chart?.additional || {};
+      const maha = add.currentMahadasha || {};
+      // Antardasha timeline can span every mahadasha (~70 entries) — show just the
+      // current mahadasha's sub-periods (date strings sort lexicographically).
+      const antar = (add.antardashaTimeline || []).filter((e) => !maha.start || !maha.end || (e.start >= maha.start && e.start < maha.end));
+      dashaChips(add.vimshottariDashaTimeline, maha.lord, 'mahaRow');
+      dashaChips(antar.length ? antar : add.antardashaTimeline, add.currentAntardasha?.lord, 'antarRow');
+    }
+    function setChartDivUI(div) { document.querySelectorAll('#chartDivSeg button').forEach((b) => b.classList.toggle('active', b.dataset.div === div)); }
+    document.querySelectorAll('#chartDivSeg button').forEach((b) => b.addEventListener('click', () => { chartDiv = b.dataset.div; setChartDivUI(chartDiv); renderChartScreen(); }));
+    function openChartScreen() { if (!state.chart) { show('onboarding'); return; } chartDiv = 'D1'; setChartDivUI('D1'); renderChartScreen(); show('chartScreen'); }
+    $('chartBack').addEventListener('click', () => show('chat'));
+
     // ── Drawer (mirrors CustomAstroDrawerContent) ──────────────────────────
     const openDrawer = () => { $('drawer').classList.add('open'); $('drawerOverlay').classList.add('open'); fetchSessions(); };
     const closeDrawer = () => { $('drawer').classList.remove('open'); $('drawerOverlay').classList.remove('open'); };
     $('menuBtn').addEventListener('click', openDrawer);
     $('drawerOverlay').addEventListener('click', closeDrawer);
     $('drawerNewChat').addEventListener('click', () => { closeDrawer(); startNewChat(); });
+    $('diChart').addEventListener('click', () => { closeDrawer(); openChartScreen(); });
     $('diBirth').addEventListener('click', () => { closeDrawer(); openBirthModal(); });
     $('diEdit').addEventListener('click', () => { closeDrawer(); editBirth(); });
     $('diPremium').addEventListener('click', () => { closeDrawer(); show('paywall'); });
