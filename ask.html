@@ -337,6 +337,9 @@
     .varg-note b { color:var(--accent); }
   </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- tz-lookup: lat/lng → IANA timezone (offline, ~100KB), so the birth time zone is
+       derived from the place instead of a manual UTC-offset dropdown (wrong for non-India). -->
+  <script src="https://unpkg.com/tz-lookup@6.1.25/tz.js"></script>
   <!-- Markdown rendering for AI answers (parse + sanitize) -->
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
@@ -454,18 +457,7 @@
           <input id="f-place" class="field" type="text" placeholder="City, Country (e.g. Mumbai, India)" autocomplete="off">
           <div class="hint" style="margin-top:.3rem;">We'll look up the coordinates for your chart.</div>
         </div>
-        <div style="margin-bottom:1.1rem;">
-          <label for="f-tz">Time zone at birth</label>
-          <select id="f-tz" class="field">
-            <option value="5.5" data-tz="Asia/Kolkata" selected>India (UTC+5:30)</option>
-            <option value="0" data-tz="Europe/London">UK (UTC+0)</option>
-            <option value="-5" data-tz="America/New_York">US Eastern (UTC−5)</option>
-            <option value="-8" data-tz="America/Los_Angeles">US Pacific (UTC−8)</option>
-            <option value="4" data-tz="Asia/Dubai">Gulf / UAE (UTC+4)</option>
-            <option value="5.75" data-tz="Asia/Kathmandu">Nepal (UTC+5:45)</option>
-            <option value="6" data-tz="Asia/Dhaka">Bangladesh (UTC+6)</option>
-          </select>
-        </div>
+        <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;">⏱ Time zone <b id="f-tz-detected"></b> — detected from your birth place (handles DST automatically).</div>
         <button id="startBtn" class="btn-primary">Generate my chart</button>
         <div id="onboardStatus" class="status-line"></div>
       </div>
@@ -499,16 +491,7 @@
           <input id="p-place" class="field" type="text" placeholder="City, Country (e.g. Mumbai, India)" autocomplete="off">
         </div>
         <div style="margin-bottom:1rem;">
-          <label for="p-tz">Time zone at birth</label>
-          <select id="p-tz" class="field">
-            <option value="5.5" data-tz="Asia/Kolkata" selected>India (UTC+5:30)</option>
-            <option value="0" data-tz="Europe/London">UK (UTC+0)</option>
-            <option value="-5" data-tz="America/New_York">US Eastern (UTC−5)</option>
-            <option value="-8" data-tz="America/Los_Angeles">US Pacific (UTC−8)</option>
-            <option value="4" data-tz="Asia/Dubai">Gulf / UAE (UTC+4)</option>
-            <option value="5.75" data-tz="Asia/Kathmandu">Nepal (UTC+5:45)</option>
-            <option value="6" data-tz="Asia/Dhaka">Bangladesh (UTC+6)</option>
-          </select>
+          <div id="p-tz-row" class="hint" style="display:none;">⏱ Time zone <b id="p-tz-detected"></b> — detected from the birth place (handles DST automatically).</div>
         </div>
         <label>Partner's gender</label>
         <div class="gender-seg" id="partnerGenderSeg" style="margin-bottom:.5rem;">
@@ -915,6 +898,29 @@
       return new Date(localMs - offsetHours * 3600 * 1000).toISOString();
     }
 
+    // IANA tz (from coordinates) + birth date → DST-correct UTC offset in hours.
+    function offsetHoursForLocal(tz, dateStr, timeStr) {
+      try {
+        const [y, mo, d] = dateStr.split('-').map(Number);
+        const [h, mi] = (timeStr || '12:00').split(':').map(Number);
+        const probe = new Date(Date.UTC(y, mo - 1, d, h, mi));
+        const off = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'longOffset' })
+          .formatToParts(probe).find(p => p.type === 'timeZoneName')?.value || 'GMT+0';
+        const m = off.match(/GMT([+-])(\d{1,2})(?::(\d{2}))?/);
+        return m ? (m[1] === '-' ? -1 : 1) * (Number(m[2]) + Number(m[3] || 0) / 60) : null;
+      } catch (_) { return null; }
+    }
+    // Derive { tz, offset } from coordinates via tz-lookup; null if the lib didn't load.
+    function deriveTz(coords, dateStr, timeStr) {
+      try {
+        if (typeof tzlookup !== 'function') return null;
+        const tz = tzlookup(coords.latitude, coords.longitude);
+        const offset = offsetHoursForLocal(tz, dateStr, timeStr);
+        return (tz && offset != null) ? { tz, offset } : null;
+      } catch (_) { return null; }
+    }
+    const fmtOffset = (o) => `UTC${o >= 0 ? '+' : '−'}${Math.floor(Math.abs(o))}:${String(Math.round((Math.abs(o) % 1) * 60)).padStart(2, '0')}`;
+
     // ── WebSocket ──────────────────────────────────────────────────
     function connectWS() {
       return new Promise(async (resolve, reject) => {
@@ -957,8 +963,6 @@
     $('startBtn').addEventListener('click', async () => {
       const dob = $('f-dob').value, place = $('f-place').value.trim();
       const time = $('f-time').value;
-      const offset = parseFloat($('f-tz').value);
-      const birthTimezone = $('f-tz').selectedOptions[0]?.dataset.tz || null;
       state.userName = $('f-name').value.trim() || null;
       if (!dob || !time || !place) { $('onboardStatus').textContent = 'Please fill date, time and place of birth.'; return; }
       // A birth date can't be in the future (or today) — guard against typos that
@@ -970,6 +974,12 @@
       try {
         status.textContent = 'Looking up your birth place…';
         const coordinates = await geocode(place);
+        // Time zone (incl. DST) is derived from the resolved coordinates, not a
+        // manual dropdown — so a non-India birth gets the correct ascendant.
+        const tzInfo = deriveTz(coordinates, dob, time);
+        const offset = tzInfo ? tzInfo.offset : 5.5;                 // fallback: IST (old default) if tz-lookup didn't load
+        const birthTimezone = tzInfo ? tzInfo.tz : 'Asia/Kolkata';
+        if (tzInfo) { $('f-tz-detected').textContent = `${tzInfo.tz} · ${fmtOffset(tzInfo.offset)}`; $('f-tz-row').style.display = 'block'; }
         const dateOfBirth = toUtcISO(dob, time, offset);
 
         status.textContent = 'Saving your birth details…';
@@ -1257,8 +1267,6 @@
       const status = $('compatSetupStatus');
       if (!setupPartnerGender) { status.textContent = "Select your partner's gender."; return; }
       const dob = $('p-dob').value, time = $('p-time').value, place = $('p-place').value.trim();
-      const offset = parseFloat($('p-tz').value);
-      const ptz = $('p-tz').selectedOptions[0]?.dataset.tz || null;
       const pname = $('p-name').value.trim() || null;
       if (!dob || !time || !place) { status.textContent = "Fill your partner's date, time and place of birth."; return; }
       if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = 'Enter a valid birth date in the past.'; return; }
@@ -1266,6 +1274,10 @@
       try {
         status.textContent = "Looking up partner's birth place…";
         const pcoords = await geocode(place);
+        const ptzInfo = deriveTz(pcoords, dob, time);
+        const offset = ptzInfo ? ptzInfo.offset : 5.5;
+        const ptz = ptzInfo ? ptzInfo.tz : 'Asia/Kolkata';
+        if (ptzInfo) { $('p-tz-detected').textContent = `${ptzInfo.tz} · ${fmtOffset(ptzInfo.offset)}`; $('p-tz-row').style.display = 'block'; }
         const pdob = toUtcISO(dob, time, offset);
         state.partnerGender = setupPartnerGender; state.userGender = oppositeGender(setupPartnerGender);
 
