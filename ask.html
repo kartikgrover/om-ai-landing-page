@@ -18,9 +18,10 @@
     • Geocoding uses OpenStreetMap Nominatim (fine for MVP volume); production
       should use the same city picker / Places source as the app (GeoNames gives
       IANA tz + autocomplete in one call — research-recommended).
-    • Unknown-birth-time: UI defaults to 12:00 noon and sends timeUnknown:true so
-      the backend can suppress lagna/house/precise-dasha claims once the
-      server-side field pipeline (server.js → queue.js → worker.js) honours it.
+    • Birth time is REQUIRED (matches the app — there is no "unknown time" option).
+    • Account sharing: web reads/writes the app's metadata/dob schema
+      (birthCoordinates + birthTimezone), so a user who onboarded in the app is
+      recognised on web (chart, chat history, subscription) and vice-versa.
 -->
 <head>
   <meta charset="UTF-8">
@@ -327,12 +328,6 @@
             <input id="f-time" class="field" type="time" required>
           </div>
         </div>
-        <label class="check" style="margin-bottom:1rem;">
-          <input type="checkbox" id="f-time-unknown"> I don't know my birth time
-        </label>
-        <div id="timeUnknownNote" class="hint" style="display:none;margin:-.6rem 0 1rem;">
-          No problem — we'll read your planetary placements and Moon sign. Your reading just won't include your rising sign or exact houses.
-        </div>
         <div style="margin-bottom:1rem;">
           <label for="f-place">Place of birth</label>
           <input id="f-place" class="field" type="text" placeholder="City, Country (e.g. Mumbai, India)" autocomplete="off">
@@ -341,13 +336,13 @@
         <div style="margin-bottom:1.1rem;">
           <label for="f-tz">Time zone at birth</label>
           <select id="f-tz" class="field">
-            <option value="5.5" selected>India (UTC+5:30)</option>
-            <option value="0">UK (UTC+0)</option>
-            <option value="-5">US Eastern (UTC−5)</option>
-            <option value="-8">US Pacific (UTC−8)</option>
-            <option value="4">Gulf / UAE (UTC+4)</option>
-            <option value="5.75">Nepal (UTC+5:45)</option>
-            <option value="6">Bangladesh (UTC+6)</option>
+            <option value="5.5" data-tz="Asia/Kolkata" selected>India (UTC+5:30)</option>
+            <option value="0" data-tz="Europe/London">UK (UTC+0)</option>
+            <option value="-5" data-tz="America/New_York">US Eastern (UTC−5)</option>
+            <option value="-8" data-tz="America/Los_Angeles">US Pacific (UTC−8)</option>
+            <option value="4" data-tz="Asia/Dubai">Gulf / UAE (UTC+4)</option>
+            <option value="5.75" data-tz="Asia/Kathmandu">Nepal (UTC+5:45)</option>
+            <option value="6" data-tz="Asia/Dhaka">Bangladesh (UTC+6)</option>
           </select>
         </div>
         <button id="startBtn" class="btn-primary">Generate my chart</button>
@@ -491,7 +486,7 @@
     // ── state ──────────────────────────────────────────────────────
     const state = { uid: null, chart: null, conversationId: null, sessionId: null, ws: null, wsUid: null,
                     freeUsed: false, premium: false, userName: null, dateOfBirth: null, coordinates: null,
-                    timeUnknown: false, birthPlace: null, birthOffset: 5.5 };
+                    timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null };
 
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
@@ -556,16 +551,21 @@
       try {
         const snap = await getDoc(doc(db, `users/${state.uid}/metadata/dob`));
         const d = snap.exists() ? snap.data() : null;
-        if (d && d.dob && d.coordinates) {
+        // The mobile app stores `birthCoordinates` (+ `birthTimezone`); the web
+        // historically wrote `coordinates`. Accept either so a user who onboarded
+        // in the app skips web onboarding and lands straight in their chart.
+        const coords = (d && (d.coordinates || d.birthCoordinates)) || null;
+        if (d && d.dob && coords) {
           show('chat');
           $('chatInner').innerHTML = '<div class="starter"><span class="typing">Loading your chart…</span></div>';
-          state.dateOfBirth = d.dob; state.coordinates = d.coordinates; state.birthPlace = d.birthPlace || null;
+          state.dateOfBirth = d.dob; state.coordinates = coords; state.birthPlace = d.birthPlace || null;
+          state.birthTimezone = d.birthTimezone || null;
           state.userName = d.name || state.userName; state.timeUnknown = !!d.timeUnknown;
           await ensureWS();
           state.chart = await new Promise((resolve, reject) => {
             const timer = setTimeout(() => reject(new Error('Chart timed out')), 120000);
             pending = { onChart: (c) => { clearTimeout(timer); resolve(c); }, onError: (e) => { clearTimeout(timer); reject(new Error(e)); } };
-            sendWS({ type: 'generateChart', userId: state.uid, conversationId: `web-${Date.now()}`, threadId: `web-${Date.now()}`, dateOfBirth: d.dob, coordinates: d.coordinates, timeUnknown: !!d.timeUnknown });
+            sendWS({ type: 'generateChart', userId: state.uid, conversationId: `web-${Date.now()}`, threadId: `web-${Date.now()}`, dateOfBirth: d.dob, coordinates: coords, timeUnknown: !!d.timeUnknown });
           });
           await refreshPremium();
           renderEmptyChat(); refreshProfileUI();
@@ -659,21 +659,13 @@
       }
     }
 
-    // ── unknown birth time UX ──────────────────────────────────────
-    $('f-time-unknown').addEventListener('change', (e) => {
-      const on = e.target.checked;
-      state.timeUnknown = on;
-      $('f-time').disabled = on;
-      if (on) $('f-time').value = '12:00';
-      $('timeUnknownNote').style.display = on ? 'block' : 'none';
-    });
-
     // ── onboarding → chart ─────────────────────────────────────────
     try { $('f-dob').max = new Date().toISOString().slice(0, 10); } catch (_) {} // block future dates in the native picker
     $('startBtn').addEventListener('click', async () => {
       const dob = $('f-dob').value, place = $('f-place').value.trim();
-      const time = state.timeUnknown ? '12:00' : $('f-time').value;
+      const time = $('f-time').value;
       const offset = parseFloat($('f-tz').value);
+      const birthTimezone = $('f-tz').selectedOptions[0]?.dataset.tz || null;
       state.userName = $('f-name').value.trim() || null;
       if (!dob || !time || !place) { $('onboardStatus').textContent = 'Please fill date, time and place of birth.'; return; }
       // A birth date can't be in the future (or today) — guard against typos that
@@ -689,8 +681,11 @@
 
         status.textContent = 'Saving your birth details…';
         await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
-          dob: dateOfBirth, coordinates, birthPlace: place, birthOffsetHours: offset,
-          name: state.userName, timeUnknown: state.timeUnknown, source: 'web', updatedAt: serverTimestamp(),
+          // Write BOTH the app's field names (birthCoordinates/birthTimezone) and
+          // the web's legacy ones, so the doc is fully readable by the mobile app.
+          dob: dateOfBirth, coordinates, birthCoordinates: coordinates,
+          birthPlace: place, birthOffsetHours: offset, birthTimezone,
+          name: state.userName, source: 'web', updatedAt: serverTimestamp(),
         }, { merge: true });
 
         status.textContent = 'Computing your Vedic chart… (this can take a few seconds)';
@@ -702,6 +697,7 @@
         });
         state.chart = chart;
         state.dateOfBirth = dateOfBirth; state.coordinates = coordinates; state.birthPlace = place;
+        state.birthTimezone = birthTimezone;
         state.sessionId = null; state.conversationId = null; // fresh chart → fresh chat
 
         await refreshPremium();
@@ -1047,8 +1043,9 @@
         if (state.uid !== prevUid && state.dateOfBirth && state.coordinates) {
           try {
             await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
-              dob: state.dateOfBirth, coordinates: state.coordinates, birthPlace: state.birthPlace || null,
-              name: state.userName || null, timeUnknown: !!state.timeUnknown, source: 'web', updatedAt: serverTimestamp(),
+              dob: state.dateOfBirth, coordinates: state.coordinates, birthCoordinates: state.coordinates,
+              birthPlace: state.birthPlace || null, birthTimezone: state.birthTimezone || null,
+              name: state.userName || null, source: 'web', updatedAt: serverTimestamp(),
             }, { merge: true });
           } catch (_) { /* best-effort — restoreOrRoute will re-onboard if missing */ }
         }
