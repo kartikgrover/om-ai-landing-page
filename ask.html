@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<!--
+  Om.AI — Web "Ask" MVP (Phase 1 of the web expansion)
+  ────────────────────────────────────────────────────────────────────────
+  Self-contained funnel page: anonymous Firebase login → birth-detail onboarding
+  → generateChart → WebSocket chat against the SAME backend the app uses.
+  Shares the Firebase project + user pool + entitlement gate with the app.
+
+  UI mirrors the React Native app's Astro chat screen (theme tokens from
+  om1/src/contexts/ThemeContext.js — default DARK, Anthropic/Claude warm-neutral
+  palette, accent terracotta #D97757, DM Serif Display titles + Source Sans body).
+  Screens: onboarding · chat · paywall · settings · profile.
+
+  STATUS: MVP for review. Known follow-ups (see docs/WEB_EXPANSION_PLAN.md):
+    • International timezone: MVP uses an explicit UTC offset (India default).
+      The app derives IANA tz from coordinates via tz-lookup — port that next.
+    • Geocoding uses OpenStreetMap Nominatim (fine for MVP volume); production
+      should use the same city picker / Places source as the app (GeoNames gives
+      IANA tz + autocomplete in one call — research-recommended).
+    • Unknown-birth-time: UI defaults to 12:00 noon and sends timeUnknown:true so
+      the backend can suppress lagna/house/precise-dasha claims once the
+      server-side field pipeline (server.js → queue.js → worker.js) honours it.
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ask Om.AI — Free Vedic Astrology Chat from Your Birth Chart</title>
+  <meta name="description" content="Ask your real Vedic birth chart anything — career, marriage, money, health. Your first question is free, 24/7.">
+  <link rel="canonical" href="https://omai.app/ask.html">
+  <!-- Open Graph / Twitter so shared links render a card (free viral loop) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://omai.app/ask.html">
+  <meta property="og:title" content="Ask Om.AI — your real Vedic birth chart, answering anything">
+  <meta property="og:description" content="Career, marriage, money, health, timing — grounded in classical Vedic texts. First question free.">
+  <meta property="og:image" content="https://omai.app/assets/og/og-ask.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ask Om.AI — your real Vedic birth chart, answering anything">
+  <meta name="twitter:description" content="Career, marriage, money, health, timing — grounded in classical Vedic texts. First question free.">
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#262624">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── App theme tokens (mirrors ThemeContext.js) ──────────────────────── */
+    :root[data-theme="dark"] {
+      --bg:#262624; --header:#30302E; --text:#FAF9F5; --secondary:#C2C0B6;
+      --border:rgba(250,249,245,.10); --border-strong:rgba(250,249,245,.16);
+      --accent:#D97757; --accent-press:#C6613F;
+      --user-bubble:#30302E; --bot-bubble:transparent; --input-bg:#30302E;
+      --card:#30302E; --card-2:#2b2b29; --overlay:rgba(0,0,0,.55);
+      --success:#22C55E; --error:#F87171;
+    }
+    :root[data-theme="light"] {
+      --bg:#FAF9F5; --header:#FFFFFF; --text:#141413; --secondary:#3D3D3A;
+      --border:rgba(20,20,19,.10); --border-strong:rgba(20,20,19,.14);
+      --accent:#D97757; --accent-press:#C6613F;
+      --user-bubble:#F5F4ED; --bot-bubble:#FFFFFF; --input-bg:#FFFFFF;
+      --card:#FFFFFF; --card-2:#FAF9F5; --overlay:rgba(20,20,19,.35);
+      --success:#16A34A; --error:#DC2626;
+    }
+    * { box-sizing:border-box; }
+    html,body { height:100%; }
+    body {
+      font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;
+      background:var(--bg); color:var(--text); margin:0;
+      -webkit-font-smoothing:antialiased; line-height:1.5;
+      display:flex; flex-direction:column; min-height:100dvh;
+    }
+    h1,h2,h3,.serif { font-family:'DM Serif Display',Georgia,serif; font-weight:400; }
+    a { color:var(--accent); }
+    button { font-family:inherit; }
+    .muted { color:var(--secondary); }
+
+    /* ── App bar (mirrors AstroScreen header) ────────────────────────────── */
+    .appbar {
+      display:flex; align-items:center; gap:.25rem;
+      padding:.6rem .75rem; padding-top:max(.6rem,env(safe-area-inset-top));
+      background:var(--header); border-bottom:1px solid var(--border);
+      position:sticky; top:0; z-index:30;
+    }
+    .appbar .brand { font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--text); margin:0 auto 0 .25rem; line-height:1; }
+    .iconbtn {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:40px; height:40px; border-radius:12px; border:none; background:transparent;
+      color:var(--text); cursor:pointer; font-size:1.15rem; transition:background .15s;
+    }
+    .iconbtn:hover { background:var(--border); }
+    .iconbtn svg { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.8; }
+
+    /* ── View scaffolding ────────────────────────────────────────────────── */
+    .view { display:none; flex:1; flex-direction:column; min-height:0; }
+    .view.active { display:flex; }
+    .scroll-pad { max-width:760px; width:100%; margin:0 auto; padding:1.25rem; }
+
+    /* ── Cards / forms (onboarding, profile, settings) ───────────────────── */
+    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; }
+    label { font-weight:600; font-size:.88rem; margin-bottom:.3rem; display:block; color:var(--text); }
+    .field { width:100%; background:var(--input-bg); color:var(--text); border:1px solid var(--border-strong);
+      border-radius:10px; padding:.7rem .85rem; font-size:1rem; font-family:inherit; }
+    .field:focus { outline:2px solid var(--accent); outline-offset:0; border-color:transparent; }
+    .field::placeholder { color:var(--secondary); }
+    select.field { appearance:none; }
+    .row2 { display:flex; gap:.75rem; } .row2 > * { flex:1; }
+    .hint { font-size:.82rem; color:var(--secondary); }
+    .check { display:flex; align-items:center; gap:.5rem; font-size:.9rem; color:var(--secondary); cursor:pointer; font-weight:500; }
+    .check input { width:18px; height:18px; accent-color:var(--accent); }
+
+    .btn-primary {
+      width:100%; background:var(--accent); color:#fff; border:none; font-weight:600;
+      border-radius:12px; padding:.8rem 1.2rem; font-size:1rem; cursor:pointer; min-height:48px; transition:background .15s;
+    }
+    .btn-primary:hover { background:var(--accent-press); }
+    .btn-primary:disabled { opacity:.55; cursor:default; }
+    .btn-ghost {
+      width:100%; background:transparent; color:var(--text); border:1px solid var(--border-strong);
+      border-radius:12px; padding:.7rem 1.2rem; font-size:1rem; cursor:pointer; min-height:46px;
+    }
+    .btn-ghost:hover { background:var(--border); }
+    .status-line { font-size:.85rem; color:var(--secondary); min-height:1.2em; margin-top:.5rem; }
+
+    /* ── Chat (mirrors AstroScreen message list + composer) ──────────────── */
+    #chatView { position:relative; }
+    .chat-scroll { flex:1; overflow-y:auto; padding:1rem; scroll-behavior:smooth; }
+    .chat-inner { max-width:760px; margin:0 auto; display:flex; flex-direction:column; }
+    .msg { max-width:85%; padding:.7rem .95rem; border-radius:12px; margin:.4rem 0; line-height:1.55; font-size:1rem; word-wrap:break-word; }
+    .msg.user { align-self:flex-end; background:var(--user-bubble); color:var(--text);
+      border:1px solid var(--border); border-bottom-right-radius:4px; }
+    .msg.ai { align-self:flex-start; background:var(--bot-bubble); color:var(--text);
+      border:1px solid var(--border); border-bottom-left-radius:4px; }
+    .msg.ai p:first-child { margin-top:0; } .msg.ai p:last-child { margin-bottom:0; }
+    .msg.ai ul,.msg.ai ol { margin:.4rem 0; padding-left:1.2rem; }
+    .msg.ai strong { font-weight:700; }
+    .typing { color:var(--secondary); font-style:italic; }
+
+    /* Empty-state starter chips */
+    .starter { max-width:560px; margin:auto; padding:1.5rem 0; text-align:center; }
+    .starter .hero-icon { font-size:2.2rem; }
+    .starter h2 { font-size:1.6rem; margin:.5rem 0 .25rem; }
+    .chip { display:block; width:100%; text-align:left; background:transparent; color:var(--text);
+      border:1px solid var(--border-strong); border-radius:12px; padding:.85rem 1rem; margin:.5rem 0;
+      font-size:.97rem; cursor:pointer; transition:background .15s,border-color .15s; }
+    .chip:hover { background:var(--border); border-color:var(--accent); }
+
+    /* Composer dock */
+    .composer-wrap { border-top:1px solid var(--border); background:var(--header); }
+    .composer { max-width:760px; margin:0 auto; display:flex; align-items:flex-end; gap:.6rem;
+      padding:.6rem .75rem; padding-bottom:max(.6rem,env(safe-area-inset-bottom)); }
+    .composer textarea { flex:1; resize:none; background:var(--input-bg); color:var(--text);
+      border:1px solid var(--border-strong); border-radius:14px; padding:.7rem .9rem;
+      font-family:inherit; font-size:1rem; line-height:1.5; max-height:120px; min-height:44px; }
+    .composer textarea:focus { outline:2px solid var(--accent); border-color:transparent; }
+    .send {
+      flex:none; width:44px; height:44px; border-radius:50%; border:none; background:var(--accent);
+      color:#fff; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; transition:transform .1s,opacity .15s;
+    }
+    .send:disabled { opacity:.55; transform:scale(.92); cursor:default; }
+    .send svg { width:22px; height:22px; fill:#fff; }
+    .jump-btn {
+      position:absolute; left:50%; transform:translateX(-50%); bottom:84px; z-index:5;
+      background:var(--card); color:var(--text); border:1px solid var(--border-strong);
+      border-radius:20px; padding:.35rem .9rem; font-size:.85rem; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.18); display:none;
+    }
+    .chat-status { max-width:760px; margin:0 auto; width:100%; padding:0 1rem .4rem; }
+
+    /* ── Trust strip (onboarding credibility) ────────────────────────────── */
+    .trust { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.8rem; color:var(--secondary); margin-top:1rem; justify-content:center; }
+    .trust b { color:var(--text); font-weight:600; }
+
+    /* ── Paywall ─────────────────────────────────────────────────────────── */
+    .plan { display:flex; align-items:center; gap:.75rem; width:100%; text-align:left;
+      background:var(--card); border:1.5px solid var(--border-strong); border-radius:14px; padding:1rem; margin:.5rem 0; cursor:pointer; position:relative; }
+    .plan.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, var(--card)); }
+    .plan .radio { width:20px; height:20px; border-radius:50%; border:2px solid var(--border-strong); flex:none; }
+    .plan.active .radio { border-color:var(--accent); background:radial-gradient(circle, var(--accent) 45%, transparent 50%); }
+    .plan .pl-main { flex:1; } .plan .pl-title { font-weight:600; display:block; } .plan .pl-sub { font-size:.82rem; color:var(--secondary); display:block; }
+    .plan .pl-price { text-align:right; font-weight:700; } .plan .pl-price s { color:var(--secondary); font-weight:400; font-size:.8rem; display:block; }
+    .badge { position:absolute; top:-10px; right:14px; background:var(--accent); color:#fff; font-size:.7rem; font-weight:700;
+      padding:.15rem .5rem; border-radius:8px; letter-spacing:.02em; }
+    .feature-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.9rem; }
+    .feature-table td { padding:.45rem .25rem; border-bottom:1px solid var(--border); }
+    .feature-table td:last-child { text-align:right; }
+    .tick { color:var(--success); font-weight:700; } .cross { color:var(--secondary); }
+
+    /* ── Settings / Profile rows ─────────────────────────────────────────── */
+    .section-label { font-size:.75rem; font-weight:600; letter-spacing:.06em; color:var(--secondary); text-transform:uppercase; margin:1.4rem .25rem .4rem; }
+    .srow { display:flex; align-items:center; gap:.85rem; width:100%; text-align:left; background:transparent;
+      border:none; border-bottom:1px solid var(--border); padding:.95rem .5rem; cursor:pointer; color:var(--text); font-size:1rem; }
+    .srow:hover { background:var(--border); }
+    .srow .ic { width:28px; text-align:center; color:var(--accent); }
+    .srow .sr-main { flex:1; } .srow .sr-sub { font-size:.8rem; color:var(--secondary); display:block; }
+    .srow .chev { color:var(--secondary); }
+    .srow.premium { border-left:3px solid var(--accent); border-radius:4px; }
+    .avatar { width:64px; height:64px; border-radius:50%; background:color-mix(in srgb,var(--accent) 18%, transparent);
+      display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--accent); margin:0 auto .5rem; }
+    .seg { display:flex; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; }
+    .seg button { flex:1; background:transparent; color:var(--text); border:none; padding:.6rem; cursor:pointer; font-size:.9rem; }
+    .seg button.active { background:var(--accent); color:#fff; }
+
+    /* ── Drawer ──────────────────────────────────────────────────────────── */
+    .drawer-overlay { position:fixed; inset:0; background:var(--overlay); z-index:40; opacity:0; pointer-events:none; transition:opacity .2s; }
+    .drawer-overlay.open { opacity:1; pointer-events:auto; }
+    .drawer {
+      position:fixed; top:0; left:0; bottom:0; width:300px; max-width:84vw; background:var(--header);
+      border-right:1px solid var(--border); z-index:41; transform:translateX(-100%); transition:transform .22s ease;
+      display:flex; flex-direction:column; padding-top:max(.6rem,env(safe-area-inset-top));
+    }
+    .drawer.open { transform:translateX(0); }
+    .drawer-newchat { display:flex; align-items:center; gap:.6rem; margin:.5rem .75rem; padding:.7rem .8rem; background:transparent;
+      border:1px solid var(--border-strong); border-radius:12px; color:var(--text); font-size:1rem; font-weight:600; cursor:pointer; }
+    .drawer-newchat:hover { background:var(--border); }
+    .drawer-history { flex:1; overflow-y:auto; padding:.25rem .5rem; }
+    .drawer-history .empty { color:var(--secondary); font-size:.85rem; padding:.75rem; text-align:center; }
+    .sess { display:flex; align-items:center; gap:.4rem; border-radius:10px; padding:.55rem .6rem; cursor:pointer; }
+    .sess:hover { background:var(--border); }
+    .sess.active { background:var(--border); }
+    .sess .t { flex:1; font-size:.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .sess .del { opacity:0; background:none; border:none; color:var(--secondary); cursor:pointer; font-size:.9rem; padding:.1rem .3rem; }
+    .sess:hover .del { opacity:1; }
+    .sess .del:hover { color:var(--error); }
+    .drawer-bottom { border-top:1px solid var(--border); padding:.4rem .5rem max(.5rem,env(safe-area-inset-bottom)); }
+    .drawer-item { display:flex; align-items:center; gap:.7rem; width:100%; text-align:left; background:transparent; border:none;
+      color:var(--text); font-size:.95rem; padding:.7rem .6rem; border-radius:10px; cursor:pointer; }
+    .drawer-item:hover { background:var(--border); }
+    .drawer-item .ic { width:22px; text-align:center; }
+
+    /* ── Modal ───────────────────────────────────────────────────────────── */
+    .modal-overlay { position:fixed; inset:0; background:var(--overlay); z-index:50; display:none; align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.open { display:flex; }
+    .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:420px; width:100%; }
+    .info-row { display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:.95rem; }
+    .info-row:last-child { border-bottom:none; }
+  </style>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- Markdown rendering for AI answers (parse + sanitize) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+</head>
+<body>
+  <!-- ── App bar (mirrors AstroScreen: hamburger ↔ drawer, new chat) ────── -->
+  <header class="appbar">
+    <button class="iconbtn" id="menuBtn" title="Menu" aria-label="Open menu">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+    </button>
+    <span class="brand">Om.AI</span>
+    <button class="iconbtn" id="newChatBtn" title="New chat" aria-label="New chat">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+
+  <!-- ── DRAWER (left slide-out, mirrors CustomAstroDrawerContent) ──────── -->
+  <div id="drawerOverlay" class="drawer-overlay"></div>
+  <aside id="drawer" class="drawer" aria-label="Menu">
+    <button class="drawer-newchat" id="drawerNewChat">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+      New chat
+    </button>
+    <div class="drawer-history" id="drawerHistory"></div>
+    <div class="drawer-bottom">
+      <button class="drawer-item" id="diBirth"><span class="ic">📅</span>Your Birth Details</button>
+      <button class="drawer-item" id="diEdit"><span class="ic">✏️</span>Edit Profile</button>
+      <button class="drawer-item" id="diPremium"><span class="ic">👑</span>Get Premium</button>
+      <button class="drawer-item" id="settingsBtn"><span class="ic">⚙️</span>Settings</button>
+    </div>
+  </aside>
+
+  <!-- ── Birth-details modal (read-only, mirrors app) ──────────────────── -->
+  <div id="birthModal" class="modal-overlay">
+    <div class="modal-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+        <h3 style="margin:0;font-size:1.25rem;">Your Birth Details</h3>
+        <button class="iconbtn" id="birthModalClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
+      </div>
+      <div class="info-row"><span class="muted">Date of birth</span><span id="bmDob">Not set</span></div>
+      <div class="info-row"><span class="muted">Birth place</span><span id="bmPlace">Not set</span></div>
+    </div>
+  </div>
+
+  <!-- ── AUTH GATE (sign in before anything) ──────────────────────────── -->
+  <div id="authView" class="view active">
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:440px;">
+      <div style="text-align:center;margin:6vh 0 1.25rem;">
+        <div style="font-size:2.2rem;">🪔</div>
+        <h1 style="font-size:1.9rem;margin:.4rem 0 .35rem;">Ask your birth chart</h1>
+        <p class="hint">Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.</p>
+      </div>
+      <div class="card">
+        <button id="signInBtn" class="btn-primary">Continue with Google</button>
+        <button id="appleSignInBtn" class="btn-primary" style="margin-top:.6rem;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;gap:.5rem;">
+          <svg width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          Continue with Apple
+        </button>
+        <div id="authStatus" class="status-line" style="text-align:center;"></div>
+      </div>
+      <div class="trust">
+        <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
+        <span><b>4.7★</b> · 30,000+ readings</span>
+        <span>🔒 Your details stay private</span>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ── ONBOARDING ───────────────────────────────────────────────────── -->
+  <div id="onboardingView" class="view">
+    <div class="chat-scroll"><div class="scroll-pad">
+      <h1 style="font-size:1.9rem;margin:.25rem 0 .35rem;">Ask your birth chart</h1>
+      <p class="hint" style="margin-bottom:1.1rem;">Your first question is free. We compute your real Vedic chart from your birth details — they stay private to your reading.</p>
+      <div class="card">
+        <div style="margin-bottom:1rem;">
+          <label for="f-name">Name <span class="hint">(optional)</span></label>
+          <input id="f-name" class="field" type="text" placeholder="Your name" autocomplete="off">
+        </div>
+        <div class="row2" style="margin-bottom:1rem;">
+          <div>
+            <label for="f-dob">Date of birth</label>
+            <input id="f-dob" class="field" type="date" required>
+          </div>
+          <div>
+            <label for="f-time">Time of birth</label>
+            <input id="f-time" class="field" type="time" required>
+          </div>
+        </div>
+        <label class="check" style="margin-bottom:1rem;">
+          <input type="checkbox" id="f-time-unknown"> I don't know my birth time
+        </label>
+        <div id="timeUnknownNote" class="hint" style="display:none;margin:-.6rem 0 1rem;">
+          No problem — we'll read your planetary placements and Moon sign. Your reading just won't include your rising sign or exact houses.
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label for="f-place">Place of birth</label>
+          <input id="f-place" class="field" type="text" placeholder="City, Country (e.g. Mumbai, India)" autocomplete="off">
+          <div class="hint" style="margin-top:.3rem;">We'll look up the coordinates for your chart.</div>
+        </div>
+        <div style="margin-bottom:1.1rem;">
+          <label for="f-tz">Time zone at birth</label>
+          <select id="f-tz" class="field">
+            <option value="5.5" selected>India (UTC+5:30)</option>
+            <option value="0">UK (UTC+0)</option>
+            <option value="-5">US Eastern (UTC−5)</option>
+            <option value="-8">US Pacific (UTC−8)</option>
+            <option value="4">Gulf / UAE (UTC+4)</option>
+            <option value="5.75">Nepal (UTC+5:45)</option>
+            <option value="6">Bangladesh (UTC+6)</option>
+          </select>
+        </div>
+        <button id="startBtn" class="btn-primary">Generate my chart</button>
+        <div id="onboardStatus" class="status-line"></div>
+      </div>
+      <div class="trust">
+        <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
+        <span><b>4.7★</b> · 30,000+ readings</span>
+        <span>🔒 Your details stay private</span>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ── CHAT ─────────────────────────────────────────────────────────── -->
+  <div id="chatView" class="view">
+    <div id="chatScroll" class="chat-scroll">
+      <div class="chat-inner" id="chatInner"></div>
+    </div>
+    <button class="jump-btn" id="jumpBtn">Jump to latest ↓</button>
+    <div class="chat-status"><div id="chatStatus" class="status-line" style="margin:0;"></div></div>
+    <div class="composer-wrap">
+      <div class="composer">
+        <textarea id="composerInput" rows="1" placeholder="Type your message…"></textarea>
+        <button id="sendBtn" class="send" aria-label="Send">
+          <svg viewBox="0 0 24 24"><path d="M3.4 20.4l17.45-7.48a1 1 0 0 0 0-1.84L3.4 3.6a.993.993 0 0 0-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAYWALL ──────────────────────────────────────────────────────── -->
+  <div id="paywallView" class="view">
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:480px;">
+      <h2 style="font-size:1.7rem;text-align:center;margin:.5rem 0 .25rem;">Continue your reading</h2>
+      <p class="hint" style="text-align:center;">You've used your free question. Unlock unlimited questions about your chart.</p>
+
+      <div id="planChoices" role="radiogroup" aria-label="Choose a plan" style="margin-top:1rem;">
+        <button type="button" class="plan active" data-plan="yearly" role="radio" aria-checked="true">
+          <span class="badge">SAVE 40% · 5 MONTHS FREE</span>
+          <span class="radio"></span>
+          <span class="pl-main"><span class="pl-title">Yearly</span><span class="pl-sub">just ₹4/day · billed ₹1,499/yr</span></span>
+          <span class="pl-price"><s>₹2,388</s>₹1,499</span>
+        </button>
+        <button type="button" class="plan" data-plan="monthly" role="radio" aria-checked="false">
+          <span class="radio"></span>
+          <span class="pl-main"><span class="pl-title">Monthly</span><span class="pl-sub">billed every month</span></span>
+          <span class="pl-price">₹199</span>
+        </button>
+      </div>
+
+      <table class="feature-table">
+        <tr><td></td><td class="muted" style="font-weight:600;">Free</td><td style="font-weight:600;color:var(--accent);">Premium</td></tr>
+        <tr><td>Questions to your chart</td><td class="cross">1</td><td class="tick">Unlimited</td></tr>
+        <tr><td>All life areas &amp; timing dates</td><td class="cross">—</td><td class="tick">✓</td></tr>
+        <tr><td>Memory across sessions</td><td class="cross">—</td><td class="tick">✓</td></tr>
+      </table>
+
+      <button id="subscribeBtn" class="btn-primary">Subscribe</button>
+      <div id="paywallStatus" class="status-line" style="text-align:center;"></div>
+      <div class="trust" style="margin-top:.75rem;justify-content:center;">
+        <span>🔒 Secure payment by <b>Razorpay</b></span><span>Cancel anytime</span><span><b>4.7★</b> · 30,000+ readings</span>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ── SETTINGS ─────────────────────────────────────────────────────── -->
+  <div id="settingsView" class="view">
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;">
+        <button class="iconbtn" data-back="1" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2 style="font-size:1.6rem;margin:0;">Settings</h2>
+      </div>
+
+      <div class="section-label">Account</div>
+      <button class="srow" id="goProfile"><span class="ic">👤</span><span class="sr-main">Profile</span><span class="chev">›</span></button>
+
+      <div class="section-label">Subscription</div>
+      <button class="srow" id="manageSub"><span class="ic">👑</span><span class="sr-main">Manage Subscription<span class="sr-sub" id="subSub">Loading…</span></span><span class="chev">›</span></button>
+
+      <div class="section-label">App</div>
+      <div class="srow" style="cursor:default;"><span class="ic">🌓</span><span class="sr-main">Theme</span>
+        <div class="seg" style="width:200px;" id="themeSeg">
+          <button data-theme-set="light">Light</button><button data-theme-set="dark">Dark</button><button data-theme-set="system">System</button>
+        </div>
+      </div>
+
+      <div class="section-label">Help &amp; Legal</div>
+      <a class="srow" href="/privacy.html"><span class="ic">🛡️</span><span class="sr-main">Privacy</span><span class="chev">›</span></a>
+      <a class="srow" href="/terms.html"><span class="ic">📄</span><span class="sr-main">About &amp; Terms</span><span class="chev">›</span></a>
+
+      <div style="margin-top:1.5rem;">
+        <button class="srow" id="signOutBtn"><span class="ic">🚪</span><span class="sr-main">Sign Out</span></button>
+        <div class="hint" style="text-align:center;margin-top:1rem;">Om.AI · Web</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ── PROFILE ──────────────────────────────────────────────────────── -->
+  <div id="profileView" class="view">
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;">
+        <button class="iconbtn" data-back="settings" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2 style="font-size:1.6rem;margin:0;">Profile</h2>
+      </div>
+      <div style="text-align:center;margin-bottom:1.25rem;">
+        <div class="avatar">👤</div>
+        <div class="serif" id="pfName" style="font-size:1.4rem;">User</div>
+        <div class="hint" id="pfEmail"></div>
+      </div>
+      <div class="section-label">Astrology Profile</div>
+      <button class="srow" id="editBirth">
+        <span class="ic">📅</span>
+        <span class="sr-main">Your Birth Details<span class="sr-sub" id="pfBirth">Not set</span></span>
+        <span class="chev">›</span>
+      </button>
+    </div></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    // Public Firebase web config (same project as the app — client config is not secret).
+    const firebaseApp = initializeApp({
+      apiKey: 'AIzaSyDcNYmmkC2DkN9SH5aULWybmNYPdy_Rxgk',
+      authDomain: 'omai-1ea53.firebaseapp.com',
+      projectId: 'omai-1ea53',
+      storageBucket: 'omai-1ea53.appspot.com',
+      messagingSenderId: '407242077441',
+      appId: '1:407242077441:android:c6fbb45bfda766f558d700', // TODO: register a dedicated Web app in Firebase for a web appId
+    });
+    const auth = getAuth(firebaseApp);
+    const db = getFirestore(firebaseApp);
+
+    // ?local → talk to a local backend (dev/testing); else Heroku prod.
+    const LOCAL = new URLSearchParams(location.search).has('local');
+    const WS_BASE = LOCAL ? 'ws://localhost:3000' : 'wss://om-ai-backend-4f29d7469ff6.herokuapp.com';
+    const API = LOCAL ? 'http://localhost:3000' : 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+
+    // ── state ──────────────────────────────────────────────────────
+    const state = { uid: null, chart: null, conversationId: null, sessionId: null, ws: null, wsUid: null,
+                    freeUsed: false, premium: false, userName: null, dateOfBirth: null, coordinates: null,
+                    timeUnknown: false, birthPlace: null, birthOffset: 5.5 };
+
+    // ── DOM helpers ────────────────────────────────────────────────
+    const $ = (id) => document.getElementById(id);
+    const views = { auth: $('authView'), onboarding: $('onboardingView'), chat: $('chatView'), paywall: $('paywallView'),
+                    settings: $('settingsView'), profile: $('profileView') };
+    let prevView = 'onboarding';
+    const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
+    function show(name) {
+      const cur = currentView();
+      if (cur !== 'settings' && cur !== 'profile') prevView = cur; // remember where to return from overlay screens
+      Object.entries(views).forEach(([k, el]) => el.classList.toggle('active', k === name));
+      // a11y: move focus into the newly shown view so keyboard/SR users aren't
+      // stranded on a now-hidden control. Prefer the primary input, else heading.
+      const el = views[name];
+      if (el) setTimeout(() => {
+        const target = el.querySelector('input,textarea,button,h1,h2,[tabindex]');
+        if (target) { if (!target.hasAttribute('tabindex') && /^H[12]$/.test(target.tagName)) target.tabIndex = -1; try { target.focus(); } catch (_) {} }
+      }, 0);
+    }
+
+    // ── theme ──────────────────────────────────────────────────────
+    const sysDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
+    function applyTheme() {
+      const pref = localStorage.getItem('omai-theme') || 'dark';
+      const resolved = pref === 'system' ? (sysDark() ? 'dark' : 'light') : pref;
+      document.documentElement.setAttribute('data-theme', resolved);
+      document.querySelector('meta[name=theme-color]').setAttribute('content', resolved === 'dark' ? '#262624' : '#FAF9F5');
+      document.querySelectorAll('[data-theme-set]').forEach((b) => b.classList.toggle('active', b.dataset.themeSet === pref));
+    }
+    document.querySelectorAll('[data-theme-set]').forEach((b) => b.addEventListener('click', () => {
+      localStorage.setItem('omai-theme', b.dataset.themeSet); applyTheme();
+    }));
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+    applyTheme();
+
+    // ── auth: the free question is only free once signed in (Google), so the
+    // gate comes first. Anonymous uids are free to mint (clear cookies → new
+    // uid → new free quota), which is why login precedes the reading.
+    onAuthStateChanged(auth, (user) => {
+      const signedIn = user && (!user.isAnonymous || LOCAL); // prod needs a real account; ?local allows anon for testing
+      if (user) {
+        const changed = state.uid && state.uid !== user.uid;
+        state.uid = user.uid;
+        // H2 fix: if the uid changed, the open WS was authed for the OLD uid and
+        // the server enforces decoded.uid===userId. Drop it so the next request
+        // reconnects under the new identity.
+        if (changed && state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
+        refreshProfileUI();
+      }
+      // Route the landing view off the gate only when appropriately signed in.
+      if (currentView() === 'auth') { if (signedIn) restoreOrRoute(); }
+      else if (!user) { show('auth'); }
+    });
+
+    // Returning signed-in user: restore birth details + regenerate the chart
+    // (the chart isn't persisted server-side — generateChart only streams it),
+    // so old sessions in the drawer become continuable. New user → onboarding.
+    let restoring = false;
+    async function restoreOrRoute() {
+      if (state.chart) { show('chat'); return; }
+      if (restoring) return; restoring = true;
+      try {
+        const snap = await getDoc(doc(db, `users/${state.uid}/metadata/dob`));
+        const d = snap.exists() ? snap.data() : null;
+        if (d && d.dob && d.coordinates) {
+          show('chat');
+          $('chatInner').innerHTML = '<div class="starter"><span class="typing">Loading your chart…</span></div>';
+          state.dateOfBirth = d.dob; state.coordinates = d.coordinates; state.birthPlace = d.birthPlace || null;
+          state.userName = d.name || state.userName; state.timeUnknown = !!d.timeUnknown;
+          await ensureWS();
+          state.chart = await new Promise((resolve, reject) => {
+            const timer = setTimeout(() => reject(new Error('Chart timed out')), 120000);
+            pending = { onChart: (c) => { clearTimeout(timer); resolve(c); }, onError: (e) => { clearTimeout(timer); reject(new Error(e)); } };
+            sendWS({ type: 'generateChart', userId: state.uid, conversationId: `web-${Date.now()}`, threadId: `web-${Date.now()}`, dateOfBirth: d.dob, coordinates: d.coordinates, timeUnknown: !!d.timeUnknown });
+          });
+          await refreshPremium();
+          renderEmptyChat(); refreshProfileUI();
+        } else {
+          show('onboarding');
+        }
+      } catch (_) {
+        show('onboarding');
+      } finally { restoring = false; }
+    }
+    // Dev convenience: ?local signs in anonymously so the flow is testable without
+    // the Google popup. Production shows the Continue-with-Google gate (no anon).
+    if (LOCAL) signInAnonymously(auth).catch((e) => { $('authStatus').textContent = 'Auth error: ' + e.message; });
+
+    $('signInBtn').addEventListener('click', async () => {
+      const btn = $('signInBtn'); btn.disabled = true; $('authStatus').textContent = 'Opening Google sign-in…';
+      try { await signInWithPopup(auth, new GoogleAuthProvider()); } // onAuthStateChanged advances the view
+      catch (e) { $('authStatus').textContent = friendlyAuthError(e); btn.disabled = false; }
+    });
+
+    // Apple sign-in (same Firebase project → same uid/account as the iOS app).
+    $('appleSignInBtn').addEventListener('click', async () => {
+      const btn = $('appleSignInBtn'); btn.disabled = true; $('authStatus').textContent = 'Opening Apple sign-in…';
+      try {
+        const provider = new OAuthProvider('apple.com');
+        provider.addScope('email'); provider.addScope('name');
+        await signInWithPopup(auth, provider); // onAuthStateChanged advances the view
+      } catch (e) { $('authStatus').textContent = friendlyAuthError(e); btn.disabled = false; }
+    });
+
+    // Popup-closed/cancelled is a user action, not an error worth shouting about.
+    function friendlyAuthError(e) {
+      const c = e?.code || '';
+      if (c === 'auth/popup-closed-by-user' || c === 'auth/cancelled-popup-request') return '';
+      if (c === 'auth/unauthorized-domain') return 'This domain isn’t authorized yet — please try again shortly.';
+      return e?.message || 'Sign-in failed.';
+    }
+
+    async function token() { return auth.currentUser ? auth.currentUser.getIdToken() : null; }
+
+    // ── geocode (OpenStreetMap Nominatim — MVP) ────────────────────
+    async function geocode(place) {
+      const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(place);
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      const arr = await res.json();
+      if (!arr.length) throw new Error('Could not find that place — try "City, Country".');
+      return { latitude: parseFloat(arr[0].lat), longitude: parseFloat(arr[0].lon) };
+    }
+
+    // Local birth wall-clock + chosen UTC offset → UTC ISO instant.
+    function toUtcISO(dateStr, timeStr, offsetHours) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const [hh, mm] = timeStr.split(':').map(Number);
+      const localMs = Date.UTC(y, m - 1, d, hh, mm, 0);
+      return new Date(localMs - offsetHours * 3600 * 1000).toISOString();
+    }
+
+    // ── WebSocket ──────────────────────────────────────────────────
+    function connectWS() {
+      return new Promise(async (resolve, reject) => {
+        const t = await token();
+        if (!state.uid || !t) return reject(new Error('Not signed in yet — try again.'));
+        const ws = new WebSocket(`${WS_BASE}?userId=${state.uid}&token=${t}`);
+        ws.onopen = () => { state.ws = ws; state.wsUid = state.uid; resolve(ws); };
+        ws.onerror = () => reject(new Error('Connection failed. Please retry.'));
+        ws.onclose = () => {
+          if (state.ws === ws) { state.ws = null; state.wsUid = null; }
+          // A mid-flight request would otherwise hang forever (button stuck,
+          // "consulting…" frozen). Surface a clean error so its promise resolves.
+          if (pending?.onError) { const p = pending; pending = null; p.onError('Connection lost — please retry.'); }
+        };
+        ws.onmessage = onWSMessage;
+      });
+    }
+    // Reuse only if open AND authed for the current uid (H2).
+    async function ensureWS() {
+      return (state.ws && state.ws.readyState === 1 && state.wsUid === state.uid) ? state.ws : connectWS();
+    }
+    function sendWS(obj) { state.ws.send(JSON.stringify(obj)); }
+
+    let pending = null;
+    function onWSMessage(ev) {
+      let m; try { m = JSON.parse(ev.data); } catch { return; }
+      switch (m.type) {
+        case 'astroChartData': pending?.onChart?.(m.data); break;
+        case 'delta':          pending?.onDelta?.(m.data); break;
+        case 'conversationId': state.conversationId = m.data; break;
+        case 'completion':     pending?.onDone?.(); break;
+        case 'paywall':        pending?.onPaywall?.(m.reason); break;
+        case 'error':          pending?.onError?.(m.data || 'Something went wrong.'); break;
+      }
+    }
+
+    // ── unknown birth time UX ──────────────────────────────────────
+    $('f-time-unknown').addEventListener('change', (e) => {
+      const on = e.target.checked;
+      state.timeUnknown = on;
+      $('f-time').disabled = on;
+      if (on) $('f-time').value = '12:00';
+      $('timeUnknownNote').style.display = on ? 'block' : 'none';
+    });
+
+    // ── onboarding → chart ─────────────────────────────────────────
+    try { $('f-dob').max = new Date().toISOString().slice(0, 10); } catch (_) {} // block future dates in the native picker
+    $('startBtn').addEventListener('click', async () => {
+      const dob = $('f-dob').value, place = $('f-place').value.trim();
+      const time = state.timeUnknown ? '12:00' : $('f-time').value;
+      const offset = parseFloat($('f-tz').value);
+      state.userName = $('f-name').value.trim() || null;
+      if (!dob || !time || !place) { $('onboardStatus').textContent = 'Please fill date, time and place of birth.'; return; }
+      // A birth date can't be in the future (or today) — guard against typos that
+      // would otherwise produce a nonsense chart.
+      if (new Date(`${dob}T${time || '12:00'}`) >= new Date()) { $('onboardStatus').textContent = 'Please enter a valid birth date in the past.'; return; }
+
+      const btn = $('startBtn'); btn.disabled = true;
+      const status = $('onboardStatus');
+      try {
+        status.textContent = 'Looking up your birth place…';
+        const coordinates = await geocode(place);
+        const dateOfBirth = toUtcISO(dob, time, offset);
+
+        status.textContent = 'Saving your birth details…';
+        await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
+          dob: dateOfBirth, coordinates, birthPlace: place, birthOffsetHours: offset,
+          name: state.userName, timeUnknown: state.timeUnknown, source: 'web', updatedAt: serverTimestamp(),
+        }, { merge: true });
+
+        status.textContent = 'Computing your Vedic chart… (this can take a few seconds)';
+        await ensureWS();
+        const chart = await new Promise((resolve, reject) => {
+          const timer = setTimeout(() => reject(new Error('Chart timed out — please retry.')), 120000);
+          pending = { onChart: (c) => { clearTimeout(timer); resolve(c); }, onError: (e) => { clearTimeout(timer); reject(new Error(e)); } };
+          sendWS({ type: 'generateChart', userId: state.uid, conversationId: state.conversationId || `web-${Date.now()}`, threadId: `web-${Date.now()}`, dateOfBirth, coordinates, timeUnknown: state.timeUnknown });
+        });
+        state.chart = chart;
+        state.dateOfBirth = dateOfBirth; state.coordinates = coordinates; state.birthPlace = place;
+        state.sessionId = null; state.conversationId = null; // fresh chart → fresh chat
+
+        await refreshPremium();
+        renderEmptyChat();
+        show('chat');
+        refreshProfileUI();
+      } catch (e) {
+        status.textContent = e.message || 'Something went wrong. Please retry.';
+        btn.disabled = false;
+      }
+    });
+
+    // ── chat ───────────────────────────────────────────────────────
+    const STARTERS = [
+      "What's my next big career window?",
+      "Walk me through 2027 — career, money, love",
+      "Describe my future spouse — looks, profession, when we'll meet",
+      "Am I in Sade Sati? When does it end?",
+    ];
+    function renderEmptyChat() {
+      const greet = state.userName ? `${state.userName}, your chart is ready` : 'Your chart is ready';
+      const inner = $('chatInner');
+      inner.innerHTML = `<div class="starter">
+        <div class="hero-icon">🪔</div>
+        <h2>${greet}</h2>
+        <p class="hint">${state.premium ? 'Ask me anything — career, marriage, money, health, or timing.' : 'Ask me anything. Your first question is free.'}</p>
+        <div id="chips"></div>
+      </div>`;
+      const chips = inner.querySelector('#chips');
+      STARTERS.forEach((s) => {
+        const b = document.createElement('button');
+        b.className = 'chip'; b.textContent = s;
+        b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); });
+        chips.appendChild(b);
+      });
+    }
+
+    function nearBottom() { const s = $('chatScroll'); return s.scrollHeight - s.scrollTop - s.clientHeight < 90; }
+    function maybeScroll(force) { if (force || nearBottom()) $('chatScroll').scrollTop = $('chatScroll').scrollHeight; }
+    $('chatScroll').addEventListener('scroll', () => { $('jumpBtn').style.display = nearBottom() ? 'none' : 'block'; });
+    $('jumpBtn').addEventListener('click', () => { maybeScroll(true); $('jumpBtn').style.display = 'none'; });
+
+    function renderMarkdown(el, text) {
+      try { el.innerHTML = DOMPurify.sanitize(marked.parse(text, { breaks: true })); }
+      catch { el.textContent = text; }
+    }
+    function clearStarter() { const s = $('chatInner').querySelector('.starter'); if (s) s.remove(); }
+    function addMsg(role, text) {
+      clearStarter();
+      const el = document.createElement('div');
+      el.className = `msg ${role}`;
+      el.setAttribute('aria-label', role === 'user' ? 'You' : 'Om.AI');
+      if (role === 'ai') { el.setAttribute('aria-live', 'polite'); renderMarkdown(el, text); }
+      else el.textContent = text;
+      $('chatInner').appendChild(el);
+      maybeScroll(true);
+      return el;
+    }
+
+    let asking = false; // single shared WS `pending` slot → serialize requests
+    async function ask() {
+      if (asking) return; // a stream is already in flight — ignore Enter/click spam
+      const input = $('composerInput'); const q = input.value.trim();
+      if (!q) return;
+      if (!state.premium && state.freeUsed) { show('paywall'); return; }
+
+      asking = true;
+      input.value = ''; autosize(); $('sendBtn').disabled = true;
+
+      // Open a persisted session on the first message of a new chat (same model
+      // as the app → these chats also show in the app's drawer for this uid).
+      let firstMsg = false;
+      if (!state.sessionId) {
+        try { state.sessionId = await createSession(); firstMsg = true; } catch (_) {}
+      }
+
+      addMsg('user', q);
+      saveMessage('user', q);
+      const aiEl = addMsg('ai', ''); aiEl.innerHTML = '<span class="typing">consulting your chart…</span>';
+      let acc = '';
+
+      try {
+        await ensureWS();
+        await new Promise((resolve) => {
+          pending = {
+            onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
+            onDone: () => resolve(),
+            onPaywall: () => { aiEl.remove(); show('paywall'); resolve(); },
+            onError: (e) => { aiEl.textContent = e; resolve(); },
+          };
+          sendWS({
+            // Thread by the session id (like the app); let the backend resolve/assign
+            // conversationId from its threadId→conversation map. Don't pass a Firestore
+            // doc-id as conversationId — the backend never issued it and will error.
+            type: 'astro', userId: state.uid,
+            conversationId: state.conversationId, threadId: state.sessionId || state.conversationId || `web-${Date.now()}`,
+            message: q, astrologyData: state.chart,
+            dateOfBirth: state.dateOfBirth, coordinates: state.coordinates,
+            language: 'en', userName: state.userName, timeUnknown: state.timeUnknown,
+          });
+        });
+      } catch (e) {
+        aiEl.textContent = 'Connection error — please retry.';
+        input.value = q; autosize(); // preserve the question on error
+      } finally {
+        asking = false;
+        $('sendBtn').disabled = false;
+        if (acc) {
+          saveMessage('bot', acc);
+          touchSession(firstMsg ? q : null);
+          if (firstMsg) fetchSessions(); // surface the new session in the drawer
+        }
+        if (!state.premium && acc) {
+          state.freeUsed = true;
+          $('chatStatus').textContent = 'That was your free question. Continue for unlimited answers.';
+        }
+      }
+    }
+
+    function autosize() { const t = $('composerInput'); t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 120) + 'px'; }
+    $('composerInput').addEventListener('input', autosize);
+    $('sendBtn').addEventListener('click', ask);
+    $('composerInput').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } });
+
+    function startNewChat() {
+      if (!state.chart) { show('onboarding'); return; }
+      state.conversationId = null; state.sessionId = null;
+      renderEmptyChat(); $('chatStatus').textContent = ''; renderHistory(); show('chat');
+    }
+    $('newChatBtn').addEventListener('click', startNewChat);
+
+    // ── Drawer (mirrors CustomAstroDrawerContent) ──────────────────────────
+    const openDrawer = () => { $('drawer').classList.add('open'); $('drawerOverlay').classList.add('open'); fetchSessions(); };
+    const closeDrawer = () => { $('drawer').classList.remove('open'); $('drawerOverlay').classList.remove('open'); };
+    $('menuBtn').addEventListener('click', openDrawer);
+    $('drawerOverlay').addEventListener('click', closeDrawer);
+    $('drawerNewChat').addEventListener('click', () => { closeDrawer(); startNewChat(); });
+    $('diBirth').addEventListener('click', () => { closeDrawer(); openBirthModal(); });
+    $('diEdit').addEventListener('click', () => { closeDrawer(); editBirth(); });
+    $('diPremium').addEventListener('click', () => { closeDrawer(); show('paywall'); });
+    $('birthModalClose').addEventListener('click', () => $('birthModal').classList.remove('open'));
+    $('birthModal').addEventListener('click', (e) => { if (e.target === $('birthModal')) $('birthModal').classList.remove('open'); });
+    // Escape closes whichever overlay is open (a11y).
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if ($('birthModal').classList.contains('open')) $('birthModal').classList.remove('open');
+      else if ($('drawer').classList.contains('open')) closeDrawer();
+    });
+    function openBirthModal() {
+      $('bmDob').textContent = state.dateOfBirth ? new Date(state.dateOfBirth).toLocaleString() : 'Not set';
+      $('bmPlace').textContent = state.birthPlace || 'Not set';
+      $('birthModal').classList.add('open');
+    }
+    function editBirth() {
+      if (state.userName) $('f-name').value = state.userName;
+      if (state.birthPlace) $('f-place').value = state.birthPlace;
+      show('onboarding');
+    }
+    function refreshDrawer() { $('diPremium').style.display = state.premium ? 'none' : 'flex'; }
+
+    // ── Astro session persistence (same Firestore model as the app) ────────
+    // Sessions: users/{uid}/astro_sessions ; messages: users/{uid}/astro_chats
+    async function createSession() {
+      const ref = await addDoc(collection(db, `users/${state.uid}/astro_sessions`),
+        { lastActive: serverTimestamp(), isCompatibility: false, createdAt: serverTimestamp(), source: 'web' });
+      return ref.id;
+    }
+    async function saveMessage(sender, text) {
+      if (!state.sessionId || !text) return;
+      try {
+        await addDoc(collection(db, `users/${state.uid}/astro_chats`),
+          { session_id: state.sessionId, text, sender, timestamp: serverTimestamp(), clientTimestamp: Date.now() });
+      } catch (_) { /* non-fatal: transcript save best-effort */ }
+    }
+    async function touchSession(firstUserMsg) {
+      try {
+        const patch = { lastActive: serverTimestamp() };
+        if (firstUserMsg) patch.firstMessagePreview = firstUserMsg.split(/\s+/).slice(0, 6).join(' ');
+        await updateDoc(doc(db, `users/${state.uid}/astro_sessions`, state.sessionId), patch);
+      } catch (_) {}
+    }
+    async function fetchSessions() {
+      const host = $('drawerHistory');
+      if (!state.uid) { host.innerHTML = '<div class="empty">Sign in to see your chats.</div>'; return; }
+      host.innerHTML = '<div class="empty">Loading…</div>';
+      try {
+        const q = query(collection(db, `users/${state.uid}/astro_sessions`),
+          where('isCompatibility', '==', false), orderBy('lastActive', 'desc'), limit(20));
+        const snap = await getDocs(q);
+        window.__sessions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderHistory();
+      } catch (e) { host.innerHTML = '<div class="empty">Couldn’t load chats.</div>'; }
+    }
+    function renderHistory() {
+      const host = $('drawerHistory'); const sessions = window.__sessions || [];
+      if (!sessions.length) { host.innerHTML = '<div class="empty">No past chats yet.</div>'; return; }
+      host.innerHTML = '';
+      sessions.forEach(s => {
+        const el = document.createElement('div');
+        el.className = 'sess' + (s.id === state.sessionId ? ' active' : '');
+        const title = s.firstMessagePreview || 'New chat';
+        el.innerHTML = `<span class="t"></span><button class="del" title="Delete" aria-label="Delete chat">🗑</button>`;
+        el.querySelector('.t').textContent = title;
+        el.querySelector('.t').addEventListener('click', () => loadSession(s.id));
+        el.querySelector('.del').addEventListener('click', (ev) => { ev.stopPropagation(); deleteSession(s.id, title); });
+        host.appendChild(el);
+      });
+    }
+    async function loadSession(id) {
+      closeDrawer();
+      if (!state.chart) { show('onboarding'); return; } // need a chart to continue the thread
+      state.sessionId = id; state.conversationId = null; // backend re-resolves the thread; conversationId comes back over WS
+      $('chatInner').innerHTML = '<div class="starter"><span class="typing">Loading…</span></div>';
+      show('chat');
+      try {
+        const q = query(collection(db, `users/${state.uid}/astro_chats`),
+          where('session_id', '==', id), orderBy('timestamp', 'asc'));
+        const snap = await getDocs(q);
+        $('chatInner').innerHTML = '';
+        snap.docs.forEach(d => { const m = d.data(); addMsg(m.sender === 'bot' ? 'ai' : 'user', m.text || ''); });
+        if (!snap.size) renderEmptyChat();
+        maybeScroll(true); renderHistory();
+      } catch (e) { renderEmptyChat(); }
+    }
+    async function deleteSession(id, title) {
+      if (!confirm(`Delete “${title}”?`)) return;
+      try {
+        const q = query(collection(db, `users/${state.uid}/astro_chats`), where('session_id', '==', id));
+        const snap = await getDocs(q);
+        await Promise.all(snap.docs.map(d => deleteDoc(doc(db, `users/${state.uid}/astro_chats`, d.id))));
+        await deleteDoc(doc(db, `users/${state.uid}/astro_sessions`, id));
+      } catch (_) {}
+      if (state.sessionId === id) startNewChat();
+      fetchSessions();
+    }
+
+    // ── settings / profile navigation ──────────────────────────────
+    $('settingsBtn').addEventListener('click', () => { closeDrawer(); refreshSubUI(); show('settings'); });
+    document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => {
+      show(b.dataset.back === 'settings' ? 'settings' : prevView);
+    }));
+    $('goProfile').addEventListener('click', () => { refreshProfileUI(); show('profile'); });
+    $('editBirth').addEventListener('click', () => {
+      // prefill known values and return to onboarding
+      if (state.userName) $('f-name').value = state.userName;
+      if (state.birthPlace) $('f-place').value = state.birthPlace;
+      show('onboarding');
+    });
+    $('signOutBtn').addEventListener('click', async () => {
+      try { await signOut(auth); } catch (_) {}
+      Object.assign(state, { chart: null, conversationId: null, premium: false, freeUsed: false, uid: null });
+      if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
+      show('auth'); // onAuthStateChanged(null) also routes here; for ?local it re-anons
+      if (LOCAL) await signInAnonymously(auth).catch(() => {});
+    });
+    $('manageSub').addEventListener('click', async () => {
+      if (!state.premium) { show('paywall'); return; }
+      if (!confirm('Cancel your subscription? You keep access until the end of your current billing period.')) return;
+      try {
+        const t = await token();
+        const r = await fetch(`${API}/api/web/razorpay/cancel`, { method: 'POST', headers: { 'Authorization': `Bearer ${t}` } });
+        if (!r.ok) throw new Error('Could not cancel');
+        $('subSub').textContent = 'Cancels at period end';
+        alert('Your subscription will not renew. You keep access until the end of your current period.');
+      } catch (e) { alert(e.message || 'Could not cancel — please try again.'); }
+    });
+
+    function refreshProfileUI() {
+      const u = auth.currentUser;
+      $('pfName').textContent = state.userName || (u && !u.isAnonymous ? (u.displayName || 'User') : 'Guest');
+      $('pfEmail').textContent = (u && !u.isAnonymous && u.email) ? u.email : 'Not signed in';
+      $('pfBirth').textContent = state.dateOfBirth
+        ? `${new Date(state.dateOfBirth).toLocaleDateString()}${state.birthPlace ? ' · ' + state.birthPlace : ''}`
+        : 'Not set';
+      refreshDrawer();
+    }
+    function refreshSubUI() {
+      $('subSub').textContent = state.premium ? 'Premium · tap to cancel' : 'Free plan · tap to upgrade';
+    }
+
+    // ── premium status ─────────────────────────────────────────────
+    const cookie = (n) => { const m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)'); return m ? m.pop() : undefined; };
+    async function refreshPremium() {
+      try {
+        const t = await token();
+        if (!t) return;
+        const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${t}` } }).then(r => r.json()).catch(() => ({}));
+        if (s && s.active) { state.premium = true; state.freeUsed = false; return; }
+        state.premium = false;
+        // Not premium → derive freeUsed from the shared question ledger, so a
+        // returning free user who already spent their question on a fresh page
+        // load (freeUsed defaults false) doesn't get a second free answer.
+        try {
+          const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
+          const remaining = snap.exists() ? Number(snap.data()?.remaining) : null;
+          if (Number.isFinite(remaining)) state.freeUsed = remaining <= 0;
+        } catch (_) { /* leave freeUsed as-is */ }
+      } catch (_) { /* ignore — fall back to free-Q flow */ }
+    }
+
+    // ── paywall: plan select + account link + Razorpay checkout ─────
+    let chosenPlan = 'yearly';
+    document.querySelectorAll('.plan').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('.plan').forEach((x) => { x.classList.remove('active'); x.setAttribute('aria-checked', 'false'); });
+      b.classList.add('active'); b.setAttribute('aria-checked', 'true'); chosenPlan = b.dataset.plan;
+    }));
+
+    async function linkAccount() {
+      const u = auth.currentUser;
+      if (u && !u.isAnonymous) return u;
+      const provider = new GoogleAuthProvider();
+      try {
+        const res = (u && u.isAnonymous) ? await linkWithPopup(u, provider) : await signInWithPopup(auth, provider);
+        return res.user;
+      } catch (e) {
+        if (e.code === 'auth/credential-already-in-use' || e.code === 'auth/email-already-in-use') {
+          return (await signInWithPopup(auth, provider)).user;
+        }
+        throw e;
+      }
+    }
+
+    // Reconstruct _fbc from the fbclid URL param if the cookie is absent (Meta match quality).
+    function getFbc() {
+      const c = cookie('_fbc'); if (c) return c;
+      const fbclid = new URLSearchParams(location.search).get('fbclid');
+      return fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined;
+    }
+
+    $('subscribeBtn').addEventListener('click', async () => {
+      const status = $('paywallStatus'); const btn = $('subscribeBtn'); btn.disabled = true;
+      try {
+        status.textContent = 'Signing you in…';
+        const prevUid = state.uid;
+        await linkAccount();
+        state.uid = auth.currentUser.uid;
+        // uid may have changed → drop any stale WS so future asks reconnect (H2).
+        if (state.ws && state.wsUid !== state.uid) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
+        // Link COLLISION: Google account already belonged to a different uid, so
+        // linkAccount() signed into THAT account instead of linking. The chart +
+        // birth details were saved under the old (anon) uid — migrate them from
+        // in-memory state so the paying account isn't empty on next reload.
+        if (state.uid !== prevUid && state.dateOfBirth && state.coordinates) {
+          try {
+            await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
+              dob: state.dateOfBirth, coordinates: state.coordinates, birthPlace: state.birthPlace || null,
+              name: state.userName || null, timeUnknown: !!state.timeUnknown, source: 'web', updatedAt: serverTimestamp(),
+            }, { merge: true });
+          } catch (_) { /* best-effort — restoreOrRoute will re-onboard if missing */ }
+        }
+        const t = await token();
+
+        status.textContent = 'Starting your subscription…';
+        const r = await fetch(`${API}/api/web/razorpay/create-subscription`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
+          body: JSON.stringify({ plan: chosenPlan, fbp: cookie('_fbp'), fbc: getFbc(), eventSourceUrl: location.href }),
+        });
+        if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start subscription');
+        const { subscriptionId, keyId } = await r.json();
+
+        const rzp = new Razorpay({
+          key: keyId,
+          subscription_id: subscriptionId,
+          name: 'Om.AI',
+          description: `Om.AI Premium (${chosenPlan})`,
+          prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
+          theme: { color: '#D97757' },
+          handler: async () => {
+            status.textContent = 'Activating your premium…';
+            for (let i = 0; i < 10; i++) {
+              await new Promise((res) => setTimeout(res, 2000));
+              const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json()).catch(() => ({}));
+              if (s.active) { state.premium = true; state.freeUsed = false; show('chat'); addMsg('ai', 'You are premium now — ask away.'); return; }
+            }
+            state.premium = true; state.freeUsed = false; show('chat');
+            addMsg('ai', 'Payment received — your premium will activate in a moment. Go ahead and ask.');
+          },
+          modal: { ondismiss: () => { btn.disabled = false; status.textContent = 'Checkout closed.'; } },
+        });
+        rzp.open();
+      } catch (e) {
+        status.textContent = e.message || 'Something went wrong. Please retry.';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
