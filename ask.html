@@ -173,6 +173,26 @@
     .msg.ai strong { font-weight:700; }
     .typing { color:var(--secondary); font-style:italic; }
 
+    /* Copy / Share controls under an AI answer (mirrors app ShareButton row) */
+    .msg-actions { display:flex; gap:.1rem; margin:.1rem 0 .5rem .1rem; align-self:stretch; }
+    .msg-act { display:inline-flex; align-items:center; gap:.35rem; background:transparent; border:none;
+      color:var(--secondary); cursor:pointer; font-family:inherit; font-size:.82rem; font-weight:600;
+      padding:.35rem .55rem; border-radius:8px; transition:background .15s,color .15s; }
+    .msg-act:hover { background:var(--border); color:var(--text); }
+    .msg-act svg { width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.8; }
+    .msg-act.copied { color:var(--success); }
+
+    /* Error row + Retry (mirrors app ChatUIComponents ErrorMessage) */
+    .err-row { align-self:stretch; max-width:100%; display:flex; align-items:center; gap:.75rem; margin:.4rem 0;
+      background:color-mix(in srgb, var(--error) 12%, transparent); border:1px solid color-mix(in srgb, var(--error) 38%, transparent);
+      border-radius:12px; padding:.7rem .9rem; }
+    .err-row .err-text { flex:1; color:var(--error); font-size:.92rem; line-height:1.4; }
+    .err-row .err-retry { flex:none; display:inline-flex; align-items:center; gap:.35rem; background:transparent;
+      border:1px solid color-mix(in srgb, var(--error) 50%, transparent); color:var(--error); font-family:inherit;
+      font-weight:600; font-size:.85rem; padding:.4rem .7rem; border-radius:9px; cursor:pointer; }
+    .err-row .err-retry:hover { background:color-mix(in srgb, var(--error) 16%, transparent); }
+    .err-row .err-retry svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; }
+
     /* Empty-state starter chips */
     .starter { max-width:560px; margin:auto; padding:1.5rem 0; text-align:center; }
     .starter .hero-icon { font-size:2.2rem; }
@@ -393,6 +413,23 @@
     </div>
   </div>
 
+  <!-- ── Downsell modal (exit-intent on subscription dismissal) ─────────
+       Mirrors the app's SecondChanceModal `pack_downsell` variant: when a user
+       backs out of the recurring-subscription sheet, offer the one-time ₹99 /
+       5-question pack instead of letting them leave empty-handed. -->
+  <div id="downsellModal" class="modal-overlay">
+    <div class="modal-card" style="max-width:340px;text-align:center;position:relative;">
+      <button class="iconbtn" id="downsellClose" aria-label="Close" style="position:absolute;top:.4rem;right:.4rem;">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+      </button>
+      <div style="font-size:2.4rem;">👋</div>
+      <h3 style="margin:.4rem 0 .5rem;font-size:1.35rem;">Not ready to subscribe?</h3>
+      <p class="hint" style="margin:0 0 1.1rem;">Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.</p>
+      <button id="downsellPackBtn" class="btn-primary">Try 5 questions · ₹99</button>
+      <button id="downsellLater" class="btn-ghost" style="margin-top:.55rem;">Maybe later</button>
+    </div>
+  </div>
+
   <!-- ── AUTH GATE (sign in before anything) ──────────────────────────── -->
   <div id="authView" class="view active">
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:440px;">
@@ -590,14 +627,22 @@
           <button data-theme-set="light">Light</button><button data-theme-set="dark">Dark</button><button data-theme-set="system">System</button>
         </div>
       </div>
+      <!-- Chat reply language (EN/HI). Wires `language` on the chat/compat WS
+           sends — the backend already returns Hindi. UI chrome stays English. -->
+      <div class="srow" style="cursor:default;"><span class="ic">🌐</span><span class="sr-main">Reply language<span class="sr-sub">Answers come back in this language</span></span>
+        <div class="seg" style="width:160px;" id="langSeg">
+          <button data-lang-set="en">English</button><button data-lang-set="hi">हिंदी</button>
+        </div>
+      </div>
 
       <div class="section-label">Help &amp; Legal</div>
+      <a class="srow" href="/support.html" target="_blank" rel="noopener"><span class="ic">💬</span><span class="sr-main">Help &amp; Support</span><span class="chev">›</span></a>
       <a class="srow" href="/privacy.html"><span class="ic">🛡️</span><span class="sr-main">Privacy</span><span class="chev">›</span></a>
       <a class="srow" href="/terms.html"><span class="ic">📄</span><span class="sr-main">About &amp; Terms</span><span class="chev">›</span></a>
 
       <div style="margin-top:1.5rem;">
         <button class="srow" id="signOutBtn"><span class="ic">🚪</span><span class="sr-main">Sign Out</span></button>
-        <div class="hint" style="text-align:center;margin-top:1rem;">Om.AI · Web</div>
+        <div class="hint" style="text-align:center;margin-top:1rem;">Om.AI · Web <span id="appVersion"></span></div>
       </div>
     </div></div>
   </div>
@@ -666,8 +711,12 @@
     const API = LOCAL ? 'http://localhost:3000' : 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
     // ── state ──────────────────────────────────────────────────────
+    // Web app version line (shown in Settings). Bump alongside notable web releases.
+    const APP_VERSION = '1.0';
     const state = { uid: null, chart: null, conversationId: null, sessionId: null, ws: null, wsUid: null,
                     freeUsed: false, premium: false, userName: null, dateOfBirth: null, coordinates: null,
+                    // Chat reply language (persisted). 'en' | 'hi' — default English.
+                    lang: (function(){ try { return localStorage.getItem('omai-lang') || 'en'; } catch(_) { return 'en'; } })(),
                     timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
                     // Relationship (compatibility) mode — mirrors the app's Personal↔Relationship toggle.
                     mode: 'personal', userGender: null, partnerGender: null,
@@ -709,6 +758,18 @@
     }));
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
     applyTheme();
+
+    // ── chat reply language (EN/HI) ────────────────────────────────
+    function applyLangUI() {
+      document.querySelectorAll('[data-lang-set]').forEach((b) => b.classList.toggle('active', b.dataset.langSet === state.lang));
+    }
+    document.querySelectorAll('[data-lang-set]').forEach((b) => b.addEventListener('click', () => {
+      state.lang = b.dataset.langSet;
+      try { localStorage.setItem('omai-lang', state.lang); } catch (_) {}
+      applyLangUI();
+    }));
+    applyLangUI();
+    try { const av = $('appVersion'); if (av) av.textContent = '· v' + APP_VERSION; } catch (_) {}
 
     // ── auth: the free question is only free once signed in (Google), so the
     // gate comes first. Anonymous uids are free to mint (clear cookies → new
@@ -1064,6 +1125,59 @@
       return el;
     }
 
+    // ── Copy / Share controls under an AI answer (mirrors app ShareButton) ──
+    // `getText()` is read lazily so streamed answers share their final text.
+    function attachMsgActions(aiEl, getText) {
+      if (aiEl.nextElementSibling && aiEl.nextElementSibling.classList?.contains('msg-actions')) return;
+      const bar = document.createElement('div');
+      bar.className = 'msg-actions';
+      bar.innerHTML =
+        `<button class="msg-act act-copy" type="button" aria-label="Copy answer">` +
+          `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8" stroke-linecap="round"/></svg>Copy</button>` +
+        `<button class="msg-act act-share" type="button" aria-label="Share answer">` +
+          `<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="19" r="2.4"/><path d="M8.1 10.9l7.8-4.6M8.1 13.1l7.8 4.6" stroke-linecap="round"/></svg>Share</button>`;
+      const copyBtn = bar.querySelector('.act-copy'), shareBtn = bar.querySelector('.act-share');
+      copyBtn.addEventListener('click', async () => {
+        const text = getText();
+        try {
+          if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
+          else { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+          copyBtn.classList.add('copied'); copyBtn.lastChild.textContent = 'Copied';
+          setTimeout(() => { copyBtn.classList.remove('copied'); copyBtn.lastChild.textContent = 'Copy'; }, 1600);
+        } catch (_) {}
+      });
+      shareBtn.addEventListener('click', async () => {
+        const text = getText() + ' — via Om.AI';
+        try {
+          if (navigator.share) { await navigator.share({ text, url: location.origin }); }
+          else if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text + ' ' + location.origin);
+            shareBtn.lastChild.textContent = 'Copied'; setTimeout(() => { shareBtn.lastChild.textContent = 'Share'; }, 1600);
+          }
+        } catch (_) { /* user cancelled the share sheet — non-fatal */ }
+      });
+      aiEl.insertAdjacentElement('afterend', bar);
+      return bar;
+    }
+
+    // ── Error row + Retry (mirrors app ChatUIComponents ErrorMessage). Replaces
+    // the in-flight AI bubble with a styled error; `onRetry` re-sends the last
+    // question. The composer text is always restored by the caller so nothing is lost.
+    function renderErrorRow(aiEl, message, onRetry) {
+      if (aiEl.nextElementSibling && aiEl.nextElementSibling.classList?.contains('msg-actions')) aiEl.nextElementSibling.remove();
+      const row = document.createElement('div');
+      row.className = 'err-row'; row.setAttribute('role', 'alert');
+      const span = document.createElement('span'); span.className = 'err-text'; span.textContent = message || 'Something went wrong.';
+      const btn = document.createElement('button');
+      btn.className = 'err-retry'; btn.type = 'button';
+      btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>Retry`;
+      btn.addEventListener('click', () => { row.remove(); onRetry(); });
+      row.appendChild(span); row.appendChild(btn);
+      aiEl.replaceWith(row);
+      maybeScroll(true);
+      return row;
+    }
+
     let asking = false; // single shared WS `pending` slot → serialize requests
     async function ask() {
       if (asking) return; // a stream is already in flight — ignore Enter/click spam
@@ -1085,7 +1199,9 @@
       addMsg('user', q);
       saveMessage('user', q);
       const aiEl = addMsg('ai', ''); aiEl.innerHTML = '<span class="typing">consulting your chart…</span>';
-      let acc = '';
+      let acc = '', errMsg = null, paywalled = false;
+      // Re-send the same question (composer already holds it via the restore below).
+      const retry = () => { $('composerInput').value = q; ask(); };
 
       try {
         await ensureWS();
@@ -1093,8 +1209,8 @@
           pending = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
             onDone: () => resolve(),
-            onPaywall: () => { aiEl.remove(); show('paywall'); resolve(); },
-            onError: (e) => { aiEl.textContent = e; resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; show('paywall'); resolve(); },
+            onError: (e) => { errMsg = e || 'Something went wrong.'; resolve(); },
           };
           sendWS({
             // Thread by the session id (like the app); let the backend resolve/assign
@@ -1104,15 +1220,23 @@
             conversationId: state.conversationId, threadId: state.sessionId || state.conversationId || `web-${Date.now()}`,
             message: q, astrologyData: state.chart,
             dateOfBirth: state.dateOfBirth, coordinates: state.coordinates,
-            language: 'en', userName: state.userName, timeUnknown: state.timeUnknown,
+            language: state.lang, userName: state.userName, timeUnknown: state.timeUnknown,
           });
         });
       } catch (e) {
-        aiEl.textContent = 'Connection error — please retry.';
-        input.value = q; autosize(); // preserve the question on error
+        errMsg = 'Connection error — please retry.';
       } finally {
         asking = false;
         $('sendBtn').disabled = false;
+        if (errMsg && !paywalled) {
+          // Styled error row + Retry; always restore the typed question so it isn't lost.
+          renderErrorRow(aiEl, errMsg, retry);
+          input.value = q; autosize();
+        } else if (acc) {
+          // Final render + Copy/Share controls under the answer.
+          renderMarkdown(aiEl, acc);
+          attachMsgActions(aiEl, () => acc);
+        }
         if (acc) {
           saveMessage('bot', acc);
           touchSession(firstMsg ? q : null);
@@ -1328,15 +1452,16 @@
       if (!state.compatSessionId) { try { state.compatSessionId = await createCompatSession(); firstMsg = true; } catch (_) {} }
       addMsg('user', q); saveCompatMessage('user', q);
       const aiEl = addMsg('ai', ''); aiEl.innerHTML = '<span class="typing">analyzing your compatibility…</span>';
-      let acc = '';
+      let acc = '', errMsg = null, paywalled = false;
+      const retry = () => { $('composerInput').value = q; askCompat(q); };
       try {
         await ensureWS();
         await new Promise((resolve) => {
           pending = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
             onDone: () => resolve(),
-            onPaywall: () => { aiEl.remove(); show('paywall'); resolve(); },
-            onError: (e) => { aiEl.textContent = e; resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; show('paywall'); resolve(); },
+            onError: (e) => { errMsg = e || 'Something went wrong.'; resolve(); },
           };
           sendWS({
             type: 'compatibilityQuestion', userId: state.uid,
@@ -1345,13 +1470,20 @@
             message: q, compatibilityReport: state.compatReport,
             astrologyData: { userChart: state.chart, partnerChart: state.partnerChart },
             dateOfBirth: state.dateOfBirth, partnerDateOfBirth: state.partner?.dob || null,
-            coordinates: state.coordinates, language: 'en', userName: state.userName,
+            coordinates: state.coordinates, language: state.lang, userName: state.userName,
           });
         });
       } catch (e) {
-        aiEl.textContent = 'Connection error — please retry.'; input.value = q; autosize();
+        errMsg = 'Connection error — please retry.';
       } finally {
         asking = false; $('sendBtn').disabled = false;
+        if (errMsg && !paywalled) {
+          renderErrorRow(aiEl, errMsg, retry);
+          input.value = q; autosize();
+        } else if (acc) {
+          renderMarkdown(aiEl, acc);
+          attachMsgActions(aiEl, () => acc);
+        }
         if (acc) { saveCompatMessage('bot', acc); touchCompatSession(firstMsg ? q : null); if (firstMsg) fetchSessions(); }
         if (!state.premium && acc) { state.freeUsed = true; $('chatStatus').textContent = 'That was your free question. Continue for unlimited answers.'; }
       }
@@ -1755,72 +1887,111 @@
       return fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined;
     }
 
+    // Sign in / link the account and migrate birth details if the uid collided.
+    // Shared by both checkout paths + the downsell so the buyer's account is set up
+    // exactly once, consistently. Returns { t, attribution }.
+    async function prepareAccountForCheckout() {
+      const prevUid = state.uid;
+      await linkAccount();
+      state.uid = auth.currentUser.uid;
+      // uid may have changed → drop any stale WS so future asks reconnect (H2).
+      if (state.ws && state.wsUid !== state.uid) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
+      // Link COLLISION: Google account already belonged to a different uid, so
+      // linkAccount() signed into THAT account instead of linking. The chart +
+      // birth details were saved under the old (anon) uid — migrate them from
+      // in-memory state so the paying account isn't empty on next reload.
+      if (state.uid !== prevUid && state.dateOfBirth && state.coordinates) {
+        try {
+          await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
+            dob: state.dateOfBirth, coordinates: state.coordinates, birthCoordinates: state.coordinates,
+            birthPlace: state.birthPlace || null, birthTimezone: state.birthTimezone || null,
+            name: state.userName || null, source: 'web', updatedAt: serverTimestamp(),
+          }, { merge: true });
+        } catch (_) { /* best-effort — restoreOrRoute will re-onboard if missing */ }
+      }
+      const t = await token();
+      const attribution = { fbp: cookie('_fbp'), fbc: getFbc(), eventSourceUrl: location.href };
+      return { t, attribution };
+    }
+
+    // ── one-time question pack (Razorpay Orders API). Reused by the paywall
+    // pack option AND the subscription-dismissal downsell. `onDismiss` lets the
+    // caller decide what happens when the user closes the pack sheet too. ──
+    async function runPackCheckout({ status, onDismiss } = {}) {
+      const setStatus = (s) => { if (status) status.textContent = s; };
+      setStatus('Signing you in…');
+      const { t, attribution } = await prepareAccountForCheckout();
+      setStatus('Starting your purchase…');
+      const r = await fetch(`${API}/api/web/razorpay/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
+        body: JSON.stringify({ pack: 'basic', ...attribution }),
+      });
+      if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start purchase');
+      const { orderId, keyId, amount, currency, questions } = await r.json();
+
+      const rzp = new Razorpay({
+        key: keyId,
+        order_id: orderId,
+        amount, currency,
+        name: 'Om.AI',
+        description: `${questions} questions`,
+        prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
+        theme: { color: '#D97757' },
+        handler: async () => {
+          setStatus('Adding your questions…');
+          // Poll the shared question ledger — the webhook credits remaining +N.
+          for (let i = 0; i < 10; i++) {
+            await new Promise((res) => setTimeout(res, 2000));
+            try {
+              const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
+              const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
+              if (Number.isFinite(rem) && rem > 0) {
+                state.freeUsed = false; show('chat');
+                addMsg('ai', `${questions} questions added — ask away.`); return;
+              }
+            } catch (_) { /* keep polling */ }
+          }
+          state.freeUsed = false; show('chat');
+          addMsg('ai', 'Payment received — your questions will be added in a moment. Go ahead and ask.');
+        },
+        modal: { ondismiss: () => { setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
+      });
+      rzp.open();
+    }
+
+    // ── Downsell on subscription dismissal (revenue): show once per session. ──
+    let downsellShownThisSession = false;
+    function openDownsell() {
+      downsellShownThisSession = true;
+      $('downsellModal').classList.add('open');
+    }
+    function closeDownsell() { $('downsellModal').classList.remove('open'); }
+    $('downsellClose').addEventListener('click', closeDownsell);
+    $('downsellLater').addEventListener('click', closeDownsell);
+    $('downsellModal').addEventListener('click', (e) => { if (e.target === $('downsellModal')) closeDownsell(); });
+    $('downsellPackBtn').addEventListener('click', async () => {
+      const dbtn = $('downsellPackBtn'); dbtn.disabled = true;
+      closeDownsell();
+      // Reflect the choice in the paywall UI + run the SAME pack checkout path.
+      const packPlan = document.querySelector('.plan[data-plan="pack"]');
+      if (packPlan) packPlan.click();
+      try { await runPackCheckout({ status: $('paywallStatus') }); }
+      catch (e) { $('paywallStatus').textContent = e.message || 'Something went wrong. Please retry.'; }
+      finally { dbtn.disabled = false; $('subscribeBtn').disabled = false; }
+    });
+
     $('subscribeBtn').addEventListener('click', async () => {
       const status = $('paywallStatus'); const btn = $('subscribeBtn'); btn.disabled = true;
       try {
-        status.textContent = 'Signing you in…';
-        const prevUid = state.uid;
-        await linkAccount();
-        state.uid = auth.currentUser.uid;
-        // uid may have changed → drop any stale WS so future asks reconnect (H2).
-        if (state.ws && state.wsUid !== state.uid) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
-        // Link COLLISION: Google account already belonged to a different uid, so
-        // linkAccount() signed into THAT account instead of linking. The chart +
-        // birth details were saved under the old (anon) uid — migrate them from
-        // in-memory state so the paying account isn't empty on next reload.
-        if (state.uid !== prevUid && state.dateOfBirth && state.coordinates) {
-          try {
-            await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
-              dob: state.dateOfBirth, coordinates: state.coordinates, birthCoordinates: state.coordinates,
-              birthPlace: state.birthPlace || null, birthTimezone: state.birthTimezone || null,
-              name: state.userName || null, source: 'web', updatedAt: serverTimestamp(),
-            }, { merge: true });
-          } catch (_) { /* best-effort — restoreOrRoute will re-onboard if missing */ }
-        }
-        const t = await token();
-        const attribution = { fbp: cookie('_fbp'), fbc: getFbc(), eventSourceUrl: location.href };
-
         // ── one-time question pack (Razorpay Orders API) ──────────────
         if (chosenKind === 'pack') {
-          status.textContent = 'Starting your purchase…';
-          const r = await fetch(`${API}/api/web/razorpay/create-order`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
-            body: JSON.stringify({ pack: 'basic', ...attribution }),
-          });
-          if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start purchase');
-          const { orderId, keyId, amount, currency, questions } = await r.json();
-
-          const rzp = new Razorpay({
-            key: keyId,
-            order_id: orderId,
-            amount, currency,
-            name: 'Om.AI',
-            description: `${questions} questions`,
-            prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
-            theme: { color: '#D97757' },
-            handler: async () => {
-              status.textContent = 'Adding your questions…';
-              // Poll the shared question ledger — the webhook credits remaining +N.
-              for (let i = 0; i < 10; i++) {
-                await new Promise((res) => setTimeout(res, 2000));
-                try {
-                  const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
-                  const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
-                  if (Number.isFinite(rem) && rem > 0) {
-                    state.freeUsed = false; show('chat');
-                    addMsg('ai', `${questions} questions added — ask away.`); return;
-                  }
-                } catch (_) { /* keep polling */ }
-              }
-              state.freeUsed = false; show('chat');
-              addMsg('ai', 'Payment received — your questions will be added in a moment. Go ahead and ask.');
-            },
-            modal: { ondismiss: () => { btn.disabled = false; status.textContent = 'Checkout closed.'; } },
-          });
-          rzp.open();
+          await runPackCheckout({ status, onDismiss: () => { btn.disabled = false; } });
           return;
         }
+
+        status.textContent = 'Signing you in…';
+        const { t, attribution } = await prepareAccountForCheckout();
 
         // ── recurring subscription (Razorpay Subscriptions API) ───────
         status.textContent = 'Starting your subscription…';
@@ -1849,7 +2020,11 @@
             state.premium = true; state.freeUsed = false; show('chat');
             addMsg('ai', 'Payment received — your premium will activate in a moment. Go ahead and ask.');
           },
-          modal: { ondismiss: () => { btn.disabled = false; status.textContent = 'Checkout closed.'; } },
+          // Subscription dismissed → exit-intent downsell to the ₹99 pack (once/session).
+          modal: { ondismiss: () => {
+            btn.disabled = false; status.textContent = 'Checkout closed.';
+            if (!downsellShownThisSession) setTimeout(openDownsell, 250);
+          } },
         });
         rzp.open();
       } catch (e) {
