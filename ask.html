@@ -298,6 +298,12 @@
           <svg width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
           Continue with Apple
         </button>
+        <div class="hint" style="display:flex;align-items:center;gap:.6rem;margin:.9rem 0;">
+          <span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>or<span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>
+        </div>
+        <input id="f-email" class="field" type="email" placeholder="Email" autocomplete="email" style="margin-bottom:.5rem;">
+        <input id="f-pass" class="field" type="password" placeholder="Password" autocomplete="current-password" style="margin-bottom:.6rem;">
+        <button id="emailSignInBtn" class="btn-primary">Continue with email</button>
         <div id="authStatus" class="status-line" style="text-align:center;"></div>
       </div>
       <div class="trust">
@@ -463,7 +469,7 @@
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-    import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     // Public Firebase web config (same project as the app — client config is not secret).
@@ -596,11 +602,41 @@
       } catch (e) { $('authStatus').textContent = friendlyAuthError(e); btn.disabled = false; }
     });
 
+    // Email/password — same Firebase project → same account/uid as the app's
+    // email/password users, so their chart + chat history + subscription carry
+    // over. Try sign-in first; if the email is new, create it. A wrong password
+    // on an existing email surfaces as email-already-in-use on the create step.
+    $('emailSignInBtn').addEventListener('click', async () => {
+      const email = $('f-email').value.trim(), pass = $('f-pass').value;
+      if (!email || !pass) { $('authStatus').textContent = 'Enter your email and password.'; return; }
+      if (pass.length < 6) { $('authStatus').textContent = 'Password must be at least 6 characters.'; return; }
+      const btn = $('emailSignInBtn'); btn.disabled = true; $('authStatus').textContent = 'Signing you in…';
+      try {
+        await signInWithEmailAndPassword(auth, email, pass); // onAuthStateChanged advances the view
+      } catch (e1) {
+        const c = e1?.code || '';
+        if (c === 'auth/invalid-credential' || c === 'auth/user-not-found' || c === 'auth/wrong-password') {
+          try {
+            $('authStatus').textContent = 'Creating your account…';
+            await createUserWithEmailAndPassword(auth, email, pass); // new user → onAuthStateChanged advances
+          } catch (e2) {
+            $('authStatus').textContent = (e2?.code === 'auth/email-already-in-use')
+              ? 'That email is already registered — check your password, or use Google/Apple.'
+              : friendlyAuthError(e2);
+            btn.disabled = false;
+          }
+        } else { $('authStatus').textContent = friendlyAuthError(e1); btn.disabled = false; }
+      }
+    });
+
     // Popup-closed/cancelled is a user action, not an error worth shouting about.
     function friendlyAuthError(e) {
       const c = e?.code || '';
       if (c === 'auth/popup-closed-by-user' || c === 'auth/cancelled-popup-request') return '';
       if (c === 'auth/unauthorized-domain') return 'This domain isn’t authorized yet — please try again shortly.';
+      if (c === 'auth/invalid-email') return 'That doesn’t look like a valid email.';
+      if (c === 'auth/weak-password') return 'Password must be at least 6 characters.';
+      if (c === 'auth/too-many-requests') return 'Too many attempts — please wait a minute and try again.';
       return e?.message || 'Sign-in failed.';
     }
 
