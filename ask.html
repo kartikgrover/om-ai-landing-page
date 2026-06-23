@@ -26,6 +26,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- ── PREVIEW GATE ───────────────────────────────────────────────────────
+       Hides the web app from the public while it's being finished. Bypass with
+       ?preview=omai-preview-2026 (persisted to localStorage → once per browser).
+       To relaunch: delete this <script>+<style>, the #omaiMaintenance div in
+       <body>, and the `window.__OMAI_LOCKED__` guard at the top of the module. -->
+  <script>
+    (function () {
+      var TOKEN = 'omai-preview-2026';
+      var ok = false;
+      try {
+        var q = new URLSearchParams(location.search).get('preview');
+        if (q === TOKEN) localStorage.setItem('omai_preview', TOKEN);
+        ok = (q === TOKEN) || (localStorage.getItem('omai_preview') === TOKEN);
+      } catch (e) { ok = false; }
+      if (!ok) { window.__OMAI_LOCKED__ = true; document.documentElement.className += ' locked'; }
+    })();
+  </script>
+  <style>
+    #omaiMaintenance { display: none; }
+    html.locked body > *:not(#omaiMaintenance) { display: none !important; }
+    html.locked #omaiMaintenance {
+      display: flex; position: fixed; inset: 0; z-index: 99999; box-sizing: border-box;
+      flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      gap: 1rem; padding: 2rem; background: #1a1714; color: #f3ede3;
+      font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+    }
+    html.locked #omaiMaintenance h1 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; font-size: clamp(1.8rem, 5vw, 2.6rem); margin: .25rem 0 0; }
+    html.locked #omaiMaintenance p { color: #b8ad9c; max-width: 30rem; line-height: 1.55; margin: 0; }
+    html.locked #omaiMaintenance a.cta { margin-top: .6rem; background: #D97757; color: #fff; text-decoration: none; padding: .85rem 1.7rem; border-radius: 12px; font-weight: 600; }
+  </style>
   <title>Ask Om.AI — Free Vedic Astrology Chat from Your Birth Chart</title>
   <meta name="description" content="Ask your real Vedic birth chart anything — career, marriage, money, health. Your first question is free, 24/7.">
   <link rel="canonical" href="https://omai.app/ask.html">
@@ -306,6 +336,14 @@
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 </head>
 <body>
+  <!-- Preview-gate screen (shown when not bypassed — see <head>). Must be a direct child of <body>. -->
+  <div id="omaiMaintenance" aria-hidden="true">
+    <div style="font-size:2.6rem;">🪔</div>
+    <h1>Coming soon to web</h1>
+    <p>We're putting the finishing touches on the Om.AI web experience — it'll be live here shortly.</p>
+    <p>Meanwhile, get the full app for the complete experience.</p>
+    <a class="cta" href="/">Get the Om.AI app →</a>
+  </div>
   <!-- ── App bar (mirrors AstroScreen: hamburger ↔ drawer, new chat) ────── -->
   <header class="appbar">
     <button class="iconbtn" id="menuBtn" title="Menu" aria-label="Open menu">
@@ -442,10 +480,6 @@
       </div>
       <p class="hint" style="margin-bottom:1rem;">Add your partner's birth details for a Vedic compatibility report — Gun Milan (Ashtakoot), Mangal dosha, navamsa and dasha timing.</p>
       <div class="card">
-        <label>Your gender</label>
-        <div class="gender-seg" id="userGenderSeg" style="margin-bottom:1rem;">
-          <button type="button" data-g="male">Male</button><button type="button" data-g="female">Female</button>
-        </div>
         <div style="margin-bottom:1rem;">
           <label for="p-name">Partner's name <span class="hint">(optional)</span></label>
           <input id="p-name" class="field" type="text" placeholder="Partner's name" autocomplete="off">
@@ -471,9 +505,10 @@
           </select>
         </div>
         <label>Partner's gender</label>
-        <div class="gender-seg" id="partnerGenderSeg" style="margin-bottom:1.1rem;">
+        <div class="gender-seg" id="partnerGenderSeg" style="margin-bottom:.5rem;">
           <button type="button" data-g="male">Male</button><button type="button" data-g="female">Female</button>
         </div>
+        <p class="hint" style="margin-bottom:1.1rem;">Gun Milan (Ashtakoot) matches an opposite-gender pair — your role is set automatically.</p>
         <button id="compatGenBtn" class="btn-primary">Generate compatibility</button>
         <div id="compatSetupStatus" class="status-line"></div>
       </div>
@@ -612,6 +647,9 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    // Preview gate (see <head>): when locked, bail before any Firebase/WS init.
+    if (window.__OMAI_LOCKED__) throw new Error('Om.AI web is in preview — gated.');
 
     // Public Firebase web config (same project as the app — client config is not secret).
     const firebaseApp = initializeApp({
@@ -1092,9 +1130,11 @@
         b.classList.add('active'); set(b.dataset.g);
       }));
     }
-    function setPartnerGenderUI(g) { setupPartnerGender = g; document.querySelectorAll('#partnerGenderSeg button').forEach((x) => x.classList.toggle('active', x.dataset.g === g)); }
-    bindGenderSeg('userGenderSeg', (g) => { setupUserGender = g; if (!setupPartnerGender) setPartnerGenderUI(g === 'male' ? 'female' : 'male'); });
-    bindGenderSeg('partnerGenderSeg', (g) => { setupPartnerGender = g; });
+    // App parity: ask ONLY the partner's gender; the user takes the opposite role.
+    // Gun Milan / Ashtakoot is computed for an opposite-gender pair — same-gender
+    // is not supported, so the user's gender is always derived as the opposite.
+    const oppositeGender = (g) => (g === 'male' ? 'female' : g === 'female' ? 'male' : null);
+    bindGenderSeg('partnerGenderSeg', (g) => { setupPartnerGender = g; setupUserGender = oppositeGender(g); });
 
     // mode toggle (Personal ↔ Relationship)
     document.querySelectorAll('#modeSeg button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
@@ -1123,7 +1163,9 @@
         ]);
         if (pSnap.exists()) { const p = pSnap.data(); state.partner = { ...p, coordinates: p.birthCoordinates || p.coordinates }; state.partnerGender = p.gender || state.partnerGender; }
         if (pcSnap.exists()) state.partnerChart = pcSnap.data();
-        if (uSnap.exists()) state.userGender = uSnap.data().gender || state.userGender;
+        // User's role is always the partner's opposite (no same-gender Gun Milan);
+        // derive it rather than trusting a stored gender that may match the partner.
+        state.userGender = oppositeGender(state.partnerGender) || (uSnap.exists() ? uSnap.data().gender : state.userGender);
         // Need BOTH the report and the partner chart (follow-up Qs require the chart).
         if (rSnap.exists() && state.partnerChart) state.compatReport = hydrateReportNames(rSnap.data());
       } catch (_) { /* fall through to setup */ }
@@ -1198,7 +1240,6 @@
     // Partner setup → partner chart → compatibility report.
     $('compatGenBtn').addEventListener('click', async () => {
       const status = $('compatSetupStatus');
-      if (!setupUserGender) { status.textContent = 'Select your gender.'; return; }
       if (!setupPartnerGender) { status.textContent = "Select your partner's gender."; return; }
       const dob = $('p-dob').value, time = $('p-time').value, place = $('p-place').value.trim();
       const offset = parseFloat($('p-tz').value);
@@ -1211,10 +1252,10 @@
         status.textContent = "Looking up partner's birth place…";
         const pcoords = await geocode(place);
         const pdob = toUtcISO(dob, time, offset);
-        state.userGender = setupUserGender; state.partnerGender = setupPartnerGender;
+        state.partnerGender = setupPartnerGender; state.userGender = oppositeGender(setupPartnerGender);
 
         status.textContent = 'Saving details…';
-        await setDoc(doc(db, `users/${state.uid}/metadata/dob`), { gender: setupUserGender }, { merge: true });
+        await setDoc(doc(db, `users/${state.uid}/metadata/dob`), { gender: state.userGender }, { merge: true });
         await setDoc(doc(db, `users/${state.uid}/metadata/partner_dob`), {
           dob: pdob, coordinates: pcoords, birthCoordinates: pcoords, birthPlace: place,
           birthTimezone: ptz, gender: setupPartnerGender, name: pname, source: 'web', updatedAt: serverTimestamp(),
