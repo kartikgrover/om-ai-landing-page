@@ -238,6 +238,27 @@
     .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:420px; width:100%; }
     .info-row { display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:.95rem; }
     .info-row:last-child { border-bottom:none; }
+
+    /* ── Compatibility (Relationship mode) ───────────────────────────────── */
+    .modebar { max-width:760px; margin:0 auto; width:100%; padding:.5rem .75rem 0; }
+    .modebar .seg { max-width:340px; margin:0 auto; }
+    .gender-seg { display:flex; gap:.5rem; }
+    .gender-seg button { flex:1; background:transparent; color:var(--text); border:1px solid var(--border-strong);
+      border-radius:10px; padding:.6rem; cursor:pointer; font-size:.95rem; }
+    .gender-seg button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .report-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.15rem; margin:.6rem 0 1rem; align-self:stretch; }
+    .report-score { display:flex; align-items:center; gap:1rem; }
+    .score-num { font-family:'DM Serif Display',serif; font-size:2.4rem; line-height:1; color:var(--accent); }
+    .score-meta { flex:1; }
+    .score-verdict { font-weight:700; font-size:1.1rem; }
+    .gun-bar { height:8px; border-radius:6px; background:var(--border); overflow:hidden; }
+    .gun-bar > i { display:block; height:100%; background:var(--accent); }
+    .koota { display:flex; justify-content:space-between; font-size:.88rem; padding:.32rem 0; border-bottom:1px solid var(--border); }
+    .koota:last-child { border-bottom:none; }
+    .koota .k-pts { font-variant-numeric:tabular-nums; color:var(--secondary); }
+    .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:.9rem; }
+    .rep-list li { margin:.18rem 0; }
+    .rep-h { font-size:.74rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
   </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- Markdown rendering for AI answers (parse + sanitize) -->
@@ -362,8 +383,61 @@
     </div></div>
   </div>
 
+  <!-- ── COMPAT SETUP (partner birth details for Relationship mode) ─────── -->
+  <div id="compatSetupView" class="view">
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem;">
+        <button class="iconbtn" data-back="chat" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2 style="font-size:1.6rem;margin:0;">Relationship match</h2>
+      </div>
+      <p class="hint" style="margin-bottom:1rem;">Add your partner's birth details for a Vedic compatibility report — Gun Milan (Ashtakoot), Mangal dosha, navamsa and dasha timing.</p>
+      <div class="card">
+        <label>Your gender</label>
+        <div class="gender-seg" id="userGenderSeg" style="margin-bottom:1rem;">
+          <button type="button" data-g="male">Male</button><button type="button" data-g="female">Female</button>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label for="p-name">Partner's name <span class="hint">(optional)</span></label>
+          <input id="p-name" class="field" type="text" placeholder="Partner's name" autocomplete="off">
+        </div>
+        <div class="row2" style="margin-bottom:1rem;">
+          <div><label for="p-dob">Date of birth</label><input id="p-dob" class="field" type="date" required></div>
+          <div><label for="p-time">Time of birth</label><input id="p-time" class="field" type="time" required></div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label for="p-place">Place of birth</label>
+          <input id="p-place" class="field" type="text" placeholder="City, Country (e.g. Mumbai, India)" autocomplete="off">
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label for="p-tz">Time zone at birth</label>
+          <select id="p-tz" class="field">
+            <option value="5.5" data-tz="Asia/Kolkata" selected>India (UTC+5:30)</option>
+            <option value="0" data-tz="Europe/London">UK (UTC+0)</option>
+            <option value="-5" data-tz="America/New_York">US Eastern (UTC−5)</option>
+            <option value="-8" data-tz="America/Los_Angeles">US Pacific (UTC−8)</option>
+            <option value="4" data-tz="Asia/Dubai">Gulf / UAE (UTC+4)</option>
+            <option value="5.75" data-tz="Asia/Kathmandu">Nepal (UTC+5:45)</option>
+            <option value="6" data-tz="Asia/Dhaka">Bangladesh (UTC+6)</option>
+          </select>
+        </div>
+        <label>Partner's gender</label>
+        <div class="gender-seg" id="partnerGenderSeg" style="margin-bottom:1.1rem;">
+          <button type="button" data-g="male">Male</button><button type="button" data-g="female">Female</button>
+        </div>
+        <button id="compatGenBtn" class="btn-primary">Generate compatibility</button>
+        <div id="compatSetupStatus" class="status-line"></div>
+      </div>
+    </div></div>
+  </div>
+
   <!-- ── CHAT ─────────────────────────────────────────────────────────── -->
   <div id="chatView" class="view">
+    <div class="modebar">
+      <div class="seg" id="modeSeg">
+        <button type="button" data-mode="personal" class="active">Personal</button>
+        <button type="button" data-mode="compat">Relationship</button>
+      </div>
+    </div>
     <div id="chatScroll" class="chat-scroll">
       <div class="chat-inner" id="chatInner"></div>
     </div>
@@ -492,12 +566,16 @@
     // ── state ──────────────────────────────────────────────────────
     const state = { uid: null, chart: null, conversationId: null, sessionId: null, ws: null, wsUid: null,
                     freeUsed: false, premium: false, userName: null, dateOfBirth: null, coordinates: null,
-                    timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null };
+                    timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
+                    // Relationship (compatibility) mode — mirrors the app's Personal↔Relationship toggle.
+                    mode: 'personal', userGender: null, partnerGender: null,
+                    partner: null, partnerChart: null, compatReport: null,
+                    compatSessionId: null, compatConversationId: null };
 
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
-    const views = { auth: $('authView'), onboarding: $('onboardingView'), chat: $('chatView'), paywall: $('paywallView'),
-                    settings: $('settingsView'), profile: $('profileView') };
+    const views = { auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
+                    chat: $('chatView'), paywall: $('paywallView'), settings: $('settingsView'), profile: $('profileView') };
     let prevView = 'onboarding';
     const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
     function show(name) {
@@ -687,8 +765,9 @@
       let m; try { m = JSON.parse(ev.data); } catch { return; }
       switch (m.type) {
         case 'astroChartData': pending?.onChart?.(m.data); break;
+        case 'compatibility':  pending?.onReport?.(m.data); break;
         case 'delta':          pending?.onDelta?.(m.data); break;
-        case 'conversationId': state.conversationId = m.data; break;
+        case 'conversationId': if (state.mode === 'compat') state.compatConversationId = m.data; else state.conversationId = m.data; break;
         case 'completion':     pending?.onDone?.(); break;
         case 'paywall':        pending?.onPaywall?.(m.reason); break;
         case 'error':          pending?.onError?.(m.data || 'Something went wrong.'); break;
@@ -732,6 +811,10 @@
           sendWS({ type: 'generateChart', userId: state.uid, conversationId: state.conversationId || `web-${Date.now()}`, threadId: `web-${Date.now()}`, dateOfBirth, coordinates, timeUnknown: state.timeUnknown });
         });
         state.chart = chart;
+        // Persist the chart like the app does (astroData/chart + d9_chart) so a
+        // web-onboarded user's chart shows in the mobile app + the web chart view.
+        setDoc(doc(db, `users/${state.uid}/astroData/chart`), chart, { merge: true }).catch(() => {});
+        if (chart?.divisionalCharts?.D9) setDoc(doc(db, `users/${state.uid}/astroData/d9_chart`), chart.divisionalCharts.D9, { merge: true }).catch(() => {});
         state.dateOfBirth = dateOfBirth; state.coordinates = coordinates; state.birthPlace = place;
         state.birthTimezone = birthTimezone;
         state.sessionId = null; state.conversationId = null; // fresh chart → fresh chat
@@ -799,6 +882,7 @@
       const input = $('composerInput'); const q = input.value.trim();
       if (!q) return;
       if (!state.premium && state.freeUsed) { show('paywall'); return; }
+      if (state.mode === 'compat') return askCompat(q);
 
       asking = true;
       input.value = ''; autosize(); $('sendBtn').disabled = true;
@@ -860,10 +944,225 @@
 
     function startNewChat() {
       if (!state.chart) { show('onboarding'); return; }
-      state.conversationId = null; state.sessionId = null;
-      renderEmptyChat(); $('chatStatus').textContent = ''; renderHistory(); show('chat');
+      if (state.mode === 'compat') { state.compatSessionId = null; state.compatConversationId = null; renderCompatHome(); }
+      else { state.conversationId = null; state.sessionId = null; renderEmptyChat(); }
+      $('chatStatus').textContent = ''; renderHistory(); show('chat');
     }
     $('newChatBtn').addEventListener('click', startNewChat);
+
+    // ── Compatibility / Relationship mode ──────────────────────────────────
+    const COMPAT_STARTERS = [
+      "How compatible are we overall?",
+      "What are our biggest strengths as a couple?",
+      "Are there any doshas we should know about?",
+      "When is a good time for us to marry?",
+    ];
+    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+
+    // segmented gender pickers (setup view)
+    let setupUserGender = null, setupPartnerGender = null;
+    function bindGenderSeg(segId, set) {
+      document.querySelectorAll(`#${segId} button`).forEach((b) => b.addEventListener('click', () => {
+        document.querySelectorAll(`#${segId} button`).forEach((x) => x.classList.remove('active'));
+        b.classList.add('active'); set(b.dataset.g);
+      }));
+    }
+    function setPartnerGenderUI(g) { setupPartnerGender = g; document.querySelectorAll('#partnerGenderSeg button').forEach((x) => x.classList.toggle('active', x.dataset.g === g)); }
+    bindGenderSeg('userGenderSeg', (g) => { setupUserGender = g; if (!setupPartnerGender) setPartnerGenderUI(g === 'male' ? 'female' : 'male'); });
+    bindGenderSeg('partnerGenderSeg', (g) => { setupPartnerGender = g; });
+
+    // mode toggle (Personal ↔ Relationship)
+    document.querySelectorAll('#modeSeg button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+    function setModeUI(mode) { document.querySelectorAll('#modeSeg button').forEach((x) => x.classList.toggle('active', x.dataset.mode === mode)); }
+    async function setMode(mode) {
+      if (mode === state.mode && currentView() === 'chat') return;
+      setModeUI(mode); state.mode = mode; $('chatStatus').textContent = '';
+      if (mode === 'compat') {
+        if (!state.compatReport) await loadCompatExisting();
+        if (!state.compatReport) { show('compatSetup'); return; }
+        state.compatSessionId = null; state.compatConversationId = null; renderCompatHome(); show('chat');
+      } else {
+        state.sessionId = null; state.conversationId = null; renderEmptyChat(); show('chat');
+      }
+      renderHistory();
+    }
+
+    // Load partner + report + partner chart from Firestore (shared with the app).
+    async function loadCompatExisting() {
+      try {
+        const [pSnap, rSnap, pcSnap, uSnap] = await Promise.all([
+          getDoc(doc(db, `users/${state.uid}/metadata/partner_dob`)),
+          getDoc(doc(db, `users/${state.uid}/astroData/compatibility_report`)),
+          getDoc(doc(db, `users/${state.uid}/astroData/partner_chart`)),
+          getDoc(doc(db, `users/${state.uid}/metadata/dob`)),
+        ]);
+        if (pSnap.exists()) { const p = pSnap.data(); state.partner = { ...p, coordinates: p.birthCoordinates || p.coordinates }; state.partnerGender = p.gender || state.partnerGender; }
+        if (pcSnap.exists()) state.partnerChart = pcSnap.data();
+        if (uSnap.exists()) state.userGender = uSnap.data().gender || state.userGender;
+        // Need BOTH the report and the partner chart (follow-up Qs require the chart).
+        if (rSnap.exists() && state.partnerChart) state.compatReport = hydrateReportNames(rSnap.data());
+      } catch (_) { /* fall through to setup */ }
+    }
+
+    // The backend report carries janam_rashi but not display names — fill them
+    // from state (Ashtakoot assigns by gender: male/female).
+    function hydrateReportNames(r) {
+      if (!r) return r;
+      const uName = state.userName || 'You', pName = state.partner?.name || 'Partner';
+      r.male = r.male || {}; r.female = r.female || {};
+      if (state.userGender === 'male') r.male.name = r.male.name || uName;
+      else if (state.userGender === 'female') r.female.name = r.female.name || uName;
+      if (state.partnerGender === 'male') r.male.name = r.male.name || pName;
+      else if (state.partnerGender === 'female') r.female.name = r.female.name || pName;
+      return r;
+    }
+
+    // Build the compatibility report card (Gun Milan score, kootas, strengths).
+    function buildReportCard(r) {
+      const card = document.createElement('div'); card.className = 'report-card';
+      const score = Math.round(Number(r.overallScore) || 0);
+      const gun = r.ashtakoot?.match_summary || {};
+      const outOf = gun.total_out_of || 36;
+      const total = (gun.total_score != null) ? gun.total_score : '—';
+      const pct = gun.percentage != null ? Math.round(gun.percentage) : (gun.total_score != null ? Math.round((gun.total_score / outOf) * 100) : 0);
+      const f = r.female || {}, mle = r.male || {};
+      let html = `<div class="report-score">
+          <div class="score-num">${score}<span style="font-size:1rem;color:var(--secondary);">/100</span></div>
+          <div class="score-meta"><div class="score-verdict">${esc(r.verdict || 'Compatibility')}</div>
+            <div class="hint">${esc(mle.name || 'Partner')}${mle.janam_rashi ? ' · ' + esc(mle.janam_rashi) : ''} &nbsp;•&nbsp; ${esc(f.name || 'Partner')}${f.janam_rashi ? ' · ' + esc(f.janam_rashi) : ''}</div></div>
+        </div>
+        <div class="rep-h">Gun Milan (Ashtakoot)</div>
+        <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${pct}%</span></div>`;
+      const pts = r.ashtakoot?.ashtakoot_points || [];
+      if (pts.length) html += '<div style="margin-top:.5rem;">' + pts.map((p) => `<div class="koota"><span>${esc(p.attribute)}</span><span class="k-pts">${esc(p.received)}/${esc(p.out_of)}</span></div>`).join('') + '</div>';
+      const str = r.recommendations?.strengths || [], chg = r.recommendations?.challenges || [];
+      if (str.length) html += `<div class="rep-h">Strengths</div><ul class="rep-list">${str.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+      if (chg.length) html += `<div class="rep-h">Challenges</div><ul class="rep-list">${chg.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+      const km = r.ashtakoot?.key_mismatches || [];
+      if (km.length) html += `<div class="hint" style="margin-top:.55rem;">Watch-outs: ${esc(km.join(', '))}</div>`;
+      card.innerHTML = html;
+      return card;
+    }
+
+    function renderCompatHome() {
+      const inner = $('chatInner'); inner.innerHTML = '';
+      if (state.compatReport) inner.appendChild(buildReportCard(state.compatReport));
+      const wrap = document.createElement('div'); wrap.className = 'starter'; wrap.style.paddingTop = '.5rem';
+      const pname = state.partner?.name ? ` with ${esc(state.partner.name)}` : '';
+      wrap.innerHTML = `<p class="hint">Ask anything about your compatibility${pname}.</p><div id="chips"></div>`;
+      inner.appendChild(wrap);
+      const chips = wrap.querySelector('#chips');
+      COMPAT_STARTERS.forEach((s) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = s; b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); }); chips.appendChild(b); });
+      maybeScroll(true);
+    }
+
+    // Compat session persistence (isCompatibility:true → shows in the app too).
+    async function createCompatSession() {
+      const ref = await addDoc(collection(db, `users/${state.uid}/astro_sessions`),
+        { lastActive: serverTimestamp(), isCompatibility: true, createdAt: serverTimestamp(), source: 'web' });
+      return ref.id;
+    }
+    async function saveCompatMessage(sender, text) {
+      if (!state.compatSessionId || !text) return;
+      try { await addDoc(collection(db, `users/${state.uid}/astro_chats`), { session_id: state.compatSessionId, text, sender, timestamp: serverTimestamp(), clientTimestamp: Date.now() }); } catch (_) {}
+    }
+    async function touchCompatSession(firstUserMsg) {
+      try { const patch = { lastActive: serverTimestamp() }; if (firstUserMsg) patch.firstMessagePreview = firstUserMsg.split(/\s+/).slice(0, 6).join(' '); await updateDoc(doc(db, `users/${state.uid}/astro_sessions`, state.compatSessionId), patch); } catch (_) {}
+    }
+
+    // Partner setup → partner chart → compatibility report.
+    $('compatGenBtn').addEventListener('click', async () => {
+      const status = $('compatSetupStatus');
+      if (!setupUserGender) { status.textContent = 'Select your gender.'; return; }
+      if (!setupPartnerGender) { status.textContent = "Select your partner's gender."; return; }
+      const dob = $('p-dob').value, time = $('p-time').value, place = $('p-place').value.trim();
+      const offset = parseFloat($('p-tz').value);
+      const ptz = $('p-tz').selectedOptions[0]?.dataset.tz || null;
+      const pname = $('p-name').value.trim() || null;
+      if (!dob || !time || !place) { status.textContent = "Fill your partner's date, time and place of birth."; return; }
+      if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = 'Enter a valid birth date in the past.'; return; }
+      const btn = $('compatGenBtn'); btn.disabled = true;
+      try {
+        status.textContent = "Looking up partner's birth place…";
+        const pcoords = await geocode(place);
+        const pdob = toUtcISO(dob, time, offset);
+        state.userGender = setupUserGender; state.partnerGender = setupPartnerGender;
+
+        status.textContent = 'Saving details…';
+        await setDoc(doc(db, `users/${state.uid}/metadata/dob`), { gender: setupUserGender }, { merge: true });
+        await setDoc(doc(db, `users/${state.uid}/metadata/partner_dob`), {
+          dob: pdob, coordinates: pcoords, birthCoordinates: pcoords, birthPlace: place,
+          birthTimezone: ptz, gender: setupPartnerGender, name: pname, source: 'web', updatedAt: serverTimestamp(),
+        }, { merge: true });
+        state.partner = { dob: pdob, coordinates: pcoords, birthPlace: place, birthTimezone: ptz, gender: setupPartnerGender, name: pname };
+
+        status.textContent = "Computing partner's chart…";
+        await ensureWS();
+        const partnerChart = await new Promise((resolve, reject) => {
+          const timer = setTimeout(() => reject(new Error('Partner chart timed out — please retry.')), 120000);
+          pending = { onChart: (c) => { clearTimeout(timer); resolve(c); }, onError: (e) => { clearTimeout(timer); reject(new Error(e)); } };
+          sendWS({ type: 'generateChart', userId: state.uid, conversationId: `web-${Date.now()}`, threadId: `web-${Date.now()}`, dateOfBirth: pdob, coordinates: pcoords, timeUnknown: false });
+        });
+        state.partnerChart = partnerChart;
+        setDoc(doc(db, `users/${state.uid}/astroData/partner_chart`), partnerChart, { merge: true }).catch(() => {});
+        if (partnerChart?.divisionalCharts?.D9) setDoc(doc(db, `users/${state.uid}/astroData/partner_d9_chart`), partnerChart.divisionalCharts.D9, { merge: true }).catch(() => {});
+
+        status.textContent = 'Analyzing compatibility…';
+        const report = await new Promise((resolve, reject) => {
+          const timer = setTimeout(() => reject(new Error('Compatibility timed out — please retry.')), 120000);
+          pending = { onReport: (r) => { clearTimeout(timer); resolve(r); }, onError: (e) => { clearTimeout(timer); reject(new Error(e)); } };
+          sendWS({ type: 'compatibility', userId: state.uid, threadId: `web-compat-${Date.now()}`,
+            userGender: state.userGender, partnerGender: state.partnerGender,
+            astrologyData: { userChart: state.chart, partnerChart } });
+        });
+        state.compatReport = hydrateReportNames(report);
+        setDoc(doc(db, `users/${state.uid}/astroData/compatibility_report`), { ...report, generatedAt: serverTimestamp(), source: 'web' }, { merge: true }).catch(() => {});
+
+        state.mode = 'compat'; setModeUI('compat');
+        state.compatSessionId = null; state.compatConversationId = null;
+        btn.disabled = false; status.textContent = '';
+        renderCompatHome(); show('chat'); renderHistory();
+      } catch (e) {
+        status.textContent = e.message || 'Something went wrong. Please retry.';
+        btn.disabled = false;
+      }
+    });
+
+    async function askCompat(q) {
+      asking = true;
+      const input = $('composerInput'); input.value = ''; autosize(); $('sendBtn').disabled = true;
+      let firstMsg = false;
+      if (!state.compatSessionId) { try { state.compatSessionId = await createCompatSession(); firstMsg = true; } catch (_) {} }
+      addMsg('user', q); saveCompatMessage('user', q);
+      const aiEl = addMsg('ai', ''); aiEl.innerHTML = '<span class="typing">analyzing your compatibility…</span>';
+      let acc = '';
+      try {
+        await ensureWS();
+        await new Promise((resolve) => {
+          pending = {
+            onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
+            onDone: () => resolve(),
+            onPaywall: () => { aiEl.remove(); show('paywall'); resolve(); },
+            onError: (e) => { aiEl.textContent = e; resolve(); },
+          };
+          sendWS({
+            type: 'compatibilityQuestion', userId: state.uid,
+            conversationId: state.compatConversationId,
+            threadId: state.compatSessionId || `web-compat-${Date.now()}`,
+            message: q, compatibilityReport: state.compatReport,
+            astrologyData: { userChart: state.chart, partnerChart: state.partnerChart },
+            dateOfBirth: state.dateOfBirth, partnerDateOfBirth: state.partner?.dob || null,
+            coordinates: state.coordinates, language: 'en', userName: state.userName,
+          });
+        });
+      } catch (e) {
+        aiEl.textContent = 'Connection error — please retry.'; input.value = q; autosize();
+      } finally {
+        asking = false; $('sendBtn').disabled = false;
+        if (acc) { saveCompatMessage('bot', acc); touchCompatSession(firstMsg ? q : null); if (firstMsg) fetchSessions(); }
+        if (!state.premium && acc) { state.freeUsed = true; $('chatStatus').textContent = 'That was your free question. Continue for unlimited answers.'; }
+      }
+    }
 
     // ── Drawer (mirrors CustomAstroDrawerContent) ──────────────────────────
     const openDrawer = () => { $('drawer').classList.add('open'); $('drawerOverlay').classList.add('open'); fetchSessions(); };
@@ -921,7 +1220,7 @@
       host.innerHTML = '<div class="empty">Loading…</div>';
       try {
         const q = query(collection(db, `users/${state.uid}/astro_sessions`),
-          where('isCompatibility', '==', false), orderBy('lastActive', 'desc'), limit(20));
+          where('isCompatibility', '==', state.mode === 'compat'), orderBy('lastActive', 'desc'), limit(20));
         const snap = await getDocs(q);
         window.__sessions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         renderHistory();
@@ -945,7 +1244,9 @@
     async function loadSession(id) {
       closeDrawer();
       if (!state.chart) { show('onboarding'); return; } // need a chart to continue the thread
-      state.sessionId = id; state.conversationId = null; // backend re-resolves the thread; conversationId comes back over WS
+      const compat = state.mode === 'compat';
+      if (compat) { state.compatSessionId = id; state.compatConversationId = null; }
+      else { state.sessionId = id; state.conversationId = null; } // backend re-resolves; conversationId comes back over WS
       $('chatInner').innerHTML = '<div class="starter"><span class="typing">Loading…</span></div>';
       show('chat');
       try {
@@ -953,8 +1254,9 @@
           where('session_id', '==', id), orderBy('timestamp', 'asc'));
         const snap = await getDocs(q);
         $('chatInner').innerHTML = '';
+        if (compat && state.compatReport) $('chatInner').appendChild(buildReportCard(state.compatReport));
         snap.docs.forEach(d => { const m = d.data(); addMsg(m.sender === 'bot' ? 'ai' : 'user', m.text || ''); });
-        if (!snap.size) renderEmptyChat();
+        if (!snap.size && !compat) renderEmptyChat();
         maybeScroll(true); renderHistory();
       } catch (e) { renderEmptyChat(); }
     }
@@ -973,7 +1275,9 @@
     // ── settings / profile navigation ──────────────────────────────
     $('settingsBtn').addEventListener('click', () => { closeDrawer(); refreshSubUI(); show('settings'); });
     document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => {
-      show(b.dataset.back === 'settings' ? 'settings' : prevView);
+      const t = b.dataset.back;
+      if (t === 'chat') { setMode('personal'); return; } // leaving partner setup → back to personal chat
+      show(t === '1' ? prevView : t);
     }));
     $('goProfile').addEventListener('click', () => { refreshProfileUI(); show('profile'); });
     $('editBirth').addEventListener('click', () => {
