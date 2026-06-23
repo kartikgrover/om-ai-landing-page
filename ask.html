@@ -260,23 +260,60 @@
     .rep-list li { margin:.18rem 0; }
     .rep-h { font-size:.74rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
 
-    /* ── Chart view (D1/D9 South-Indian grid + planet table + dasha) ──────── */
-    .chart-grid { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); aspect-ratio:1/1; max-width:380px; margin:.25rem auto 0; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; background:var(--card); }
-    .chart-cell { border:.5px solid var(--border); padding:.28rem .3rem; position:relative; display:flex; flex-direction:column; min-height:0; overflow:hidden; }
-    .chart-cell .sign { color:var(--secondary); font-size:.6rem; text-transform:uppercase; letter-spacing:.03em; }
-    .chart-cell .planets { font-size:.82rem; font-weight:600; display:flex; flex-wrap:wrap; gap:.05rem .3rem; margin-top:.12rem; line-height:1.3; }
-    .chart-cell.asc { background:color-mix(in srgb,var(--accent) 13%, transparent); }
-    .chart-cell .asc-tag { position:absolute; top:2px; right:3px; font-size:.54rem; color:var(--accent); font-weight:700; }
-    .chart-center { grid-row:2/4; grid-column:2/4; display:flex; align-items:center; justify-content:center; color:var(--secondary); font-size:.72rem; text-align:center; border:.5px solid var(--border); }
-    .ptable { width:100%; border-collapse:collapse; font-size:.86rem; margin-top:1.1rem; }
-    .ptable th, .ptable td { text-align:left; padding:.42rem .3rem; border-bottom:1px solid var(--border); }
-    .ptable th { color:var(--secondary); font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.03em; }
-    .ptable td:first-child { font-weight:600; }
-    .dasha-row { display:flex; gap:.4rem; overflow-x:auto; padding:.35rem 0 .2rem; -webkit-overflow-scrolling:touch; }
-    .dasha-chip { flex:none; border:1px solid var(--border-strong); border-radius:10px; padding:.4rem .65rem; white-space:nowrap; }
-    .dasha-chip.cur { border-color:var(--accent); background:color-mix(in srgb,var(--accent) 11%, transparent); }
-    .dasha-chip b { display:block; font-size:.88rem; }
-    .dasha-chip span { color:var(--secondary); font-size:.72rem; }
+    /* ── Birth chart — North-Indian kundali (replica of the app AstroChartScreen) ── */
+    .kun-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; max-width:min(520px,100%); margin:0 auto 1rem; }
+    .kun-svg { width:100%; height:auto; display:block; }
+    .kun-frame { stroke:var(--border-strong); stroke-width:1; fill:none; }
+    .kun-frame-soft { stroke:var(--border); stroke-width:.8; fill:none; }
+    .kun-signno { fill:var(--secondary); font-size:3.1px; font-weight:600; opacity:.75; }
+    .kun-planet { font-size:4px; font-weight:700; }
+    .kun-planet.retro { font-style:italic; }
+    .kun-rel-ascendant { fill:var(--accent); }
+    .kun-rel-exalted { fill:var(--success); }
+    .kun-rel-debilitated { fill:var(--error); }
+    .kun-rel-friendly, .kun-rel-own { fill:#5BA3D0; }
+    .kun-rel-enemy { fill:#E0975A; }
+    .kun-rel-neutral { fill:var(--text); opacity:.85; }
+    .kun-empty { color:var(--secondary); font-size:.85rem; padding:.8rem 0; text-align:center; }
+    .kun-hit { cursor:pointer; }
+    .kun-hit.sel { fill:color-mix(in srgb, var(--accent) 16%, transparent); }
+    .kun-detail { margin-top:.8rem; border-top:1px solid var(--border); padding-top:.7rem; }
+    .kun-dethead { font-weight:700; color:var(--accent); font-size:.9rem; margin-bottom:.4rem; }
+    .kun-detrow { display:flex; align-items:center; gap:.45rem; font-size:.85rem; padding:.2rem 0; color:var(--text); }
+    .kun-dot { width:9px; height:9px; border-radius:50%; flex:none; }
+    .kun-detmeta { color:var(--secondary); margin-left:auto; font-size:.78rem; }
+    .kun-retro { color:var(--accent); font-style:italic; }
+    .cx-head { font-weight:700; font-size:.76rem; color:var(--secondary); text-transform:uppercase; letter-spacing:.04em; margin:1.1rem 0 .5rem; }
+    .dasha-scroll { display:flex; gap:.5rem; overflow-x:auto; padding-bottom:.4rem; }
+    .dasha-block { flex:none; min-width:96px; border:1px solid var(--border-strong); border-radius:10px; padding:.5rem .65rem; background:var(--card); }
+    .dasha-block.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 9%, var(--card)); }
+    .dasha-lord { font-weight:700; font-size:.9rem; display:flex; align-items:center; gap:.35rem; }
+    .dasha-lord .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; }
+    .dasha-dates { font-size:.72rem; color:var(--secondary); margin-top:.2rem; white-space:nowrap; }
+    .ptable { width:100%; border-collapse:collapse; font-size:.82rem; margin-top:.3rem; }
+    .ptable th { text-align:left; color:var(--secondary); font-weight:600; padding:.4rem .35rem; border-bottom:1px solid var(--border-strong); font-size:.7rem; text-transform:uppercase; letter-spacing:.03em; }
+    .ptable td { padding:.4rem .35rem; border-bottom:1px solid var(--border); }
+    .ptable td.dig { font-weight:600; }
+    .ptable tr:last-child td { border-bottom:none; }
+    .varg-note { margin-top:.7rem; font-size:.85rem; color:var(--text); }
+    .varg-note b { color:var(--accent); }
+    /* ── Upcoming transits (hub + chart) — house-mapped with Ashtakavarga bindus ── */
+    .tr-row { display:flex; gap:.7rem; padding:.6rem .2rem; border-bottom:1px solid var(--border); }
+    .tr-row:last-child { border-bottom:none; }
+    .tr-row.tr-confl { background:var(--card); border-radius:10px; padding:.6rem .55rem; }
+    .tr-date { flex:none; width:84px; font-size:.78rem; color:var(--secondary); padding-top:.1rem; }
+    .tr-main { flex:1; min-width:0; }
+    .tr-evt { font-size:.9rem; display:flex; align-items:center; gap:.45rem; flex-wrap:wrap; line-height:1.35; }
+    .tr-dot { width:8px; height:8px; border-radius:50%; flex:none; }
+    .tr-meta { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.3rem; }
+    .tr-h { font-size:.72rem; background:var(--input-bg); border:1px solid var(--border-strong); border-radius:7px; padding:.05rem .45rem; color:var(--secondary); }
+    .tr-h-moon { color:#5BA3D0; border-color:#5BA3D0; }
+    .tr-bindu { font-size:.72rem; background:var(--input-bg); border:1px solid var(--border-strong); border-radius:7px; padding:.05rem .45rem; color:var(--secondary); }
+    .tr-bindu-hi { color:var(--success); border-color:var(--success); }
+    .tr-bindu-lo { color:var(--error); border-color:var(--error); }
+    .tr-lord { font-size:.72rem; color:var(--accent); display:inline-flex; align-items:center; gap:.2rem; }
+    .tr-dur { font-size:.72rem; color:var(--secondary); }
+    .tr-empty { color:var(--secondary); font-size:.85rem; padding:1rem; text-align:center; }
   </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- Markdown rendering for AI answers (parse + sanitize) -->
@@ -571,12 +608,8 @@
         <button type="button" data-div="D1" class="active">Rasi (D1)</button>
         <button type="button" data-div="D9">Navamsa (D9)</button>
       </div>
-      <div id="chartDiagram"></div>
-      <div id="chartTable"></div>
-      <div class="section-label">Mahadasha</div>
-      <div class="dasha-row" id="mahaRow"></div>
-      <div class="section-label">Antardasha</div>
-      <div class="dasha-row" id="antarRow"></div>
+      <div class="kun-card"><div id="kunHost"></div></div>
+      <div id="chartExtras"></div>
     </div></div>
   </div>
 
@@ -1204,67 +1237,156 @@
       }
     }
 
-    // ── Birth chart view (D1/D9 South-Indian grid + planet table + dasha) ───
-    const PABBR = { Sun:'Su', Moon:'Mo', Mars:'Ma', Mercury:'Me', Jupiter:'Ju', Venus:'Ve', Saturn:'Sa', Rahu:'Ra', Ketu:'Ke' };
-    const PORDER = ['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
-    // South-Indian fixed sign layout (1-indexed grid row/col).
-    const SI_LAYOUT = [
-      { sign:'Pisces', r:1, c:1 }, { sign:'Aries', r:1, c:2 }, { sign:'Taurus', r:1, c:3 }, { sign:'Gemini', r:1, c:4 },
-      { sign:'Aquarius', r:2, c:1 }, { sign:'Cancer', r:2, c:4 },
-      { sign:'Capricorn', r:3, c:1 }, { sign:'Leo', r:3, c:4 },
-      { sign:'Sagittarius', r:4, c:1 }, { sign:'Scorpio', r:4, c:2 }, { sign:'Libra', r:4, c:3 }, { sign:'Virgo', r:4, c:4 },
-    ];
+    // ── Birth chart — North-Indian kundali (ported from the Pro console, which
+    //    is itself a replica of the app's AstroChartScreen, for cross-surface
+    //    consistency: same diamond layout, dignity colours, combustion, dasha). ──
+    const KUN_ZODIAC = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+    const KUN_ABBR = { Lagna:'Lg', Ascendant:'Lg', Sun:'Su', Moon:'Mo', Mars:'Ma', Mercury:'Me', Jupiter:'Ju', Venus:'Ve', Saturn:'Sa', Rahu:'Ra', Ketu:'Ke' };
+    const KUN_HOUSE_XY = { 1:[50,27],2:[25,9],3:[9,26],4:[26,50],5:[9,74],6:[25,91],7:[50,73],8:[75,91],9:[91,74],10:[74,50],11:[91,26],12:[75,9] };
+    const KUN_REL_CLASS = (rel) => ({ ascendant:'kun-rel-ascendant', exalted:'kun-rel-exalted', debilitated:'kun-rel-debilitated', friendly:'kun-rel-friendly', own:'kun-rel-own', enemy:'kun-rel-enemy' }[(rel||'').toLowerCase()] || 'kun-rel-neutral');
+    const KUN_REL_COLOR = { ascendant:'var(--accent)', exalted:'var(--success)', debilitated:'var(--error)', friendly:'#5BA3D0', own:'#5BA3D0', enemy:'#E0975A' };
+    // Combustion (astangata) — not in the payload, computed from longitudes.
+    const COMBUST_ORB = { Moon:12, Mars:17, Mercury:14, Jupiter:11, Venus:10, Saturn:15 };
+    const COMBUST_ORB_RETRO = { Mercury:12, Venus:8 };
+    function computeCombust(birthChart) {
+      const set = new Set();
+      const sun = birthChart && birthChart.Sun;
+      if (!sun || sun.longitude == null) return set;
+      const sunLon = parseFloat(sun.longitude);
+      for (const [p, info] of Object.entries(birthChart)) {
+        if (!info || info.longitude == null || ['Sun','Rahu','Ketu','Lagna','Ascendant'].includes(p)) continue;
+        const orb = (info.retrograde && COMBUST_ORB_RETRO[p]) ? COMBUST_ORB_RETRO[p] : COMBUST_ORB[p];
+        if (!orb) continue;
+        let d = Math.abs(parseFloat(info.longitude) - sunLon);
+        if (d > 180) d = 360 - d;
+        if (d < orb) set.add(p);
+      }
+      return set;
+    }
     let chartDiv = 'D1';
+    function renderKundali(chartData, host, variant) {
+      variant = variant === 'D9' ? 'D9' : 'D1';
+      let birthChart, lagna;
+      if (variant === 'D9') { const d9 = chartData?.divisionalCharts?.D9 || {}; birthChart = d9.birthChart; lagna = d9.lagna; }
+      else { birthChart = chartData?.birthChart; lagna = chartData?.lagna; }
+      if (!birthChart || !lagna) { host.innerHTML = '<div class="kun-empty">' + variant + ' chart not available — ask a question to regenerate it.</div>'; return; }
+      const ascIdx = KUN_ZODIAC.indexOf(lagna);
+      const combustSet = variant === 'D1' ? computeCombust(birthChart) : new Set();
+      const occ = {};
+      for (const [planet, info] of Object.entries(birthChart)) {
+        const h = info && Number(info.house);
+        if (!h || h < 1 || h > 12 || planet === 'Lagna' || planet === 'Ascendant') continue;
+        (occ[h] = occ[h] || []).push({ planet, ...info });
+      }
+      (occ[1] = occ[1] || []).unshift({ planet: 'Lagna', relationship: 'Ascendant', zodiac: lagna });
+      const NS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('viewBox', '0 0 100 100'); svg.setAttribute('class', 'kun-svg');
+      svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', (variant==='D9'?'Navamsa':'Rasi') + ' chart');
+      const line = (x1,y1,x2,y2,cls) => { const l=document.createElementNS(NS,'line'); l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);l.setAttribute('class',cls); return l; };
+      const poly = (pts,cls) => { const p=document.createElementNS(NS,'polygon'); p.setAttribute('points',pts);p.setAttribute('class',cls); return p; };
+      svg.appendChild(poly('1,1 99,1 99,99 1,99','kun-frame'));
+      svg.appendChild(line(1,1,99,99,'kun-frame-soft'));
+      svg.appendChild(line(99,1,1,99,'kun-frame-soft'));
+      svg.appendChild(poly('50,1 99,50 50,99 1,50','kun-frame-soft'));
+      for (let h=1; h<=12; h++) {
+        const [cx, cy] = KUN_HOUSE_XY[h];
+        const signNo = ((ascIdx + h - 1) % 12) + 1;
+        const g = document.createElementNS(NS,'g');
+        const sn = document.createElementNS(NS,'text');
+        sn.setAttribute('x', cx); sn.setAttribute('y', cy - 5.5); sn.setAttribute('text-anchor','middle'); sn.setAttribute('class','kun-signno');
+        sn.textContent = signNo; g.appendChild(sn);
+        const list = occ[h] || [];
+        const perLine = list.length > 3 ? 2 : 1;
+        let li = 0;
+        for (let i=0; i<list.length; i+=perLine) {
+          const row = list.slice(i, i+perLine);
+          const t = document.createElementNS(NS,'text');
+          t.setAttribute('x', cx); t.setAttribute('y', cy - 1.5 + li*4.3); t.setAttribute('text-anchor','middle');
+          row.forEach((p, k) => {
+            const ts = document.createElementNS(NS,'tspan');
+            const combust = combustSet.has(p.planet);
+            let cls = 'kun-planet ' + KUN_REL_CLASS(p.relationship);
+            if (p.retrograde) cls += ' retro';
+            ts.setAttribute('class', cls);
+            if (k>0) ts.setAttribute('dx','1.5');
+            ts.textContent = (KUN_ABBR[p.planet] || p.planet.slice(0,2)) + (p.retrograde ? '↺' : '') + (combust ? '⊙' : '');
+            const title = document.createElementNS(NS,'title');
+            const deg = p.longitude != null ? ' · ' + (parseFloat(p.longitude)%30).toFixed(1) + '°' : '';
+            title.textContent = `${p.planet}: ${p.zodiac||''}${deg}${p.nakshatra?' · '+p.nakshatra:''}${p.relationship?' · '+p.relationship:''}${combust?' · combust':''}`;
+            ts.appendChild(title); t.appendChild(ts);
+          });
+          g.appendChild(t); li++;
+        }
+        svg.appendChild(g);
+        const hit = document.createElementNS(NS,'circle');
+        hit.setAttribute('cx', cx); hit.setAttribute('cy', cy); hit.setAttribute('r', 12);
+        hit.setAttribute('fill', 'transparent'); hit.setAttribute('class', 'kun-hit'); hit.setAttribute('data-house', h);
+        svg.appendChild(hit);
+      }
+      host.innerHTML = ''; host.appendChild(svg);
+      const detail = document.createElement('div'); detail.className = 'kun-detail'; detail.style.display = 'none'; host.appendChild(detail);
+      const showHouse = (h) => {
+        const sign = KUN_ZODIAC[(ascIdx + h - 1) % 12];
+        const list = occ[h] || [];
+        const rows = list.length ? list.map((p) => {
+          const nm = p.planet === 'Lagna' ? 'Ascendant' : p.planet;
+          const col = KUN_REL_COLOR[(p.relationship||'').toLowerCase()] || 'var(--text)';
+          const deg = p.longitude != null ? ' · ' + (parseFloat(p.longitude)%30).toFixed(1) + '°' : '';
+          const nak = p.nakshatra ? ' · ' + p.nakshatra : '';
+          const rel = (p.relationship && p.planet !== 'Lagna') ? ' · ' + p.relationship : '';
+          return `<div class="kun-detrow"><span class="kun-dot" style="background:${col}"></span><b>${esc(nm)}</b>${p.retrograde?' <span class="kun-retro">℞</span>':''}<span class="kun-detmeta">${esc(p.zodiac||sign)}${deg}${esc(nak)}${esc(rel)}</span></div>`;
+        }).join('') : '<div class="kun-detrow kun-empty">Empty house</div>';
+        detail.innerHTML = `<div class="kun-dethead">House ${h} · ${esc(sign)}</div>${rows}`;
+        detail.style.display = '';
+        svg.querySelectorAll('.kun-hit').forEach((c) => c.classList.toggle('sel', c.getAttribute('data-house') === String(h)));
+      };
+      svg.addEventListener('click', (e) => { const t = e.target.closest('.kun-hit'); if (!t) return; showHouse(Number(t.getAttribute('data-house'))); });
+    }
 
-    function buildChartDiagram(bChart, lagnaSign) {
-      const bySign = {};
-      Object.entries(bChart || {}).forEach(([planet, d]) => { const z = d && d.zodiac; if (!z) return; (bySign[z] = bySign[z] || []).push(PABBR[planet] || planet.slice(0, 2)); });
-      const grid = document.createElement('div'); grid.className = 'chart-grid';
-      SI_LAYOUT.forEach(({ sign, r, c }) => {
-        const cell = document.createElement('div'); cell.className = 'chart-cell' + (sign === lagnaSign ? ' asc' : '');
-        cell.style.gridRow = r; cell.style.gridColumn = c;
-        cell.innerHTML = `${sign === lagnaSign ? '<span class="asc-tag">Asc</span>' : ''}<span class="sign">${sign.slice(0, 3)}</span><span class="planets">${(bySign[sign] || []).join(' ')}</span>`;
-        grid.appendChild(cell);
-      });
-      const center = document.createElement('div'); center.className = 'chart-center'; center.textContent = lagnaSign ? `${lagnaSign} rising` : '';
-      grid.appendChild(center);
-      return grid;
+    // Dasha timelines · planetary table · vargottama (all from state.chart).
+    const KUN_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const PLANET_ORDER = ['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+    const fmtDashaD = (s) => { const [y,m] = String(s).split('-'); return (KUN_MONTHS[(+m)-1]||'') + ' ' + y; };
+    const dashaActive = (e) => { const now = Date.now(); return new Date(e.start).getTime() <= now && now < new Date(e.end).getTime(); };
+    function renderChartExtras(chartData, variant) {
+      const host = $('chartExtras');
+      if (!chartData) { host.innerHTML = ''; return; }
+      const add = chartData.additional || {};
+      let html = '';
+      const bc = variant === 'D9' ? chartData.divisionalCharts?.D9?.birthChart : chartData.birthChart;
+      if (bc) {
+        const combustSet = variant === 'D1' ? computeCombust(bc) : new Set();
+        const rows = PLANET_ORDER.filter((p) => bc[p]).map((p) => {
+          const info = bc[p];
+          const deg = info.longitude != null ? (parseFloat(info.longitude) % 30).toFixed(1) + '°' : '—';
+          const nak = info.nakshatra ? esc(info.nakshatra) + (info.pada ? ' · ' + info.pada : '') : '—';
+          const col = KUN_REL_COLOR[(info.relationship || '').toLowerCase()] || 'var(--text)';
+          const retro = info.retrograde ? ' <span class="kun-retro">℞</span>' : '';
+          const combust = combustSet.has(p) ? ' <span title="combust">⊙</span>' : '';
+          return `<tr><td><b>${p}</b>${retro}${combust}</td><td>${esc(info.zodiac || '—')}</td><td>${info.house || '—'}</td><td>${deg}</td><td>${nak}</td><td class="dig" style="color:${col}">${esc(info.relationship || '—')}</td></tr>`;
+        }).join('');
+        html += `<div class="cx-head">Planetary positions${variant === 'D9' ? ' · Navāṁśa' : ''}</div>
+          <table class="ptable"><thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Deg</th><th>Nakshatra</th><th>Dignity</th></tr></thead><tbody>${rows}</tbody></table>`;
+      }
+      if (variant === 'D9') {
+        const vg = chartData.divisionalCharts?.D9?.vargottamaPlanets || [];
+        html += `<div class="varg-note">${vg.length ? '<b>Vargottama:</b> ' + vg.map(esc).join(', ') + ' — same sign in D1 & D9 (reinforced).' : 'No vargottama planets.'}</div>`;
+      }
+      if (variant === 'D1') {
+        const block = (e) => `<div class="dasha-block${dashaActive(e) ? ' active' : ''}"><div class="dasha-lord">${dashaActive(e) ? '<span class="dot"></span>' : ''}${esc(e.lord)}</div><div class="dasha-dates">${fmtDashaD(e.start)} → ${fmtDashaD(e.end)}</div></div>`;
+        const md = add.vimshottariDashaTimeline || [], ad = add.antardashaTimeline || [];
+        const maha = add.currentMahadasha || {};
+        const adCur = ad.filter((e) => !maha.start || !maha.end || (e.start >= maha.start && e.start < maha.end));
+        if (md.length) html += `<div class="cx-head">Mahadasha</div><div class="dasha-scroll">${md.map(block).join('')}</div>`;
+        if (ad.length) html += `<div class="cx-head">Antardasha</div><div class="dasha-scroll">${(adCur.length ? adCur : ad).map(block).join('')}</div>`;
+      }
+      host.innerHTML = html;
+      host.querySelectorAll('.dasha-block.active').forEach((el) => { el.parentElement.scrollLeft = Math.max(0, el.offsetLeft - 70); });
     }
-    function buildPlanetTable(bChart) {
-      const rows = PORDER.filter((p) => bChart && bChart[p]).map((p) => {
-        const d = bChart[p]; const deg = (d.longitude != null && !isNaN(parseFloat(d.longitude))) ? (parseFloat(d.longitude) % 30).toFixed(1) + '°' : '';
-        const nak = d.nakshatra ? esc(d.nakshatra) + (d.pada ? ' (' + d.pada + ')' : '') : '—';
-        return `<tr><td>${p}</td><td>${esc(d.zodiac || '')}${deg ? ' ' + deg : ''}</td><td>${d.house != null ? d.house : ''}</td><td>${nak}</td></tr>`;
-      }).join('');
-      return `<table class="ptable"><thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Nakshatra</th></tr></thead><tbody>${rows}</tbody></table>`;
-    }
-    function dashaChips(timeline, curLord, hostId) {
-      const host = $(hostId); host.innerHTML = '';
-      const y = (s) => String(s || '').slice(0, 4);
-      if (!timeline || !timeline.length) { host.innerHTML = '<span class="hint">—</span>'; return; }
-      timeline.forEach((e) => { const el = document.createElement('div'); el.className = 'dasha-chip' + (e.lord === curLord ? ' cur' : ''); el.innerHTML = `<b>${esc(e.lord)}</b><span>${y(e.start)}–${y(e.end)}</span>`; host.appendChild(el); });
-      const cur = host.querySelector('.dasha-chip.cur'); if (cur) cur.scrollIntoView({ inline: 'center', block: 'nearest' });
-    }
-    function chartFor(div) {
-      if (div === 'D9') { const d9 = state.chart?.divisionalCharts?.D9; return { bChart: d9?.birthChart, lagna: d9?.lagna }; }
-      return { bChart: state.chart?.birthChart, lagna: state.chart?.lagna };
-    }
-    function renderChartScreen() {
-      const { bChart, lagna } = chartFor(chartDiv);
-      const diag = $('chartDiagram'); diag.innerHTML = '';
-      const has = bChart && Object.keys(bChart).length;
-      if (has) diag.appendChild(buildChartDiagram(bChart, lagna));
-      else diag.innerHTML = `<div class="hint" style="text-align:center;padding:1.5rem;">${chartDiv === 'D9' ? 'Navamsa' : 'Rasi'} chart not available — ask a question to regenerate it.</div>`;
-      $('chartTable').innerHTML = has ? buildPlanetTable(bChart) : '';
-      const add = state.chart?.additional || {};
-      const maha = add.currentMahadasha || {};
-      // Antardasha timeline can span every mahadasha (~70 entries) — show just the
-      // current mahadasha's sub-periods (date strings sort lexicographically).
-      const antar = (add.antardashaTimeline || []).filter((e) => !maha.start || !maha.end || (e.start >= maha.start && e.start < maha.end));
-      dashaChips(add.vimshottariDashaTimeline, maha.lord, 'mahaRow');
-      dashaChips(antar.length ? antar : add.antardashaTimeline, add.currentAntardasha?.lord, 'antarRow');
-    }
+
     function setChartDivUI(div) { document.querySelectorAll('#chartDivSeg button').forEach((b) => b.classList.toggle('active', b.dataset.div === div)); }
+    function renderChartScreen() { renderKundali(state.chart, $('kunHost'), chartDiv); renderChartExtras(state.chart, chartDiv); }
     document.querySelectorAll('#chartDivSeg button').forEach((b) => b.addEventListener('click', () => { chartDiv = b.dataset.div; setChartDivUI(chartDiv); renderChartScreen(); }));
     function openChartScreen() { if (!state.chart) { show('onboarding'); return; } chartDiv = 'D1'; setChartDivUI('D1'); renderChartScreen(); show('chartScreen'); }
     $('chartBack').addEventListener('click', () => show('chat'));
