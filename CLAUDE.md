@@ -14,6 +14,10 @@ This is part of a multi-project VS Code workspace (5 projects):
 - **om-ai-ops** — Firebase config, Firestore rules/indexes, Cloud Functions → `/Users/kartikgrover/Documents/Projects/om-ai-ops`
 - **om-ai-pro** — Astrologer Pro console (B2B), static single-file site on Firebase Hosting → `pro.omai.app` → `/Users/kartikgrover/Documents/Projects/om-ai-pro`
 
+## Skills & plugins to use
+- **Building/reshaping any page UI** (index.html, the `ask.html` MVP, SEO/landing pages): use the **frontend-design** skill.
+- **Any JS library / Razorpay web / Firebase web SDK**: pull current docs via **context7** (`mcp__plugin_context7_context7__*`).
+
 ## CRITICAL: Deployment Safety
 
 **Push = deploy.** GitHub Pages serves directly from the repo, so any `git push` to the default branch goes live immediately — there is no staging step and no Action gate. This means **`git commit` + `git push` is a production deploy** and needs explicit user permission every time. Local edits and `git commit` (without push) are fine.
