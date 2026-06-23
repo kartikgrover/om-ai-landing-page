@@ -1,17 +1,18 @@
 # Om.ai Landing Page — Claude Code Instructions
 
 ## Project
-Static landing page for Om.ai (Vedic astrology app). Hosted via GitHub Pages with custom domain.
+Om.ai (Vedic astrology app) website, hosted via GitHub Pages on `omai.app` (custom domain). Two surfaces in one repo: (1) the static landing/SEO/marketing + legal pages, and (2) the **consumer web MVP** `ask.html` — an interactive single-file web app (chat + charts) that shares the app's Firebase account and backend. See the "Web Consumer MVP" section below.
 
 ## Response Accuracy
 **If you are not confident about a factual claim (pricing, industry norms, competitor data, best practices, etc.), do a web search BEFORE responding.** Do not guess or state things as fact when unsure — verify first. Getting it wrong wastes time and erodes trust.
 
 ## Workspace Context
-This is part of a multi-project VS Code workspace:
-- **om-ai-landing-page** (this project) — Landing page website → `/Users/kartikgrover/Documents/Projects/om-ai-landing-page`
+This is part of a multi-project VS Code workspace (5 projects):
+- **om-ai-landing-page** (this project) — Landing page website + consumer web MVP (`ask.html` on `omai.app`) → `/Users/kartikgrover/Documents/Projects/om-ai-landing-page`
 - **om/om1** — React Native frontend (Expo) → `/Users/kartikgrover/Documents/Projects/om/om1`
 - **om.ai-backend** — Node.js API server, Heroku-deployed → `/Users/kartikgrover/Documents/Projects/om.ai-backend`
 - **om-ai-ops** — Firebase config, Firestore rules/indexes, Cloud Functions → `/Users/kartikgrover/Documents/Projects/om-ai-ops`
+- **om-ai-pro** — Astrologer Pro console (B2B), static single-file site on Firebase Hosting → `pro.omai.app` → `/Users/kartikgrover/Documents/Projects/om-ai-pro`
 
 ## CRITICAL: Deployment Safety
 
@@ -25,11 +26,23 @@ This site is live and serves:
 
 ## Key Pages
 - `index.html` — Main landing page
+- `ask.html` — **Consumer web MVP** (the interactive app on the web — see section below)
 - `privacy-policy.html` — Privacy policy (linked from app stores)
 - `delete-account.html` — Account deletion (required by app stores)
 - `horoscope.html`, `panchang.html`, etc. — SEO content pages
 - `blog/` — Blog posts
 - `CNAME` — Custom domain config
+
+## Web Consumer MVP (`ask.html`)
+This repo also serves **the consumer web app** at `omai.app/ask.html` — a single-file interactive app (inline `<script type="module">`, no build) mirroring the mobile app's *paid* half.
+
+- **Scope = chat + charts ONLY** (the astro-hub "Today" dashboard was built then removed 2026-06-23 — the SEO pages already cover the informational layer). Flow: onboarding → personal chat ↔ compatibility chat → Birth Chart (D1/D9 + dasha) → history → paywall.
+- **Shares the app's account.** Same Firebase project (`omai-1ea53`) → same UID per provider; an app user signs in on web (Google/Apple/email-pass) and inherits their chart/history/subscription. Firestore under `users/{uid}/`: `astroData/chart`+`d9_chart`, `metadata/dob` (read `coordinates || birthCoordinates`; write both + `birthTimezone`), `premium/subscription`, `questions/purchased.remaining`, `astro_sessions`+`astro_chats`. Birth time REQUIRED.
+- **Backend = live Heroku server** over WebSocket. Types: `astro`/`astroQuestion`, `compatibility`/`compatibilityQuestion` (need `convId`), `generateChart`. Web entitlement gate + Razorpay billing shipped to backend `main` in **v425**.
+- **Billing = Razorpay:** ₹199/mo (`plan_T57Fhoh2RRjnX9`), ₹1,499/yr (`plan_T57FirTng7tqWC`), LIVE; backend `routes/web-payments.js`; enforces only when backend `ENTITLEMENT_GATE=enforce`.
+- **Chart UI** ported from `../om-ai-pro/index.html` (canonical app-parity renderer) — copy from there when mirroring app UI.
+- **Sanity-check JS:** extract the `<script type="module">` body, strip `import` lines, `node --check`.
+- **Sibling B2B surface:** `../om-ai-pro` = astrologer Pro console (`pro.omai.app`), same backend, `audience:'pro'` brief. Don't confuse the two.
 
 ## Notes
 - Static HTML/CSS/JS — no build system
@@ -42,7 +55,7 @@ This site is live and serves:
 `bq` CLI is authed as `groverkartik25@gmail.com`. Tables: `` `omai-1ea53.analytics_498597496.events_YYYYMMDD` `` (daily export, data from 2026-01-17). Standard GA4 schema — `event_name`, `event_date`, `user_pseudo_id`, `geo.country`, `traffic_source.*`, `device`, `platform`, `event_value_in_usd`, plus `collected_traffic_source` (gclid for Google Ads). Common events: `first_open`, `session_start`, `in_app_purchase`, `page_view`, `user_engagement`. For landing-page-only traffic, filter by `event_dimensions.hostname` or `traffic_source.source = 'website'` / `medium = 'landing'`. Query with `bq query --use_legacy_sql=false --format=json 'SELECT … FROM \`omai-1ea53.analytics_498597496.events_*\` WHERE _TABLE_SUFFIX BETWEEN "YYYYMMDD" AND "YYYYMMDD"'`.
 
 ### Meta Ads API
-Available via the backend project (`../om.ai-backend/server.js:3008`). Account `act_1704926593380350`, token in `META_ADS_ACCESS_TOKEN` env var. Read-only.
+Available via the backend project (`../om.ai-backend/server.js:3008`). Current account `act_223330353092043` ("Om.AI Ad Account", live); legacy `act_1704926593380350` (USD) is paused — don't use. Token in `META_ADS_ACCESS_TOKEN` env var. Read-only.
 
 ## IMPORTANT: No Mention of Internal Tools/Vendors
 - **NEVER mention Swiss Ephemeris** on any public-facing page (no license yet)
