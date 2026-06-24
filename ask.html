@@ -115,6 +115,11 @@
     }
     * { box-sizing:border-box; }
     html,body { height:100%; }
+    /* Match the landing page's 17px base — ask.html previously set no root size (→16px),
+       so every rem ran ~6% smaller than omai.app and the secondary text looked tiny. */
+    html { font-size:17px; }
+    /* Type scale (px @17px root): xs≈13.6 · sm≈15.3 · md=17 · lg≈19.5 · xl≈23.8 · 2xl≈27 · 3xl≈32 */
+    :root { --fs-xs:.8rem; --fs-sm:.9rem; --fs-md:1rem; --fs-lg:1.15rem; --fs-xl:1.4rem; --fs-2xl:1.6rem; --fs-3xl:1.9rem; }
     body {
       font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;
       background:var(--bg); color:var(--text); margin:0;
@@ -147,6 +152,35 @@
     .view.active { display:flex; }
     .scroll-pad { max-width:760px; width:100%; margin:0 auto; padding:1.25rem; }
 
+    /* ── Desktop drawer content-shift (app/ChatGPT-style sidebar) ─────────────
+       When the drawer is open at desktop width it sits beside (not over) the chat:
+       shift the appbar + active view right by the drawer width so nothing underlaps
+       and the centered content re-centers in the remaining space. Mobile keeps the
+       overlay + dim backdrop (no shift) — see the @media guard below. */
+    .appbar, .view { transition:margin-left .22s ease; }
+    @media (min-width:900px) {
+      body.drawer-shift .appbar,
+      body.drawer-shift .view { margin-left:300px; }
+    }
+
+    /* ── Bottom-sheet screens (chart + report) ───────────────────────────────
+       Mirrors the app's AstroChartView / CompatibilityView: presentation:"modal"
+       + CardStyleInterpolators.forModalPresentationIOS — an iOS card that slides up
+       from the bottom. These two views stay mounted during the slide-out so the
+       downward dismiss animates, then .active is removed. */
+    .view.sheet {
+      position:fixed; inset:0; z-index:60; flex-direction:column;
+      background:var(--bg); border-radius:18px 18px 0 0;
+      box-shadow:0 -8px 40px rgba(0,0,0,.35);
+      transform:translateY(100%); transition:transform .28s ease;
+      will-change:transform;
+    }
+    .view.sheet.active { display:flex; }
+    .view.sheet.up { transform:translateY(0); }
+    /* small grabber handle at the top of the sheet */
+    .view.sheet .sheet-grab { flex:none; width:38px; height:4px; border-radius:3px;
+      background:var(--border-strong); margin:.5rem auto .1rem; }
+
     /* ── Cards / forms (onboarding, profile, settings) ───────────────────── */
     .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; }
     label { font-weight:600; font-size:.88rem; margin-bottom:.3rem; display:block; color:var(--text); }
@@ -161,7 +195,7 @@
     .city-suggest .cs-item:hover, .city-suggest .cs-item.active { background:var(--accent); color:#fff; }
     select.field { appearance:none; }
     .row2 { display:flex; gap:.75rem; } .row2 > * { flex:1; }
-    .hint { font-size:.82rem; color:var(--secondary); }
+    .hint { font-size:var(--fs-sm); color:var(--secondary); }
     .check { display:flex; align-items:center; gap:.5rem; font-size:.9rem; color:var(--secondary); cursor:pointer; font-weight:500; }
     .check input { width:18px; height:18px; accent-color:var(--accent); }
 
@@ -176,7 +210,7 @@
       border-radius:12px; padding:.7rem 1.2rem; font-size:1rem; cursor:pointer; min-height:46px;
     }
     .btn-ghost:hover { background:var(--border); }
-    .status-line { font-size:.85rem; color:var(--secondary); min-height:1.2em; margin-top:.5rem; }
+    .status-line { font-size:var(--fs-sm); color:var(--secondary); min-height:1.2em; margin-top:.5rem; }
     .authlink { color:var(--accent); cursor:pointer; text-decoration:none; }
     .authlink:hover { text-decoration:underline; }
 
@@ -184,7 +218,7 @@
     #chatView { position:relative; }
     .chat-scroll { flex:1; overflow-y:auto; padding:1rem; scroll-behavior:smooth; }
     .chat-inner { max-width:760px; margin:0 auto; display:flex; flex-direction:column; }
-    .msg { max-width:85%; padding:.7rem .95rem; border-radius:12px; margin:.4rem 0; line-height:1.55; font-size:1rem; word-wrap:break-word; }
+    .msg { max-width:85%; padding:.7rem .95rem; border-radius:12px; margin:.4rem 0; line-height:1.55; font-size:var(--fs-md); word-wrap:break-word; }
     .msg.user { align-self:flex-end; background:var(--user-bubble); color:var(--text);
       border:1px solid var(--border); border-bottom-right-radius:4px; }
     /* Bot reply = flat (mirrors the app's assistant message: transparent, no
@@ -225,12 +259,26 @@
 
     /* Empty-state starter chips */
     .starter { max-width:560px; margin:auto; padding:1.5rem 0; text-align:center; }
-    .starter .hero-icon { font-size:2.2rem; }
-    .starter h2 { font-size:1.6rem; margin:.5rem 0 .25rem; }
-    .chip { display:block; width:100%; text-align:left; background:transparent; color:var(--text);
-      border:1px solid var(--border-strong); border-radius:12px; padding:.85rem 1rem; margin:.5rem 0;
-      font-size:.97rem; cursor:pointer; transition:background .15s,border-color .15s; }
-    .chip:hover { background:var(--border); border-color:var(--accent); }
+    .starter .hero-icon { font-size:2.6rem; color:var(--accent); line-height:1; }
+    .starter h2 { font-size:var(--fs-2xl); margin:.5rem 0 .25rem; }
+    /* Flat starter suggestions (mirrors app SuggestionBubble: transparent, 0.5px @30%
+       hairline border, radius 12, centered body text — not a boxy card). */
+    .chip { display:block; width:100%; text-align:center; background:transparent; color:var(--text);
+      border:1px solid color-mix(in srgb, var(--border) 30%, transparent); border-radius:12px; padding:1rem; margin:.5rem 0;
+      font-size:var(--fs-md); cursor:pointer; transition:background .15s,border-color .15s; }
+    .chip:hover { background:var(--border); border-color:color-mix(in srgb, var(--accent) 55%, transparent); }
+
+    /* Contextual artifact button in the composer dock — mirrors the app's ChartButton:
+       subtle surface, 1px border, accent-coloured icon + label, 44px tap target. */
+    .artifact-bar { display:flex; justify-content:center; padding:.5rem .6rem 0; }
+    .artifact-bar:empty { display:none; }
+    .artifact-btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+      min-height:44px; padding:.5rem 1.05rem; border-radius:12px;
+      background:var(--card-2); border:1px solid var(--border-strong);
+      color:var(--accent); font:inherit; font-size:.95rem; font-weight:600;
+      cursor:pointer; white-space:nowrap; transition:background .15s,border-color .15s; }
+    .artifact-btn:hover { background:var(--card); border-color:var(--accent); }
+    .artifact-btn svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.7; flex:none; }
 
     /* Composer dock */
     .composer-wrap { border-top:1px solid var(--border); background:var(--header); }
@@ -256,6 +304,13 @@
     /* ── Trust strip (onboarding credibility) ────────────────────────────── */
     .trust { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.8rem; color:var(--secondary); margin-top:1rem; justify-content:center; }
     .trust b { color:var(--text); font-weight:600; }
+    .trust span { display:inline-flex; align-items:center; gap:.3rem; }
+    /* Inline outline icons that sit in flowing text (trust badges, tz hint, rating).
+       Matches the drawer/settings icon language: outline, accent stroke, ~1em, stroke-width 1.7. */
+    .ico { width:1.05em; height:1.05em; flex:none; stroke:currentColor; fill:none; stroke-width:1.7; vertical-align:-.15em; }
+    .ico-star { fill:var(--accent); stroke:var(--accent); }
+    /* Brand mark (ॐ Aum) — mirrors the app's MaterialCommunityIcons "om" glyph used as its brand mark. */
+    .brand-mark { color:var(--accent); font-weight:400; line-height:1; }
 
     /* ── Paywall ─────────────────────────────────────────────────────────── */
     .plan { display:flex; align-items:center; gap:.75rem; width:100%; text-align:left; color:var(--text);
@@ -263,7 +318,7 @@
     .plan.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, var(--card)); }
     .plan .radio { width:20px; height:20px; border-radius:50%; border:2px solid var(--border-strong); flex:none; }
     .plan.active .radio { border-color:var(--accent); background:radial-gradient(circle, var(--accent) 45%, transparent 50%); }
-    .plan .pl-main { flex:1; } .plan .pl-title { font-weight:600; display:block; } .plan .pl-sub { font-size:.82rem; color:var(--secondary); display:block; }
+    .plan .pl-main { flex:1; } .plan .pl-title { font-weight:600; display:block; } .plan .pl-sub { font-size:var(--fs-sm); color:var(--secondary); display:block; }
     .plan .pl-price { text-align:right; font-weight:700; } .plan .pl-price s { color:var(--secondary); font-weight:400; font-size:.8rem; display:block; }
     .badge { position:absolute; top:-10px; right:14px; background:var(--accent); color:#fff; font-size:.7rem; font-weight:700;
       padding:.15rem .5rem; border-radius:8px; letter-spacing:.02em; }
@@ -271,6 +326,7 @@
     .feature-table td { padding:.45rem .25rem; border-bottom:1px solid var(--border); }
     .feature-table td:last-child { text-align:right; }
     .tick { color:var(--success); font-weight:700; } .cross { color:var(--secondary); }
+    .tick .ico-check { width:1.05em; height:1.05em; stroke:var(--success); fill:none; stroke-width:2.2; vertical-align:-.12em; }
     /* labelled dividers above the plan group + question-pack group (mirrors app modal) */
     .pw-div { display:flex; align-items:center; gap:.6rem; margin:1.1rem 0 .2rem; }
     .pw-div::before, .pw-div::after { content:''; flex:1; height:1px; background:var(--border); }
@@ -279,16 +335,17 @@
     .plan.pack .pl-sub { color:var(--secondary); }
 
     /* ── Settings / Profile rows ─────────────────────────────────────────── */
-    .section-label { font-size:.75rem; font-weight:600; letter-spacing:.06em; color:var(--secondary); text-transform:uppercase; margin:1.4rem .25rem .4rem; }
+    .section-label { font-size:var(--fs-xs); font-weight:600; letter-spacing:.06em; color:var(--secondary); text-transform:uppercase; margin:1.4rem .25rem .4rem; }
     .srow { display:flex; align-items:center; gap:.85rem; width:100%; text-align:left; background:transparent;
       border:none; border-bottom:1px solid var(--border); padding:.95rem .5rem; cursor:pointer; color:var(--text); font-size:1rem; }
     .srow:hover { background:var(--border); }
     .srow .ic { width:28px; text-align:center; color:var(--accent); }
-    .srow .sr-main { flex:1; } .srow .sr-sub { font-size:.8rem; color:var(--secondary); display:block; }
+    .srow .sr-main { flex:1; } .srow .sr-sub { font-size:var(--fs-sm); color:var(--secondary); display:block; }
     .srow .chev { color:var(--secondary); }
     .srow.premium { border-left:3px solid var(--accent); border-radius:4px; }
     .avatar { width:64px; height:64px; border-radius:50%; background:color-mix(in srgb,var(--accent) 18%, transparent);
       display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--accent); margin:0 auto .5rem; }
+    .avatar svg { width:34px; height:34px; stroke:currentColor; fill:none; stroke-width:1.6; }
     .seg { display:flex; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; }
     .seg button { flex:1; background:transparent; color:var(--text); border:none; padding:.6rem; cursor:pointer; font-size:.9rem; }
     .seg button.active { background:var(--accent); color:#fff; }
@@ -302,6 +359,8 @@
       display:flex; flex-direction:column; padding-top:max(.6rem,env(safe-area-inset-top));
     }
     .drawer.open { transform:translateX(0); }
+    .drawer-head { display:flex; align-items:center; justify-content:space-between;
+      padding:.4rem .5rem .4rem .85rem; min-height:48px; }
     .drawer-newchat { display:flex; align-items:center; gap:.6rem; margin:.5rem .75rem; padding:.7rem .8rem; background:transparent;
       border:1px solid var(--border-strong); border-radius:12px; color:var(--text); font-size:1rem; font-weight:600; cursor:pointer; }
     .drawer-newchat:hover { background:var(--border); }
@@ -312,6 +371,7 @@
     .sess.active { background:var(--border); }
     .sess .t { flex:1; font-size:.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .sess .del { opacity:0; background:none; border:none; color:var(--secondary); cursor:pointer; font-size:.9rem; padding:.1rem .3rem; }
+    .sess .del svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; display:block; }
     .sess:hover .del { opacity:1; }
     .sess .del:hover { color:var(--error); }
     .drawer-bottom { border-top:1px solid var(--border); padding:.4rem .5rem max(.5rem,env(safe-area-inset-bottom)); }
@@ -319,6 +379,9 @@
       color:var(--text); font-size:.95rem; padding:.7rem .6rem; border-radius:10px; cursor:pointer; }
     .drawer-item:hover { background:var(--border); }
     .drawer-item .ic { width:22px; text-align:center; }
+    /* Outline icons in the drawer + settings rows (no emoji) — accent-coloured like the app. */
+    .drawer-item .ic, .srow .ic { display:inline-flex; align-items:center; justify-content:center; }
+    .drawer-item .ic svg, .srow .ic svg { width:20px; height:20px; stroke:var(--accent); fill:none; stroke-width:1.7; }
 
     /* ── Modal ───────────────────────────────────────────────────────────── */
     .modal-overlay { position:fixed; inset:0; background:var(--overlay); z-index:50; display:none; align-items:center; justify-content:center; padding:1rem; }
@@ -338,23 +401,23 @@
     .report-score { display:flex; align-items:center; gap:1rem; }
     .score-num { font-family:'DM Serif Display',serif; font-size:2.4rem; line-height:1; color:var(--accent); }
     .score-meta { flex:1; }
-    .score-verdict { font-weight:700; font-size:1.1rem; }
+    .score-verdict { font-weight:700; font-size:var(--fs-lg); }
     .gun-bar { height:8px; border-radius:6px; background:var(--border); overflow:hidden; }
     .gun-bar > i { display:block; height:100%; background:var(--accent); }
-    .koota { display:flex; justify-content:space-between; font-size:.88rem; padding:.32rem 0; border-bottom:1px solid var(--border); }
+    .koota { display:flex; justify-content:space-between; font-size:var(--fs-sm); padding:.32rem 0; border-bottom:1px solid var(--border); }
     .koota:last-child { border-bottom:none; }
     .koota .k-name { flex:1; }
     .koota .k-pts { font-variant-numeric:tabular-nums; color:var(--secondary); }
     .k-bar { flex:0 0 56px; height:5px; border-radius:4px; background:var(--border); overflow:hidden; margin:0 .6rem; align-self:center; }
     .k-bar > i { display:block; height:100%; border-radius:4px; }
-    .adv-asp { display:flex; align-items:flex-start; gap:.5rem; font-size:.86rem; padding:.22rem 0; }
+    .adv-asp { display:flex; align-items:flex-start; gap:.5rem; font-size:var(--fs-sm); padding:.22rem 0; }
     .adv-dot { width:7px; height:7px; border-radius:50%; flex:none; margin-top:.42rem; }
-    .adv-dasha { font-size:.86rem; padding:.22rem 0; }
+    .adv-dasha { font-size:var(--fs-sm); padding:.22rem 0; }
     .report-card .rtabs { margin:.9rem 0; }
     .report-card [data-rpane][hidden] { display:none; }
-    .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:.9rem; }
+    .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:var(--fs-sm); }
     .rep-list li { margin:.18rem 0; }
-    .rep-h { font-size:.74rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
+    .rep-h { font-size:var(--fs-xs); font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
 
     /* ── Birth chart — North-Indian kundali (replica of the app AstroChartScreen) ── */
     .kun-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; max-width:min(520px,100%); margin:0 auto 1rem; }
@@ -379,7 +442,7 @@
     .kun-dot { width:9px; height:9px; border-radius:50%; flex:none; }
     .kun-detmeta { color:var(--secondary); margin-left:auto; font-size:.78rem; }
     .kun-retro { color:var(--accent); font-style:italic; }
-    .cx-head { font-weight:700; font-size:.76rem; color:var(--secondary); text-transform:uppercase; letter-spacing:.04em; margin:1.1rem 0 .5rem; }
+    .cx-head { font-weight:700; font-size:var(--fs-xs); color:var(--secondary); text-transform:uppercase; letter-spacing:.04em; margin:1.1rem 0 .5rem; }
     .dasha-scroll { display:flex; gap:.5rem; overflow-x:auto; padding-bottom:.4rem; }
     .dasha-block { flex:none; min-width:96px; border:1px solid var(--border-strong); border-radius:10px; padding:.5rem .65rem; background:var(--card); }
     .dasha-block.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 9%, var(--card)); }
@@ -405,7 +468,7 @@
 <body>
   <!-- Preview-gate screen (shown when not bypassed — see <head>). Must be a direct child of <body>. -->
   <div id="omaiMaintenance" aria-hidden="true">
-    <div style="font-size:2.6rem;">🪔</div>
+    <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="width:84px;height:auto;"></picture>
     <h1>Coming soon to web</h1>
     <p>We're putting the finishing touches on the Om.AI web experience — it'll be live here shortly.</p>
     <p>Meanwhile, get the full app for the complete experience.</p>
@@ -425,17 +488,23 @@
   <!-- ── DRAWER (left slide-out, mirrors CustomAstroDrawerContent) ──────── -->
   <div id="drawerOverlay" class="drawer-overlay"></div>
   <aside id="drawer" class="drawer" aria-label="Menu">
+    <div class="drawer-head">
+      <span class="brand" style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text);line-height:1;">Om.AI</span>
+      <button class="iconbtn" id="drawerClose" aria-label="Close menu" title="Close menu">
+        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+      </button>
+    </div>
     <button class="drawer-newchat" id="drawerNewChat">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
       New chat
     </button>
     <div class="drawer-history" id="drawerHistory"></div>
     <div class="drawer-bottom">
-      <button class="drawer-item" id="diChart"><span class="ic">🔯</span>Birth Chart</button>
-      <button class="drawer-item" id="diBirth"><span class="ic">📅</span>Your Birth Details</button>
-      <button class="drawer-item" id="diEdit"><span class="ic">✏️</span>Edit Profile</button>
-      <button class="drawer-item" id="diPremium"><span class="ic">👑</span>Get Premium</button>
-      <button class="drawer-item" id="settingsBtn"><span class="ic">⚙️</span>Settings</button>
+      <button class="drawer-item" id="diChart"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 16v-4M12 16V9M16 16v-2" stroke-linecap="round"/></svg></span>Birth Chart</button>
+      <button class="drawer-item" id="diBirth"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3" stroke-linecap="round"/></svg></span>Your Birth Details</button>
+      <button class="drawer-item" id="diEdit"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10a2 2 0 0 0-2.83-2.83L5 17.17V20Z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4"/></svg></span>Edit Profile</button>
+      <button class="drawer-item" id="diPremium"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18h14l1.2-9-4.7 3.5L12 6l-3.5 6.5L3.8 9 5 18Z" stroke-linejoin="round"/></svg></span>Get Premium</button>
+      <button class="drawer-item" id="settingsBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg></span>Settings</button>
     </div>
   </aside>
 
@@ -443,7 +512,7 @@
   <div id="birthModal" class="modal-overlay">
     <div class="modal-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
-        <h3 style="margin:0;font-size:1.25rem;">Your Birth Details</h3>
+        <h3 style="margin:0;font-size:var(--fs-xl);">Your Birth Details</h3>
         <button class="iconbtn" id="birthModalClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <div class="info-row"><span class="muted">Date of birth</span><span id="bmDob">Not set</span></div>
@@ -460,8 +529,8 @@
       <button class="iconbtn" id="downsellClose" aria-label="Close" style="position:absolute;top:.4rem;right:.4rem;">
         <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
       </button>
-      <div style="font-size:2.4rem;">👋</div>
-      <h3 style="margin:.4rem 0 .5rem;font-size:1.35rem;">Not ready to subscribe?</h3>
+      <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="width:64px;height:auto;margin:0 auto;"></picture>
+      <h3 style="margin:.4rem 0 .5rem;font-size:var(--fs-xl);">Not ready to subscribe?</h3>
       <p class="hint" style="margin:0 0 1.1rem;">Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.</p>
       <button id="downsellPackBtn" class="btn-primary">Try 5 questions · ₹99</button>
       <button id="downsellLater" class="btn-ghost" style="margin-top:.55rem;">Maybe later</button>
@@ -472,7 +541,7 @@
   <div id="authView" class="view active">
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:440px;">
       <div style="text-align:center;margin:6vh 0 1.25rem;">
-        <div style="font-size:2.2rem;">🪔</div>
+        <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="width:88px;height:auto;margin:0 auto;"></picture>
         <h1 style="font-size:1.9rem;margin:.4rem 0 .35rem;">Ask your birth chart</h1>
         <p id="authSubtitle" class="hint">Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.</p>
       </div>
@@ -501,8 +570,8 @@
       </div>
       <div class="trust">
         <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
-        <span><b>4.8★</b> · 190,000+ readings</span>
-        <span>🔒 Your details stay private</span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>Your details stay private</span>
       </div>
     </div></div>
   </div>
@@ -535,14 +604,14 @@
           </div>
           <div class="hint" style="margin-top:.3rem;">Pick your birth city from the list for an accurate chart.</div>
         </div>
-        <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;">⏱ Time zone <b id="f-tz-detected"></b> — detected from your birth place (handles DST automatically).</div>
+        <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Time zone <b id="f-tz-detected"></b> — detected from your birth place (handles DST automatically).</div>
         <button id="startBtn" class="btn-primary">Generate my chart</button>
         <div id="onboardStatus" class="status-line"></div>
       </div>
       <div class="trust">
         <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
-        <span><b>4.8★</b> · 190,000+ readings</span>
-        <span>🔒 Your details stay private</span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>Your details stay private</span>
       </div>
     </div></div>
   </div>
@@ -572,7 +641,7 @@
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div id="p-tz-row" class="hint" style="display:none;">⏱ Time zone <b id="p-tz-detected"></b> — detected from the birth place (handles DST automatically).</div>
+          <div id="p-tz-row" class="hint" style="display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Time zone <b id="p-tz-detected"></b> — detected from the birth place (handles DST automatically).</div>
         </div>
         <label>Partner's gender</label>
         <div class="gender-seg" id="partnerGenderSeg" style="margin-bottom:.5rem;">
@@ -599,6 +668,9 @@
     <button class="jump-btn" id="jumpBtn">Jump to latest ↓</button>
     <div class="chat-status"><div id="chatStatus" class="status-line" style="margin:0;"></div></div>
     <div class="composer-wrap">
+      <!-- Contextual artifact button (mirrors the app's in-chat dock): Personal → View chart,
+           Relationship → View report / Generate. Filled by renderArtifactBar(); empty = hidden. -->
+      <div id="artifactBar" class="artifact-bar"></div>
       <div class="composer">
         <textarea id="composerInput" rows="1" placeholder="Type your message…"></textarea>
         <button id="sendBtn" class="send" aria-label="Send">
@@ -611,17 +683,18 @@
   <!-- ── PAYWALL ──────────────────────────────────────────────────────── -->
   <div id="paywallView" class="view">
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:480px;">
-      <h2 id="pwHeroTitle" style="font-size:1.7rem;text-align:center;margin:.5rem 0 .25rem;">Continue your reading</h2>
+      <h2 id="pwHeroTitle" style="font-size:var(--fs-2xl);text-align:center;margin:.5rem 0 .25rem;">Continue your reading</h2>
       <p id="pwHeroSub" class="hint" style="text-align:center;">You've used your free question. Unlock unlimited questions about your chart.</p>
 
       <table class="feature-table">
         <tr><td></td><td class="muted" style="font-weight:600;">Free</td><td style="font-weight:600;color:var(--accent);">Premium</td></tr>
         <tr><td>Questions to your chart</td><td class="cross">1</td><td class="tick">Unlimited</td></tr>
-        <tr><td>All life areas &amp; timing dates</td><td class="cross">—</td><td class="tick">✓</td></tr>
-        <tr><td>Memory across sessions</td><td class="cross">—</td><td class="tick">✓</td></tr>
+        <tr><td>Compatibility &amp; Gun Milan readings</td><td class="cross">—</td><td class="tick">Unlimited</td></tr>
+        <tr><td>All life areas &amp; timing dates</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
+        <tr><td>Memory across sessions</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
       </table>
 
-      <div class="pw-div"><span>Om.AI Premium</span></div>
+      <div class="pw-div"><span style="text-transform:none;">Om.AI Premium</span></div>
       <div id="planChoices" role="radiogroup" aria-label="Choose a plan">
         <button type="button" class="plan active" data-plan="yearly" role="radio" aria-checked="true">
           <span class="badge">SAVE 40% · 5 MONTHS FREE</span>
@@ -646,7 +719,7 @@
       <button id="subscribeBtn" class="btn-primary">Subscribe</button>
       <div id="paywallStatus" class="status-line" style="text-align:center;"></div>
       <div class="trust" style="margin-top:.75rem;justify-content:center;">
-        <span>🔒 Secure payment by <b>Razorpay</b></span><span>Cancel anytime</span><span><b>4.8★</b> · 190,000+ readings</span>
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>Secure payment by <b>Razorpay</b></span><span>Cancel anytime</span><span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
       </div>
     </div></div>
   </div>
@@ -660,33 +733,33 @@
       </div>
 
       <div class="section-label">Account</div>
-      <button class="srow" id="goProfile"><span class="ic">👤</span><span class="sr-main">Profile</span><span class="chev">›</span></button>
+      <button class="srow" id="goProfile"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0" stroke-linecap="round"/></svg></span><span class="sr-main">Profile</span><span class="chev">›</span></button>
 
       <div class="section-label">Subscription</div>
-      <button class="srow" id="manageSub"><span class="ic">👑</span><span class="sr-main">Manage Subscription<span class="sr-sub" id="subSub">Loading…</span></span><span class="chev">›</span></button>
+      <button class="srow" id="manageSub"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18h14l1.2-9-4.7 3.5L12 6l-3.5 6.5L3.8 9 5 18Z" stroke-linejoin="round"/></svg></span><span class="sr-main">Manage Subscription<span class="sr-sub" id="subSub">Loading…</span></span><span class="chev">›</span></button>
 
       <div class="section-label">App</div>
-      <div class="srow" style="cursor:default;"><span class="ic">🌓</span><span class="sr-main">Theme</span>
+      <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13A8 8 0 1 1 11 4a6.5 6.5 0 0 0 9 9Z" stroke-linejoin="round"/></svg></span><span class="sr-main">Theme</span>
         <div class="seg" style="width:200px;" id="themeSeg">
           <button data-theme-set="light">Light</button><button data-theme-set="dark">Dark</button><button data-theme-set="system">System</button>
         </div>
       </div>
       <!-- Chat reply language (EN/HI). Wires `language` on the chat/compat WS
            sends — the backend already returns Hindi. UI chrome stays English. -->
-      <div class="srow" style="cursor:default;"><span class="ic">🌐</span><span class="sr-main">Reply language<span class="sr-sub">Answers come back in this language</span></span>
+      <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17" stroke-linecap="round"/></svg></span><span class="sr-main">Reply language<span class="sr-sub">Answers come back in this language</span></span>
         <div class="seg" style="width:160px;" id="langSeg">
           <button data-lang-set="en">English</button><button data-lang-set="hi">हिंदी</button>
         </div>
       </div>
 
       <div class="section-label">Help &amp; Legal</div>
-      <a class="srow" href="/support.html" target="_blank" rel="noopener"><span class="ic">💬</span><span class="sr-main">Help &amp; Support</span><span class="chev">›</span></a>
-      <a class="srow" href="/privacy.html"><span class="ic">🛡️</span><span class="sr-main">Privacy</span><span class="chev">›</span></a>
-      <a class="srow" href="/terms.html"><span class="ic">📄</span><span class="sr-main">About &amp; Terms</span><span class="chev">›</span></a>
-      <a class="srow" href="/delete-account.html" target="_blank" rel="noopener"><span class="ic">🗑️</span><span class="sr-main">Delete account<span class="sr-sub">Remove your account &amp; data</span></span><span class="chev">›</span></a>
+      <a class="srow" href="/support.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1-4.2A7.5 7.5 0 1 1 20 11.5Z" stroke-linejoin="round"/></svg></span><span class="sr-main">Help &amp; Support</span><span class="chev">›</span></a>
+      <a class="srow" href="/privacy.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l7 2.8v5c0 4.4-3 7.8-7 9.7-4-1.9-7-5.3-7-9.7v-5z" stroke-linejoin="round"/></svg></span><span class="sr-main">Privacy</span><span class="chev">›</span></a>
+      <a class="srow" href="/terms.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8z" stroke-linejoin="round"/><path d="M14 3.5V8h4.5M8.5 13h7M8.5 16.5h5" stroke-linecap="round"/></svg></span><span class="sr-main">About &amp; Terms</span><span class="chev">›</span></a>
+      <a class="srow" href="/delete-account.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7h13M10 7V5h4v2M7 7l.9 12.5h8.2L17 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main">Delete account<span class="sr-sub">Remove your account &amp; data</span></span><span class="chev">›</span></a>
 
       <div style="margin-top:1.5rem;">
-        <button class="srow" id="signOutBtn"><span class="ic">🚪</span><span class="sr-main">Sign Out</span></button>
+        <button class="srow" id="signOutBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6a1.5 1.5 0 0 0-1.5-1.5h-6A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5h6A1.5 1.5 0 0 0 14 18v-2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 12h11m0 0-3-3m3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main">Sign Out</span></button>
         <div class="hint" style="text-align:center;margin-top:1rem;">Om.AI · Web <span id="appVersion"></span></div>
       </div>
     </div></div>
@@ -700,13 +773,13 @@
         <h2 style="font-size:1.6rem;margin:0;">Profile</h2>
       </div>
       <div style="text-align:center;margin-bottom:1.25rem;">
-        <div class="avatar">👤</div>
+        <div class="avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M5 20a7 7 0 0 1 14 0" stroke-linecap="round"/></svg></div>
         <div class="serif" id="pfName" style="font-size:1.4rem;">User</div>
         <div class="hint" id="pfEmail"></div>
       </div>
       <div class="section-label">Astrology Profile</div>
       <button class="srow" id="editBirth">
-        <span class="ic">📅</span>
+        <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3" stroke-linecap="round"/></svg></span>
         <span class="sr-main">Your Birth Details<span class="sr-sub" id="pfBirth">Not set</span></span>
         <span class="chev">›</span>
       </button>
@@ -714,7 +787,8 @@
   </div>
 
   <!-- ── BIRTH CHART (D1/D9 grid + planet table + dasha timelines) ──────── -->
-  <div id="chartScreenView" class="view">
+  <div id="chartScreenView" class="view sheet">
+    <div class="sheet-grab" aria-hidden="true"></div>
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
       <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;">
         <button class="iconbtn" id="chartBack" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -726,6 +800,19 @@
       </div>
       <div class="kun-card"><div id="kunHost"></div></div>
       <div id="chartExtras"></div>
+    </div></div>
+  </div>
+
+  <!-- ── COMPATIBILITY REPORT (own screen — mirrors the app's CompatibilityScreen modal;
+       reached via the chat dock "View report" button, so the chat stays pure chat) ── -->
+  <div id="reportView" class="view sheet">
+    <div class="sheet-grab" aria-hidden="true"></div>
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;">
+        <button class="iconbtn" id="reportBack" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <h2 style="font-size:1.6rem;margin:0;">Compatibility</h2>
+      </div>
+      <div id="reportHost"></div>
     </div></div>
   </div>
 
@@ -762,7 +849,7 @@
     // Web app version line (shown in Settings). Bump alongside notable web releases.
     const APP_VERSION = '1.0';
     const state = { uid: null, chart: null, conversationId: null, sessionId: null, ws: null, wsUid: null,
-                    freeUsed: false, premium: false, userName: null, dateOfBirth: null, coordinates: null,
+                    freeUsed: false, premium: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
                     // Chat reply language (persisted). 'en' | 'hi' — default English.
                     lang: (function(){ try { return localStorage.getItem('omai-lang') || 'en'; } catch(_) { return 'en'; } })(),
                     timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
@@ -774,7 +861,7 @@
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
     const views = { auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
-                    chat: $('chatView'), chartScreen: $('chartScreenView'), paywall: $('paywallView'),
+                    chat: $('chatView'), chartScreen: $('chartScreenView'), report: $('reportView'), paywall: $('paywallView'),
                     settings: $('settingsView'), profile: $('profileView') };
     let prevView = 'onboarding';
     const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
@@ -783,8 +870,14 @@
       const cur = currentView();
       if (cur !== 'settings' && cur !== 'profile') prevView = cur; // remember where to return from overlay screens
       Object.entries(views).forEach(([k, el]) => el.classList.toggle('active', k === name));
+      // Reset any open bottom-sheet's slide state when routing to a non-sheet view.
+      if (name !== 'chartScreen' && name !== 'report') { views.chartScreen.classList.remove('up'); views.report.classList.remove('up'); }
+      if (name === 'chat') { try { restoreDrawerOnChat(); } catch (_) {} }
       if (name === 'paywall') {
         try { renderPaywallHero(); } catch (_) {}
+        // Clear any stale status from a prior visit ("Checkout closed." / an error)
+        // so it doesn't sit under the button on a fresh open.
+        { const ps = $('paywallStatus'); if (ps) ps.textContent = ''; }
         track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
         _pwSrc = 'direct';
       }
@@ -1231,7 +1324,6 @@
       const greet = state.userName ? `${state.userName}, your chart is ready` : 'Your chart is ready';
       const inner = $('chatInner');
       inner.innerHTML = `<div class="starter">
-        <div class="hero-icon">🪔</div>
         <h2>${greet}</h2>
         <p class="hint">${state.premium ? 'Ask me anything — career, marriage, money, health, or timing.' : 'Ask me anything. Your first question is free.'}</p>
         <div id="chips"></div>
@@ -1243,6 +1335,7 @@
         b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); });
         chips.appendChild(b);
       });
+      renderArtifactBar();
     }
 
     function nearBottom() { const s = $('chatScroll'); return s.scrollHeight - s.scrollTop - s.clientHeight < 90; }
@@ -1325,8 +1418,12 @@
       if (asking) return; // a stream is already in flight — ignore Enter/click spam
       const input = $('composerInput'); const q = input.value.trim();
       if (!q) return;
-      if (!state.premium && state.freeUsed) { _pwSrc = 'question_limit'; show('paywall'); return; }
+      // Compat FOLLOW-UPS are free continuation of an already-generated report (the
+      // report was the metered "reading"), so delegate BEFORE the free-quota guard —
+      // never paywall someone chatting about a reading they already paid for. Only
+      // NEW astro questions (below) and NEW reports (compatGenBtn) are gated.
       if (state.mode === 'compat') return askCompat(q);
+      if (!state.premium && state.freeUsed) { _pwSrc = 'question_limit'; show('paywall'); return; }
 
       asking = true;
       input.value = ''; autosize(); $('sendBtn').disabled = true;
@@ -1386,8 +1483,19 @@
           if (firstMsg) fetchSessions(); // surface the new session in the drawer
         }
         if (!state.premium && acc) {
-          state.freeUsed = true;
-          $('chatStatus').textContent = 'That was your free question. Continue for unlimited answers.';
+          // The server (consumeFreeQuota) already decremented the shared ledger for
+          // this astro answer. Mirror it locally: a pack buyer with questions left is
+          // NOT blocked; only remaining<=0 trips the paywall. (A blanket freeUsed=true
+          // here used to paywall pack buyers after one of their five questions.)
+          if (Number.isFinite(state.remaining)) {
+            state.remaining = Math.max(0, state.remaining - 1);
+            state.freeUsed = state.remaining <= 0;
+          } else {
+            state.freeUsed = true; // brand-new user just spent their one granted free question
+          }
+          $('chatStatus').textContent = state.freeUsed
+            ? 'That was your free question. Continue for unlimited answers.'
+            : `${state.remaining} question${state.remaining === 1 ? '' : 's'} left.`;
         }
       }
     }
@@ -1566,13 +1674,15 @@
 
     function renderCompatHome() {
       const inner = $('chatInner'); inner.innerHTML = '';
-      if (state.compatReport) inner.appendChild(buildReportCard(state.compatReport));
+      // The report no longer lives in the chat scroll — it's its own screen (openReportScreen),
+      // surfaced via the dock "View report" button. Chat stays a pure conversation (app parity).
       const wrap = document.createElement('div'); wrap.className = 'starter'; wrap.style.paddingTop = '.5rem';
       const pname = state.partner?.name ? ` with ${esc(state.partner.name)}` : '';
       wrap.innerHTML = `<p class="hint">Ask anything about your compatibility${pname}.</p><div id="chips"></div>`;
       inner.appendChild(wrap);
       const chips = wrap.querySelector('#chips');
       COMPAT_STARTERS.forEach((s) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = s; b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); }); chips.appendChild(b); });
+      renderArtifactBar();
       maybeScroll(true);
     }
 
@@ -1598,6 +1708,10 @@
       const pname = $('p-name').value.trim() || null;
       if (!dob || !time || !place) { status.textContent = "Fill your partner's date, time and place of birth."; return; }
       if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = 'Enter a valid birth date in the past.'; return; }
+      // A compatibility REPORT is a metered "reading" — block a NEW one when the free
+      // question is used up (the server enforces too; this avoids computing a partner
+      // chart we can't deliver). Follow-up questions on an existing report stay free.
+      if (!state.premium && state.freeUsed) { _pwSrc = 'compat_limit'; show('paywall'); return; }
       const btn = $('compatGenBtn'); btn.disabled = true;
       try {
         status.textContent = "Looking up partner's birth place…";
@@ -1631,20 +1745,39 @@
         status.textContent = 'Analyzing compatibility…';
         const report = await new Promise((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error('Compatibility timed out — please retry.')), 120000);
-          pending = { onReport: (r) => { clearTimeout(timer); resolve(r); }, onError: (e) => { clearTimeout(timer); reject(new Error(e)); } };
+          // onPaywall: the report is now metered server-side, so an over-quota user gets
+          // a paywall frame here — without this handler the frame would be dropped and the
+          // 120s timer would fire a confusing "timed out" instead.
+          pending = {
+            onReport: (r) => { clearTimeout(timer); resolve(r); },
+            onPaywall: () => { clearTimeout(timer); reject(new Error('__paywall__')); },
+            onError: (e) => { clearTimeout(timer); reject(new Error(e)); },
+          };
           sendWS({ type: 'compatibility', userId: state.uid, threadId: `web-compat-${Date.now()}`,
             userGender: state.userGender, partnerGender: state.partnerGender,
             astrologyData: { userChart: state.chart, partnerChart } });
         });
         state.compatReport = hydrateReportNames(report);
         setDoc(doc(db, `users/${state.uid}/astroData/compatibility_report`), { ...report, generatedAt: serverTimestamp(), source: 'web' }, { merge: true }).catch(() => {});
+        // The server metered this report against the shared free-question quota — mirror
+        // it so the local guard knows the free reading is spent (a pack buyer keeps the
+        // rest of their balance; only remaining<=0 trips the paywall on the NEXT reading).
+        if (!state.premium) {
+          if (Number.isFinite(state.remaining)) { state.remaining = Math.max(0, state.remaining - 1); state.freeUsed = state.remaining <= 0; }
+          else { state.freeUsed = true; }
+        }
 
         state.mode = 'compat'; setModeUI('compat');
         state.compatSessionId = null; state.compatConversationId = null;
         btn.disabled = false; status.textContent = '';
-        renderCompatHome(); show('chat'); renderHistory();
+        // Set up the (clean) compat chat, then open the freshly-generated report on its own
+        // screen — the payoff for hitting "Generate". Back returns to the chat (dock has "View report").
+        renderCompatHome(); renderHistory(); openReportScreen();
       } catch (e) {
-        status.textContent = e.message || 'Something went wrong. Please retry.';
+        // Over-quota → the report onPaywall rejected with this sentinel; show the
+        // paywall instead of a scary error under the setup form.
+        if (e.message === '__paywall__') { _pwSrc = 'server_gate'; show('paywall'); }
+        else { status.textContent = e.message || 'Something went wrong. Please retry.'; }
         btn.disabled = false;
       }
     });
@@ -1690,7 +1823,9 @@
           attachMsgActions(aiEl, () => acc);
         }
         if (acc) { saveCompatMessage('bot', acc); touchCompatSession(firstMsg ? q : null); if (firstMsg) fetchSessions(); }
-        if (!state.premium && acc) { state.freeUsed = true; $('chatStatus').textContent = 'That was your free question. Continue for unlimited answers.'; }
+        // A compat follow-up is FREE continuation of an already-generated report (the
+        // report was the metered reading), so it does NOT consume the free question —
+        // don't flip freeUsed here. The report flow (compatGenBtn) owns that decrement.
       }
     }
 
@@ -1845,14 +1980,91 @@
     function setChartDivUI(div) { document.querySelectorAll('#chartDivSeg button').forEach((b) => b.classList.toggle('active', b.dataset.div === div)); }
     function renderChartScreen() { renderKundali(state.chart, $('kunHost'), chartDiv); renderChartExtras(state.chart, chartDiv); }
     document.querySelectorAll('#chartDivSeg button').forEach((b) => b.addEventListener('click', () => { chartDiv = b.dataset.div; setChartDivUI(chartDiv); renderChartScreen(); }));
-    function openChartScreen() { if (!state.chart) { show('onboarding'); return; } chartDiv = 'D1'; setChartDivUI('D1'); renderChartScreen(); show('chartScreen'); }
-    $('chartBack').addEventListener('click', () => show('chat'));
+    // ── Bottom-sheet presenters (chart + report) ───────────────────────────
+    // Mirrors the app's modal presentation (forModalPresentationIOS): the sheet
+    // slides up from the bottom OVER the current view (which stays mounted behind
+    // it, since the sheet is position:fixed), and the back button slides it down.
+    function openSheet(name) {
+      const el = views[name];
+      el.classList.add('active');
+      // next frame → transition translateY(100%)→0
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('up')));
+    }
+    function closeSheet(name) {
+      const el = views[name];
+      el.classList.remove('up'); // slides down
+      const done = () => { el.classList.remove('active'); el.removeEventListener('transitionend', done); };
+      el.addEventListener('transitionend', done);
+      setTimeout(done, 360); // fallback if transitionend doesn't fire
+    }
+    function openChartScreen() { if (!state.chart) { show('onboarding'); return; } chartDiv = 'D1'; setChartDivUI('D1'); renderChartScreen(); openSheet('chartScreen'); }
+    $('chartBack').addEventListener('click', () => closeSheet('chartScreen'));
+
+    // Compatibility report as its OWN screen (parity with the app's CompatibilityScreen),
+    // reached from the chat dock so the chat stays a pure conversation.
+    function openReportScreen() {
+      if (!state.compatReport) { show('compatSetup'); return; } // no report yet → partner entry
+      const host = $('reportHost'); host.innerHTML = ''; host.appendChild(buildReportCard(state.compatReport));
+      openSheet('report');
+    }
+    $('reportBack').addEventListener('click', () => closeSheet('report'));
+    // Stroke/outline icons — match the web's icon language AND the app's MaterialCommunityIcons
+    // choices (eye = view chart, text-box-outline = report, file-chart-outline = generate report).
+    const ICON_EYE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2"/></svg>';
+    const ICON_REPORT = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 8.5h8M8 12h8M8 15.5h5" stroke-linecap="round"/></svg>';
+    const ICON_FILECHART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V9z" stroke-linejoin="round"/><path d="M13 3v6h6" stroke-linejoin="round"/><path d="M8.5 17.5v-3M12 17.5v-5M15.5 17.5v-2" stroke-linecap="round"/></svg>';
+    // Contextual dock button (mirrors the app's in-chat dock): Personal → Your chart;
+    // Relationship → Compatibility report (if generated) / Generate. Re-rendered on every chat render.
+    function renderArtifactBar() {
+      const bar = $('artifactBar'); if (!bar) return;
+      if (state.mode === 'compat') {
+        bar.innerHTML = state.compatReport
+          ? `<button type="button" class="artifact-btn" id="abReport">${ICON_REPORT}Compatibility report</button>`
+          : `<button type="button" class="artifact-btn" id="abGen">${ICON_FILECHART}Generate report</button>`;
+      } else {
+        bar.innerHTML = state.chart ? `<button type="button" class="artifact-btn" id="abChart">${ICON_EYE}Your chart</button>` : '';
+      }
+      const r = $('abReport'); if (r) r.onclick = openReportScreen;
+      const g = $('abGen'); if (g) g.onclick = () => show('compatSetup');
+      const c = $('abChart'); if (c) c.onclick = openChartScreen;
+    }
 
 
     // ── Drawer (mirrors CustomAstroDrawerContent) ──────────────────────────
-    const openDrawer = () => { $('drawer').classList.add('open'); $('drawerOverlay').classList.add('open'); fetchSessions(); };
-    const closeDrawer = () => { $('drawer').classList.remove('open'); $('drawerOverlay').classList.remove('open'); };
-    $('menuBtn').addEventListener('click', openDrawer);
+    // Drawer open/closed choice persists across refresh (mirrors AstroScreen's drawer
+    // remembering its state). On mobile the drawer is a content-covering overlay, so we
+    // only auto-restore "open" at desktop widths; on mobile it stays on-demand. The user's
+    // explicit open/close is always remembered regardless of width.
+    const DRAWER_KEY = 'omai_chat_drawer_open';
+    const DRAWER_DESKTOP_MQ = window.matchMedia('(min-width: 900px)');
+    const drawerPrefOpen = () => { try { const v = localStorage.getItem(DRAWER_KEY); return v === null ? true : v === '1'; } catch (_) { return true; } };
+    const setDrawerPref = (open) => { try { localStorage.setItem(DRAWER_KEY, open ? '1' : '0'); } catch (_) {} };
+    // Apply (don't toggle the overlay dim/pointer-events on desktop, where the drawer sits
+    // beside the centered chat rather than over it).
+    const applyDrawerState = (open) => {
+      $('drawer').classList.toggle('open', open);
+      $('drawerOverlay').classList.toggle('open', open && !DRAWER_DESKTOP_MQ.matches);
+      // Desktop: shift the appbar + active view right by the drawer width so the
+      // centered chat re-centers and nothing underlaps. Mobile keeps the overlay.
+      document.body.classList.toggle('drawer-shift', open && DRAWER_DESKTOP_MQ.matches);
+      if (open) fetchSessions();
+    };
+    const openDrawer = () => { setDrawerPref(true); applyDrawerState(true); };
+    const closeDrawer = () => { setDrawerPref(false); $('drawer').classList.remove('open'); $('drawerOverlay').classList.remove('open'); document.body.classList.remove('drawer-shift'); };
+    const toggleDrawer = () => { ($('drawer').classList.contains('open') ? closeDrawer : openDrawer)(); };
+    // Restore last state when the chat screen is first shown (only auto-open on desktop;
+    // on mobile, default-open would cover the chat, so it waits for the hamburger).
+    let _drawerRestored = false;
+    const restoreDrawerOnChat = () => {
+      if (_drawerRestored) return; _drawerRestored = true;
+      if (DRAWER_DESKTOP_MQ.matches && drawerPrefOpen()) applyDrawerState(true);
+    };
+    // Keep the shift/overlay correct when the viewport crosses the desktop breakpoint.
+    DRAWER_DESKTOP_MQ.addEventListener('change', () => {
+      if ($('drawer').classList.contains('open')) applyDrawerState(true);
+    });
+    $('menuBtn').addEventListener('click', toggleDrawer);
+    $('drawerClose').addEventListener('click', closeDrawer);
     $('drawerOverlay').addEventListener('click', closeDrawer);
     $('drawerNewChat').addEventListener('click', () => { closeDrawer(); startNewChat(); });
     $('diChart').addEventListener('click', () => { closeDrawer(); openChartScreen(); });
@@ -1920,7 +2132,7 @@
         const el = document.createElement('div');
         el.className = 'sess' + (s.id === state.sessionId ? ' active' : '');
         const title = s.firstMessagePreview || 'New chat';
-        el.innerHTML = `<span class="t"></span><button class="del" title="Delete" aria-label="Delete chat">🗑</button>`;
+        el.innerHTML = `<span class="t"></span><button class="del" title="Delete" aria-label="Delete chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7h13M10 7V5h4v2M7 7l.9 12.5h8.2L17 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
         el.querySelector('.t').textContent = title;
         el.querySelector('.t').addEventListener('click', () => loadSession(s.id));
         el.querySelector('.del').addEventListener('click', (ev) => { ev.stopPropagation(); deleteSession(s.id, title); });
@@ -1940,9 +2152,10 @@
           where('session_id', '==', id), orderBy('timestamp', 'asc'));
         const snap = await getDocs(q);
         $('chatInner').innerHTML = '';
-        if (compat && state.compatReport) $('chatInner').appendChild(buildReportCard(state.compatReport));
+        // Report no longer embeds in the chat — it's its own screen. Chat stays pure.
         snap.docs.forEach(d => { const m = d.data(); addMsg(m.sender === 'bot' ? 'ai' : 'user', m.text || ''); });
-        if (!snap.size && !compat) renderEmptyChat();
+        if (!snap.size) { compat ? renderCompatHome() : renderEmptyChat(); } // empty session → home (renders dock bar)
+        else renderArtifactBar();                                           // has messages → just the dock button
         maybeScroll(true); renderHistory();
       } catch (e) { renderEmptyChat(); }
     }
@@ -2019,6 +2232,10 @@
         try {
           const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
           const remaining = snap.exists() ? Number(snap.data()?.remaining) : null;
+          // Track the ledger balance so the local guard distinguishes "free question
+          // spent" from "still has paid pack questions" — a pack buyer (not premium)
+          // must not be blocked after one of five. null = brand-new user, no doc yet.
+          state.remaining = Number.isFinite(remaining) ? remaining : null;
           if (Number.isFinite(remaining)) state.freeUsed = remaining <= 0;
         } catch (_) { /* leave freeUsed as-is */ }
       } catch (_) { /* ignore — fall back to free-Q flow */ }
@@ -2154,7 +2371,7 @@
               const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
               const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
               if (Number.isFinite(rem) && rem > 0) {
-                state.freeUsed = false; show('chat');
+                state.remaining = rem; state.freeUsed = false; show('chat');
                 addMsg('ai', `${questions} questions added — ask away.`); return;
               }
             } catch (_) { /* keep polling */ }
