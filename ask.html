@@ -30,14 +30,20 @@
        full omai.app journey (SEO page → ask → paywall → purchase) lives in one property.
        MVP funnel events (question / paywall_interaction / purchase) don't fire on the
        static pages, so they stay cleanly filterable. window.track mirrors the app's
-       analyticsService.logEvent — same event-family names for cross-platform funnels. -->
+       analyticsService.logEvent — same event-family names for cross-platform funnels.
+       surface='web_ask' is set as a global default param (before config, so the first
+       page_view carries it too) → every event from this surface is filterable without a
+       separate GA4 property. Register `surface` as an event-scoped custom dimension in
+       GA4 (G-EPT0NFE087) to slice the web-ask funnel out of the shared landing property. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-EPT0NFE087');
-    window.track = function (name, params) { try { gtag('event', name, params || {}); } catch (_) {} };
+    gtag('config', 'G-EPT0NFE087', { surface: 'web_ask' });   // attaches surface to the auto page_view
+    // Every funnel event also carries surface='web_ask' so the web-ask funnel is filterable
+    // out of the shared landing property without a separate GA4 property.
+    window.track = function (name, params) { try { gtag('event', name, Object.assign({ surface: 'web_ask' }, params || {})); } catch (_) {} };
   </script>
   <!-- ── PREVIEW GATE ───────────────────────────────────────────────────────
        Hides the web app from the public while it's being finished. Bypass with
