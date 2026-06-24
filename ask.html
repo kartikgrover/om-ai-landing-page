@@ -685,6 +685,7 @@
   <!-- ── PAYWALL ──────────────────────────────────────────────────────── -->
   <div id="paywallView" class="view">
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:480px;">
+      <button class="iconbtn" id="paywallBack" aria-label="Back" style="margin:.25rem 0 .25rem -.4rem;"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <h2 id="pwHeroTitle" style="font-size:var(--fs-2xl);text-align:center;margin:.5rem 0 .25rem;">Continue your reading</h2>
       <p id="pwHeroSub" class="hint" style="text-align:center;">You've used your free question. Unlock unlimited questions about your chart.</p>
 
@@ -2010,6 +2011,7 @@
       openSheet('report');
     }
     $('reportBack').addEventListener('click', () => closeSheet('report'));
+    $('paywallBack').addEventListener('click', () => show(prevView)); // return to wherever the paywall was opened from
     // Stroke/outline icons — match the web's icon language AND the app's MaterialCommunityIcons
     // choices (eye = view chart, text-box-outline = report, file-chart-outline = generate report).
     const ICON_EYE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2"/></svg>';
@@ -2053,6 +2055,9 @@
     };
     const openDrawer = () => { setDrawerPref(true); applyDrawerState(true); };
     const closeDrawer = () => { setDrawerPref(false); $('drawer').classList.remove('open'); $('drawerOverlay').classList.remove('open'); document.body.classList.remove('drawer-shift'); };
+    // Desktop drawer is persistent (pushes the view); selecting an item keeps it open. Only the
+    // mobile overlay collapses on selection (else it would cover the screen you just opened).
+    const closeDrawerMobile = () => { if (!DRAWER_DESKTOP_MQ.matches) closeDrawer(); };
     const toggleDrawer = () => { ($('drawer').classList.contains('open') ? closeDrawer : openDrawer)(); };
     // Restore last state when the chat screen is first shown (only auto-open on desktop;
     // on mobile, default-open would cover the chat, so it waits for the hamburger).
@@ -2068,11 +2073,11 @@
     $('menuBtn').addEventListener('click', toggleDrawer);
     $('drawerClose').addEventListener('click', closeDrawer);
     $('drawerOverlay').addEventListener('click', closeDrawer);
-    $('drawerNewChat').addEventListener('click', () => { closeDrawer(); startNewChat(); });
-    $('diChart').addEventListener('click', () => { closeDrawer(); openChartScreen(); });
-    $('diBirth').addEventListener('click', () => { closeDrawer(); openBirthModal(); });
-    $('diEdit').addEventListener('click', () => { closeDrawer(); editBirth(); });
-    $('diPremium').addEventListener('click', () => { closeDrawer(); show('paywall'); });
+    $('drawerNewChat').addEventListener('click', () => { closeDrawerMobile(); startNewChat(); });
+    $('diChart').addEventListener('click', () => { closeDrawerMobile(); openChartScreen(); });
+    $('diBirth').addEventListener('click', () => { closeDrawerMobile(); openBirthModal(); });
+    $('diEdit').addEventListener('click', () => { closeDrawerMobile(); editBirth(); });
+    $('diPremium').addEventListener('click', () => { closeDrawerMobile(); show('paywall'); });
     $('birthModalClose').addEventListener('click', () => $('birthModal').classList.remove('open'));
     $('birthModal').addEventListener('click', (e) => { if (e.target === $('birthModal')) $('birthModal').classList.remove('open'); });
     // Escape closes whichever overlay is open (a11y).
@@ -2124,7 +2129,29 @@
         const snap = await getDocs(q);
         window.__sessions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         renderHistory();
+        backfillSessionTitles();
       } catch (e) { host.innerHTML = '<div class="empty">Couldn’t load chats.</div>'; }
+    }
+    // A session can lack firstMessagePreview (legacy data, or a first answer that errored before
+    // the preview was written) and would otherwise show "New chat" despite having a real convo.
+    // Backfill the title from the first stored message (one-time per session; reuses the existing
+    // (session_id, timestamp) index from loadSession), then re-render the drawer.
+    async function backfillSessionTitles() {
+      const missing = (window.__sessions || []).filter(s => !s.firstMessagePreview);
+      if (!missing.length) return;
+      await Promise.all(missing.map(async (s) => {
+        try {
+          const mq = query(collection(db, `users/${state.uid}/astro_chats`),
+            where('session_id', '==', s.id), orderBy('timestamp', 'asc'), limit(1));
+          const ms = await getDocs(mq);
+          const first = ms.docs[0] && ms.docs[0].data();
+          if (first && first.text) {
+            s.firstMessagePreview = first.text.split(/\s+/).slice(0, 6).join(' ');
+            updateDoc(doc(db, `users/${state.uid}/astro_sessions`, s.id), { firstMessagePreview: s.firstMessagePreview }).catch(() => {});
+          }
+        } catch (_) { /* keep the "New chat" fallback if the lookup fails */ }
+      }));
+      renderHistory();
     }
     function renderHistory() {
       const host = $('drawerHistory'); const sessions = window.__sessions || [];
@@ -2142,7 +2169,7 @@
       });
     }
     async function loadSession(id) {
-      closeDrawer();
+      closeDrawerMobile();
       if (!state.chart) { show('onboarding'); return; } // need a chart to continue the thread
       const compat = state.mode === 'compat';
       if (compat) { state.compatSessionId = id; state.compatConversationId = null; }
