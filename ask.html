@@ -331,7 +331,13 @@
     .gun-bar > i { display:block; height:100%; background:var(--accent); }
     .koota { display:flex; justify-content:space-between; font-size:.88rem; padding:.32rem 0; border-bottom:1px solid var(--border); }
     .koota:last-child { border-bottom:none; }
+    .koota .k-name { flex:1; }
     .koota .k-pts { font-variant-numeric:tabular-nums; color:var(--secondary); }
+    .k-bar { flex:0 0 56px; height:5px; border-radius:4px; background:var(--border); overflow:hidden; margin:0 .6rem; align-self:center; }
+    .k-bar > i { display:block; height:100%; border-radius:4px; }
+    .adv-asp { display:flex; align-items:flex-start; gap:.5rem; font-size:.86rem; padding:.22rem 0; }
+    .adv-dot { width:7px; height:7px; border-radius:50%; flex:none; margin-top:.42rem; }
+    .adv-dasha { font-size:.86rem; padding:.22rem 0; }
     .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:.9rem; }
     .rep-list li { margin:.18rem 0; }
     .rep-h { font-size:.74rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
@@ -481,7 +487,7 @@
       </div>
       <div class="trust">
         <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
-        <span><b>4.7★</b> · 30,000+ readings</span>
+        <span><b>4.8★</b> · 190,000+ readings</span>
         <span>🔒 Your details stay private</span>
       </div>
     </div></div>
@@ -521,7 +527,7 @@
       </div>
       <div class="trust">
         <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
-        <span><b>4.7★</b> · 30,000+ readings</span>
+        <span><b>4.8★</b> · 190,000+ readings</span>
         <span>🔒 Your details stay private</span>
       </div>
     </div></div>
@@ -626,7 +632,7 @@
       <button id="subscribeBtn" class="btn-primary">Subscribe</button>
       <div id="paywallStatus" class="status-line" style="text-align:center;"></div>
       <div class="trust" style="margin-top:.75rem;justify-content:center;">
-        <span>🔒 Secure payment by <b>Razorpay</b></span><span>Cancel anytime</span><span><b>4.7★</b> · 30,000+ readings</span>
+        <span>🔒 Secure payment by <b>Razorpay</b></span><span>Cancel anytime</span><span><b>4.8★</b> · 190,000+ readings</span>
       </div>
     </div></div>
   </div>
@@ -1469,14 +1475,50 @@
         <div class="rep-h">Gun Milan (Ashtakoot)</div>
         <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${pct}%</span></div>`;
       const pts = r.ashtakoot?.ashtakoot_points || [];
-      if (pts.length) html += '<div style="margin-top:.5rem;">' + pts.map((p) => `<div class="koota"><span>${esc(p.attribute)}</span><span class="k-pts">${esc(p.received)}/${esc(p.out_of)}</span></div>`).join('') + '</div>';
+      if (pts.length) html += '<div style="margin-top:.5rem;">' + pts.map((p) => {
+        const ratio = (p.received != null && p.out_of) ? (Number(p.received) / Number(p.out_of)) : 0;
+        const bcol = ratio >= 0.66 ? '#16a34a' : ratio >= 0.34 ? '#E0975A' : '#dc2626';   // green / amber / red, per-factor (mirrors the app)
+        return `<div class="koota"><span class="k-name">${esc(p.attribute)}</span><span class="k-bar"><i style="width:${Math.round(ratio * 100)}%;background:${bcol}"></i></span><span class="k-pts" style="color:${bcol};font-weight:600;">${esc(p.received)}/${esc(p.out_of)}</span></div>`;
+      }).join('') + '</div>';
       const str = r.recommendations?.strengths || [], chg = r.recommendations?.challenges || [];
       if (str.length) html += `<div class="rep-h">Strengths</div><ul class="rep-list">${str.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
       if (chg.length) html += `<div class="rep-h">Challenges</div><ul class="rep-list">${chg.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
       const km = r.ashtakoot?.key_mismatches || [];
       if (km.length) html += `<div class="hint" style="margin-top:.55rem;">Watch-outs: ${esc(km.join(', '))}</div>`;
+      // ── Advanced synastry (mirrors the app + Pro): Navamsa D9, cross-chart aspects, dasha timing.
+      // Fields match the backend's compatibility report (navamsaAnalysis / crossAspects /
+      // dashaCompatibility); every block is guarded so absent data simply renders nothing.
+      const userName = ((state.userGender === 'male' ? mle.name : f.name)) || 'You';
+      const partnerName = ((state.userGender === 'male' ? f.name : mle.name)) || 'Partner';
+      html += advHtml(r, userName, partnerName);
       card.innerHTML = html;
       return card;
+    }
+    // Advanced section for the compatibility card — Navamsa insights, cross-chart aspects, dasha.
+    function advHtml(r, userName, partnerName) {
+      const ins = (r.navamsaAnalysis && r.navamsaAnalysis.insights) || [];
+      const cx = r.crossAspects || {};
+      const ben = cx.benefic || [], mal = cx.malefic || [], sum = cx.summary || {};
+      const dt = (r.dashaCompatibility && r.dashaCompatibility.currentTiming) || {};
+      if (!ins.length && !ben.length && !mal.length && !dt.user && !dt.partner) return '';
+      const nameFor = (chart) => chart === 'user' ? userName : partnerName;
+      let h = '';
+      if (ins.length) h += `<div class="rep-h">Navamsa (D9) synastry</div><ul class="rep-list">${ins.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
+      if (ben.length || mal.length) {
+        const aspRow = (asp) => {
+          const fromN = (asp.from && asp.from.planet) || '', toN = (asp.to && asp.to.planet) || '';
+          const fromWho = nameFor(asp.from && asp.from.chart), toWho = nameFor(asp.to && asp.to.chart);
+          const dotc = asp.nature === 'malefic' ? '#dc2626' : '#16a34a';
+          return `<div class="adv-asp"><span class="adv-dot" style="background:${dotc}"></span><span>${esc(fromWho)} ${esc(fromN)} → ${esc(toWho)} ${esc(toN)} <span class="hint">${esc(asp.effect || asp.type || '')}</span></span></div>`;
+        };
+        const ratio = sum.ratio ? ` (${esc(sum.ratio)})` : '';
+        h += `<div class="rep-h">Cross-chart aspects${ratio}</div>` + ben.map(aspRow).join('') + mal.map(aspRow).join('');
+      }
+      if (dt.user || dt.partner) {
+        const dCard = (who, d) => { if (!d) return ''; const lords = [d.mahadasha, d.antardasha].filter(Boolean).join(' › '); const fav = d.combined ? ` · ${esc(d.combined)}` : ''; return `<div class="adv-dasha"><b>${esc(who)}</b> — ${esc(lords)}${fav}</div>`; };
+        h += `<div class="rep-h">Dasha timing</div>` + dCard(userName, dt.user) + dCard(partnerName, dt.partner);
+      }
+      return h;
     }
 
     function renderCompatHome() {
