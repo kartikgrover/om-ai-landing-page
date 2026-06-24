@@ -1146,6 +1146,10 @@
     let pending = null;
     function onWSMessage(ev) {
       let m; try { m = JSON.parse(ev.data); } catch { return; }
+      // server.js sends inline failures as {error:'...'} with NO `type` (rate-limit, enqueue
+      // failure, validation). Without this they match no case below → pending.onError never
+      // fires → the awaited promise hangs forever (spinner stuck, input locked). Normalise.
+      if (m.error && !m.type) m = { type: 'error', data: m.error };
       switch (m.type) {
         case 'astroChartData': pending?.onChart?.(m.data); break;
         case 'compatibility':  pending?.onReport?.(m.data); break;
@@ -1429,6 +1433,14 @@
     function setModeUI(mode) { document.querySelectorAll('#modeSeg button').forEach((x) => x.classList.toggle('active', x.dataset.mode === mode)); }
     async function setMode(mode) {
       if (mode === state.mode && currentView() === 'chat') return;
+      // A stream is in flight (single shared `pending` + one chat container). Switching modes here
+      // runs renderEmptyChat()/renderCompatHome(), which wipes the element the in-flight answer is
+      // rendering into → the answer silently vanishes. Block until it finishes.
+      if (asking) {
+        const s = $('chatStatus');
+        if (s) { s.textContent = 'Please wait for the current answer to finish.'; setTimeout(() => { if (s.textContent === 'Please wait for the current answer to finish.') s.textContent = ''; }, 2500); }
+        return;
+      }
       setModeUI(mode); state.mode = mode; $('chatStatus').textContent = '';
       if (mode === 'compat') {
         if (!state.compatReport) await loadCompatExisting();
