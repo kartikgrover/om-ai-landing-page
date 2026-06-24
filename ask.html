@@ -148,6 +148,11 @@
       border-radius:10px; padding:.7rem .85rem; font-size:1rem; font-family:inherit; }
     .field:focus { outline:2px solid var(--accent); outline-offset:0; border-color:transparent; }
     .field::placeholder { color:var(--secondary); }
+    .place-wrap { position:relative; }
+    .city-suggest { position:absolute; top:100%; left:0; right:0; z-index:40; background:var(--input-bg); border:1px solid var(--border-strong); border-radius:10px; margin-top:3px; max-height:240px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,.18); }
+    .city-suggest .cs-item { padding:.55rem .7rem; cursor:pointer; font-size:.9rem; color:var(--text); border-bottom:1px solid var(--border); }
+    .city-suggest .cs-item:last-child { border-bottom:none; }
+    .city-suggest .cs-item:hover, .city-suggest .cs-item.active { background:var(--accent); color:#fff; }
     select.field { appearance:none; }
     .row2 { display:flex; gap:.75rem; } .row2 > * { flex:1; }
     .hint { font-size:.82rem; color:var(--secondary); }
@@ -504,8 +509,11 @@
         </div>
         <div style="margin-bottom:1rem;">
           <label for="f-place">Place of birth</label>
-          <input id="f-place" class="field" type="text" placeholder="City, Country (e.g. Mumbai, India)" autocomplete="off">
-          <div class="hint" style="margin-top:.3rem;">We'll look up the coordinates for your chart.</div>
+          <div class="place-wrap">
+            <input id="f-place" class="field" type="text" placeholder="Start typing your birth city…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false">
+            <div class="city-suggest" id="f-place-sug"></div>
+          </div>
+          <div class="hint" style="margin-top:.3rem;">Pick your birth city from the list for an accurate chart.</div>
         </div>
         <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;">⏱ Time zone <b id="f-tz-detected"></b> — detected from your birth place (handles DST automatically).</div>
         <button id="startBtn" class="btn-primary">Generate my chart</button>
@@ -538,7 +546,10 @@
         </div>
         <div style="margin-bottom:1rem;">
           <label for="p-place">Place of birth</label>
-          <input id="p-place" class="field" type="text" placeholder="City, Country (e.g. Mumbai, India)" autocomplete="off">
+          <div class="place-wrap">
+            <input id="p-place" class="field" type="text" placeholder="Start typing the birth city…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false">
+            <div class="city-suggest" id="p-place-sug"></div>
+          </div>
         </div>
         <div style="margin-bottom:1rem;">
           <div id="p-tz-row" class="hint" style="display:none;">⏱ Time zone <b id="p-tz-detected"></b> — detected from the birth place (handles DST automatically).</div>
@@ -652,6 +663,7 @@
       <a class="srow" href="/support.html" target="_blank" rel="noopener"><span class="ic">💬</span><span class="sr-main">Help &amp; Support</span><span class="chev">›</span></a>
       <a class="srow" href="/privacy.html"><span class="ic">🛡️</span><span class="sr-main">Privacy</span><span class="chev">›</span></a>
       <a class="srow" href="/terms.html"><span class="ic">📄</span><span class="sr-main">About &amp; Terms</span><span class="chev">›</span></a>
+      <a class="srow" href="/delete-account.html" target="_blank" rel="noopener"><span class="ic">🗑️</span><span class="sr-main">Delete account<span class="sr-sub">Remove your account &amp; data</span></span><span class="chev">›</span></a>
 
       <div style="margin-top:1.5rem;">
         <button class="srow" id="signOutBtn"><span class="ic">🚪</span><span class="sr-main">Sign Out</span></button>
@@ -698,6 +710,9 @@
   </div>
 
 
+  <!-- Bundled birth-city dataset (India-complete + world pop>300k) → instant, rate-limit-free
+       city autocomplete; Nominatim is only the fallback for the long tail. -->
+  <script defer src="cities.js"></script>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
@@ -971,6 +986,80 @@
 
     async function token() { return auth.currentUser ? auth.currentUser.getIdToken() : null; }
 
+    // ── city autocomplete (bundled dataset + Nominatim fallback) ───────
+    const _esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    const CC_NAME = { in: 'India', us: 'United States', gb: 'United Kingdom', ae: 'UAE', ca: 'Canada', au: 'Australia', sg: 'Singapore', np: 'Nepal', lk: 'Sri Lanka', bd: 'Bangladesh', pk: 'Pakistan', my: 'Malaysia', qa: 'Qatar', sa: 'Saudi Arabia', kw: 'Kuwait', om: 'Oman', bh: 'Bahrain', nz: 'New Zealand', za: 'South Africa', de: 'Germany', fr: 'France', it: 'Italy', es: 'Spain', nl: 'Netherlands', ch: 'Switzerland', ie: 'Ireland', mu: 'Mauritius', fj: 'Fiji', tt: 'Trinidad & Tobago' };
+    function localCitySearch(q) {
+      const list = window.OMAI_CITIES || [];
+      const ql = q.trim().toLowerCase();
+      if (ql.length < 2 || !list.length) return [];
+      const pre = [], sub = [];
+      for (const c of list) {
+        const n = c[0].toLowerCase();
+        if (n.startsWith(ql)) { if (pre.length < 6) pre.push(c); }
+        else if (n.includes(ql)) { if (sub.length < 6) sub.push(c); }
+        if (pre.length >= 6) break;
+      }
+      return [...pre, ...sub].slice(0, 6).map(c => {
+        const cc = (c[3] || '').toLowerCase();
+        const region = c[3] === 'IN' ? (c[4] ? `${c[4]}, India` : 'India') : (CC_NAME[cc] || c[3]);
+        return { label: `${c[0]}, ${region}`, latitude: c[1], longitude: c[2], countryCode: cc };
+      });
+    }
+    async function nominatimSearch(q) {
+      const url = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&q=' + encodeURIComponent(q);
+      const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('search failed');
+      const arr = await res.json();
+      return (arr || []).map(r => ({
+        label: r.display_name,
+        latitude: parseFloat(r.lat), longitude: parseFloat(r.lon),
+        countryCode: r.address && r.address.country_code ? String(r.address.country_code).toLowerCase() : null,
+      }));
+    }
+    // Local-first: bundled dataset answers the common case instantly (no Nominatim rate limit);
+    // only supplement with Nominatim when local matches are sparse (a village, an odd spelling).
+    async function searchPlaces(q) {
+      const local = localCitySearch(q);
+      if (local.length >= 5) return local;
+      try {
+        const remote = await nominatimSearch(q);
+        const seen = new Set(local.map(x => x.label.toLowerCase()));
+        for (const r of remote) { const k = r.label.toLowerCase(); if (!seen.has(k)) { local.push(r); seen.add(k); } }
+      } catch (_) {}
+      return local.slice(0, 8);
+    }
+    // A picked city short-circuits the submit-time geocode (we already have its coords).
+    const cityPick = {};
+    function attachCityPicker(inputId) {
+      const input = $(inputId), sug = $(inputId + '-sug'); if (!input || !sug) return;
+      let timer = null, items = [];
+      const hide = () => { sug.style.display = 'none'; sug.innerHTML = ''; input.setAttribute('aria-expanded', 'false'); };
+      const pick = (it) => { cityPick[inputId] = { label: it.label, coordinates: { latitude: it.latitude, longitude: it.longitude, countryCode: it.countryCode } }; input.value = it.label; hide(); };
+      const render = () => {
+        sug.innerHTML = items.map((it, i) => `<div class="cs-item" data-i="${i}">${_esc(it.label)}</div>`).join('');
+        sug.style.display = items.length ? 'block' : 'none';
+        input.setAttribute('aria-expanded', items.length ? 'true' : 'false');
+        sug.querySelectorAll('.cs-item').forEach(el => el.addEventListener('mousedown', (e) => { e.preventDefault(); pick(items[+el.dataset.i]); }));
+      };
+      input.addEventListener('input', () => {
+        if (cityPick[inputId] && cityPick[inputId].label !== input.value) delete cityPick[inputId]; // edited after picking → invalidate
+        clearTimeout(timer);
+        const q = input.value.trim();
+        if (q.length < 2) { hide(); return; }
+        timer = setTimeout(async () => { try { items = await searchPlaces(q); render(); } catch (_) { hide(); } }, 250);
+      });
+      input.addEventListener('blur', () => setTimeout(hide, 150)); // allow mousedown to register first
+    }
+    attachCityPicker('f-place');
+    attachCityPicker('p-place');
+    // Resolve a place field's coordinates: prefer the picked city, else geocode the free text.
+    async function resolvePlaceCoords(inputId, place) {
+      const p = cityPick[inputId];
+      if (p && p.label === place) return p.coordinates;
+      return geocode(place);
+    }
+
     // ── geocode (OpenStreetMap Nominatim — MVP) ────────────────────
     async function geocode(place) {
       const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(place);
@@ -1063,7 +1152,7 @@
       const status = $('onboardStatus');
       try {
         status.textContent = 'Looking up your birth place…';
-        const coordinates = await geocode(place);
+        const coordinates = await resolvePlaceCoords('f-place', place);
         // Time zone (incl. DST) is derived from the resolved coordinates, not a
         // manual dropdown — so a non-India birth gets the correct ascendant.
         const tzInfo = deriveTz(coordinates, dob, time);
@@ -1427,7 +1516,7 @@
       const btn = $('compatGenBtn'); btn.disabled = true;
       try {
         status.textContent = "Looking up partner's birth place…";
-        const pcoords = await geocode(place);
+        const pcoords = await resolvePlaceCoords('p-place', place);
         const ptzInfo = deriveTz(pcoords, dob, time);
         const offset = ptzInfo ? ptzInfo.offset : 5.5;
         const ptz = ptzInfo ? ptzInfo.tz : 'Asia/Kolkata';
