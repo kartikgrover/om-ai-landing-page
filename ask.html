@@ -344,6 +344,8 @@
     .adv-asp { display:flex; align-items:flex-start; gap:.5rem; font-size:.86rem; padding:.22rem 0; }
     .adv-dot { width:7px; height:7px; border-radius:50%; flex:none; margin-top:.42rem; }
     .adv-dasha { font-size:.86rem; padding:.22rem 0; }
+    .report-card .rtabs { margin:.9rem 0; }
+    .report-card [data-rpane][hidden] { display:none; }
     .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:.9rem; }
     .rep-list li { margin:.18rem 0; }
     .rep-h { font-size:.74rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
@@ -1473,31 +1475,48 @@
       const total = (gun.total_score != null) ? gun.total_score : '—';
       const pct = gun.percentage != null ? Math.round(gun.percentage) : (gun.total_score != null ? Math.round((gun.total_score / outOf) * 100) : 0);
       const f = r.female || {}, mle = r.male || {};
-      let html = `<div class="report-score">
+      // Score header — always visible above the tabs.
+      const scoreHtml = `<div class="report-score">
           <div class="score-num">${score}<span style="font-size:1rem;color:var(--secondary);">/100</span></div>
           <div class="score-meta"><div class="score-verdict">${esc(r.verdict || 'Compatibility')}</div>
             <div class="hint">${esc(mle.name || 'Partner')}${mle.janam_rashi ? ' · ' + esc(mle.janam_rashi) : ''} &nbsp;•&nbsp; ${esc(f.name || 'Partner')}${f.janam_rashi ? ' · ' + esc(f.janam_rashi) : ''}</div></div>
-        </div>
-        <div class="rep-h">Gun Milan (Ashtakoot)</div>
-        <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${pct}%</span></div>`;
+        </div>`;
+      // Traditional tab — Gun Milan score + the 8 kootas with per-factor bars.
       const pts = r.ashtakoot?.ashtakoot_points || [];
-      if (pts.length) html += '<div style="margin-top:.5rem;">' + pts.map((p) => {
+      let traditional = `<div class="rep-h">Gun Milan (Ashtakoot)</div>
+        <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${pct}%</span></div>`;
+      if (pts.length) traditional += '<div style="margin-top:.5rem;">' + pts.map((p) => {
         const ratio = (p.received != null && p.out_of) ? (Number(p.received) / Number(p.out_of)) : 0;
         const bcol = ratio >= 0.66 ? '#16a34a' : ratio >= 0.34 ? '#E0975A' : '#dc2626';   // green / amber / red, per-factor (mirrors the app)
         return `<div class="koota"><span class="k-name">${esc(p.attribute)}</span><span class="k-bar"><i style="width:${Math.round(ratio * 100)}%;background:${bcol}"></i></span><span class="k-pts" style="color:${bcol};font-weight:600;">${esc(p.received)}/${esc(p.out_of)}</span></div>`;
       }).join('') + '</div>';
+      // Overview tab — strengths, challenges, watch-outs.
       const str = r.recommendations?.strengths || [], chg = r.recommendations?.challenges || [];
-      if (str.length) html += `<div class="rep-h">Strengths</div><ul class="rep-list">${str.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
-      if (chg.length) html += `<div class="rep-h">Challenges</div><ul class="rep-list">${chg.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
       const km = r.ashtakoot?.key_mismatches || [];
-      if (km.length) html += `<div class="hint" style="margin-top:.55rem;">Watch-outs: ${esc(km.join(', '))}</div>`;
-      // ── Advanced synastry (mirrors the app + Pro): Navamsa D9, cross-chart aspects, dasha timing.
-      // Fields match the backend's compatibility report (navamsaAnalysis / crossAspects /
-      // dashaCompatibility); every block is guarded so absent data simply renders nothing.
+      let overview = '';
+      if (str.length) overview += `<div class="rep-h">Strengths</div><ul class="rep-list">${str.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+      if (chg.length) overview += `<div class="rep-h">Challenges</div><ul class="rep-list">${chg.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+      if (km.length) overview += `<div class="hint" style="margin-top:.55rem;">Watch-outs: ${esc(km.join(', '))}</div>`;
+      if (!overview) overview = `<p class="hint">No summary available.</p>`;
+      // Advanced tab — Navamsa D9, cross-chart aspects, dasha timing (guarded; absent data renders nothing).
       const userName = ((state.userGender === 'male' ? mle.name : f.name)) || 'You';
       const partnerName = ((state.userGender === 'male' ? f.name : mle.name)) || 'Partner';
-      html += advHtml(r, userName, partnerName);
-      card.innerHTML = html;
+      const advanced = advHtml(r, userName, partnerName) || `<p class="hint">No advanced synastry available.</p>`;
+      card.innerHTML = scoreHtml + `
+        <div class="seg rtabs" role="tablist">
+          <button type="button" class="active" data-rtab="overview" role="tab">Overview</button>
+          <button type="button" data-rtab="traditional" role="tab">Traditional</button>
+          <button type="button" data-rtab="advanced" role="tab">Advanced</button>
+        </div>
+        <div data-rpane="overview">${overview}</div>
+        <div data-rpane="traditional" hidden>${traditional}</div>
+        <div data-rpane="advanced" hidden>${advanced}</div>`;
+      card.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-rtab]'); if (!b) return;
+        const tab = b.dataset.rtab;
+        card.querySelectorAll('[data-rtab]').forEach((x) => x.classList.toggle('active', x === b));
+        card.querySelectorAll('[data-rpane]').forEach((p) => { p.hidden = (p.dataset.rpane !== tab); });
+      });
       return card;
     }
     // Advanced section for the compatibility card — Navamsa insights, cross-chart aspects, dasha.
