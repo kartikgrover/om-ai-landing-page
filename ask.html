@@ -138,7 +138,7 @@
       background:var(--header); border-bottom:1px solid var(--border);
       position:sticky; top:0; z-index:30;
     }
-    .appbar .brand { font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--text); margin:0 auto 0 .25rem; line-height:1; }
+    .appbar #newChatBtn { margin-left:auto; } /* brand lives in the drawer header only; keep new-chat pinned right */
     .iconbtn {
       display:inline-flex; align-items:center; justify-content:center;
       width:40px; height:40px; border-radius:12px; border:none; background:transparent;
@@ -146,6 +146,9 @@
     }
     .iconbtn:hover { background:var(--border); }
     .iconbtn svg { width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.8; }
+    /* Native date/time picker glyph + popup follow the active theme (else: black icon + white dropdown on dark). */
+    [data-theme="dark"] input[type="date"], [data-theme="dark"] input[type="time"] { color-scheme: dark; }
+    [data-theme="light"] input[type="date"], [data-theme="light"] input[type="time"] { color-scheme: light; }
 
     /* ── View scaffolding ────────────────────────────────────────────────── */
     .view { display:none; flex:1; flex-direction:column; min-height:0; }
@@ -479,7 +482,6 @@
     <button class="iconbtn" id="menuBtn" title="Menu" aria-label="Open menu">
       <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
     </button>
-    <span class="brand">Om.AI</span>
     <button class="iconbtn" id="newChatBtn" title="New chat" aria-label="New chat">
       <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
     </button>
