@@ -26,6 +26,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- Google Analytics (GA4) — reuses the landing-page property G-EPT0NFE087 so the
+       full omai.app journey (SEO page → ask → paywall → purchase) lives in one property.
+       MVP funnel events (question / paywall_interaction / purchase) don't fire on the
+       static pages, so they stay cleanly filterable. window.track mirrors the app's
+       analyticsService.logEvent — same event-family names for cross-platform funnels. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-EPT0NFE087');
+    window.track = function (name, params) { try { gtag('event', name, params || {}); } catch (_) {} };
+  </script>
   <!-- ── PREVIEW GATE ───────────────────────────────────────────────────────
        Hides the web app from the public while it's being finished. Bypass with
        ?preview=omai-preview-2026 (persisted to localStorage → once per browser).
@@ -730,11 +743,16 @@
                     settings: $('settingsView'), profile: $('profileView') };
     let prevView = 'onboarding';
     const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
+    let _pwSrc = 'direct'; // set by callers right before show('paywall') to label the funnel source
     function show(name) {
       const cur = currentView();
       if (cur !== 'settings' && cur !== 'profile') prevView = cur; // remember where to return from overlay screens
       Object.entries(views).forEach(([k, el]) => el.classList.toggle('active', k === name));
-      if (name === 'paywall') { try { renderPaywallHero(); } catch (_) {} }
+      if (name === 'paywall') {
+        try { renderPaywallHero(); } catch (_) {}
+        track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
+        _pwSrc = 'direct';
+      }
       // a11y: move focus into the newly shown view so keyboard/SR users aren't
       // stranded on a now-hidden control. Prefer the primary input, else heading.
       const el = views[name];
@@ -784,6 +802,15 @@
         // reconnects under the new identity.
         if (changed && state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
         refreshProfileUI();
+        // Login funnel (mirrors the app's auth_interaction family). Once per session,
+        // real accounts only (anon ?local sessions don't count).
+        if (!user.isAnonymous && !window.__loginTracked) {
+          window.__loginTracked = true;
+          const pid = user.providerData?.[0]?.providerId || '';
+          const method = pid.includes('google') ? 'google' : pid.includes('apple') ? 'apple' : 'email';
+          track('auth_interaction', { action: 'login', method });
+          track('login', { method }); // GA4 standard event
+        }
       }
       // Route the landing view off the gate only when appropriately signed in.
       if (currentView() === 'auth') { if (signedIn) restoreOrRoute(); }
@@ -898,6 +925,8 @@
         $('authStatus').textContent = 'Creating your account…';
         try {
           await createUserWithEmailAndPassword(auth, email, pass); // onAuthStateChanged advances the view
+          track('auth_interaction', { action: 'sign_up', method: 'email' });
+          track('sign_up', { method: 'email' }); // GA4 standard event
         } catch (e) {
           if (e?.code === 'auth/email-already-in-use') {
             setAuthMode('signin'); $('f-email').value = email;
@@ -1183,11 +1212,12 @@
       if (asking) return; // a stream is already in flight — ignore Enter/click spam
       const input = $('composerInput'); const q = input.value.trim();
       if (!q) return;
-      if (!state.premium && state.freeUsed) { show('paywall'); return; }
+      if (!state.premium && state.freeUsed) { _pwSrc = 'question_limit'; show('paywall'); return; }
       if (state.mode === 'compat') return askCompat(q);
 
       asking = true;
       input.value = ''; autosize(); $('sendBtn').disabled = true;
+      track('question', { status: 'asked', question_type: 'astrology' });
 
       // Open a persisted session on the first message of a new chat (same model
       // as the app → these chats also show in the app's drawer for this uid).
@@ -1208,9 +1238,9 @@
         await new Promise((resolve) => {
           pending = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
-            onDone: () => resolve(),
-            onPaywall: () => { aiEl.remove(); paywalled = true; show('paywall'); resolve(); },
-            onError: (e) => { errMsg = e || 'Something went wrong.'; resolve(); },
+            onDone: () => { track('question', { status: 'answered', question_type: 'astrology' }); resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; _pwSrc = 'server_gate'; show('paywall'); resolve(); },
+            onError: (e) => { errMsg = e || 'Something went wrong.'; track('question', { status: 'failed', question_type: 'astrology' }); resolve(); },
           };
           sendWS({
             // Thread by the session id (like the app); let the backend resolve/assign
@@ -1451,6 +1481,7 @@
       let firstMsg = false;
       if (!state.compatSessionId) { try { state.compatSessionId = await createCompatSession(); firstMsg = true; } catch (_) {} }
       addMsg('user', q); saveCompatMessage('user', q);
+      track('question', { status: 'asked', question_type: 'compatibility' });
       const aiEl = addMsg('ai', ''); aiEl.innerHTML = '<span class="typing">analyzing your compatibility…</span>';
       let acc = '', errMsg = null, paywalled = false;
       const retry = () => { $('composerInput').value = q; askCompat(q); };
@@ -1459,9 +1490,9 @@
         await new Promise((resolve) => {
           pending = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
-            onDone: () => resolve(),
-            onPaywall: () => { aiEl.remove(); paywalled = true; show('paywall'); resolve(); },
-            onError: (e) => { errMsg = e || 'Something went wrong.'; resolve(); },
+            onDone: () => { track('question', { status: 'answered', question_type: 'compatibility' }); resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; _pwSrc = 'server_gate'; show('paywall'); resolve(); },
+            onError: (e) => { errMsg = e || 'Something went wrong.'; track('question', { status: 'failed', question_type: 'compatibility' }); resolve(); },
           };
           sendWS({
             type: 'compatibilityQuestion', userId: state.uid,
@@ -1939,6 +1970,8 @@
         prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
         theme: { color: '#D97757' },
         handler: async () => {
+          track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
+          track('purchase', { transaction_id: orderId, value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 monetization
           setStatus('Adding your questions…');
           // Poll the shared question ledger — the webhook credits remaining +N.
           for (let i = 0; i < 10; i++) {
@@ -1957,6 +1990,8 @@
         },
         modal: { ondismiss: () => { setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
       });
+      track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
+      track('begin_checkout', { value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 standard
       rzp.open();
     }
 
@@ -2011,6 +2046,8 @@
           prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
           theme: { color: '#D97757' },
           handler: async () => {
+            track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
+            track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 monetization
             status.textContent = 'Activating your premium…';
             for (let i = 0; i < 10; i++) {
               await new Promise((res) => setTimeout(res, 2000));
@@ -2026,6 +2063,8 @@
             if (!downsellShownThisSession) setTimeout(openDownsell, 250);
           } },
         });
+        track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
+        track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 standard
         rzp.open();
       } catch (e) {
         status.textContent = e.message || 'Something went wrong. Please retry.';
