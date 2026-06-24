@@ -421,6 +421,41 @@
     .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:var(--fs-sm); }
     .rep-list li { margin:.18rem 0; }
     .rep-h { font-size:var(--fs-xs); font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--secondary); margin-top:.8rem; margin-bottom:.15rem; }
+    /* Overview — You · Partner janam-rashi header */
+    .jr-card { display:flex; align-items:center; justify-content:center; gap:.9rem; border:1px solid var(--border); border-radius:12px; padding:.7rem .9rem; margin:.2rem 0 .9rem; }
+    .jr-side { flex:1; text-align:center; }
+    .jr-side .jr-name { font-size:var(--fs-sm); font-weight:600; }
+    .jr-side .jr-sign { font-size:var(--fs-sm); color:var(--secondary); }
+    .jr-heart { color:var(--accent); flex:none; }
+    /* Overview — factor breakdown rows */
+    .fb-intro { font-size:var(--fs-xs); color:var(--secondary); margin:.1rem 0 .6rem; }
+    .fb-row { margin-bottom:.7rem; }
+    .fb-head { display:flex; justify-content:space-between; align-items:center; font-size:var(--fs-sm); }
+    .fb-name { font-weight:600; }
+    .fb-pct { font-weight:700; font-variant-numeric:tabular-nums; }
+    .fb-detail { font-size:var(--fs-xs); color:var(--secondary); margin:.12rem 0; }
+    .fb-bar { height:6px; border-radius:4px; background:var(--border); overflow:hidden; }
+    .fb-bar > i { display:block; height:100%; border-radius:4px; }
+    .fb-verdict { font-size:var(--fs-xs); margin-top:.12rem; }
+    /* Concern callouts (key mismatches) */
+    .concern-box { border-left:3px solid #dc2626; background:color-mix(in srgb, #dc2626 7%, transparent); border-radius:8px; padding:.5rem .7rem; margin:.3rem 0 .2rem; }
+    .concern-row { display:flex; align-items:center; gap:.5rem; font-size:var(--fs-sm); padding:.16rem 0; }
+    .concern-row .c-ic { color:#dc2626; flex:none; }
+    /* Gun Milan — partner values under each koota */
+    .koota-block { padding:.4rem 0; border-bottom:1px solid var(--border); }
+    .koota-block:last-child { border-bottom:none; }
+    .koota-vals { display:flex; justify-content:space-between; font-size:var(--fs-xs); color:var(--secondary); margin:.18rem .2rem .28rem; }
+    .koota-vals span { flex:1; text-align:center; }
+    .partner-hdr { display:flex; justify-content:space-between; font-size:var(--fs-xs); color:var(--secondary); border:1px solid var(--border); border-radius:8px; padding:.4rem .9rem; margin:.5rem 0 .4rem; }
+    .partner-hdr span { flex:1; text-align:center; font-weight:600; }
+    /* Advanced — dasha cards */
+    .dasha-card { border:1px solid var(--border); border-radius:10px; padding:.6rem .8rem; margin:.35rem 0; }
+    .dasha-card .d-title { font-size:var(--fs-sm); font-weight:600; margin-bottom:.2rem; }
+    .dasha-card .d-line { font-size:var(--fs-xs); color:var(--secondary); }
+    .dasha-card .d-line b { color:var(--text); font-weight:600; }
+    .dasha-card .d-interp { font-size:var(--fs-xs); margin-top:.2rem; }
+    .dasha-combined { background:var(--card-2,rgba(255,255,255,.04)); border-radius:8px; padding:.5rem .7rem; font-size:var(--fs-sm); margin-top:.35rem; }
+    .adv-desc { font-size:var(--fs-xs); color:var(--secondary); margin:.1rem 0 .35rem; }
 
     /* ── Birth chart — North-Indian kundali (replica of the app AstroChartScreen) ── */
     .kun-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; max-width:min(520px,100%); margin:0 auto 1rem; }
@@ -549,7 +584,12 @@
       </div>
       <div class="card">
         <div id="authSocial">
-          <button id="signInBtn" class="btn-primary">Continue with Google</button>
+          <button id="signInBtn" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:.5rem;">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#fff;border-radius:3px;flex:none;">
+              <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18c-.44-1.32-.69-2.73-.69-4.18s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
+            </span>
+            Continue with Google
+          </button>
           <button id="appleSignInBtn" class="btn-primary" style="margin-top:.6rem;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;gap:.5rem;">
             <svg width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
             Continue with Apple
@@ -685,7 +725,9 @@
   <!-- ── PAYWALL ──────────────────────────────────────────────────────── -->
   <div id="paywallView" class="view">
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:480px;">
-      <button class="iconbtn" id="paywallBack" aria-label="Back" style="margin:.25rem 0 .25rem -.4rem;"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div style="display:flex;justify-content:flex-end;margin:.1rem 0 -.4rem;">
+        <button class="iconbtn" id="paywallClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
+      </div>
       <h2 id="pwHeroTitle" style="font-size:var(--fs-2xl);text-align:center;margin:.5rem 0 .25rem;">Continue your reading</h2>
       <p id="pwHeroSub" class="hint" style="text-align:center;">You've used your free question. Unlock unlimited questions about your chart.</p>
 
@@ -1595,50 +1637,47 @@
       return r;
     }
 
-    // Build the compatibility report card (Gun Milan score, kootas, strengths).
+    // Colour helpers — mirror the app's getScoreColor / getAshtakootColor thresholds.
+    const GREEN = '#16a34a', AMBER = '#E0975A', RED = '#dc2626', ACCENT = '#E0975A';
+    function pctColor(p) { return p >= 60 ? GREEN : p >= 40 ? AMBER : RED; }
+    // Heart icon (matches the app's Janam Rashi card; brand SVG language, no emoji).
+    const HEART_SVG = '<svg class="jr-heart" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-6.7-4.35-9.33-8.06C.9 10.3 1.4 7.1 3.9 5.6c2-1.2 4.3-.6 5.6 1l.5.6.5-.6c1.3-1.6 3.6-2.2 5.6-1 2.5 1.5 3 4.7 1.23 7.34C18.7 16.65 12 21 12 21z"/></svg>';
+    const WARN_SVG = '<svg class="c-ic" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>';
+
+    // Build the compatibility report card (parity with the app's CompatibilityScreen:
+    // Overview · Gun Milan · Advanced, same sections/order/fields).
     function buildReportCard(r) {
       const card = document.createElement('div'); card.className = 'report-card';
       const score = Math.round(Number(r.overallScore) || 0);
-      const gun = r.ashtakoot?.match_summary || {};
-      const outOf = gun.total_out_of || 36;
-      const total = (gun.total_score != null) ? gun.total_score : '—';
-      const pct = gun.percentage != null ? Math.round(gun.percentage) : (gun.total_score != null ? Math.round((gun.total_score / outOf) * 100) : 0);
       const f = r.female || {}, mle = r.male || {};
-      // Score header — always visible above the tabs.
+      // Current user always on the left (app: getPartnerOrder). Resolve by gender.
+      const currentUser = (state.userGender === 'male') ? mle : f;
+      const partner = (state.userGender === 'male') ? f : mle;
+      const userName = currentUser.name || 'You';
+      const partnerName = partner.name || 'Partner';
+
+      // Score header — "Overall Compatibility" + score/100 + verdict (always above the tabs).
       const scoreHtml = `<div class="report-score">
-          <div class="score-num">${score}<span style="font-size:1rem;color:var(--secondary);">/100</span></div>
-          <div class="score-meta"><div class="score-verdict">${esc(r.verdict || 'Compatibility')}</div>
-            <div class="hint">${esc(mle.name || 'Partner')}${mle.janam_rashi ? ' · ' + esc(mle.janam_rashi) : ''} &nbsp;•&nbsp; ${esc(f.name || 'Partner')}${f.janam_rashi ? ' · ' + esc(f.janam_rashi) : ''}</div></div>
+          <div class="score-num" style="color:${pctColor(score)};">${score}<span style="font-size:1rem;color:var(--secondary);">/100</span></div>
+          <div class="score-meta">
+            <div class="hint" style="margin-bottom:.1rem;">Overall Compatibility</div>
+            <div class="score-verdict" style="color:${pctColor(score)};">${esc(r.verdict || 'Compatibility')}</div>
+            <div class="hint">${esc(userName)}${currentUser.janam_rashi ? ' · ' + esc(currentUser.janam_rashi) : ''} &nbsp;•&nbsp; ${esc(partnerName)}${partner.janam_rashi ? ' · ' + esc(partner.janam_rashi) : ''}</div>
+          </div>
         </div>`;
-      // Traditional tab — Gun Milan score + the 8 kootas with per-factor bars.
-      const pts = r.ashtakoot?.ashtakoot_points || [];
-      let traditional = `<div class="rep-h">Gun Milan (Ashtakoot)</div>
-        <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${pct}%</span></div>`;
-      if (pts.length) traditional += '<div style="margin-top:.5rem;">' + pts.map((p) => {
-        const ratio = (p.received != null && p.out_of) ? (Number(p.received) / Number(p.out_of)) : 0;
-        const bcol = ratio >= 0.66 ? '#16a34a' : ratio >= 0.34 ? '#E0975A' : '#dc2626';   // green / amber / red, per-factor (mirrors the app)
-        return `<div class="koota"><span class="k-name">${esc(p.attribute)}</span><span class="k-bar"><i style="width:${Math.round(ratio * 100)}%;background:${bcol}"></i></span><span class="k-pts" style="color:${bcol};font-weight:600;">${esc(p.received)}/${esc(p.out_of)}</span></div>`;
-      }).join('') + '</div>';
-      // Overview tab — strengths, challenges, watch-outs.
-      const str = r.recommendations?.strengths || [], chg = r.recommendations?.challenges || [];
-      const km = r.ashtakoot?.key_mismatches || [];
-      let overview = '';
-      if (str.length) overview += `<div class="rep-h">Strengths</div><ul class="rep-list">${str.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
-      if (chg.length) overview += `<div class="rep-h">Challenges</div><ul class="rep-list">${chg.slice(0, 4).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
-      if (km.length) overview += `<div class="hint" style="margin-top:.55rem;">Watch-outs: ${esc(km.join(', '))}</div>`;
-      if (!overview) overview = `<p class="hint">No summary available.</p>`;
-      // Advanced tab — Navamsa D9, cross-chart aspects, dasha timing (guarded; absent data renders nothing).
-      const userName = ((state.userGender === 'male' ? mle.name : f.name)) || 'You';
-      const partnerName = ((state.userGender === 'male' ? f.name : mle.name)) || 'Partner';
+
+      const overview = overviewHtml(r, currentUser, partner, userName, partnerName);
+      const gunMilan = gunMilanHtml(r, currentUser, partner);
       const advanced = advHtml(r, userName, partnerName) || `<p class="hint">No advanced synastry available.</p>`;
+
       card.innerHTML = scoreHtml + `
         <div class="seg rtabs" role="tablist">
           <button type="button" class="active" data-rtab="overview" role="tab">Overview</button>
-          <button type="button" data-rtab="traditional" role="tab">Traditional</button>
+          <button type="button" data-rtab="traditional" role="tab">Gun Milan</button>
           <button type="button" data-rtab="advanced" role="tab">Advanced</button>
         </div>
         <div data-rpane="overview">${overview}</div>
-        <div data-rpane="traditional" hidden>${traditional}</div>
+        <div data-rpane="traditional" hidden>${gunMilan}</div>
         <div data-rpane="advanced" hidden>${advanced}</div>`;
       card.addEventListener('click', (e) => {
         const b = e.target.closest('[data-rtab]'); if (!b) return;
@@ -1648,7 +1687,92 @@
       });
       return card;
     }
-    // Advanced section for the compatibility card — Navamsa insights, cross-chart aspects, dasha.
+
+    // OVERVIEW pane — Janam Rashi · factor breakdown · key concerns · strengths/challenges · understanding.
+    function overviewHtml(r, currentUser, partner, userName, partnerName) {
+      let h = '';
+      // Janam Rashi (You · Partner) — only when both signs present.
+      if (currentUser.janam_rashi && partner.janam_rashi) {
+        h += `<div class="jr-card">
+            <div class="jr-side"><div class="jr-name">${esc(userName)}</div><div class="jr-sign">${esc(currentUser.janam_rashi)}</div></div>
+            ${HEART_SVG}
+            <div class="jr-side"><div class="jr-name">${esc(partnerName)}</div><div class="jr-sign">${esc(partner.janam_rashi)}</div></div>
+          </div>`;
+      }
+      // Factor breakdown — "What Contributes to Your Score".
+      const fb = r.factorBreakdown || [];
+      if (fb.length) {
+        h += `<div class="rep-h">What contributes to your score</div>`;
+        h += `<div class="fb-intro">Your overall score combines traditional Ashtakoot matching with deeper chart factors.</div>`;
+        h += fb.map((factor) => {
+          const max = Number(factor.maxScore) || 0;
+          const pct = max > 0 ? Math.round((Number(factor.score) / max) * 100) : 0;
+          const col = pct >= 50 ? GREEN : RED;
+          return `<div class="fb-row">
+              <div class="fb-head"><span class="fb-name">${esc(factor.factor)}</span><span class="fb-pct" style="color:${col};">${pct}%</span></div>
+              ${factor.details ? `<div class="fb-detail">${esc(factor.details)}</div>` : ''}
+              <div class="fb-bar"><i style="width:${pct}%;background:${col};"></i></div>
+              ${factor.verdict ? `<div class="fb-verdict" style="color:${col};">${esc(factor.verdict)}</div>` : ''}
+            </div>`;
+        }).join('');
+      }
+      // Key Concerns (ashtakoot key mismatches).
+      const km = r.ashtakoot?.key_mismatches || [];
+      if (km.length) {
+        h += `<div class="rep-h">Key concerns</div>`;
+        h += `<div class="concern-box">` + km.map((m) =>
+          `<div class="concern-row">${WARN_SVG}<span>${esc(m)} requires attention</span></div>`).join('') + `</div>`;
+      }
+      // Strengths & Challenges.
+      const str = r.recommendations?.strengths || [], chg = r.recommendations?.challenges || [];
+      if (str.length || chg.length) {
+        h += `<div class="rep-h">Strengths &amp; challenges</div>`;
+        if (str.length) h += `<div class="fb-verdict" style="color:${GREEN};font-weight:600;margin-top:.3rem;">Strengths</div><ul class="rep-list">${str.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+        if (chg.length) h += `<div class="fb-verdict" style="color:${RED};font-weight:600;margin-top:.3rem;">Areas of focus</div><ul class="rep-list">${chg.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+      }
+      // Understanding Your Report (static, app parity).
+      h += `<div class="rep-h">Understanding your report</div>`;
+      h += `<p class="hint" style="margin:.1rem 0 .35rem;">This analysis blends traditional Gun Milan with deeper chart factors — navamsa, cross-chart aspects and current planetary periods.</p>`;
+      h += `<p class="hint" style="margin:0;">Astrology offers guidance, not certainty. Use these insights alongside your own understanding of the relationship.</p>`;
+      if (!h) h = `<p class="hint">No summary available.</p>`;
+      return h;
+    }
+
+    // GUN MILAN pane — Ashtakoot total + the 8 kootas (with partner values + bars) + concerns.
+    function gunMilanHtml(r, currentUser, partner) {
+      const gun = r.ashtakoot?.match_summary || {};
+      const outOf = gun.total_out_of || 36;
+      const total = (gun.total_score != null) ? gun.total_score : '—';
+      const pct = gun.percentage != null ? Math.round(gun.percentage) : (gun.total_score != null ? Math.round((gun.total_score / outOf) * 100) : 0);
+      const pts = r.ashtakoot?.ashtakoot_points || [];
+      let h = `<div class="rep-h">Ashtakoot analysis</div>
+        <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${pct}% match</span></div>`;
+      if (pts.length) {
+        const uKey = state.userGender || 'female', pKey = state.partnerGender || 'male';
+        // Partner header (which column is whom).
+        h += `<div class="partner-hdr"><span>${esc(currentUser.name || 'You')}</span><span>${esc(partner.name || 'Partner')}</span></div>`;
+        h += '<div style="margin-top:.2rem;">' + pts.map((p) => {
+          const ratio = (p.received != null && p.out_of) ? (Number(p.received) / Number(p.out_of)) : 0;
+          const bcol = ratio >= 0.66 ? GREEN : ratio >= 0.34 ? AMBER : RED;   // green / amber / red, per-factor (mirrors the app)
+          const uVal = p[uKey], pVal = p[pKey];
+          const valsRow = (uVal || pVal) ? `<div class="koota-vals"><span>${esc(uVal || '—')}</span><span>${esc(pVal || '—')}</span></div>` : '';
+          return `<div class="koota-block">
+              <div class="koota" style="border:none;padding:0;"><span class="k-name">${esc(p.attribute)}</span><span class="k-bar"><i style="width:${Math.round(ratio * 100)}%;background:${bcol}"></i></span><span class="k-pts" style="color:${bcol};font-weight:600;">${esc(p.received)}/${esc(p.out_of)}</span></div>
+              ${valsRow}
+            </div>`;
+        }).join('') + '</div>';
+      }
+      // Key Ashtakoot Concerns.
+      const km = r.ashtakoot?.key_mismatches || [];
+      if (km.length) {
+        h += `<div class="rep-h">Key Ashtakoot concerns</div>`;
+        h += `<div class="concern-box">` + km.map((m) =>
+          `<div class="concern-row">${WARN_SVG}<span>${esc(m)} requires attention</span></div>`).join('') + `</div>`;
+      }
+      return h;
+    }
+
+    // ADVANCED pane — Navamsa (D9) insights, cross-chart aspects, dasha timing (matches app order/fields).
     function advHtml(r, userName, partnerName) {
       const ins = (r.navamsaAnalysis && r.navamsaAnalysis.insights) || [];
       const cx = r.crossAspects || {};
@@ -1657,20 +1781,52 @@
       if (!ins.length && !ben.length && !mal.length && !dt.user && !dt.partner) return '';
       const nameFor = (chart) => chart === 'user' ? userName : partnerName;
       let h = '';
-      if (ins.length) h += `<div class="rep-h">Navamsa (D9) synastry</div><ul class="rep-list">${ins.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
-      if (ben.length || mal.length) {
-        const aspRow = (asp) => {
+      // Navamsa (D9) synastry.
+      if (ins.length) {
+        h += `<div class="rep-h">Navāṁśa (D9) synastry</div>`;
+        h += `<div class="adv-desc">The D9 (marriage) chart shows the deeper compatibility beneath the surface.</div>`;
+        h += `<ul class="rep-list">${ins.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
+      }
+      // Cross-chart aspects — summary + top 5 benefic + top 5 malefic (with "+N more").
+      if (ben.length || mal.length || sum.ratio) {
+        h += `<div class="rep-h">Cross-chart aspects</div>`;
+        h += `<div class="adv-desc">How one partner's planets influence the other's — the relationship's everyday dynamic.</div>`;
+        if (sum.ratio || sum.totalBenefic != null || sum.totalMalefic != null) {
+          h += `<div class="dasha-combined" style="margin-bottom:.3rem;"><b>Overall: ${esc(sum.ratio || '')}</b><div class="d-line" style="margin-top:.1rem;">Supportive: ${sum.totalBenefic != null ? esc(sum.totalBenefic) : ben.length} • Challenging: ${sum.totalMalefic != null ? esc(sum.totalMalefic) : mal.length}</div></div>`;
+        }
+        const aspRow = (asp, col) => {
           const fromN = (asp.from && asp.from.planet) || '', toN = (asp.to && asp.to.planet) || '';
           const fromWho = nameFor(asp.from && asp.from.chart), toWho = nameFor(asp.to && asp.to.chart);
-          const dotc = asp.nature === 'malefic' ? '#dc2626' : '#16a34a';
-          return `<div class="adv-asp"><span class="adv-dot" style="background:${dotc}"></span><span>${esc(fromWho)} ${esc(fromN)} → ${esc(toWho)} ${esc(toN)} <span class="hint">${esc(asp.effect || asp.type || '')}</span></span></div>`;
+          return `<div class="adv-asp"><span class="adv-dot" style="background:${col}"></span><span>${esc(fromWho)} ${esc(fromN)} → ${esc(toWho)} ${esc(toN)} <span class="hint">${esc(asp.effect || asp.type || '')}</span></span></div>`;
         };
-        const ratio = sum.ratio ? ` (${esc(sum.ratio)})` : '';
-        h += `<div class="rep-h">Cross-chart aspects${ratio}</div>` + ben.map(aspRow).join('') + mal.map(aspRow).join('');
+        if (ben.length) {
+          h += `<div class="fb-verdict" style="color:${GREEN};font-weight:600;margin-top:.3rem;">Harmonious (${sum.totalBenefic != null ? esc(sum.totalBenefic) : ben.length})</div>`;
+          h += ben.slice(0, 5).map((a) => aspRow(a, GREEN)).join('');
+          if (sum.totalBenefic != null && sum.totalBenefic > 5) h += `<div class="hint" style="margin-top:.15rem;">+${sum.totalBenefic - 5} more supportive aspects</div>`;
+        }
+        if (mal.length) {
+          h += `<div class="fb-verdict" style="color:${RED};font-weight:600;margin-top:.3rem;">Challenging (${sum.totalMalefic != null ? esc(sum.totalMalefic) : mal.length})</div>`;
+          h += mal.slice(0, 5).map((a) => aspRow(a, RED)).join('');
+          if (sum.totalMalefic != null && sum.totalMalefic > 5) h += `<div class="hint" style="margin-top:.15rem;">+${sum.totalMalefic - 5} more challenging aspects</div>`;
+        }
       }
+      // Dasha timing — per-person card + combined.
       if (dt.user || dt.partner) {
-        const dCard = (who, d) => { if (!d) return ''; const lords = [d.mahadasha, d.antardasha].filter(Boolean).join(' › '); const fav = d.combined ? ` · ${esc(d.combined)}` : ''; return `<div class="adv-dasha"><b>${esc(who)}</b> — ${esc(lords)}${fav}</div>`; };
-        h += `<div class="rep-h">Dasha timing</div>` + dCard(userName, dt.user) + dCard(partnerName, dt.partner);
+        h += `<div class="rep-h">Current timing (planetary periods)</div>`;
+        h += `<div class="adv-desc">Whether each partner is currently in a period that supports marriage.</div>`;
+        const dCard = (who, d) => {
+          if (!d) return '';
+          const favCol = d.favorable === true ? GREEN : d.favorable === false ? RED : 'var(--secondary)';
+          let lines = '';
+          if (d.mahadasha) lines += `<div class="d-line">Mahadasha: <b>${esc(d.mahadasha)}</b></div>`;
+          if (d.antardasha) lines += `<div class="d-line">Antardasha: <b>${esc(d.antardasha)}</b></div>`;
+          if (d.antardashaFavorable === true || d.antardashaFavorable === false)
+            lines += `<div class="d-line" style="color:${d.antardashaFavorable ? GREEN : RED};">Antardasha ${d.antardashaFavorable ? 'supports marriage' : 'needs patience'}</div>`;
+          const interp = d.interpretation ? `<div class="d-interp" style="color:${favCol};">${esc(d.interpretation)}</div>` : '';
+          return `<div class="dasha-card"><div class="d-title">${esc(who)}'s current period</div>${lines}${interp}</div>`;
+        };
+        h += dCard(userName, dt.user) + dCard(partnerName, dt.partner);
+        if (dt.combined) h += `<div class="dasha-combined">${esc(dt.combined)}</div>`;
       }
       return h;
     }
@@ -2011,7 +2167,11 @@
       openSheet('report');
     }
     $('reportBack').addEventListener('click', () => closeSheet('report'));
-    $('paywallBack').addEventListener('click', () => show(prevView)); // return to wherever the paywall was opened from
+    // Paywall is a modal-style screen: dismiss with a top-right ✕ or ESC (web + a11y best practice;
+    // matches the app's close-X paywall). Returns to wherever it was opened from.
+    const dismissPaywall = () => { if (currentView() === 'paywall') show(prevView); };
+    $('paywallClose').addEventListener('click', dismissPaywall);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') dismissPaywall(); });
     // Stroke/outline icons — match the web's icon language AND the app's MaterialCommunityIcons
     // choices (eye = view chart, text-box-outline = report, file-chart-outline = generate report).
     const ICON_EYE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2"/></svg>';
