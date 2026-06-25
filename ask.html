@@ -201,7 +201,7 @@
       /* Rail mode (not .open): hide labels/history/brand, center the icons. */
       .drawer:not(.open) .drawer-history,
       .drawer:not(.open) .dlabel,
-      .drawer:not(.open) .drawer-head .brand { display:none; }
+      .drawer:not(.open) .drawer-head .brand { display:none !important; } /* !important beats the brand span's inline display:inline-flex */
       .drawer:not(.open) .drawer-head { justify-content:center; padding:.4rem; }
       .drawer:not(.open) .drawer-newchat { justify-content:center; gap:0; margin:.5rem .6rem; padding:.7rem 0; }
       .drawer:not(.open) .drawer-item { justify-content:center; gap:0; padding:.7rem 0; }
@@ -416,7 +416,7 @@
     .drawer {
       position:fixed; top:0; left:0; bottom:0; width:260px; max-width:84vw; background:var(--bg);
       border-right:1px solid var(--border); z-index:41; transform:translateX(-100%); transition:transform .22s ease;
-      display:flex; flex-direction:column; padding-top:max(.6rem,env(safe-area-inset-top));
+      display:flex; flex-direction:column; padding-top:env(safe-area-inset-top);
     }
     .drawer.open { transform:translateX(0); }
     .drawer-head { display:flex; align-items:center; justify-content:space-between;
@@ -662,7 +662,7 @@
        flashes the login screen on refresh (onAuthStateChanged routes off this once resolved). -->
   <div id="bootView" class="view active">
     <div style="margin:auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.1rem;">
-      <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" width="72" height="72" style="border-radius:16px;"></picture>
+      <picture><source srcset="/assets/logo-mark.webp" type="image/webp"><img src="/assets/logo-mark.png" alt="Om.AI" width="613" height="362" style="width:96px;height:auto;"></picture>
       <div class="boot-spinner" role="status" aria-label="Loading"></div>
     </div>
   </div>
@@ -819,7 +819,7 @@
       <table class="feature-table">
         <tr><td></td><td class="muted" style="font-weight:600;" data-i18n="pwFree">Free</td><td style="font-weight:600;color:var(--accent);" data-i18n="pwPremium">Premium</td></tr>
         <tr><td data-i18n="pwFeatQ">Questions to your chart</td><td class="cross">1</td><td class="tick" data-i18n="pwUnlimited">Unlimited</td></tr>
-        <tr><td data-i18n="pwFeatCompat">Compatibility &amp; Gun Milan readings</td><td class="cross">—</td><td class="tick" data-i18n="pwUnlimited">Unlimited</td></tr>
+        <tr><td data-i18n="pwFeatCompat">Birth chart &amp; Gun Milan reports</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
         <tr><td data-i18n="pwFeatAreas">All life areas &amp; timing dates</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
         <tr><td data-i18n="pwFeatMemory">Memory across sessions</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
       </table>
@@ -888,7 +888,8 @@
       <a class="srow" href="/support.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1-4.2A7.5 7.5 0 1 1 20 11.5Z" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="helpSupport">Help &amp; Support</span><span class="chev">›</span></a>
       <a class="srow" href="/privacy.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l7 2.8v5c0 4.4-3 7.8-7 9.7-4-1.9-7-5.3-7-9.7v-5z" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="privacy">Privacy</span><span class="chev">›</span></a>
       <a class="srow" href="/terms.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8z" stroke-linejoin="round"/><path d="M14 3.5V8h4.5M8.5 13h7M8.5 16.5h5" stroke-linecap="round"/></svg></span><span class="sr-main" data-i18n="aboutTerms">About &amp; Terms</span><span class="chev">›</span></a>
-      <a class="srow" href="/delete-account.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7h13M10 7V5h4v2M7 7l.9 12.5h8.2L17 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main"><span data-i18n="deleteAccount">Delete account</span><span class="sr-sub" data-i18n="deleteAccountSub">Remove your account &amp; data</span></span><span class="chev">›</span></a>
+      <button class="srow" id="deleteAccountBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7h13M10 7V5h4v2M7 7l.9 12.5h8.2L17 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main"><span data-i18n="deleteAccount">Delete account</span><span class="sr-sub" data-i18n="deleteAccountSub">Remove your account &amp; data</span></span><span class="chev">›</span></button>
+      <div id="deleteAccountStatus" class="hint" style="text-align:center;margin-top:.3rem;color:var(--danger);"></div>
 
       <div style="margin-top:1.5rem;">
         <button class="srow" id="signOutBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6a1.5 1.5 0 0 0-1.5-1.5h-6A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5h6A1.5 1.5 0 0 0 14 18v-2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 12h11m0 0-3-3m3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="signOut">Sign Out</span></button>
@@ -978,7 +979,7 @@
   <script defer src="cities.js"></script>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-    import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, deleteUser, reauthenticateWithPopup, reauthenticateWithCredential, EmailAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     // Preview gate (see <head>): when locked, bail before any Firebase/WS init.
@@ -1103,11 +1104,11 @@
         repCurrentTiming:'Current timing (planetary periods)', repCurrentTimingSub:'Whether each partner is currently in a period that supports marriage.', repMahadasha:'Mahadasha', repAntardasha:'Antardasha', repAntarSupports:'Antardasha supports marriage', repAntarPatience:'Antardasha needs patience', repCurrentPeriod:"{who}'s current period",
         cxNavamsa:'Navāṁśa', cxPlanet:'Planet', cxSign:'Sign', cxHouse:'House', cxDeg:'Deg', cxNakshatra:'Nakshatra', cxDignity:'Dignity', cxVargottama:'Vargottama', cxVargottamaNote:'— same sign in D1 & D9 (reinforced).', cxNoVargottama:'No vargottama planets.', cxEmptyHouse:'Empty house', cxHouseLabel:'House', cxAscendant:'Ascendant',
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
-        pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Compatibility & Gun Milan readings', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
+        pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Birth chart & Gun Milan reports', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
         getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 190,000+ seekers · 4.8★', pwBadge:'SAVE 40% · 5 MONTHS FREE',
         secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
-        secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', signOut:'Sign Out',
+        secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
         notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · ₹99', maybeLater:'Maybe later',
         buyQuestionsAdded:'{n} questions added — ask away.', buyQuestionsPending:'Payment received — your questions will be added in a moment. Go ahead and ask.', buyPremiumNow:'You are premium now — ask away.', buyPremiumPending:'Payment received — your premium will activate in a moment. Go ahead and ask.', cancelAlert:'Your subscription will not renew. You keep access until the end of your current period.',
@@ -1153,11 +1154,11 @@
         repCurrentTiming:'वर्तमान समय (ग्रह दशाएँ)', repCurrentTimingSub:'क्या प्रत्येक साथी वर्तमान में विवाह के अनुकूल दशा में है।', repMahadasha:'महादशा', repAntardasha:'अंतर्दशा', repAntarSupports:'अंतर्दशा विवाह का समर्थन करती है', repAntarPatience:'अंतर्दशा में धैर्य आवश्यक', repCurrentPeriod:'{who} की वर्तमान दशा',
         cxNavamsa:'नवांश', cxPlanet:'ग्रह', cxSign:'राशि', cxHouse:'भाव', cxDeg:'अंश', cxNakshatra:'नक्षत्र', cxDignity:'स्थिति', cxVargottama:'Vargottama', cxVargottamaNote:'— D1 व D9 में समान राशि (प्रबलित)।', cxNoVargottama:'कोई vargottama ग्रह नहीं।', cxEmptyHouse:'खाली भाव', cxHouseLabel:'भाव', cxAscendant:'लग्न',
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
-        pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'अनुकूलता व Gun Milan रीडिंग', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
+        pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'जन्म कुंडली व Gun Milan रिपोर्ट', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
         getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'190,000+ जिज्ञासुओं का भरोसा · 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
         secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
-        secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', signOut:'साइन आउट',
+        secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
         notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>₹99 में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · ₹99', maybeLater:'शायद बाद में',
         buyQuestionsAdded:'{n} प्रश्न जोड़े गए — पूछिए।', buyQuestionsPending:'भुगतान प्राप्त — आपके प्रश्न कुछ ही क्षण में जुड़ जाएँगे। पूछना शुरू करें।', buyPremiumNow:'अब आप प्रीमियम हैं — पूछिए।', buyPremiumPending:'भुगतान प्राप्त — आपका प्रीमियम कुछ ही क्षण में सक्रिय होगा। पूछना शुरू करें।', cancelAlert:'आपकी सदस्यता नवीनीकृत नहीं होगी। आप अपनी वर्तमान अवधि के अंत तक पहुँच बनाए रखेंगे।',
@@ -1716,12 +1717,12 @@
       if (asking) return; // a stream is already in flight — ignore Enter/click spam
       const input = $('composerInput'); const q = input.value.trim();
       if (!q) return;
-      // Compat FOLLOW-UPS are free continuation of an already-generated report (the
-      // report was the metered "reading"), so delegate BEFORE the free-quota guard —
-      // never paywall someone chatting about a reading they already paid for. Only
-      // NEW astro questions (below) and NEW reports (compatGenBtn) are gated.
-      if (state.mode === 'compat') return askCompat(q);
+      // QUESTIONS are metered (app parity): astro questions AND compat follow-ups both
+      // draw the shared free-question quota. REPORTS (birth chart + compat report) are
+      // free — see compatGenBtn. So apply the quota guard BEFORE delegating to the compat
+      // follow-up flow; askCompat mirrors the decrement on success.
       if (!state.premium && state.freeUsed) { openPaywall('question_limit'); return; }
+      if (state.mode === 'compat') return askCompat(q);
 
       asking = true;
       input.value = ''; autosize(); $('sendBtn').disabled = true;
@@ -2168,11 +2169,8 @@
       if (!dob || !time || !place) { status.textContent = "Fill your partner's date, time and place of birth."; return; }
       if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = t('cpValidDate'); return; }
       const editing = isEditingPartner;
-      // A compatibility REPORT is a metered "reading", but EDITING/regenerating an existing one
-      // is an in-place update of the SAME reading (app parity) — the request carries regenerate:true
-      // and the server skips the gate for it, so an edit is free and never paywalled. Only a
-      // brand-NEW report is metered: block it once the free question is used up (server enforces too).
-      if (!editing && !state.premium && state.freeUsed) { openPaywall('compat_limit'); return; }
+      // A compatibility REPORT is always FREE (app parity: birth chart + compat report cost
+      // nothing — only QUESTIONS are metered), so there's no paywall gate here.
       const btn = $('compatGenBtn'); btn.disabled = true;
       // Snapshot the current chart+report so a failed/paywalled regen can roll back. The
       // wipe below clears them up front so a partial regen can't leave a stale report
@@ -2220,7 +2218,6 @@
             onError: (e) => { clearTimeout(timer); reject(new Error(e)); },
           };
           sendWS({ type: 'compatibility', userId: state.uid, threadId: `web-compat-${Date.now()}`,
-            regenerate: editing, // in-place partner edit → server skips the gate (free, app parity)
             userGender: state.userGender, partnerGender: state.partnerGender,
             astrologyData: { userChart: state.chart, partnerChart } });
         });
@@ -2229,15 +2226,7 @@
         // partner can't survive into the regenerated one. On a fresh generate, merge is fine.
         setDoc(doc(db, `users/${state.uid}/astroData/compatibility_report`),
           { ...report, generatedAt: serverTimestamp(), source: 'web' }, editing ? {} : { merge: true }).catch(() => {});
-        // The server metered this report against the shared free-question quota — mirror it
-        // so the local guard matches (a pack buyer keeps the rest of their balance; only
-        // remaining<=0 trips the paywall on the NEXT reading). An EDIT regenerates the SAME
-        // reading in place (server skips the gate for it), so it does NOT decrement.
-        if (!editing && !state.premium) {
-          if (Number.isFinite(state.remaining)) { state.remaining = Math.max(0, state.remaining - 1); state.freeUsed = state.remaining <= 0; }
-          else { state.freeUsed = true; }
-          refreshHeaderQuota();
-        }
+        // Report generation is free — no quota decrement (only questions are metered).
 
         state.mode = 'compat'; setModeUI('compat');
         // Editing keeps the existing compat conversation (the report changed, not the thread);
@@ -2302,9 +2291,20 @@
           attachMsgActions(aiEl, () => acc);
         }
         if (acc) { saveCompatMessage('bot', acc); touchCompatSession(firstMsg ? q : null); if (firstMsg) fetchSessions(); }
-        // A compat follow-up is FREE continuation of an already-generated report (the
-        // report was the metered reading), so it does NOT consume the free question —
-        // don't flip freeUsed here. The report flow (compatGenBtn) owns that decrement.
+        // A compat follow-up is a metered QUESTION (app parity) — mirror the server's
+        // decrement of the shared free-question ledger, exactly like an astro question.
+        if (!state.premium && acc) {
+          if (Number.isFinite(state.remaining)) {
+            state.remaining = Math.max(0, state.remaining - 1);
+            state.freeUsed = state.remaining <= 0;
+          } else {
+            state.freeUsed = true;
+          }
+          $('chatStatus').textContent = state.freeUsed
+            ? t('freeQUsed')
+            : t(state.remaining === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n: state.remaining }) + '.';
+          refreshHeaderQuota();
+        }
       }
     }
 
@@ -2779,6 +2779,61 @@
       if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
       show('auth'); // onAuthStateChanged(null) also routes here; for ?local it re-anons
       if (LOCAL) await signInAnonymously(auth).catch(() => {});
+    });
+    // Delete account — auth-gated like the app/Pro: confirm → re-authenticate (recent-login
+    // requirement for deleteUser) → server-side data wipe → deleteUser → route to signed-out.
+    $('deleteAccountBtn').addEventListener('click', async () => {
+      const status = $('deleteAccountStatus');
+      const setS = (s) => { if (status) status.textContent = s; };
+      setS('');
+      const user = auth.currentUser;
+      if (!user) { show('auth'); return; }
+      if (!confirm(t('delConfirm'))) return;
+      const btn = $('deleteAccountBtn'); btn.style.pointerEvents = 'none'; btn.style.opacity = '.55';
+      const reset = () => { btn.style.pointerEvents = ''; btn.style.opacity = ''; };
+      try {
+        // Step 1 — re-authenticate by provider (anonymous users have no provider → skip).
+        if (!user.isAnonymous) {
+          setS(t('delReauth'));
+          const providerId = user.providerData?.[0]?.providerId || '';
+          if (providerId === 'google.com') {
+            await reauthenticateWithPopup(user, new GoogleAuthProvider());
+          } else if (providerId === 'apple.com') {
+            const p = new OAuthProvider('apple.com'); p.addScope('email'); p.addScope('name');
+            await reauthenticateWithPopup(user, p);
+          } else if (providerId === 'password') {
+            const pw = prompt(t('delPwPrompt'));
+            if (!pw) { setS(t('delCancelled')); reset(); return; }
+            await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, pw));
+          }
+          // Other providers: a fresh ID token is usually enough; deleteUser re-prompts if not (caught below).
+        }
+        // Step 2 — wipe server-side data (deletes users/{uid} + pros/{uid}).
+        setS(t('delDeleting'));
+        const idToken = await user.getIdToken();
+        const res = await fetch(`${API}/api/user/delete-data`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+        });
+        if (!res.ok) throw new Error('delete-data ' + res.status);
+        // Step 3 — delete the Firebase auth user, clear local state, route to signed-out view.
+        await deleteUser(user);
+        Object.assign(state, { chart: null, conversationId: null, premium: false, freeUsed: false, uid: null });
+        if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
+        await signOut(auth).catch(() => {}); // belt-and-suspenders; deleteUser already clears currentUser
+        closeModal('settingsView');
+        show('auth');
+        if (LOCAL) await signInAnonymously(auth).catch(() => {});
+      } catch (e) {
+        reset();
+        const code = e && e.code || '';
+        // Re-auth popup closed/cancelled → leave the account untouched, say so plainly.
+        if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request' || code === 'auth/user-cancelled') {
+          setS(t('delCancelled')); return;
+        }
+        setS(t('delFailed'));
+        alert(e.message || t('delFailed'));
+      }
     });
     $('manageSub').addEventListener('click', async () => {
       if (!state.premium) { openPaywall('manage_subscription'); return; }
