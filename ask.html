@@ -869,14 +869,14 @@
 
       <div class="section-label" data-i18n="secApp">App</div>
       <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13A8 8 0 1 1 11 4a6.5 6.5 0 0 0 9 9Z" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="theme">Theme</span>
-        <div class="seg" style="width:200px;" id="themeSeg">
+        <div class="seg" style="min-width:200px;" id="themeSeg">
           <button data-theme-set="light" data-i18n="light">Light</button><button data-theme-set="dark" data-i18n="dark">Dark</button><button data-theme-set="system" data-i18n="system">System</button>
         </div>
       </div>
       <!-- Chat reply language (EN/HI). Wires `language` on the chat/compat WS
            sends — the backend already returns Hindi. UI chrome stays English. -->
       <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17" stroke-linecap="round"/></svg></span><span class="sr-main"><span data-i18n="language">Language</span><span class="sr-sub" data-i18n="langSub">Your chart readings come back in this language</span></span>
-        <div class="seg" style="width:160px;" id="langSeg">
+        <div class="seg" style="min-width:160px;" id="langSeg">
           <button data-lang-set="en">English</button><button data-lang-set="hi">हिंदी</button>
         </div>
       </div>
@@ -1087,7 +1087,16 @@
         yourChart:'Your chart', compatReport:'Compatibility report', generateReportBtn:'Generate report',
         birthChart:'Birth Chart', rasiD1:'Rasi (D1)', navamsaD9:'Navamsa (D9)', tapHouse:'Tap any house for its planets & aspects',
         legLagna:'Lagna', legExalted:'Exalted', legFriendlyOwn:'Friendly / Own', legNeutral:'Neutral', legDebilitated:'Debilitated', legEnemy:'Enemy', planetaryPositions:'Planetary positions',
-        compatibility:'Compatibility', compatHomeHint:'Ask anything about your compatibility',
+        compatibility:'Compatibility', compatHomeHint:'Ask anything about your compatibility', compatWith:'with {name}',
+        repOverallCompat:'Overall Compatibility', repTabOverview:'Overview', repTabGunMilan:'Gun Milan', repTabAdvanced:'Advanced',
+        repContributes:'What contributes to your score', repContributesSub:'Your overall score combines traditional Ashtakoot matching with deeper chart factors.',
+        repKeyConcerns:'Key concerns', repRequiresAttention:'{m} requires attention', repStrengthsChallenges:'Strengths & challenges', repStrengths:'Strengths', repAreasFocus:'Areas of focus',
+        repUnderstanding:'Understanding your report', repUnderstandingP1:'This analysis blends traditional Gun Milan with deeper chart factors — navamsa, cross-chart aspects and current planetary periods.', repUnderstandingP2:'Astrology offers guidance, not certainty. Use these insights alongside your own understanding of the relationship.', repNoSummary:'No summary available.',
+        repAshtakootAnalysis:'Ashtakoot analysis', repPctMatch:'{p}% match', repKeyAshtakootConcerns:'Key Ashtakoot concerns', repNoAdvanced:'No advanced synastry available.',
+        repNavSynastry:'Navāṁśa (D9) synastry', repNavSub:'The D9 (marriage) chart shows the deeper compatibility beneath the surface.',
+        repCrossAspects:'Cross-chart aspects', repCrossSub:"How one partner's planets influence the other's — the relationship's everyday dynamic.", repOverall:'Overall: {r}', repSupportiveChallenging:'Supportive: {s} • Challenging: {c}', repHarmonious:'Harmonious ({n})', repChallenging:'Challenging ({n})', repMoreSupportive:'+{n} more supportive aspects', repMoreChallenging:'+{n} more challenging aspects',
+        repCurrentTiming:'Current timing (planetary periods)', repCurrentTimingSub:'Whether each partner is currently in a period that supports marriage.', repMahadasha:'Mahadasha', repAntardasha:'Antardasha', repAntarSupports:'Antardasha supports marriage', repAntarPatience:'Antardasha needs patience', repCurrentPeriod:"{who}'s current period",
+        cxNavamsa:'Navāṁśa', cxPlanet:'Planet', cxSign:'Sign', cxHouse:'House', cxDeg:'Deg', cxNakshatra:'Nakshatra', cxDignity:'Dignity', cxVargottama:'Vargottama', cxVargottamaNote:'— same sign in D1 & D9 (reinforced).', cxNoVargottama:'No vargottama planets.', cxEmptyHouse:'Empty house', cxHouseLabel:'House', cxAscendant:'Ascendant',
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
         pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Compatibility & Gun Milan readings', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
@@ -1096,6 +1105,12 @@
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
         notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · ₹99', maybeLater:'Maybe later',
+        buyQuestionsAdded:'{n} questions added — ask away.', buyQuestionsPending:'Payment received — your questions will be added in a moment. Go ahead and ask.', buyPremiumNow:'You are premium now — ask away.', buyPremiumPending:'Payment received — your premium will activate in a moment. Go ahead and ask.', cancelAlert:'Your subscription will not renew. You keep access until the end of your current period.',
+        authOpeningGoogle:'Opening Google sign-in…', authOpeningApple:'Opening Apple sign-in…', authEnterEmail:'Enter your email.', authSendingReset:'Sending reset link…', authResetSent:'Check your email for a password reset link.', authEnterBoth:'Enter your email and password.', authPwShort:'Password must be at least 6 characters.', authCreating:'Creating your account…', authEmailRegistered:'That email is already registered — sign in instead.', authSigningIn:'Signing you in…', authTrouble:'Trouble signing in? Reset your password below.', authWrong:'Email or password is incorrect.',
+        obFillBirth:'Please fill date, time and place of birth.', obValidDate:'Please enter a valid birth date in the past.', obLookupPlace:'Looking up your birth place…', obSavingDetails:'Saving your birth details…', obComputingChart:'Computing your Vedic chart… (this can take a few seconds)',
+        cpValidDate:'Enter a valid birth date in the past.', cpSavingDetails:'Saving details…', cpAnalyzing:'Analyzing compatibility…',
+        subStartingMvp:'Starting your subscription…', subActivatingMvp:'Activating your premium…', subCheckoutClosedMvp:'Checkout closed.',
+        genericErr:'Something went wrong. Please retry.', genericErrShort:'Something went wrong.', copyDone:'Copied', copyLabel:'Copy', shareLabel:'Share', copyAria:'Copy answer', shareAria:'Share answer', profUser:'User', profGuest:'Guest',
       },
       hi: {
         modePersonal:'व्यक्तिगत', modeRelationship:'रिश्ता', newChat:'नई चैट', birthDetails:'आपकी जन्म जानकारी', editProfile:'प्रोफ़ाइल संपादित करें', getPremium:'प्रीमियम लें', settings:'सेटिंग्स',
@@ -1120,7 +1135,16 @@
         yourChart:'आपकी कुंडली', compatReport:'अनुकूलता रिपोर्ट', generateReportBtn:'रिपोर्ट बनाएं',
         birthChart:'जन्म कुंडली', rasiD1:'राशि (D1)', navamsaD9:'नवांश (D9)', tapHouse:'किसी भी भाव पर टैप करें — उसके ग्रह व दृष्टियाँ देखें',
         legLagna:'लग्न', legExalted:'उच्च', legFriendlyOwn:'मित्र / स्व', legNeutral:'तटस्थ', legDebilitated:'नीच', legEnemy:'शत्रु', planetaryPositions:'ग्रह स्थिति',
-        compatibility:'अनुकूलता', compatHomeHint:'अपनी अनुकूलता के बारे में कुछ भी पूछें',
+        compatibility:'अनुकूलता', compatHomeHint:'अपनी अनुकूलता के बारे में कुछ भी पूछें', compatWith:'{name} के साथ',
+        repOverallCompat:'समग्र अनुकूलता', repTabOverview:'अवलोकन', repTabGunMilan:'Gun Milan', repTabAdvanced:'विस्तृत',
+        repContributes:'आपके स्कोर में क्या योगदान देता है', repContributesSub:'आपका समग्र स्कोर पारंपरिक Ashtakoot मिलान को गहरे कुंडली कारकों के साथ जोड़ता है।',
+        repKeyConcerns:'मुख्य चिंताएँ', repRequiresAttention:'{m} पर ध्यान देने की आवश्यकता है', repStrengthsChallenges:'ताकत व चुनौतियाँ', repStrengths:'ताकत', repAreasFocus:'ध्यान देने योग्य क्षेत्र',
+        repUnderstanding:'अपनी रिपोर्ट को समझें', repUnderstandingP1:'यह विश्लेषण पारंपरिक Gun Milan को गहरे कुंडली कारकों — navamsa, परस्पर-कुंडली दृष्टियों और वर्तमान ग्रह दशाओं — के साथ जोड़ता है।', repUnderstandingP2:'ज्योतिष मार्गदर्शन देता है, निश्चितता नहीं। इन अंतर्दृष्टियों का उपयोग रिश्ते की अपनी समझ के साथ करें।', repNoSummary:'कोई सारांश उपलब्ध नहीं।',
+        repAshtakootAnalysis:'Ashtakoot विश्लेषण', repPctMatch:'{p}% मिलान', repKeyAshtakootConcerns:'मुख्य Ashtakoot चिंताएँ', repNoAdvanced:'कोई विस्तृत मिलान उपलब्ध नहीं।',
+        repNavSynastry:'Navāṁśa (D9) मिलान', repNavSub:'D9 (विवाह) कुंडली सतह के नीचे की गहरी अनुकूलता दर्शाती है।',
+        repCrossAspects:'परस्पर-कुंडली दृष्टियाँ', repCrossSub:'एक साथी के ग्रह दूसरे को कैसे प्रभावित करते हैं — रिश्ते की रोज़मर्रा की गतिशीलता।', repOverall:'कुल मिलाकर: {r}', repSupportiveChallenging:'सहायक: {s} • चुनौतीपूर्ण: {c}', repHarmonious:'सामंजस्यपूर्ण ({n})', repChallenging:'चुनौतीपूर्ण ({n})', repMoreSupportive:'+{n} और सहायक दृष्टियाँ', repMoreChallenging:'+{n} और चुनौतीपूर्ण दृष्टियाँ',
+        repCurrentTiming:'वर्तमान समय (ग्रह दशाएँ)', repCurrentTimingSub:'क्या प्रत्येक साथी वर्तमान में विवाह के अनुकूल दशा में है।', repMahadasha:'महादशा', repAntardasha:'अंतर्दशा', repAntarSupports:'अंतर्दशा विवाह का समर्थन करती है', repAntarPatience:'अंतर्दशा में धैर्य आवश्यक', repCurrentPeriod:'{who} की वर्तमान दशा',
+        cxNavamsa:'नवांश', cxPlanet:'ग्रह', cxSign:'राशि', cxHouse:'भाव', cxDeg:'अंश', cxNakshatra:'नक्षत्र', cxDignity:'स्थिति', cxVargottama:'Vargottama', cxVargottamaNote:'— D1 व D9 में समान राशि (प्रबलित)।', cxNoVargottama:'कोई vargottama ग्रह नहीं।', cxEmptyHouse:'खाली भाव', cxHouseLabel:'भाव', cxAscendant:'लग्न',
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
         pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'अनुकूलता व Gun Milan रीडिंग', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
@@ -1129,6 +1153,12 @@
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
         notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>₹99 में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · ₹99', maybeLater:'शायद बाद में',
+        buyQuestionsAdded:'{n} प्रश्न जोड़े गए — पूछिए।', buyQuestionsPending:'भुगतान प्राप्त — आपके प्रश्न कुछ ही क्षण में जुड़ जाएँगे। पूछना शुरू करें।', buyPremiumNow:'अब आप प्रीमियम हैं — पूछिए।', buyPremiumPending:'भुगतान प्राप्त — आपका प्रीमियम कुछ ही क्षण में सक्रिय होगा। पूछना शुरू करें।', cancelAlert:'आपकी सदस्यता नवीनीकृत नहीं होगी। आप अपनी वर्तमान अवधि के अंत तक पहुँच बनाए रखेंगे।',
+        authOpeningGoogle:'Google साइन-इन खुल रहा है…', authOpeningApple:'Apple साइन-इन खुल रहा है…', authEnterEmail:'अपना ईमेल दर्ज करें।', authSendingReset:'रीसेट लिंक भेजा जा रहा है…', authResetSent:'पासवर्ड रीसेट लिंक के लिए अपना ईमेल देखें।', authEnterBoth:'अपना ईमेल और पासवर्ड दर्ज करें।', authPwShort:'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।', authCreating:'आपका खाता बन रहा है…', authEmailRegistered:'यह ईमेल पहले से पंजीकृत है — इसके बजाय साइन इन करें।', authSigningIn:'आपको साइन इन किया जा रहा है…', authTrouble:'साइन इन में परेशानी? नीचे अपना पासवर्ड रीसेट करें।', authWrong:'ईमेल या पासवर्ड गलत है।',
+        obFillBirth:'कृपया जन्म तिथि, समय और स्थान भरें।', obValidDate:'कृपया अतीत की एक मान्य जन्म तिथि दर्ज करें।', obLookupPlace:'आपका जन्म स्थान खोजा जा रहा है…', obSavingDetails:'आपकी जन्म जानकारी सहेजी जा रही है…', obComputingChart:'आपकी वैदिक कुंडली बन रही है… (इसमें कुछ क्षण लग सकते हैं)',
+        cpValidDate:'अतीत की एक मान्य जन्म तिथि दर्ज करें।', cpSavingDetails:'जानकारी सहेजी जा रही है…', cpAnalyzing:'अनुकूलता का विश्लेषण हो रहा है…',
+        subStartingMvp:'आपकी सदस्यता शुरू हो रही है…', subActivatingMvp:'आपका प्रीमियम सक्रिय हो रहा है…', subCheckoutClosedMvp:'चेकआउट बंद किया गया।',
+        genericErr:'कुछ गलत हुआ। कृपया पुनः प्रयास करें।', genericErrShort:'कुछ गलत हुआ।', copyDone:'कॉपी हो गया', copyLabel:'कॉपी', shareLabel:'शेयर', copyAria:'उत्तर कॉपी करें', shareAria:'उत्तर साझा करें', profUser:'उपयोगकर्ता', profGuest:'अतिथि',
       },
     };
     const t = (key, vars) => { let s = (I18N[state.lang] && I18N[state.lang][key] != null) ? I18N[state.lang][key] : (I18N.en[key] != null ? I18N.en[key] : key); if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]); return s; };
@@ -1143,8 +1173,12 @@
       applyI18n();
       // Re-render dynamic views so already-rendered strings switch language too.
       try { if (currentView() === 'chat') { state.mode === 'compat' ? renderCompatHome() : renderEmptyChat(); } } catch (_) {}
+      // The compatibility report + birth-chart sheets render their labels through t() at build
+      // time, so re-render them in place if they're currently open (class 'up').
+      try { if ($('reportView').classList.contains('up') && state.compatReport) { const host = $('reportHost'); host.innerHTML = ''; host.appendChild(buildReportCard(state.compatReport)); } } catch (_) {}
+      try { if ($('chartScreenView').classList.contains('up') && state.chart) renderChartScreen(); } catch (_) {}
       try { renderPaywallHero(); updateCtaLabel(); } catch (_) {}
-      try { refreshSubUI(); } catch (_) {}
+      try { refreshSubUI(); refreshHeaderQuota(); } catch (_) {}
     }
     document.querySelectorAll('[data-lang-set]').forEach((b) => b.addEventListener('click', () => {
       state.lang = b.dataset.langSet;
@@ -1225,14 +1259,14 @@
     if (LOCAL) signInAnonymously(auth).catch((e) => { $('authStatus').textContent = 'Auth error: ' + e.message; });
 
     $('signInBtn').addEventListener('click', async () => {
-      const btn = $('signInBtn'); btn.disabled = true; $('authStatus').textContent = 'Opening Google sign-in…';
+      const btn = $('signInBtn'); btn.disabled = true; $('authStatus').textContent = t('authOpeningGoogle');
       try { await signInWithPopup(auth, new GoogleAuthProvider()); } // onAuthStateChanged advances the view
       catch (e) { $('authStatus').textContent = friendlyAuthError(e); btn.disabled = false; }
     });
 
     // Apple sign-in (same Firebase project → same uid/account as the iOS app).
     $('appleSignInBtn').addEventListener('click', async () => {
-      const btn = $('appleSignInBtn'); btn.disabled = true; $('authStatus').textContent = 'Opening Apple sign-in…';
+      const btn = $('appleSignInBtn'); btn.disabled = true; $('authStatus').textContent = t('authOpeningApple');
       try {
         const provider = new OAuthProvider('apple.com');
         provider.addScope('email'); provider.addScope('name');
@@ -1270,23 +1304,23 @@
       const btn = $('emailSignInBtn');
       // ── Reset password ──
       if (authMode === 'reset') {
-        if (!email) { $('authStatus').textContent = 'Enter your email.'; return; }
-        btn.disabled = true; $('authStatus').textContent = 'Sending reset link…';
+        if (!email) { $('authStatus').textContent = t('authEnterEmail'); return; }
+        btn.disabled = true; $('authStatus').textContent = t('authSendingReset');
         try {
           await sendPasswordResetEmail(auth, email.toLowerCase());
           setAuthMode('signin'); $('f-email').value = email;
-          $('authStatus').textContent = 'Check your email for a password reset link.';
+          $('authStatus').textContent = t('authResetSent');
         } catch (e) { $('authStatus').textContent = friendlyAuthError(e); }
         finally { btn.disabled = false; }
         return;
       }
       const pass = $('f-pass').value;
-      if (!email || !pass) { $('authStatus').textContent = 'Enter your email and password.'; return; }
-      if (pass.length < 6) { $('authStatus').textContent = 'Password must be at least 6 characters.'; return; }
+      if (!email || !pass) { $('authStatus').textContent = t('authEnterBoth'); return; }
+      if (pass.length < 6) { $('authStatus').textContent = t('authPwShort'); return; }
       btn.disabled = true;
       // ── Create account ──
       if (authMode === 'signup') {
-        $('authStatus').textContent = 'Creating your account…';
+        $('authStatus').textContent = t('authCreating');
         try {
           await createUserWithEmailAndPassword(auth, email, pass); // onAuthStateChanged advances the view
           track('auth_interaction', { action: 'sign_up', method: 'email' });
@@ -1294,14 +1328,14 @@
         } catch (e) {
           if (e?.code === 'auth/email-already-in-use') {
             setAuthMode('signin'); $('f-email').value = email;
-            $('authStatus').textContent = 'That email is already registered — sign in instead.';
+            $('authStatus').textContent = t('authEmailRegistered');
           } else { $('authStatus').textContent = friendlyAuthError(e); }
           btn.disabled = false;
         }
         return;
       }
       // ── Sign in ──
-      $('authStatus').textContent = 'Signing you in…';
+      $('authStatus').textContent = t('authSigningIn');
       try {
         await signInWithEmailAndPassword(auth, email, pass); // onAuthStateChanged advances the view
         invalidCredCount = 0;
@@ -1312,9 +1346,9 @@
           if (invalidCredCount >= 2) {           // mirror the app: hand off to reset after 2 failed tries
             invalidCredCount = 0;
             setAuthMode('reset'); $('f-email').value = email;
-            $('authStatus').textContent = 'Trouble signing in? Reset your password below.';
+            $('authStatus').textContent = t('authTrouble');
           } else {
-            $('authStatus').textContent = 'Email or password is incorrect.';
+            $('authStatus').textContent = t('authWrong');
           }
         } else { $('authStatus').textContent = friendlyAuthError(e); }
         btn.disabled = false;
@@ -1496,15 +1530,15 @@
       const dob = $('f-dob').value, place = $('f-place').value.trim();
       const time = $('f-time').value;
       state.userName = $('f-name').value.trim() || null;
-      if (!dob || !time || !place) { $('onboardStatus').textContent = 'Please fill date, time and place of birth.'; return; }
+      if (!dob || !time || !place) { $('onboardStatus').textContent = t('obFillBirth'); return; }
       // A birth date can't be in the future (or today) — guard against typos that
       // would otherwise produce a nonsense chart.
-      if (new Date(`${dob}T${time || '12:00'}`) >= new Date()) { $('onboardStatus').textContent = 'Please enter a valid birth date in the past.'; return; }
+      if (new Date(`${dob}T${time || '12:00'}`) >= new Date()) { $('onboardStatus').textContent = t('obValidDate'); return; }
 
       const btn = $('startBtn'); btn.disabled = true;
       const status = $('onboardStatus');
       try {
-        status.textContent = 'Looking up your birth place…';
+        status.textContent = t('obLookupPlace');
         const coordinates = await resolvePlaceCoords('f-place', place);
         // Time zone (incl. DST) is derived from the resolved coordinates, not a
         // manual dropdown — so a non-India birth gets the correct ascendant.
@@ -1514,7 +1548,7 @@
         if (tzInfo) { $('f-tz-detected').textContent = `${tzInfo.tz} · ${fmtOffset(tzInfo.offset)}`; $('f-tz-row').style.display = 'block'; }
         const dateOfBirth = toUtcISO(dob, time, offset);
 
-        status.textContent = 'Saving your birth details…';
+        status.textContent = t('obSavingDetails');
         await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
           // Write BOTH the app's field names (birthCoordinates/birthTimezone) and
           // the web's legacy ones, so the doc is fully readable by the mobile app.
@@ -1523,7 +1557,7 @@
           name: state.userName, source: 'web', updatedAt: serverTimestamp(),
         }, { merge: true });
 
-        status.textContent = 'Computing your Vedic chart… (this can take a few seconds)';
+        status.textContent = t('obComputingChart');
         await ensureWS();
         const chart = await new Promise((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error('Chart timed out — please retry.')), 120000);
@@ -1547,7 +1581,7 @@
         show('chat');
         refreshProfileUI();
       } catch (e) {
-        status.textContent = e.message || 'Something went wrong. Please retry.';
+        status.textContent = e.message || t('genericErr');
         btn.disabled = false;
       }
     });
@@ -1624,18 +1658,18 @@
       const bar = document.createElement('div');
       bar.className = 'msg-actions';
       bar.innerHTML =
-        `<button class="msg-act act-copy" type="button" aria-label="Copy answer">` +
-          `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8" stroke-linecap="round"/></svg>Copy</button>` +
-        `<button class="msg-act act-share" type="button" aria-label="Share answer">` +
-          `<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="19" r="2.4"/><path d="M8.1 10.9l7.8-4.6M8.1 13.1l7.8 4.6" stroke-linecap="round"/></svg>Share</button>`;
+        `<button class="msg-act act-copy" type="button" aria-label="${t('copyAria')}">` +
+          `<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8" stroke-linecap="round"/></svg>${t('copyLabel')}</button>` +
+        `<button class="msg-act act-share" type="button" aria-label="${t('shareAria')}">` +
+          `<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.4"/><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="19" r="2.4"/><path d="M8.1 10.9l7.8-4.6M8.1 13.1l7.8 4.6" stroke-linecap="round"/></svg>${t('shareLabel')}</button>`;
       const copyBtn = bar.querySelector('.act-copy'), shareBtn = bar.querySelector('.act-share');
       copyBtn.addEventListener('click', async () => {
         const text = getText();
         try {
           if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
           else { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
-          copyBtn.classList.add('copied'); copyBtn.lastChild.textContent = 'Copied';
-          setTimeout(() => { copyBtn.classList.remove('copied'); copyBtn.lastChild.textContent = 'Copy'; }, 1600);
+          copyBtn.classList.add('copied'); copyBtn.lastChild.textContent = t('copyDone');
+          setTimeout(() => { copyBtn.classList.remove('copied'); copyBtn.lastChild.textContent = t('copyLabel'); }, 1600);
         } catch (_) {}
       });
       shareBtn.addEventListener('click', async () => {
@@ -1644,7 +1678,7 @@
           if (navigator.share) { await navigator.share({ text, url: location.origin }); }
           else if (navigator.clipboard?.writeText) {
             await navigator.clipboard.writeText(text + ' ' + location.origin);
-            shareBtn.lastChild.textContent = 'Copied'; setTimeout(() => { shareBtn.lastChild.textContent = 'Share'; }, 1600);
+            shareBtn.lastChild.textContent = t('copyDone'); setTimeout(() => { shareBtn.lastChild.textContent = t('shareLabel'); }, 1600);
           }
         } catch (_) { /* user cancelled the share sheet — non-fatal */ }
       });
@@ -1659,7 +1693,7 @@
       if (aiEl.nextElementSibling && aiEl.nextElementSibling.classList?.contains('msg-actions')) aiEl.nextElementSibling.remove();
       const row = document.createElement('div');
       row.className = 'err-row'; row.setAttribute('role', 'alert');
-      const span = document.createElement('span'); span.className = 'err-text'; span.textContent = message || 'Something went wrong.';
+      const span = document.createElement('span'); span.className = 'err-text'; span.textContent = message || t('genericErrShort');
       const btn = document.createElement('button');
       btn.className = 'err-retry'; btn.type = 'button';
       btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>Retry`;
@@ -1897,7 +1931,7 @@
     }
 
     // Colour helpers — mirror the app's getScoreColor / getAshtakootColor thresholds.
-    const GREEN = '#16a34a', AMBER = '#E0975A', RED = '#dc2626', ACCENT = '#E0975A';
+    const GREEN = '#16a34a', AMBER = '#E0975A', RED = '#dc2626';
     function pctColor(p) { return p >= 60 ? GREEN : p >= 40 ? AMBER : RED; }
     // Heart icon (matches the app's Janam Rashi card; brand SVG language, no emoji).
     const HEART_SVG = '<svg class="jr-heart" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-6.7-4.35-9.33-8.06C.9 10.3 1.4 7.1 3.9 5.6c2-1.2 4.3-.6 5.6 1l.5.6.5-.6c1.3-1.6 3.6-2.2 5.6-1 2.5 1.5 3 4.7 1.23 7.34C18.7 16.65 12 21 12 21z"/></svg>';
@@ -1919,21 +1953,21 @@
       const scoreHtml = `<div class="report-score">
           <div class="score-num" style="color:${pctColor(score)};">${score}<span style="font-size:var(--fs-md);color:var(--secondary);">/100</span></div>
           <div class="score-meta">
-            <div class="hint" style="margin-bottom:.1rem;">Overall Compatibility</div>
-            <div class="score-verdict" style="color:${pctColor(score)};">${esc(r.verdict || 'Compatibility')}</div>
+            <div class="hint" style="margin-bottom:.1rem;">${t('repOverallCompat')}</div>
+            <div class="score-verdict" style="color:${pctColor(score)};">${esc(r.verdict || t('compatibility'))}</div>
             <div class="hint">${esc(userName)}${currentUser.janam_rashi ? ' · ' + esc(currentUser.janam_rashi) : ''} &nbsp;•&nbsp; ${esc(partnerName)}${partner.janam_rashi ? ' · ' + esc(partner.janam_rashi) : ''}</div>
           </div>
         </div>`;
 
       const overview = overviewHtml(r, currentUser, partner, userName, partnerName);
       const gunMilan = gunMilanHtml(r, currentUser, partner);
-      const advanced = advHtml(r, userName, partnerName) || `<p class="hint">No advanced synastry available.</p>`;
+      const advanced = advHtml(r, userName, partnerName) || `<p class="hint">${t('repNoAdvanced')}</p>`;
 
       card.innerHTML = scoreHtml + `
         <div class="seg rtabs" role="tablist">
-          <button type="button" class="active" data-rtab="overview" role="tab">Overview</button>
-          <button type="button" data-rtab="traditional" role="tab">Gun Milan</button>
-          <button type="button" data-rtab="advanced" role="tab">Advanced</button>
+          <button type="button" class="active" data-rtab="overview" role="tab">${t('repTabOverview')}</button>
+          <button type="button" data-rtab="traditional" role="tab">${t('repTabGunMilan')}</button>
+          <button type="button" data-rtab="advanced" role="tab">${t('repTabAdvanced')}</button>
         </div>
         <div data-rpane="overview">${overview}</div>
         <div data-rpane="traditional" hidden>${gunMilan}</div>
@@ -1961,8 +1995,8 @@
       // Factor breakdown — "What Contributes to Your Score".
       const fb = r.factorBreakdown || [];
       if (fb.length) {
-        h += `<div class="rep-h">What contributes to your score</div>`;
-        h += `<div class="fb-intro">Your overall score combines traditional Ashtakoot matching with deeper chart factors.</div>`;
+        h += `<div class="rep-h">${t('repContributes')}</div>`;
+        h += `<div class="fb-intro">${t('repContributesSub')}</div>`;
         h += fb.map((factor) => {
           const max = Number(factor.maxScore) || 0;
           const pct = max > 0 ? Math.round((Number(factor.score) / max) * 100) : 0;
@@ -1978,22 +2012,22 @@
       // Key Concerns (ashtakoot key mismatches).
       const km = r.ashtakoot?.key_mismatches || [];
       if (km.length) {
-        h += `<div class="rep-h">Key concerns</div>`;
+        h += `<div class="rep-h">${t('repKeyConcerns')}</div>`;
         h += `<div class="concern-box">` + km.map((m) =>
-          `<div class="concern-row">${WARN_SVG}<span>${esc(m)} requires attention</span></div>`).join('') + `</div>`;
+          `<div class="concern-row">${WARN_SVG}<span>${t('repRequiresAttention', { m: esc(m) })}</span></div>`).join('') + `</div>`;
       }
       // Strengths & Challenges.
       const str = r.recommendations?.strengths || [], chg = r.recommendations?.challenges || [];
       if (str.length || chg.length) {
-        h += `<div class="rep-h">Strengths &amp; challenges</div>`;
-        if (str.length) h += `<div class="fb-verdict" style="color:${GREEN};font-weight:600;margin-top:.3rem;">Strengths</div><ul class="rep-list">${str.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
-        if (chg.length) h += `<div class="fb-verdict" style="color:${RED};font-weight:600;margin-top:.3rem;">Areas of focus</div><ul class="rep-list">${chg.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+        h += `<div class="rep-h">${t('repStrengthsChallenges')}</div>`;
+        if (str.length) h += `<div class="fb-verdict" style="color:${GREEN};font-weight:600;margin-top:.3rem;">${t('repStrengths')}</div><ul class="rep-list">${str.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
+        if (chg.length) h += `<div class="fb-verdict" style="color:${RED};font-weight:600;margin-top:.3rem;">${t('repAreasFocus')}</div><ul class="rep-list">${chg.map((s) => `<li>${esc(s)}</li>`).join('')}</ul>`;
       }
       // Understanding Your Report (static, app parity).
-      h += `<div class="rep-h">Understanding your report</div>`;
-      h += `<p class="hint" style="margin:.1rem 0 .35rem;">This analysis blends traditional Gun Milan with deeper chart factors — navamsa, cross-chart aspects and current planetary periods.</p>`;
-      h += `<p class="hint" style="margin:0;">Astrology offers guidance, not certainty. Use these insights alongside your own understanding of the relationship.</p>`;
-      if (!h) h = `<p class="hint">No summary available.</p>`;
+      h += `<div class="rep-h">${t('repUnderstanding')}</div>`;
+      h += `<p class="hint" style="margin:.1rem 0 .35rem;">${t('repUnderstandingP1')}</p>`;
+      h += `<p class="hint" style="margin:0;">${t('repUnderstandingP2')}</p>`;
+      if (!h) h = `<p class="hint">${t('repNoSummary')}</p>`;
       return h;
     }
 
@@ -2004,8 +2038,8 @@
       const total = (gun.total_score != null) ? gun.total_score : '—';
       const pct = gun.percentage != null ? Math.round(gun.percentage) : (gun.total_score != null ? Math.round((gun.total_score / outOf) * 100) : 0);
       const pts = r.ashtakoot?.ashtakoot_points || [];
-      let h = `<div class="rep-h">Ashtakoot analysis</div>
-        <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${pct}% match</span></div>`;
+      let h = `<div class="rep-h">${t('repAshtakootAnalysis')}</div>
+        <div style="display:flex;align-items:center;gap:.6rem;"><strong style="white-space:nowrap;">${total}/${outOf}</strong><div class="gun-bar" style="flex:1;"><i style="width:${pct}%"></i></div><span class="hint">${t('repPctMatch', { p: pct })}</span></div>`;
       if (pts.length) {
         const uKey = state.userGender || 'female', pKey = state.partnerGender || 'male';
         // Partner header (which column is whom).
@@ -2024,9 +2058,9 @@
       // Key Ashtakoot Concerns.
       const km = r.ashtakoot?.key_mismatches || [];
       if (km.length) {
-        h += `<div class="rep-h">Key Ashtakoot concerns</div>`;
+        h += `<div class="rep-h">${t('repKeyAshtakootConcerns')}</div>`;
         h += `<div class="concern-box">` + km.map((m) =>
-          `<div class="concern-row">${WARN_SVG}<span>${esc(m)} requires attention</span></div>`).join('') + `</div>`;
+          `<div class="concern-row">${WARN_SVG}<span>${t('repRequiresAttention', { m: esc(m) })}</span></div>`).join('') + `</div>`;
       }
       return h;
     }
@@ -2042,16 +2076,16 @@
       let h = '';
       // Navamsa (D9) synastry.
       if (ins.length) {
-        h += `<div class="rep-h">Navāṁśa (D9) synastry</div>`;
-        h += `<div class="adv-desc">The D9 (marriage) chart shows the deeper compatibility beneath the surface.</div>`;
+        h += `<div class="rep-h">${t('repNavSynastry')}</div>`;
+        h += `<div class="adv-desc">${t('repNavSub')}</div>`;
         h += `<ul class="rep-list">${ins.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`;
       }
       // Cross-chart aspects — summary + top 5 benefic + top 5 malefic (with "+N more").
       if (ben.length || mal.length || sum.ratio) {
-        h += `<div class="rep-h">Cross-chart aspects</div>`;
-        h += `<div class="adv-desc">How one partner's planets influence the other's — the relationship's everyday dynamic.</div>`;
+        h += `<div class="rep-h">${t('repCrossAspects')}</div>`;
+        h += `<div class="adv-desc">${t('repCrossSub')}</div>`;
         if (sum.ratio || sum.totalBenefic != null || sum.totalMalefic != null) {
-          h += `<div class="dasha-combined" style="margin-bottom:.3rem;"><b>Overall: ${esc(sum.ratio || '')}</b><div class="d-line" style="margin-top:.1rem;">Supportive: ${sum.totalBenefic != null ? esc(sum.totalBenefic) : ben.length} • Challenging: ${sum.totalMalefic != null ? esc(sum.totalMalefic) : mal.length}</div></div>`;
+          h += `<div class="dasha-combined" style="margin-bottom:.3rem;"><b>${t('repOverall', { r: esc(sum.ratio || '') })}</b><div class="d-line" style="margin-top:.1rem;">${t('repSupportiveChallenging', { s: sum.totalBenefic != null ? esc(sum.totalBenefic) : ben.length, c: sum.totalMalefic != null ? esc(sum.totalMalefic) : mal.length })}</div></div>`;
         }
         const aspRow = (asp, col) => {
           const fromN = (asp.from && asp.from.planet) || '', toN = (asp.to && asp.to.planet) || '';
@@ -2059,30 +2093,30 @@
           return `<div class="adv-asp"><span class="adv-dot" style="background:${col}"></span><span>${esc(fromWho)} ${esc(fromN)} → ${esc(toWho)} ${esc(toN)} <span class="hint">${esc(asp.effect || asp.type || '')}</span></span></div>`;
         };
         if (ben.length) {
-          h += `<div class="fb-verdict" style="color:${GREEN};font-weight:600;margin-top:.3rem;">Harmonious (${sum.totalBenefic != null ? esc(sum.totalBenefic) : ben.length})</div>`;
+          h += `<div class="fb-verdict" style="color:${GREEN};font-weight:600;margin-top:.3rem;">${t('repHarmonious', { n: sum.totalBenefic != null ? esc(sum.totalBenefic) : ben.length })}</div>`;
           h += ben.slice(0, 5).map((a) => aspRow(a, GREEN)).join('');
-          if (sum.totalBenefic != null && sum.totalBenefic > 5) h += `<div class="hint" style="margin-top:.15rem;">+${sum.totalBenefic - 5} more supportive aspects</div>`;
+          if (sum.totalBenefic != null && sum.totalBenefic > 5) h += `<div class="hint" style="margin-top:.15rem;">${t('repMoreSupportive', { n: sum.totalBenefic - 5 })}</div>`;
         }
         if (mal.length) {
-          h += `<div class="fb-verdict" style="color:${RED};font-weight:600;margin-top:.3rem;">Challenging (${sum.totalMalefic != null ? esc(sum.totalMalefic) : mal.length})</div>`;
+          h += `<div class="fb-verdict" style="color:${RED};font-weight:600;margin-top:.3rem;">${t('repChallenging', { n: sum.totalMalefic != null ? esc(sum.totalMalefic) : mal.length })}</div>`;
           h += mal.slice(0, 5).map((a) => aspRow(a, RED)).join('');
-          if (sum.totalMalefic != null && sum.totalMalefic > 5) h += `<div class="hint" style="margin-top:.15rem;">+${sum.totalMalefic - 5} more challenging aspects</div>`;
+          if (sum.totalMalefic != null && sum.totalMalefic > 5) h += `<div class="hint" style="margin-top:.15rem;">${t('repMoreChallenging', { n: sum.totalMalefic - 5 })}</div>`;
         }
       }
       // Dasha timing — per-person card + combined.
       if (dt.user || dt.partner) {
-        h += `<div class="rep-h">Current timing (planetary periods)</div>`;
-        h += `<div class="adv-desc">Whether each partner is currently in a period that supports marriage.</div>`;
+        h += `<div class="rep-h">${t('repCurrentTiming')}</div>`;
+        h += `<div class="adv-desc">${t('repCurrentTimingSub')}</div>`;
         const dCard = (who, d) => {
           if (!d) return '';
           const favCol = d.favorable === true ? GREEN : d.favorable === false ? RED : 'var(--secondary)';
           let lines = '';
-          if (d.mahadasha) lines += `<div class="d-line">Mahadasha: <b>${esc(d.mahadasha)}</b></div>`;
-          if (d.antardasha) lines += `<div class="d-line">Antardasha: <b>${esc(d.antardasha)}</b></div>`;
+          if (d.mahadasha) lines += `<div class="d-line">${t('repMahadasha')}: <b>${esc(d.mahadasha)}</b></div>`;
+          if (d.antardasha) lines += `<div class="d-line">${t('repAntardasha')}: <b>${esc(d.antardasha)}</b></div>`;
           if (d.antardashaFavorable === true || d.antardashaFavorable === false)
-            lines += `<div class="d-line" style="color:${d.antardashaFavorable ? GREEN : RED};">Antardasha ${d.antardashaFavorable ? 'supports marriage' : 'needs patience'}</div>`;
+            lines += `<div class="d-line" style="color:${d.antardashaFavorable ? GREEN : RED};">${d.antardashaFavorable ? t('repAntarSupports') : t('repAntarPatience')}</div>`;
           const interp = d.interpretation ? `<div class="d-interp" style="color:${favCol};">${esc(d.interpretation)}</div>` : '';
-          return `<div class="dasha-card"><div class="d-title">${esc(who)}'s current period</div>${lines}${interp}</div>`;
+          return `<div class="dasha-card"><div class="d-title">${t('repCurrentPeriod', { who: esc(who) })}</div>${lines}${interp}</div>`;
         };
         h += dCard(userName, dt.user) + dCard(partnerName, dt.partner);
         if (dt.combined) h += `<div class="dasha-combined">${esc(dt.combined)}</div>`;
@@ -2095,7 +2129,7 @@
       // The report no longer lives in the chat scroll — it's its own screen (openReportScreen),
       // surfaced via the dock "View report" button. Chat stays a pure conversation (app parity).
       const wrap = document.createElement('div'); wrap.className = 'starter'; wrap.style.paddingTop = '.5rem';
-      const pname = state.partner?.name ? ` ${state.lang === 'hi' ? '—' : 'with'} ${esc(state.partner.name)}` : '';
+      const pname = state.partner?.name ? ' ' + t('compatWith', { name: esc(state.partner.name) }) : '';
       wrap.innerHTML = `<p class="hint">${esc(t('compatHomeHint'))}${pname}.</p><div id="chips"></div>`;
       inner.appendChild(wrap);
       const chips = wrap.querySelector('#chips');
@@ -2125,7 +2159,7 @@
       const dob = $('p-dob').value, time = $('p-time').value, place = $('p-place').value.trim();
       const pname = $('p-name').value.trim() || null;
       if (!dob || !time || !place) { status.textContent = "Fill your partner's date, time and place of birth."; return; }
-      if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = 'Enter a valid birth date in the past.'; return; }
+      if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = t('cpValidDate'); return; }
       const editing = isEditingPartner;
       // A compatibility REPORT is a metered "reading", but EDITING/regenerating an existing one
       // is an in-place update of the SAME reading (app parity) — the request carries regenerate:true
@@ -2148,7 +2182,7 @@
         const pdob = toUtcISO(dob, time, offset);
         state.partnerGender = setupPartnerGender; state.userGender = oppositeGender(setupPartnerGender);
 
-        if (!editing) status.textContent = 'Saving details…';
+        if (!editing) status.textContent = t('cpSavingDetails');
         await setDoc(doc(db, `users/${state.uid}/metadata/dob`), { gender: state.userGender }, { merge: true });
         await setDoc(doc(db, `users/${state.uid}/metadata/partner_dob`), {
           dob: pdob, coordinates: pcoords, birthCoordinates: pcoords, birthPlace: place,
@@ -2167,7 +2201,7 @@
         setDoc(doc(db, `users/${state.uid}/astroData/partner_chart`), partnerChart, { merge: true }).catch(() => {});
         if (partnerChart?.divisionalCharts?.D9) setDoc(doc(db, `users/${state.uid}/astroData/partner_d9_chart`), partnerChart.divisionalCharts.D9, { merge: true }).catch(() => {});
 
-        if (!editing) status.textContent = 'Analyzing compatibility…';
+        if (!editing) status.textContent = t('cpAnalyzing');
         const report = await new Promise((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error('Compatibility timed out — please retry.')), 120000);
           // onPaywall: the report is now metered server-side, so an over-quota user gets
@@ -2215,7 +2249,7 @@
         // Over-quota → the report onPaywall rejected with this sentinel; show the
         // paywall instead of a scary error under the setup form.
         if (e.message === '__paywall__') { openPaywall('server_gate'); }
-        else { status.textContent = e.message || 'Something went wrong. Please retry.'; }
+        else { status.textContent = e.message || t('genericErr'); }
         btn.disabled = false;
       }
     });
@@ -2360,14 +2394,14 @@
         const sign = KUN_ZODIAC[(ascIdx + h - 1) % 12];
         const list = occ[h] || [];
         const rows = list.length ? list.map((p) => {
-          const nm = p.planet === 'Lagna' ? 'Ascendant' : p.planet;
+          const nm = p.planet === 'Lagna' ? t('cxAscendant') : p.planet;
           const col = KUN_REL_COLOR[(p.relationship||'').toLowerCase()] || 'var(--text)';
           const deg = p.longitude != null ? ' · ' + (parseFloat(p.longitude)%30).toFixed(1) + '°' : '';
           const nak = p.nakshatra ? ' · ' + p.nakshatra : '';
           const rel = (p.relationship && p.planet !== 'Lagna') ? ' · ' + p.relationship : '';
           return `<div class="kun-detrow"><span class="kun-dot" style="background:${col}"></span><b>${esc(nm)}</b>${p.retrograde?' <span class="kun-retro">℞</span>':''}<span class="kun-detmeta">${esc(p.zodiac||sign)}${deg}${esc(nak)}${esc(rel)}</span></div>`;
-        }).join('') : '<div class="kun-detrow kun-empty">Empty house</div>';
-        detail.innerHTML = `<div class="kun-dethead">House ${h} · ${esc(sign)}</div>${rows}`;
+        }).join('') : `<div class="kun-detrow kun-empty">${t('cxEmptyHouse')}</div>`;
+        detail.innerHTML = `<div class="kun-dethead">${t('cxHouseLabel')} ${h} · ${esc(sign)}</div>${rows}`;
         detail.style.display = '';
         svg.querySelectorAll('.kun-hit').forEach((c) => c.classList.toggle('sel', c.getAttribute('data-house') === String(h)));
       };
@@ -2396,20 +2430,20 @@
           const combust = combustSet.has(p) ? ' <span title="combust">⊙</span>' : '';
           return `<tr><td><b>${p}</b>${retro}${combust}</td><td>${esc(info.zodiac || '—')}</td><td>${info.house || '—'}</td><td>${deg}</td><td>${nak}</td><td class="dig" style="color:${col}">${esc(info.relationship || '—')}</td></tr>`;
         }).join('');
-        html += `<div class="cx-head">Planetary positions${variant === 'D9' ? ' · Navāṁśa' : ''}</div>
-          <div class="ptable-wrap"><table class="ptable"><thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Deg</th><th>Nakshatra</th><th>Dignity</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        html += `<div class="cx-head">${t('planetaryPositions')}${variant === 'D9' ? ' · ' + t('cxNavamsa') : ''}</div>
+          <div class="ptable-wrap"><table class="ptable"><thead><tr><th>${t('cxPlanet')}</th><th>${t('cxSign')}</th><th>${t('cxHouse')}</th><th>${t('cxDeg')}</th><th>${t('cxNakshatra')}</th><th>${t('cxDignity')}</th></tr></thead><tbody>${rows}</tbody></table></div>`;
       }
       if (variant === 'D9') {
         const vg = chartData.divisionalCharts?.D9?.vargottamaPlanets || [];
-        html += `<div class="varg-note">${vg.length ? '<b>Vargottama:</b> ' + vg.map(esc).join(', ') + ' — same sign in D1 & D9 (reinforced).' : 'No vargottama planets.'}</div>`;
+        html += `<div class="varg-note">${vg.length ? '<b>' + t('cxVargottama') + ':</b> ' + vg.map(esc).join(', ') + ' ' + t('cxVargottamaNote') : t('cxNoVargottama')}</div>`;
       }
       if (variant === 'D1') {
         const block = (e) => `<div class="dasha-block${dashaActive(e) ? ' active' : ''}"><div class="dasha-lord">${dashaActive(e) ? '<span class="dot"></span>' : ''}${esc(e.lord)}</div><div class="dasha-dates">${fmtDashaD(e.start)} → ${fmtDashaD(e.end)}</div></div>`;
         const md = add.vimshottariDashaTimeline || [], ad = add.antardashaTimeline || [];
         const maha = add.currentMahadasha || {};
         const adCur = ad.filter((e) => !maha.start || !maha.end || (e.start >= maha.start && e.start < maha.end));
-        if (md.length) html += `<div class="cx-head">Mahadasha</div><div class="dasha-scroll">${md.map(block).join('')}</div>`;
-        if (ad.length) html += `<div class="cx-head">Antardasha</div><div class="dasha-scroll">${(adCur.length ? adCur : ad).map(block).join('')}</div>`;
+        if (md.length) html += `<div class="cx-head">${t('repMahadasha')}</div><div class="dasha-scroll">${md.map(block).join('')}</div>`;
+        if (ad.length) html += `<div class="cx-head">${t('repAntardasha')}</div><div class="dasha-scroll">${(adCur.length ? adCur : ad).map(block).join('')}</div>`;
       }
       host.innerHTML = html;
       host.querySelectorAll('.dasha-block.active').forEach((el) => { el.parentElement.scrollLeft = Math.max(0, el.offsetLeft - 70); });
@@ -2550,7 +2584,7 @@
     function openBirthModal() {
       closeSheetsIfOpen();
       $('bmDob').textContent = state.dateOfBirth ? new Date(state.dateOfBirth).toLocaleString() : 'Not set';
-      $('bmPlace').textContent = state.birthPlace || 'Not set';
+      $('bmPlace').textContent = state.birthPlace || t('notSet');
       $('birthModal').classList.add('open');
     }
     // A drawer action while the chart/report sheet is up must close the sheet first —
@@ -2594,7 +2628,15 @@
         el.setAttribute('aria-label', label);
         el.title = label;
       } else {
-        el.style.display = 'none';
+        // Brand-new free user: no questions doc yet → state.remaining is null. The free tier is
+        // 1 question, so surface "1 question left" up front (app parity) instead of hiding the chip
+        // until it's already spent.
+        const label = t('quotaLeftOne', { n: 1 });
+        el.className = 'hdr-quota is-count';
+        el.style.display = 'inline-flex';
+        el.innerHTML = '<span class="qcount">' + esc(label) + '</span>';
+        el.setAttribute('aria-label', label);
+        el.title = label;
       }
     }
     $('hdrQuota').addEventListener('click', () => { if (!state.premium) { openPaywall('header_count'); } });
@@ -2739,13 +2781,13 @@
         const r = await fetch(`${API}/api/web/razorpay/cancel`, { method: 'POST', headers: { 'Authorization': `Bearer ${tok}` } });
         if (!r.ok) throw new Error('Could not cancel');
         $('subSub').textContent = t('subCancels');
-        alert('Your subscription will not renew. You keep access until the end of your current period.');
+        alert(t('cancelAlert'));
       } catch (e) { alert(e.message || 'Could not cancel — please try again.'); }
     });
 
     function refreshProfileUI() {
       const u = auth.currentUser;
-      $('pfName').textContent = state.userName || (u && !u.isAnonymous ? (u.displayName || 'User') : 'Guest');
+      $('pfName').textContent = state.userName || (u && !u.isAnonymous ? (u.displayName || t('profUser')) : t('profGuest'));
       $('pfEmail').textContent = (u && !u.isAnonymous && u.email) ? u.email : 'Not signed in';
       $('pfBirth').textContent = state.dateOfBirth
         ? `${new Date(state.dateOfBirth).toLocaleDateString()}${state.birthPlace ? ' · ' + state.birthPlace : ''}`
@@ -2913,12 +2955,12 @@
               const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
               if (Number.isFinite(rem) && rem > 0) {
                 state.remaining = rem; state.freeUsed = false; show('chat');
-                addMsg('ai', `${questions} questions added — ask away.`); return;
+                addMsg('ai', t('buyQuestionsAdded', { n: questions })); return;
               }
             } catch (_) { /* keep polling */ }
           }
           state.freeUsed = false; show('chat');
-          addMsg('ai', 'Payment received — your questions will be added in a moment. Go ahead and ask.');
+          addMsg('ai', t('buyQuestionsPending'));
         },
         modal: { ondismiss: () => { setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
       });
@@ -2944,7 +2986,7 @@
       const packPlan = document.querySelector('.plan[data-plan="pack"]');
       if (packPlan) packPlan.click();
       try { await runPackCheckout({ status: $('paywallStatus') }); }
-      catch (e) { $('paywallStatus').textContent = e.message || 'Something went wrong. Please retry.'; }
+      catch (e) { $('paywallStatus').textContent = e.message || t('genericErr'); }
       finally { dbtn.disabled = false; $('subscribeBtn').disabled = false; }
     });
 
@@ -2957,11 +2999,11 @@
           return;
         }
 
-        status.textContent = 'Signing you in…';
+        status.textContent = t('authSigningIn');
         const { t, attribution } = await prepareAccountForCheckout();
 
         // ── recurring subscription (Razorpay Subscriptions API) ───────
-        status.textContent = 'Starting your subscription…';
+        status.textContent = t('subStartingMvp');
         const r = await fetch(`${API}/api/web/razorpay/create-subscription`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
@@ -2980,18 +3022,18 @@
           handler: async () => {
             track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
             track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 monetization
-            status.textContent = 'Activating your premium…';
+            status.textContent = t('subActivatingMvp');
             for (let i = 0; i < 10; i++) {
               await new Promise((res) => setTimeout(res, 2000));
               const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json()).catch(() => ({}));
-              if (s.active) { state.premium = true; state.freeUsed = false; show('chat'); addMsg('ai', 'You are premium now — ask away.'); return; }
+              if (s.active) { state.premium = true; state.freeUsed = false; show('chat'); addMsg('ai', t('buyPremiumNow')); return; }
             }
             state.premium = true; state.freeUsed = false; show('chat');
-            addMsg('ai', 'Payment received — your premium will activate in a moment. Go ahead and ask.');
+            addMsg('ai', t('buyPremiumPending'));
           },
           // Subscription dismissed → exit-intent downsell to the ₹99 pack (once/session).
           modal: { ondismiss: () => {
-            btn.disabled = false; status.textContent = 'Checkout closed.';
+            btn.disabled = false; status.textContent = t('subCheckoutClosedMvp');
             if (!downsellShownThisSession) setTimeout(openDownsell, 250);
           } },
         });
@@ -2999,7 +3041,7 @@
         track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 standard
         rzp.open();
       } catch (e) {
-        status.textContent = e.message || 'Something went wrong. Please retry.';
+        status.textContent = e.message || t('genericErr');
         btn.disabled = false;
       }
     });
