@@ -149,6 +149,9 @@
     /* Native date/time picker glyph + popup follow the active theme (else: black icon + white dropdown on dark). */
     [data-theme="dark"] input[type="date"], [data-theme="dark"] input[type="time"] { color-scheme: dark; }
     [data-theme="light"] input[type="date"], [data-theme="light"] input[type="time"] { color-scheme: light; }
+    /* Boot splash spinner (shown until Firebase auth resolves). */
+    .boot-spinner { width:26px; height:26px; border:3px solid var(--border-strong); border-top-color:var(--accent); border-radius:50%; animation:bootspin .8s linear infinite; }
+    @keyframes bootspin { to { transform:rotate(360deg); } }
 
     /* ── View scaffolding ────────────────────────────────────────────────── */
     .view { display:none; flex:1; flex-direction:column; min-height:0; }
@@ -527,9 +530,6 @@
   <aside id="drawer" class="drawer" aria-label="Menu">
     <div class="drawer-head">
       <span class="brand" style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text);line-height:1;">Om.AI</span>
-      <button class="iconbtn" id="drawerClose" aria-label="Close menu" title="Close menu">
-        <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
-      </button>
     </div>
     <button class="drawer-newchat" id="drawerNewChat">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
@@ -575,7 +575,15 @@
   </div>
 
   <!-- ── AUTH GATE (sign in before anything) ──────────────────────────── -->
-  <div id="authView" class="view active">
+  <!-- Boot splash: the default view until Firebase auth resolves, so a signed-in user never
+       flashes the login screen on refresh (onAuthStateChanged routes off this once resolved). -->
+  <div id="bootView" class="view active">
+    <div style="margin:auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.1rem;">
+      <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" width="72" height="72" style="border-radius:16px;"></picture>
+      <div class="boot-spinner" role="status" aria-label="Loading"></div>
+    </div>
+  </div>
+  <div id="authView" class="view">
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:440px;">
       <div style="text-align:center;margin:6vh 0 1.25rem;">
         <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="width:88px;height:auto;margin:0 auto;"></picture>
@@ -905,7 +913,7 @@
 
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
-    const views = { auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
+    const views = { boot: $('bootView'), auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
                     chat: $('chatView'), chartScreen: $('chartScreenView'), report: $('reportView'), paywall: $('paywallView'),
                     settings: $('settingsView'), profile: $('profileView') };
     let prevView = 'onboarding';
@@ -985,9 +993,10 @@
           track('login', { method }); // GA4 standard event
         }
       }
-      // Route the landing view off the gate only when appropriately signed in.
-      if (currentView() === 'auth') { if (signedIn) restoreOrRoute(); }
-      else if (!user) { show('auth'); }
+      // Route off the boot splash (or the login gate) once auth resolves: signed-in users go
+      // straight to their chat/onboarding (never flashing the login screen); otherwise show login.
+      if (signedIn) { const cv = currentView(); if (cv === 'auth' || cv === 'boot') restoreOrRoute(); }
+      else if (!user || currentView() === 'boot') { show('auth'); }
     });
 
     // Returning signed-in user: restore birth details + regenerate the chart
@@ -2231,7 +2240,6 @@
       if ($('drawer').classList.contains('open')) applyDrawerState(true);
     });
     $('menuBtn').addEventListener('click', toggleDrawer);
-    $('drawerClose').addEventListener('click', closeDrawer);
     $('drawerOverlay').addEventListener('click', closeDrawer);
     $('drawerNewChat').addEventListener('click', () => { closeDrawerMobile(); startNewChat(); });
     $('diChart').addEventListener('click', () => { closeDrawerMobile(); openChartScreen(); });
