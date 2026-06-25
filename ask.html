@@ -115,10 +115,10 @@
     }
     * { box-sizing:border-box; }
     html,body { height:100%; }
-    /* 15px root — sized to read like Claude/GPT (16px-root with 13–14px chrome). The old 17px
-       root + hot tokens read too big; chrome now rides explicit --fs-* tokens, not raw inheritance. */
-    html { font-size:15px; }
-    /* Type scale (px @15px root): xs=12 · sm≈13 · md=15 · lg≈17 · xl=20 · 2xl≈23 · 3xl=28 */
+    /* 16px root — body/composer text at 16px. Chrome rides explicit --fs-* tokens, not raw
+       inheritance, so the whole scale grows proportionally from the root. */
+    html { font-size:16px; }
+    /* Type scale (px @16px root): xs≈13 · sm≈14 · md=16 · lg≈18 · xl≈21 · 2xl≈24 · 3xl=30 */
     :root { --fs-xs:.8rem; --fs-sm:.87rem; --fs-md:1rem; --fs-lg:1.13rem; --fs-xl:1.33rem; --fs-2xl:1.53rem; --fs-3xl:1.87rem; }
     body {
       font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;
