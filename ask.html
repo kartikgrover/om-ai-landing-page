@@ -115,10 +115,11 @@
     }
     * { box-sizing:border-box; }
     html,body { height:100%; }
-    /* 16px root — body/composer text at 16px. Chrome rides explicit --fs-* tokens, not raw
-       inheritance, so the whole scale grows proportionally from the root. */
-    html { font-size:16px; }
-    /* Type scale (px @16px root): xs≈13 · sm≈14 · md=16 · lg≈18 · xl≈21 · 2xl≈24 · 3xl=30 */
+    /* 17.5px root — compensates for Source Sans 3's small x-height (ratio .486) so our text
+       renders as tall as ChatGPT (system font) / Claude (Anthropic Sans) do at 16px. Chrome
+       rides explicit --fs-* tokens, not raw inheritance, so the whole scale grows from the root. */
+    html { font-size:17.5px; }
+    /* Type scale (px @17.5px root): xs=14 · sm≈15 · md=17.5 · lg≈20 · xl≈23 · 2xl≈27 · 3xl=33 */
     :root { --fs-xs:.8rem; --fs-sm:.87rem; --fs-md:1rem; --fs-lg:1.13rem; --fs-xl:1.33rem; --fs-2xl:1.53rem; --fs-3xl:1.87rem; }
     body {
       font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;
@@ -145,16 +146,15 @@
        tall, 13px/600, radius 8px. Keep these exact values in sync with the Pro spec. */
     .seg.hdr-modeseg { position:absolute; left:50%; transform:translateX(-50%); width:auto; max-width:300px; border-radius:8px; }
     .hdr-modeseg button { flex:none; padding:.3rem .8rem; font-size:var(--fs-sm); font-weight:600; line-height:1.2; }
-    @media (max-width:560px) { .hdr-modeseg button { padding:.28rem .5rem; font-size:var(--fs-xs); } }
+    @media (max-width:560px) { .hdr-modeseg button { padding:.28rem .5rem; font-size:var(--fs-xs); }
+      .hdr-quota .qfull { display:none; } .hdr-quota .qnum { display:inline; } /* number-only so it can't collide with the centered toggle */ }
     /* Header free-question count / Premium badge (mirrors the app's headerRight). */
     .hdr-quota { display:inline-flex; align-items:center; gap:.4rem; height:40px; padding:0 .35rem;
       border:none; background:transparent; color:var(--text); cursor:pointer; font-family:inherit; }
-    .hdr-quota .qchip { width:27px; height:27px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
-      font-size:var(--fs-sm); font-weight:600; line-height:1; color:var(--text);
-      border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); background:color-mix(in srgb, var(--accent) 13%, transparent); }
     /* Full "N question(s) left" pill — web has room (the app shows only the number). */
     .hdr-quota .qcount { padding:.32rem .7rem; border-radius:999px; font-size:var(--fs-sm); font-weight:600; line-height:1; white-space:nowrap; color:var(--text);
       border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); background:color-mix(in srgb, var(--accent) 13%, transparent); }
+    .hdr-quota .qnum { display:none; }  /* phones show just the number (app parity) to free header space for the centered toggle */
     .hdr-quota.is-premium { cursor:default; }
     .hdr-quota.is-premium svg { width:18px; height:18px; stroke:var(--accent); fill:none; stroke-width:1.7; }
     .hdr-quota.is-premium .pl { font-size:var(--fs-sm); font-weight:600; opacity:.85; }
@@ -399,6 +399,9 @@
     .srow .sr-main { flex:1; } .srow .sr-sub { font-size:var(--fs-sm); color:var(--secondary); display:block; }
     .srow .chev { color:var(--secondary); }
     .srow.premium { border-left:3px solid var(--accent); border-radius:4px; }
+    /* Phones: let the Theme/Language segmented controls wrap full-width below their label
+       instead of forcing horizontal overflow inside the settings modal at the larger type. */
+    @media (max-width:560px) { .srow { flex-wrap:wrap; } .srow .seg { min-width:0 !important; width:100%; } }
     .avatar { width:64px; height:64px; border-radius:50%; background:color-mix(in srgb,var(--accent) 18%, transparent);
       display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--accent); margin:0 auto .5rem; }
     .avatar svg { width:34px; height:34px; stroke:currentColor; fill:none; stroke-width:1.6; }
@@ -555,7 +558,7 @@
     .kun-retro { color:var(--accent); font-style:italic; }
     .cx-head { font-weight:700; font-size:var(--fs-xs); color:var(--secondary); text-transform:uppercase; letter-spacing:.04em; margin:1.1rem 0 .5rem; }
     .dasha-scroll { display:flex; gap:.5rem; overflow-x:auto; padding-bottom:.4rem; }
-    .dasha-block { flex:none; min-width:96px; border:1px solid var(--border-strong); border-radius:10px; padding:.5rem .65rem; background:var(--card); }
+    .dasha-block { flex:none; min-width:6.5rem; border:1px solid var(--border-strong); border-radius:10px; padding:.5rem .65rem; background:var(--card); }
     .dasha-block.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 9%, var(--card)); }
     .dasha-lord { font-weight:700; font-size:var(--fs-sm); display:flex; align-items:center; gap:.35rem; }
     .dasha-lord .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; }
@@ -607,7 +610,7 @@
   <div id="drawerOverlay" class="drawer-overlay"></div>
   <aside id="drawer" class="drawer" aria-label="Menu">
     <div class="drawer-head">
-      <span class="brand" style="display:inline-flex;align-items:center;line-height:0;"><picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="height:30px;width:auto;display:block;"></picture></span>
+      <span class="brand" style="display:inline-flex;align-items:center;line-height:0;"><picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="height:40px;width:auto;display:block;"></picture></span>
       <button class="iconbtn" id="drawerToggle" aria-label="Toggle sidebar" title="Toggle sidebar">
         <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M9.5 5v14" stroke-linecap="round"/></svg>
       </button>
@@ -734,7 +737,7 @@
           </div>
           <div class="hint" style="margin-top:.3rem;" data-i18n="pickCity">Pick your birth city from the list for an accurate chart.</div>
         </div>
-        <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Time zone <b id="f-tz-detected"></b> — detected from your birth place (handles DST automatically).</div>
+        <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="tzPre">Time zone</span> <b id="f-tz-detected"></b> <span data-i18n="tzPost">— detected from your birth place (handles DST automatically).</span></div>
         <button id="startBtn" class="btn-primary" data-i18n="generateChart">Generate my chart</button>
         <div id="onboardStatus" class="status-line"></div>
       </div></div>
@@ -771,7 +774,7 @@
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <div id="p-tz-row" class="hint" style="display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Time zone <b id="p-tz-detected"></b> — detected from the birth place (handles DST automatically).</div>
+          <div id="p-tz-row" class="hint" style="display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="tzPre">Time zone</span> <b id="p-tz-detected"></b> <span data-i18n="tzPost">— detected from the birth place (handles DST automatically).</span></div>
         </div>
         <label data-i18n="partnerGender">Partner's gender</label>
         <div class="gender-seg" id="partnerGenderSeg" style="margin-bottom:.5rem;">
@@ -1066,6 +1069,8 @@
     const I18N = {
       en: {
         modePersonal:'Personal', modeRelationship:'Relationship', newChat:'New chat', birthDetails:'Your Birth Details', editProfile:'Edit Profile', getPremium:'Get Premium', settings:'Settings',
+        historySignIn:'Sign in to see your chats.', historyLoading:'Loading…', historyError:'Couldn’t load chats.', historyEmpty:'No past chats yet.', retry:'Retry',
+        loadMsgs:'Studying your Kundali…|Analyzing the Grahas…|Consulting the Nakshatras…|Calculating planetary influences…|Calculating…|Interpreting positions…',
         authTitle:'Ask your birth chart', authSub:'Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.',
         authSubSignup:'Create your account to get your free Vedic reading.', authSubReset:'Enter your email and we’ll send you a password reset link.',
         continueGoogle:'Continue with Google', continueApple:'Continue with Apple', orLabel:'or', emailPh:'Email', passwordPh:'Password', signIn:'Sign in', createAccountBtn:'Create account', sendReset:'Send reset link',
@@ -1114,6 +1119,8 @@
       },
       hi: {
         modePersonal:'व्यक्तिगत', modeRelationship:'रिश्ता', newChat:'नई चैट', birthDetails:'आपकी जन्म जानकारी', editProfile:'प्रोफ़ाइल संपादित करें', getPremium:'प्रीमियम लें', settings:'सेटिंग्स',
+        historySignIn:'अपनी चैट देखने के लिए साइन इन करें।', historyLoading:'लोड हो रहा है…', historyError:'चैट लोड नहीं हो सकीं।', historyEmpty:'अभी तक कोई पुरानी चैट नहीं।', retry:'पुनः प्रयास करें',
+        loadMsgs:'आपकी कुंडली का अध्ययन…|ग्रहों का विश्लेषण…|नक्षत्रों से परामर्श…|ग्रहों के प्रभाव की गणना…|गणना हो रही है…|स्थितियों की व्याख्या…',
         authTitle:'अपनी जन्म कुंडली से पूछें', authSub:'अपनी निःशुल्क रीडिंग पाने के लिए साइन इन करें। हम आपकी असली वैदिक कुंडली बनाते हैं और किसी भी विषय पर उत्तर देते हैं — करियर, विवाह, धन, स्वास्थ्य, समय।',
         authSubSignup:'अपनी निःशुल्क वैदिक रीडिंग पाने के लिए खाता बनाएं।', authSubReset:'अपना ईमेल दर्ज करें, हम पासवर्ड रीसेट लिंक भेजेंगे।',
         continueGoogle:'Google से जारी रखें', continueApple:'Apple से जारी रखें', orLabel:'या', emailPh:'ईमेल', passwordPh:'पासवर्ड', signIn:'साइन इन करें', createAccountBtn:'खाता बनाएं', sendReset:'रीसेट लिंक भेजें',
@@ -1633,9 +1640,9 @@
     // Bot loading indicator — mirrors the app's InlineLoader mode='astro' (spinner +
     // typewriter rotating through shuffled astrology messages, 18ms/char, 1.5s pause).
     // Self-stops once `el`'s content is replaced (stream begins) or it leaves the DOM.
-    const ASTRO_LOAD_MSGS = ['Studying your Kundali…', 'Analyzing the Grahas…', 'Consulting the Nakshatras…', 'Calculating planetary influences…', 'Calculating…', 'Interpreting positions…'];
+    const astroLoadMsgs = () => t('loadMsgs').split('|');
     function startInlineLoader(el, msgs) {
-      const set = (msgs || ASTRO_LOAD_MSGS).slice();
+      const set = (msgs || astroLoadMsgs()).slice();
       for (let i = set.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [set[i], set[j]] = [set[j], set[i]]; }
       el.innerHTML = '<span class="inline-loader"><span class="il-spin" aria-hidden="true"></span><span class="il-text"></span></span>';
       const textEl = el.querySelector('.il-text');
@@ -1696,7 +1703,7 @@
       const span = document.createElement('span'); span.className = 'err-text'; span.textContent = message || t('genericErrShort');
       const btn = document.createElement('button');
       btn.className = 'err-retry'; btn.type = 'button';
-      btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>Retry`;
+      btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4v4h4" stroke-linecap="round" stroke-linejoin="round"/></svg>${esc(t('retry'))}`;
       btn.addEventListener('click', () => { row.remove(); onRetry(); });
       row.appendChild(span); row.appendChild(btn);
       aiEl.replaceWith(row);
@@ -2624,7 +2631,7 @@
         const label = t(n === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n });
         el.className = 'hdr-quota is-count';
         el.style.display = 'inline-flex';
-        el.innerHTML = '<span class="qcount">' + esc(label) + '</span>';
+        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">' + esc(String(n)) + '</span></span>';
         el.setAttribute('aria-label', label);
         el.title = label;
       } else {
@@ -2634,7 +2641,7 @@
         const label = t('quotaLeftOne', { n: 1 });
         el.className = 'hdr-quota is-count';
         el.style.display = 'inline-flex';
-        el.innerHTML = '<span class="qcount">' + esc(label) + '</span>';
+        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">1</span></span>';
         el.setAttribute('aria-label', label);
         el.title = label;
       }
@@ -2664,8 +2671,8 @@
     }
     async function fetchSessions() {
       const host = $('drawerHistory');
-      if (!state.uid) { host.innerHTML = '<div class="empty">Sign in to see your chats.</div>'; return; }
-      host.innerHTML = '<div class="empty">Loading…</div>';
+      if (!state.uid) { host.innerHTML = '<div class="empty">' + esc(t('historySignIn')) + '</div>'; return; }
+      host.innerHTML = '<div class="empty">' + esc(t('historyLoading')) + '</div>';
       try {
         const q = query(collection(db, `users/${state.uid}/astro_sessions`),
           where('isCompatibility', '==', state.mode === 'compat'), orderBy('lastActive', 'desc'), limit(20));
@@ -2673,7 +2680,7 @@
         window.__sessions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         renderHistory();
         backfillSessionTitles();
-      } catch (e) { host.innerHTML = '<div class="empty">Couldn’t load chats.</div>'; }
+      } catch (e) { host.innerHTML = '<div class="empty">' + esc(t('historyError')) + '</div>'; }
     }
     // A session can lack firstMessagePreview (legacy data, or a first answer that errored before
     // the preview was written) and would otherwise show "New chat" despite having a real convo.
@@ -2698,12 +2705,12 @@
     }
     function renderHistory() {
       const host = $('drawerHistory'); const sessions = window.__sessions || [];
-      if (!sessions.length) { host.innerHTML = '<div class="empty">No past chats yet.</div>'; return; }
+      if (!sessions.length) { host.innerHTML = '<div class="empty">' + esc(t('historyEmpty')) + '</div>'; return; }
       host.innerHTML = '';
       sessions.forEach(s => {
         const el = document.createElement('div');
         el.className = 'sess' + (s.id === state.sessionId ? ' active' : '');
-        const title = s.firstMessagePreview || 'New chat';
+        const title = s.firstMessagePreview || t('newChat');
         el.innerHTML = `<span class="t"></span><button class="del" title="Delete" aria-label="Delete chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7h13M10 7V5h4v2M7 7l.9 12.5h8.2L17 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
         el.querySelector('.t').textContent = title;
         el.querySelector('.t').addEventListener('click', () => loadSession(s.id));
@@ -2717,7 +2724,7 @@
       const compat = state.mode === 'compat';
       if (compat) { state.compatSessionId = id; state.compatConversationId = null; }
       else { state.sessionId = id; state.conversationId = null; } // backend re-resolves; conversationId comes back over WS
-      $('chatInner').innerHTML = '<div class="starter"><span class="typing">Loading…</span></div>';
+      $('chatInner').innerHTML = '<div class="starter"><span class="typing">' + esc(t('historyLoading')) + '</span></div>';
       show('chat');
       try {
         const q = query(collection(db, `users/${state.uid}/astro_chats`),
