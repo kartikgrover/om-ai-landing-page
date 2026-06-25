@@ -115,11 +115,11 @@
     }
     * { box-sizing:border-box; }
     html,body { height:100%; }
-    /* Match the landing page's 17px base — ask.html previously set no root size (→16px),
-       so every rem ran ~6% smaller than omai.app and the secondary text looked tiny. */
-    html { font-size:17px; }
-    /* Type scale (px @17px root): xs≈13.6 · sm≈15.3 · md=17 · lg≈19.5 · xl≈23.8 · 2xl≈27 · 3xl≈32 */
-    :root { --fs-xs:.8rem; --fs-sm:.9rem; --fs-md:1rem; --fs-lg:1.15rem; --fs-xl:1.4rem; --fs-2xl:1.6rem; --fs-3xl:1.9rem; }
+    /* 15px root — sized to read like Claude/GPT (16px-root with 13–14px chrome). The old 17px
+       root + hot tokens read too big; chrome now rides explicit --fs-* tokens, not raw inheritance. */
+    html { font-size:15px; }
+    /* Type scale (px @15px root): xs=12 · sm≈13 · md=15 · lg≈17 · xl=20 · 2xl≈23 · 3xl=28 */
+    :root { --fs-xs:.8rem; --fs-sm:.87rem; --fs-md:1rem; --fs-lg:1.13rem; --fs-xl:1.33rem; --fs-2xl:1.53rem; --fs-3xl:1.87rem; }
     body {
       font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;
       background:var(--bg); color:var(--text); margin:0;
@@ -135,24 +135,29 @@
     .appbar {
       display:flex; align-items:center; gap:.25rem;
       padding:.6rem .75rem; padding-top:max(.6rem,env(safe-area-inset-top));
-      background:var(--header); border-bottom:1px solid var(--border);
+      background:var(--bg); border-bottom:1px solid transparent;
       position:sticky; top:0; z-index:30;
     }
     .appbar #hdrQuota { margin-left:auto; } /* brand lives in the drawer header only; push the right-side group out */
     /* Personal/Relationship mode toggle lives centered in the header (mirrors the Pro
        console). Absolutely centered so it stays put regardless of the side controls. */
-    .hdr-modeseg { position:absolute; left:50%; transform:translateX(-50%); width:auto; max-width:300px; }
-    .hdr-modeseg button { flex:none; padding:.32rem .9rem; font-size:var(--fs-sm); }
-    @media (max-width:560px) { .hdr-modeseg button { padding:.32rem .55rem; font-size:var(--fs-xs); } }
+    /* Low-profile segmented control (matches the Pro console's Individual/Matching toggle): ~30px
+       tall, 13px/600, radius 8px. Keep these exact values in sync with the Pro spec. */
+    .seg.hdr-modeseg { position:absolute; left:50%; transform:translateX(-50%); width:auto; max-width:300px; border-radius:8px; }
+    .hdr-modeseg button { flex:none; padding:.3rem .8rem; font-size:var(--fs-sm); font-weight:600; line-height:1.2; }
+    @media (max-width:560px) { .hdr-modeseg button { padding:.28rem .5rem; font-size:var(--fs-xs); } }
     /* Header free-question count / Premium badge (mirrors the app's headerRight). */
     .hdr-quota { display:inline-flex; align-items:center; gap:.4rem; height:40px; padding:0 .35rem;
       border:none; background:transparent; color:var(--text); cursor:pointer; font-family:inherit; }
     .hdr-quota .qchip { width:27px; height:27px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
-      font-size:.85rem; font-weight:600; line-height:1; color:var(--text);
+      font-size:var(--fs-sm); font-weight:600; line-height:1; color:var(--text);
+      border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); background:color-mix(in srgb, var(--accent) 13%, transparent); }
+    /* Full "N question(s) left" pill — web has room (the app shows only the number). */
+    .hdr-quota .qcount { padding:.32rem .7rem; border-radius:999px; font-size:var(--fs-sm); font-weight:600; line-height:1; white-space:nowrap; color:var(--text);
       border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); background:color-mix(in srgb, var(--accent) 13%, transparent); }
     .hdr-quota.is-premium { cursor:default; }
     .hdr-quota.is-premium svg { width:18px; height:18px; stroke:var(--accent); fill:none; stroke-width:1.7; }
-    .hdr-quota.is-premium .pl { font-size:.92rem; font-weight:600; opacity:.85; }
+    .hdr-quota.is-premium .pl { font-size:var(--fs-sm); font-weight:600; opacity:.85; }
     /* No app chrome (hamburger/drawer) before sign-in — the auth & boot views own the screen. */
     body.chrome-off .appbar, body.chrome-off .drawer, body.chrome-off .drawer-overlay { display:none; }
     .iconbtn {
@@ -170,6 +175,9 @@
     @keyframes bootspin { to { transform:rotate(360deg); } }
 
     /* ── View scaffolding ────────────────────────────────────────────────── */
+    /* show() moves focus to the new view's heading for screen readers (tabindex=-1);
+       suppress the visible focus ring on those programmatic-only targets (not keyboard-reachable). */
+    [tabindex="-1"]:focus { outline:none; }
     .view { display:none; flex:1; flex-direction:column; min-height:0; }
     .view.active { display:flex; }
     .scroll-pad { max-width:760px; width:100%; margin:0 auto; padding:1.25rem; }
@@ -181,8 +189,23 @@
        overlay + dim backdrop (no shift) — see the @media guard below. */
     .appbar, .view { transition:margin-left .22s ease; }
     @media (min-width:900px) {
-      body.drawer-shift .appbar,
-      body.drawer-shift .view { margin-left:300px; }
+      /* Desktop: the drawer is ALWAYS on screen — collapsed = a 64px icon rail (still shows
+         the options as icons), open = 300px expanded. The toggle lives on the drawer.
+         :not(.open)/.open beat the base `.drawer` width regardless of source order. */
+      .drawer { transition:width .2s ease; }
+      .drawer:not(.open) { transform:translateX(0); width:56px; }
+      .drawer.open { transform:translateX(0); width:260px; }
+      .appbar, .view { margin-left:56px; }
+      body.drawer-shift .appbar, body.drawer-shift .view { margin-left:260px; }
+      .appbar #menuBtn { display:none; } /* toggle moved onto the drawer */
+      /* Rail mode (not .open): hide labels/history/brand, center the icons. */
+      .drawer:not(.open) .drawer-history,
+      .drawer:not(.open) .dlabel,
+      .drawer:not(.open) .drawer-head .brand { display:none; }
+      .drawer:not(.open) .drawer-head { justify-content:center; padding:.4rem; }
+      .drawer:not(.open) .drawer-newchat { justify-content:center; gap:0; margin:.5rem .6rem; padding:.7rem 0; }
+      .drawer:not(.open) .drawer-item { justify-content:center; gap:0; padding:.7rem 0; }
+      .drawer:not(.open) .drawer-item .ic { width:auto; }
     }
 
     /* ── Bottom-sheet screens (chart + report) ───────────────────────────────
@@ -208,31 +231,31 @@
 
     /* ── Cards / forms (onboarding, profile, settings) ───────────────────── */
     .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; }
-    label { font-weight:600; font-size:.88rem; margin-bottom:.3rem; display:block; color:var(--text); }
+    label { font-weight:600; font-size:var(--fs-sm); margin-bottom:.3rem; display:block; color:var(--text); }
     .field { width:100%; background:var(--input-bg); color:var(--text); border:1px solid var(--border-strong);
-      border-radius:10px; padding:.7rem .85rem; font-size:1rem; font-family:inherit; }
+      border-radius:10px; padding:.7rem .85rem; font-size:var(--fs-md); font-family:inherit; }
     .field:focus { outline:2px solid var(--accent); outline-offset:0; border-color:transparent; }
     .field::placeholder { color:var(--secondary); }
     .place-wrap { position:relative; }
     .city-suggest { position:absolute; top:100%; left:0; right:0; z-index:40; background:var(--input-bg); border:1px solid var(--border-strong); border-radius:10px; margin-top:3px; max-height:240px; overflow-y:auto; display:none; box-shadow:0 8px 24px rgba(0,0,0,.18); }
-    .city-suggest .cs-item { padding:.55rem .7rem; cursor:pointer; font-size:.9rem; color:var(--text); border-bottom:1px solid var(--border); }
+    .city-suggest .cs-item { padding:.55rem .7rem; cursor:pointer; font-size:var(--fs-sm); color:var(--text); border-bottom:1px solid var(--border); }
     .city-suggest .cs-item:last-child { border-bottom:none; }
     .city-suggest .cs-item:hover, .city-suggest .cs-item.active { background:var(--accent); color:#fff; }
     select.field { appearance:none; }
     .row2 { display:flex; gap:.75rem; } .row2 > * { flex:1; }
     .hint { font-size:var(--fs-sm); color:var(--secondary); }
-    .check { display:flex; align-items:center; gap:.5rem; font-size:.9rem; color:var(--secondary); cursor:pointer; font-weight:500; }
+    .check { display:flex; align-items:center; gap:.5rem; font-size:var(--fs-sm); color:var(--secondary); cursor:pointer; font-weight:500; }
     .check input { width:18px; height:18px; accent-color:var(--accent); }
 
     .btn-primary {
       width:100%; background:var(--accent); color:#fff; border:none; font-weight:600;
-      border-radius:12px; padding:.8rem 1.2rem; font-size:1rem; cursor:pointer; min-height:48px; transition:background .15s;
+      border-radius:10px; padding:.55rem 1.1rem; font-size:var(--fs-sm); cursor:pointer; min-height:38px; transition:background .15s;
     }
     .btn-primary:hover { background:var(--accent-press); }
     .btn-primary:disabled { opacity:.55; cursor:default; }
     .btn-ghost {
-      width:100%; background:transparent; color:var(--text); border:1px solid var(--border-strong);
-      border-radius:12px; padding:.7rem 1.2rem; font-size:1rem; cursor:pointer; min-height:46px;
+      width:100%; background:transparent; color:var(--text); border:1px solid var(--border-strong); font-weight:600;
+      border-radius:10px; padding:.5rem 1rem; font-size:var(--fs-sm); cursor:pointer; min-height:38px;
     }
     .btn-ghost:hover { background:var(--border); }
     .status-line { font-size:var(--fs-sm); color:var(--secondary); min-height:1.2em; margin-top:.5rem; }
@@ -270,7 +293,7 @@
     /* Copy / Share controls under an AI answer (mirrors app ShareButton row) */
     .msg-actions { display:flex; gap:.1rem; margin:.1rem 0 .5rem .1rem; align-self:stretch; }
     .msg-act { display:inline-flex; align-items:center; gap:.35rem; background:transparent; border:none;
-      color:var(--secondary); cursor:pointer; font-family:inherit; font-size:.82rem; font-weight:600;
+      color:var(--secondary); cursor:pointer; font-family:inherit; font-size:var(--fs-xs); font-weight:600;
       padding:.35rem .55rem; border-radius:8px; transition:background .15s,color .15s; }
     .msg-act:hover { background:var(--border); color:var(--text); }
     .msg-act svg { width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.8; }
@@ -280,10 +303,10 @@
     .err-row { align-self:stretch; max-width:100%; display:flex; align-items:center; gap:.75rem; margin:.4rem 0;
       background:color-mix(in srgb, var(--error) 12%, transparent); border:1px solid color-mix(in srgb, var(--error) 38%, transparent);
       border-radius:12px; padding:.7rem .9rem; }
-    .err-row .err-text { flex:1; color:var(--error); font-size:.92rem; line-height:1.4; }
+    .err-row .err-text { flex:1; color:var(--error); font-size:var(--fs-sm); line-height:1.4; }
     .err-row .err-retry { flex:none; display:inline-flex; align-items:center; gap:.35rem; background:transparent;
       border:1px solid color-mix(in srgb, var(--error) 50%, transparent); color:var(--error); font-family:inherit;
-      font-weight:600; font-size:.85rem; padding:.4rem .7rem; border-radius:9px; cursor:pointer; }
+      font-weight:600; font-size:var(--fs-sm); padding:.4rem .7rem; border-radius:9px; cursor:pointer; }
     .err-row .err-retry:hover { background:color-mix(in srgb, var(--error) 16%, transparent); }
     .err-row .err-retry svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; }
 
@@ -293,30 +316,32 @@
     .starter h2 { font-size:var(--fs-2xl); margin:.5rem 0 .25rem; }
     /* Flat starter suggestions (mirrors app SuggestionBubble: transparent, 0.5px @30%
        hairline border, radius 12, centered body text — not a boxy card). */
+    /* Flat starter suggestions (no box) — just centered text with a rounded hover, like the app. */
     .chip { display:block; width:100%; text-align:center; background:transparent; color:var(--text);
-      border:1px solid color-mix(in srgb, var(--border) 30%, transparent); border-radius:12px; padding:1rem; margin:.5rem 0;
-      font-size:var(--fs-md); cursor:pointer; transition:background .15s,border-color .15s; }
-    .chip:hover { background:var(--border); border-color:color-mix(in srgb, var(--accent) 55%, transparent); }
+      border:none; border-radius:12px; padding:.8rem 1rem; margin:.2rem 0;
+      font-size:var(--fs-sm); cursor:pointer; transition:background .15s; }
+    .chip:hover { background:var(--border); }
 
     /* Contextual artifact button in the composer dock — mirrors the app's ChartButton:
        subtle surface, 1px border, accent-coloured icon + label, 44px tap target. */
-    .artifact-bar { display:flex; justify-content:center; padding:.5rem .6rem 0; }
+    .artifact-bar { display:flex; justify-content:center; flex-wrap:wrap; gap:.5rem; padding:.5rem .6rem 0; }
     .artifact-bar:empty { display:none; }
     .artifact-btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
       min-height:44px; padding:.5rem 1.05rem; border-radius:12px;
       background:var(--card-2); border:1px solid var(--border-strong);
-      color:var(--accent); font:inherit; font-size:.95rem; font-weight:600;
+      color:var(--accent); font:inherit; font-size:var(--fs-md); font-weight:600;
       cursor:pointer; white-space:nowrap; transition:background .15s,border-color .15s; }
     .artifact-btn:hover { background:var(--card); border-color:var(--accent); }
     .artifact-btn svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.7; flex:none; }
 
     /* Composer dock */
-    .composer-wrap { border-top:1px solid var(--border); background:var(--header); }
+    /* Seamless bottom (Claude-style): the dock blends with the chat; only the input box differs. */
+    .composer-wrap { border-top:1px solid transparent; background:var(--bg); }
     .composer { max-width:760px; margin:0 auto; display:flex; align-items:flex-end; gap:.6rem;
       padding:.6rem .75rem; padding-bottom:max(.6rem,env(safe-area-inset-bottom)); }
     .composer textarea { flex:1; resize:none; background:var(--input-bg); color:var(--text);
       border:1px solid var(--border-strong); border-radius:14px; padding:.7rem .9rem;
-      font-family:inherit; font-size:1rem; line-height:1.5; max-height:120px; min-height:44px; }
+      font-family:inherit; font-size:var(--fs-md); line-height:1.5; max-height:120px; min-height:44px; }
     .composer textarea:focus { outline:2px solid var(--accent); border-color:transparent; }
     .send {
       flex:none; width:44px; height:44px; border-radius:50%; border:none; background:var(--accent);
@@ -327,12 +352,12 @@
     .jump-btn {
       position:absolute; left:50%; transform:translateX(-50%); bottom:84px; z-index:5;
       background:var(--card); color:var(--text); border:1px solid var(--border-strong);
-      border-radius:20px; padding:.35rem .9rem; font-size:.85rem; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.18); display:none;
+      border-radius:20px; padding:.35rem .9rem; font-size:var(--fs-sm); cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.18); display:none;
     }
     .chat-status { max-width:760px; margin:0 auto; width:100%; padding:0 1rem .4rem; }
 
     /* ── Trust strip (onboarding credibility) ────────────────────────────── */
-    .trust { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:.8rem; color:var(--secondary); margin-top:1rem; justify-content:center; }
+    .trust { display:flex; flex-wrap:wrap; gap:.4rem 1rem; font-size:var(--fs-xs); color:var(--secondary); margin-top:1rem; justify-content:center; }
     .trust b { color:var(--text); font-weight:600; }
     .trust span { display:inline-flex; align-items:center; gap:.3rem; }
     /* Inline outline icons that sit in flowing text (trust badges, tz hint, rating).
@@ -349,10 +374,10 @@
     .plan .radio { width:20px; height:20px; border-radius:50%; border:2px solid var(--border-strong); flex:none; }
     .plan.active .radio { border-color:var(--accent); background:radial-gradient(circle, var(--accent) 45%, transparent 50%); }
     .plan .pl-main { flex:1; } .plan .pl-title { font-weight:600; display:block; } .plan .pl-sub { font-size:var(--fs-sm); color:var(--secondary); display:block; }
-    .plan .pl-price { text-align:right; font-weight:700; } .plan .pl-price s { color:var(--secondary); font-weight:400; font-size:.8rem; display:block; }
+    .plan .pl-price { text-align:right; font-weight:700; } .plan .pl-price s { color:var(--secondary); font-weight:400; font-size:var(--fs-xs); margin-right:.35rem; }
     .badge { position:absolute; top:-10px; right:14px; background:var(--accent); color:#fff; font-size:.7rem; font-weight:700;
       padding:.15rem .5rem; border-radius:8px; letter-spacing:.02em; }
-    .feature-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:.9rem; }
+    .feature-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:var(--fs-sm); }
     .feature-table td { padding:.45rem .25rem; border-bottom:1px solid var(--border); }
     .feature-table td:last-child { text-align:right; }
     .tick { color:var(--success); font-weight:700; } .cross { color:var(--secondary); }
@@ -360,14 +385,15 @@
     /* labelled dividers above the plan group + question-pack group (mirrors app modal) */
     .pw-div { display:flex; align-items:center; gap:.6rem; margin:1.1rem 0 .2rem; }
     .pw-div::before, .pw-div::after { content:''; flex:1; height:1px; background:var(--border); }
-    .pw-div span { font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--secondary); white-space:nowrap; }
+    .pw-div span { font-size:var(--fs-xs); font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--secondary); white-space:nowrap; }
     /* one-time question pack: reuses .plan scan-pattern, no recurring sub */
     .plan.pack .pl-sub { color:var(--secondary); }
+    .pw-billing { text-align:center; font-size:var(--fs-xs); color:var(--secondary); margin-top:.4rem; }
 
     /* ── Settings / Profile rows ─────────────────────────────────────────── */
     .section-label { font-size:var(--fs-xs); font-weight:600; letter-spacing:.06em; color:var(--secondary); text-transform:uppercase; margin:1.4rem .25rem .4rem; }
     .srow { display:flex; align-items:center; gap:.85rem; width:100%; text-align:left; background:transparent;
-      border:none; border-bottom:1px solid var(--border); padding:.95rem .5rem; cursor:pointer; color:var(--text); font-size:1rem; }
+      border:none; border-bottom:1px solid var(--border); padding:.85rem .5rem; cursor:pointer; color:var(--text); font-size:var(--fs-md); }
     .srow:hover { background:var(--border); }
     .srow .ic { width:28px; text-align:center; color:var(--accent); }
     .srow .sr-main { flex:1; } .srow .sr-sub { font-size:var(--fs-sm); color:var(--secondary); display:block; }
@@ -377,51 +403,54 @@
       display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--accent); margin:0 auto .5rem; }
     .avatar svg { width:34px; height:34px; stroke:currentColor; fill:none; stroke-width:1.6; }
     .seg { display:flex; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; }
-    .seg button { flex:1; background:transparent; color:var(--text); border:none; padding:.6rem; cursor:pointer; font-size:.9rem; }
+    .seg button { flex:1; background:transparent; color:var(--secondary); border:none; padding:.35rem .8rem; cursor:pointer; font-size:var(--fs-sm); }
+    .seg button + button { border-left:1px solid var(--border-strong); }
     .seg button.active { background:var(--accent); color:#fff; }
 
     /* ── Drawer ──────────────────────────────────────────────────────────── */
     .drawer-overlay { position:fixed; inset:0; background:var(--overlay); z-index:40; opacity:0; pointer-events:none; transition:opacity .2s; }
     .drawer-overlay.open { opacity:1; pointer-events:auto; }
     .drawer {
-      position:fixed; top:0; left:0; bottom:0; width:300px; max-width:84vw; background:var(--header);
+      position:fixed; top:0; left:0; bottom:0; width:260px; max-width:84vw; background:var(--bg);
       border-right:1px solid var(--border); z-index:41; transform:translateX(-100%); transition:transform .22s ease;
       display:flex; flex-direction:column; padding-top:max(.6rem,env(safe-area-inset-top));
     }
     .drawer.open { transform:translateX(0); }
     .drawer-head { display:flex; align-items:center; justify-content:space-between;
       padding:.4rem .5rem .4rem .85rem; min-height:48px; }
-    .drawer-newchat { display:flex; align-items:center; gap:.6rem; margin:.5rem .75rem; padding:.7rem .8rem; background:transparent;
-      border:1px solid var(--border-strong); border-radius:12px; color:var(--text); font-size:1rem; font-weight:600; cursor:pointer; }
+    .drawer-newchat { display:flex; align-items:center; gap:.7rem; margin:.35rem .5rem; padding:.7rem .6rem; background:transparent;
+      border:none; border-radius:10px; color:var(--text); font-size:var(--fs-sm); font-weight:600; cursor:pointer; }
     .drawer-newchat:hover { background:var(--border); }
     .drawer-history { flex:1; overflow-y:auto; padding:.25rem .5rem; }
-    .drawer-history .empty { color:var(--secondary); font-size:.85rem; padding:.75rem; text-align:center; }
+    .drawer-bottom { margin-top:auto; } /* pin utilities to the bottom (New chat stays up top) */
+    .drawer-history .empty { color:var(--secondary); font-size:var(--fs-sm); padding:.75rem; text-align:center; }
     .sess { display:flex; align-items:center; gap:.4rem; border-radius:10px; padding:.55rem .6rem; cursor:pointer; }
     .sess:hover { background:var(--border); }
     .sess.active { background:var(--border); }
-    .sess .t { flex:1; font-size:.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .sess .del { opacity:0; background:none; border:none; color:var(--secondary); cursor:pointer; font-size:.9rem; padding:.1rem .3rem; }
+    .sess .t { flex:1; font-size:var(--fs-sm); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .sess .del { opacity:0; background:none; border:none; color:var(--secondary); cursor:pointer; font-size:var(--fs-sm); padding:.1rem .3rem; }
     .sess .del svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; display:block; }
     .sess:hover .del { opacity:1; }
     .sess .del:hover { color:var(--error); }
     .drawer-bottom { border-top:1px solid var(--border); padding:.4rem .5rem max(.5rem,env(safe-area-inset-bottom)); }
     .drawer-item { display:flex; align-items:center; gap:.7rem; width:100%; text-align:left; background:transparent; border:none;
-      color:var(--text); font-size:.95rem; padding:.7rem .6rem; border-radius:10px; cursor:pointer; }
+      color:var(--text); font-size:var(--fs-sm); padding:.7rem .6rem; border-radius:10px; cursor:pointer; }
     .drawer-item:hover { background:var(--border); }
     .drawer-item .ic { width:22px; text-align:center; }
     /* Outline icons in the drawer + settings rows (no emoji) — accent-coloured like the app. */
     .drawer-item .ic, .srow .ic { display:inline-flex; align-items:center; justify-content:center; }
-    .drawer-item .ic svg, .srow .ic svg { width:20px; height:20px; stroke:var(--accent); fill:none; stroke-width:1.7; }
+    .drawer-item .ic svg, .srow .ic svg { width:18px; height:18px; stroke:var(--accent); fill:none; stroke-width:1.7; }
+    .drawer-newchat svg { width:18px; height:18px; }
 
     /* ── Modal ───────────────────────────────────────────────────────────── */
     .modal-overlay { position:fixed; inset:0; background:var(--overlay); z-index:50; display:none; align-items:center; justify-content:center; padding:1rem; }
     .modal-overlay.open { display:flex; }
-    .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:420px; width:100%; }
+    .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:480px; width:100%; }
     /* GPT/Claude-style settings popup: a wider, scrollable centered card. */
     .modal-card.modal-lg { max-width:560px; max-height:86vh; overflow-y:auto; text-align:left; }
-    .modal-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:-.25rem 0 .9rem; }
-    .modal-head h2 { font-size:1.5rem; margin:0; }
-    .info-row { display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:.95rem; }
+    .modal-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:0 0 .9rem; }
+    .modal-head h2 { font-size:var(--fs-2xl); margin:0; }
+    .info-row { display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:var(--fs-md); }
     .info-row:last-child { border-bottom:none; }
 
     /* ── Compatibility (Relationship mode) ───────────────────────────────── */
@@ -429,7 +458,7 @@
     .modebar .seg { max-width:340px; margin:0 auto; }
     .gender-seg { display:flex; gap:.5rem; }
     .gender-seg button { flex:1; background:transparent; color:var(--text); border:1px solid var(--border-strong);
-      border-radius:10px; padding:.6rem; cursor:pointer; font-size:.95rem; }
+      border-radius:10px; padding:.6rem; cursor:pointer; font-size:var(--fs-md); }
     .gender-seg button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
     /* Flat report (no outer box) — sections sit directly on the sheet, like the app. */
     .report-card { background:transparent; border:none; border-radius:0; padding:0; margin:.2rem 0 1rem; align-self:stretch; }
@@ -550,7 +579,7 @@
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 </head>
-<body>
+<body class="chrome-off"><!-- starts chrome-free for a clean boot splash; show() clears it on the chat view -->
   <!-- Preview-gate screen (shown when not bypassed — see <head>). Must be a direct child of <body>. -->
   <div id="omaiMaintenance" aria-hidden="true">
     <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="width:84px;height:auto;"></picture>
@@ -568,8 +597,8 @@
          Count chip taps through to the paywall; Premium badge is a static status.
          (New chat lives in the drawer only — no duplicate in the header.) -->
     <div class="seg hdr-modeseg" id="modeSeg" style="display:none;">
-      <button type="button" data-mode="personal" class="active">Personal</button>
-      <button type="button" data-mode="compat">Relationship</button>
+      <button type="button" data-mode="personal" class="active" data-i18n="modePersonal">Personal</button>
+      <button type="button" data-mode="compat" data-i18n="modeRelationship">Relationship</button>
     </div>
     <button class="hdr-quota" id="hdrQuota" style="display:none;" aria-label="Questions left"></button>
   </header>
@@ -578,18 +607,21 @@
   <div id="drawerOverlay" class="drawer-overlay"></div>
   <aside id="drawer" class="drawer" aria-label="Menu">
     <div class="drawer-head">
-      <span class="brand" style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text);line-height:1;">Om.AI</span>
+      <span class="brand" style="display:inline-flex;align-items:center;line-height:0;"><picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="height:30px;width:auto;display:block;"></picture></span>
+      <button class="iconbtn" id="drawerToggle" aria-label="Toggle sidebar" title="Toggle sidebar">
+        <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M9.5 5v14" stroke-linecap="round"/></svg>
+      </button>
     </div>
     <button class="drawer-newchat" id="drawerNewChat">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
-      New chat
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" stroke-linecap="round"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="dlabel" data-i18n="newChat">New chat</span>
     </button>
     <div class="drawer-history" id="drawerHistory"></div>
     <div class="drawer-bottom">
-      <button class="drawer-item" id="diBirth"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3" stroke-linecap="round"/></svg></span>Your Birth Details</button>
-      <button class="drawer-item" id="diEdit"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10a2 2 0 0 0-2.83-2.83L5 17.17V20Z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4"/></svg></span>Edit Profile</button>
-      <button class="drawer-item" id="diPremium"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18h14l1.2-9-4.7 3.5L12 6l-3.5 6.5L3.8 9 5 18Z" stroke-linejoin="round"/></svg></span>Get Premium</button>
-      <button class="drawer-item" id="settingsBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg></span>Settings</button>
+      <button class="drawer-item" id="diBirth"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3" stroke-linecap="round"/></svg></span><span class="dlabel" data-i18n="birthDetails">Your Birth Details</span></button>
+      <button class="drawer-item" id="diEdit"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10a2 2 0 0 0-2.83-2.83L5 17.17V20Z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4"/></svg></span><span class="dlabel" data-i18n="editProfile">Edit Profile</span></button>
+      <button class="drawer-item" id="diPremium"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18h14l1.2-9-4.7 3.5L12 6l-3.5 6.5L3.8 9 5 18Z" stroke-linejoin="round"/></svg></span><span class="dlabel" data-i18n="getPremium">Get Premium</span></button>
+      <button class="drawer-item" id="settingsBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg></span><span class="dlabel" data-i18n="settings">Settings</span></button>
     </div>
   </aside>
 
@@ -597,11 +629,11 @@
   <div id="birthModal" class="modal-overlay">
     <div class="modal-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
-        <h3 style="margin:0;font-size:var(--fs-xl);">Your Birth Details</h3>
+        <h3 style="margin:0;font-size:var(--fs-xl);" data-i18n="birthDetails">Your Birth Details</h3>
         <button class="iconbtn" id="birthModalClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
-      <div class="info-row"><span class="muted">Date of birth</span><span id="bmDob">Not set</span></div>
-      <div class="info-row"><span class="muted">Birth place</span><span id="bmPlace">Not set</span></div>
+      <div class="info-row"><span class="muted" data-i18n="bmDate">Date of birth</span><span id="bmDob" data-i18n="notSet">Not set</span></div>
+      <div class="info-row"><span class="muted" data-i18n="bmPlace">Birth place</span><span id="bmPlace" data-i18n="notSet">Not set</span></div>
     </div>
   </div>
 
@@ -615,10 +647,10 @@
         <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
       </button>
       <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="width:64px;height:auto;margin:0 auto;"></picture>
-      <h3 style="margin:.4rem 0 .5rem;font-size:var(--fs-xl);">Not ready to subscribe?</h3>
-      <p class="hint" style="margin:0 0 1.1rem;">Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.</p>
-      <button id="downsellPackBtn" class="btn-primary">Try 5 questions · ₹99</button>
-      <button id="downsellLater" class="btn-ghost" style="margin-top:.55rem;">Maybe later</button>
+      <h3 style="margin:.4rem 0 .5rem;font-size:var(--fs-xl);" data-i18n="notReady">Not ready to subscribe?</h3>
+      <p class="hint" style="margin:0 0 1.1rem;" id="downsellBody">Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.</p>
+      <button id="downsellPackBtn" class="btn-primary" data-i18n="tryPack">Try 5 questions · ₹99</button>
+      <button id="downsellLater" class="btn-ghost" style="margin-top:.55rem;" data-i18n="maybeLater">Maybe later</button>
     </div>
   </div>
 
@@ -635,39 +667,39 @@
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:440px;">
       <div style="text-align:center;margin:6vh 0 1.25rem;">
         <picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Om.AI" style="width:88px;height:auto;margin:0 auto;"></picture>
-        <h1 style="font-size:1.9rem;margin:.4rem 0 .35rem;">Ask your birth chart</h1>
-        <p id="authSubtitle" class="hint">Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.</p>
+        <h1 style="font-size:var(--fs-3xl);margin:.4rem 0 .35rem;" data-i18n="authTitle">Ask your birth chart</h1>
+        <p id="authSubtitle" class="hint" data-i18n="authSub">Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.</p>
       </div>
       <div class="card">
         <div id="authSocial">
           <button id="signInBtn" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:.5rem;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/></svg>
-            Continue with Google
+            <span data-i18n="continueGoogle">Continue with Google</span>
           </button>
           <button id="appleSignInBtn" class="btn-primary" style="margin-top:.6rem;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;gap:.5rem;">
             <svg width="17" height="17" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-            Continue with Apple
+            <span data-i18n="continueApple">Continue with Apple</span>
           </button>
           <div class="hint" style="display:flex;align-items:center;gap:.6rem;margin:.9rem 0;">
-            <span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>or<span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>
+            <span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span><span data-i18n="orLabel">or</span><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>
           </div>
         </div>
-        <input id="f-email" class="field" type="email" placeholder="Email" autocomplete="email" style="margin-bottom:.5rem;">
-        <input id="f-pass" class="field" type="password" placeholder="Password" autocomplete="current-password" style="margin-bottom:.6rem;">
-        <button id="emailSignInBtn" class="btn-primary">Sign in</button>
-        <div id="authTerms" class="hint" style="text-align:center;margin-top:.7rem;display:none;">By creating an account you agree to our <a href="/terms-of-service.html" target="_blank" class="authlink">Terms</a> &amp; <a href="/privacy-policy.html" target="_blank" class="authlink">Privacy Policy</a>.</div>
-        <div id="authLinks" style="text-align:center;margin-top:.8rem;font-size:.85rem;">
-          <a id="lnkForgot" class="authlink">Forgot password?</a>
+        <input id="f-email" class="field" type="email" placeholder="Email" data-i18n-ph="emailPh" autocomplete="email" style="margin-bottom:.5rem;">
+        <input id="f-pass" class="field" type="password" placeholder="Password" data-i18n-ph="passwordPh" autocomplete="current-password" style="margin-bottom:.6rem;">
+        <button id="emailSignInBtn" class="btn-primary" data-i18n="signIn">Sign in</button>
+        <div id="authTerms" class="hint" style="text-align:center;margin-top:.7rem;display:none;"><span data-i18n="termsPre">By creating an account you agree to our</span> <a href="/terms-of-service.html" target="_blank" class="authlink" data-i18n="termsLink">Terms</a> <span data-i18n="termsAnd">&amp;</span> <a href="/privacy-policy.html" target="_blank" class="authlink" data-i18n="privacyLink">Privacy Policy</a>.</div>
+        <div id="authLinks" style="text-align:center;margin-top:.8rem;font-size:var(--fs-sm);">
+          <a id="lnkForgot" class="authlink" data-i18n="forgotPw">Forgot password?</a>
           <span id="lnkSep" style="color:var(--secondary);margin:0 .55rem;">·</span>
-          <a id="lnkToSignup" class="authlink">Create account</a>
-          <a id="lnkToSignin" class="authlink" style="display:none;">Already have an account? Sign in</a>
+          <a id="lnkToSignup" class="authlink" data-i18n="createAccount">Create account</a>
+          <a id="lnkToSignin" class="authlink" style="display:none;" data-i18n="haveAccount">Already have an account? Sign in</a>
         </div>
         <div id="authStatus" class="status-line" style="text-align:center;"></div>
       </div>
       <div class="trust">
-        <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
-        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
-        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>Your details stay private</span>
+        <span data-i18n="trustClassical">Real Vedic chart from classical texts</span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">190,000+ readings</span></span>
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="trustPrivate">Your details stay private</span></span>
       </div>
     </div></div>
   </div>
@@ -675,41 +707,41 @@
   <!-- ── ONBOARDING ───────────────────────────────────────────────────── -->
   <div id="onboardingView" class="view">
     <div class="chat-scroll"><div class="scroll-pad">
-      <h1 style="font-size:1.9rem;margin:.25rem 0 .35rem;">Ask your birth chart</h1>
-      <p class="hint" style="margin-bottom:1.1rem;">Your first question is free. We compute your real Vedic chart from your birth details — they stay private to your reading.</p>
+      <h1 style="font-size:var(--fs-3xl);margin:.25rem 0 .35rem;" data-i18n="authTitle">Ask your birth chart</h1>
+      <p class="hint" style="margin-bottom:1.1rem;" data-i18n="onboardSub">Your first question is free. We compute your real Vedic chart from your birth details — they stay private to your reading.</p>
       <!-- The form card is relocatable: first-run it sits here; "Edit Profile" moves
            this exact node into #editBirthModal so the wiring/autocomplete stays intact. -->
       <div id="onboardCardHost"><div class="card" id="birthFormCard">
         <div style="margin-bottom:1rem;">
-          <label for="f-name">Name <span class="hint">(optional)</span></label>
-          <input id="f-name" class="field" type="text" placeholder="Your name" autocomplete="off">
+          <label for="f-name"><span data-i18n="nameLabel">Name</span> <span class="hint" data-i18n="optional">(optional)</span></label>
+          <input id="f-name" class="field" type="text" placeholder="Your name" data-i18n-ph="namePh" autocomplete="off">
         </div>
         <div class="row2" style="margin-bottom:1rem;">
           <div>
-            <label for="f-dob">Date of birth</label>
+            <label for="f-dob" data-i18n="dobLabel">Date of birth</label>
             <input id="f-dob" class="field" type="date" required>
           </div>
           <div>
-            <label for="f-time">Time of birth</label>
+            <label for="f-time" data-i18n="timeLabel">Time of birth</label>
             <input id="f-time" class="field" type="time" required>
           </div>
         </div>
         <div style="margin-bottom:1rem;">
-          <label for="f-place">Place of birth</label>
+          <label for="f-place" data-i18n="placeLabel">Place of birth</label>
           <div class="place-wrap">
-            <input id="f-place" class="field" type="text" placeholder="Start typing your birth city…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false">
+            <input id="f-place" class="field" type="text" placeholder="Start typing your birth city…" data-i18n-ph="cityPh" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false">
             <div class="city-suggest" id="f-place-sug"></div>
           </div>
-          <div class="hint" style="margin-top:.3rem;">Pick your birth city from the list for an accurate chart.</div>
+          <div class="hint" style="margin-top:.3rem;" data-i18n="pickCity">Pick your birth city from the list for an accurate chart.</div>
         </div>
         <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Time zone <b id="f-tz-detected"></b> — detected from your birth place (handles DST automatically).</div>
-        <button id="startBtn" class="btn-primary">Generate my chart</button>
+        <button id="startBtn" class="btn-primary" data-i18n="generateChart">Generate my chart</button>
         <div id="onboardStatus" class="status-line"></div>
       </div></div>
       <div class="trust">
-        <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
-        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
-        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>Your details stay private</span>
+        <span data-i18n="trustClassical">Real Vedic chart from classical texts (BPHS / Parashari)</span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">190,000+ readings</span></span>
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="trustPrivate">Your details stay private</span></span>
       </div>
     </div></div>
   </div>
@@ -719,34 +751,34 @@
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
       <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem;">
         <button class="iconbtn" data-back="chat" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <h2 style="font-size:1.6rem;margin:0;">Relationship match</h2>
+        <h2 id="compatSetupTitle" style="font-size:var(--fs-2xl);margin:0;" data-i18n="relMatch">Relationship match</h2>
       </div>
-      <p class="hint" style="margin-bottom:1rem;">Add your partner's birth details for a Vedic compatibility report — Gun Milan (Ashtakoot), Mangal dosha, navamsa and dasha timing.</p>
+      <p id="compatSetupSub" class="hint" style="margin-bottom:1rem;" data-i18n="relSub">Add your partner's birth details for a Vedic compatibility report — Gun Milan (Ashtakoot), Mangal dosha, navamsa and dasha timing.</p>
       <div class="card">
         <div style="margin-bottom:1rem;">
-          <label for="p-name">Partner's name <span class="hint">(optional)</span></label>
-          <input id="p-name" class="field" type="text" placeholder="Partner's name" autocomplete="off">
+          <label for="p-name"><span data-i18n="partnerName">Partner's name</span> <span class="hint" data-i18n="optional">(optional)</span></label>
+          <input id="p-name" class="field" type="text" placeholder="Partner's name" data-i18n-ph="partnerNamePh" autocomplete="off">
         </div>
         <div class="row2" style="margin-bottom:1rem;">
-          <div><label for="p-dob">Date of birth</label><input id="p-dob" class="field" type="date" required></div>
-          <div><label for="p-time">Time of birth</label><input id="p-time" class="field" type="time" required></div>
+          <div><label for="p-dob" data-i18n="dobLabel">Date of birth</label><input id="p-dob" class="field" type="date" required></div>
+          <div><label for="p-time" data-i18n="timeLabel">Time of birth</label><input id="p-time" class="field" type="time" required></div>
         </div>
         <div style="margin-bottom:1rem;">
-          <label for="p-place">Place of birth</label>
+          <label for="p-place" data-i18n="placeLabel">Place of birth</label>
           <div class="place-wrap">
-            <input id="p-place" class="field" type="text" placeholder="Start typing the birth city…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false">
+            <input id="p-place" class="field" type="text" placeholder="Start typing the birth city…" data-i18n-ph="partnerCityPh" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false">
             <div class="city-suggest" id="p-place-sug"></div>
           </div>
         </div>
         <div style="margin-bottom:1rem;">
           <div id="p-tz-row" class="hint" style="display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Time zone <b id="p-tz-detected"></b> — detected from the birth place (handles DST automatically).</div>
         </div>
-        <label>Partner's gender</label>
+        <label data-i18n="partnerGender">Partner's gender</label>
         <div class="gender-seg" id="partnerGenderSeg" style="margin-bottom:.5rem;">
-          <button type="button" data-g="male">Male</button><button type="button" data-g="female">Female</button>
+          <button type="button" data-g="male" data-i18n="male">Male</button><button type="button" data-g="female" data-i18n="female">Female</button>
         </div>
-        <p class="hint" style="margin-bottom:1.1rem;">Gun Milan (Ashtakoot) matches an opposite-gender pair — your role is set automatically.</p>
-        <button id="compatGenBtn" class="btn-primary">Generate compatibility</button>
+        <p class="hint" style="margin-bottom:1.1rem;" data-i18n="gunMilanNote">Gun Milan (Ashtakoot) matches an opposite-gender pair — your role is set automatically.</p>
+        <button id="compatGenBtn" class="btn-primary" data-i18n="generateCompat">Generate compatibility</button>
         <div id="compatSetupStatus" class="status-line"></div>
       </div>
     </div></div>
@@ -757,14 +789,14 @@
     <div id="chatScroll" class="chat-scroll">
       <div class="chat-inner" id="chatInner"></div>
     </div>
-    <button class="jump-btn" id="jumpBtn">Jump to latest ↓</button>
+    <button class="jump-btn" id="jumpBtn" data-i18n="jumpLatest">Jump to latest ↓</button>
     <div class="chat-status"><div id="chatStatus" class="status-line" style="margin:0;"></div></div>
     <div class="composer-wrap">
       <!-- Contextual artifact button (mirrors the app's in-chat dock): Personal → View chart,
            Relationship → View report / Generate. Filled by renderArtifactBar(); empty = hidden. -->
       <div id="artifactBar" class="artifact-bar"></div>
       <div class="composer">
-        <textarea id="composerInput" rows="1" placeholder="Type your message…"></textarea>
+        <textarea id="composerInput" rows="1" placeholder="Type your message…" data-i18n-ph="composerPh"></textarea>
         <button id="sendBtn" class="send" aria-label="Send">
           <svg viewBox="0 0 24 24"><path d="M3.4 20.4l17.45-7.48a1 1 0 0 0 0-1.84L3.4 3.6a.993.993 0 0 0-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg>
         </button>
@@ -782,39 +814,41 @@
       <p id="pwHeroSub" class="hint" style="text-align:center;">You've used your free question. Unlock unlimited questions about your chart.</p>
 
       <table class="feature-table">
-        <tr><td></td><td class="muted" style="font-weight:600;">Free</td><td style="font-weight:600;color:var(--accent);">Premium</td></tr>
-        <tr><td>Questions to your chart</td><td class="cross">1</td><td class="tick">Unlimited</td></tr>
-        <tr><td>Compatibility &amp; Gun Milan readings</td><td class="cross">—</td><td class="tick">Unlimited</td></tr>
-        <tr><td>All life areas &amp; timing dates</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
-        <tr><td>Memory across sessions</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
+        <tr><td></td><td class="muted" style="font-weight:600;" data-i18n="pwFree">Free</td><td style="font-weight:600;color:var(--accent);" data-i18n="pwPremium">Premium</td></tr>
+        <tr><td data-i18n="pwFeatQ">Questions to your chart</td><td class="cross">1</td><td class="tick" data-i18n="pwUnlimited">Unlimited</td></tr>
+        <tr><td data-i18n="pwFeatCompat">Compatibility &amp; Gun Milan readings</td><td class="cross">—</td><td class="tick" data-i18n="pwUnlimited">Unlimited</td></tr>
+        <tr><td data-i18n="pwFeatAreas">All life areas &amp; timing dates</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
+        <tr><td data-i18n="pwFeatMemory">Memory across sessions</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
       </table>
 
-      <div class="pw-div"><span style="text-transform:none;">Om.AI Premium</span></div>
+      <div class="pw-div"><span style="text-transform:none;font-size:var(--fs-sm);" data-i18n="omaiPremium">Om.AI Premium</span></div>
       <div id="planChoices" role="radiogroup" aria-label="Choose a plan">
         <button type="button" class="plan active" data-plan="yearly" role="radio" aria-checked="true">
-          <span class="badge">SAVE 40% · 5 MONTHS FREE</span>
+          <span class="badge" data-i18n="pwBadge">SAVE 40% · 5 MONTHS FREE</span>
           <span class="radio"></span>
-          <span class="pl-main"><span class="pl-title">Yearly</span><span class="pl-sub">just ₹4/day · billed ₹1,499/yr</span></span>
+          <span class="pl-main"><span class="pl-title" data-i18n="planYearly">Yearly</span></span>
           <span class="pl-price"><s>₹2,388</s>₹1,499</span>
         </button>
         <button type="button" class="plan" data-plan="monthly" role="radio" aria-checked="false">
           <span class="radio"></span>
-          <span class="pl-main"><span class="pl-title">Monthly</span></span>
+          <span class="pl-main"><span class="pl-title" data-i18n="planMonthly">Monthly</span></span>
           <span class="pl-price">₹199</span>
         </button>
 
-        <div class="pw-div"><span>Or pay per question</span></div>
+        <div class="pw-div"><span data-i18n="orPayPerQ">Or pay per question</span></div>
         <button type="button" class="plan pack" data-plan="pack" role="radio" aria-checked="false">
           <span class="radio"></span>
-          <span class="pl-main"><span class="pl-title">5 questions</span><span class="pl-sub">one-time · no auto-renewal</span></span>
+          <span class="pl-main"><span class="pl-title" data-i18n="pack5q">5 questions</span></span>
           <span class="pl-price">₹99</span>
         </button>
       </div>
 
-      <button id="subscribeBtn" class="btn-primary">Subscribe</button>
+      <button id="subscribeBtn" class="btn-primary">Get Unlimited</button>
       <div id="paywallStatus" class="status-line" style="text-align:center;"></div>
-      <div class="trust" style="margin-top:.75rem;justify-content:center;">
-        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>Secure payment by <b>Razorpay</b></span><span>Auto-renews. Cancel anytime.</span><span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
+      <!-- Contextual billing line for the selected plan (mirrors the app's RefundText, just above the trust footer). -->
+      <div id="paywallBilling" class="pw-billing">Auto-renews. Cancel anytime.</div>
+      <div class="trust" style="margin-top:.5rem;justify-content:center;">
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="securePaymentVia">Secure payment via</span> <b>Razorpay</b></span><span data-i18n="trustedSeekers">Trusted by 190,000+ seekers · 4.8★</span>
       </div>
     </div>
   </div>
@@ -823,38 +857,38 @@
   <div id="settingsView" class="modal-overlay">
     <div class="modal-card modal-lg">
       <div class="modal-head">
-        <h2>Settings</h2>
+        <h2 data-i18n="settings">Settings</h2>
         <button class="iconbtn" id="settingsClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
 
-      <div class="section-label">Account</div>
-      <button class="srow" id="goProfile"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0" stroke-linecap="round"/></svg></span><span class="sr-main">Profile</span><span class="chev">›</span></button>
+      <div class="section-label" data-i18n="secAccount">Account</div>
+      <button class="srow" id="goProfile"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0" stroke-linecap="round"/></svg></span><span class="sr-main" data-i18n="profile">Profile</span><span class="chev">›</span></button>
 
-      <div class="section-label">Subscription</div>
-      <button class="srow" id="manageSub"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18h14l1.2-9-4.7 3.5L12 6l-3.5 6.5L3.8 9 5 18Z" stroke-linejoin="round"/></svg></span><span class="sr-main">Manage Subscription<span class="sr-sub" id="subSub">Loading…</span></span><span class="chev">›</span></button>
+      <div class="section-label" data-i18n="secSubscription">Subscription</div>
+      <button class="srow" id="manageSub"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18h14l1.2-9-4.7 3.5L12 6l-3.5 6.5L3.8 9 5 18Z" stroke-linejoin="round"/></svg></span><span class="sr-main"><span data-i18n="manageSub">Manage Subscription</span><span class="sr-sub" id="subSub" data-i18n="subLoading">Loading…</span></span><span class="chev">›</span></button>
 
-      <div class="section-label">App</div>
-      <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13A8 8 0 1 1 11 4a6.5 6.5 0 0 0 9 9Z" stroke-linejoin="round"/></svg></span><span class="sr-main">Theme</span>
+      <div class="section-label" data-i18n="secApp">App</div>
+      <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13A8 8 0 1 1 11 4a6.5 6.5 0 0 0 9 9Z" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="theme">Theme</span>
         <div class="seg" style="width:200px;" id="themeSeg">
-          <button data-theme-set="light">Light</button><button data-theme-set="dark">Dark</button><button data-theme-set="system">System</button>
+          <button data-theme-set="light" data-i18n="light">Light</button><button data-theme-set="dark" data-i18n="dark">Dark</button><button data-theme-set="system" data-i18n="system">System</button>
         </div>
       </div>
       <!-- Chat reply language (EN/HI). Wires `language` on the chat/compat WS
            sends — the backend already returns Hindi. UI chrome stays English. -->
-      <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17" stroke-linecap="round"/></svg></span><span class="sr-main">Reply language<span class="sr-sub">Answers come back in this language</span></span>
+      <div class="srow" style="cursor:default;"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 2.6 14.6 0 17M12 3.5c-2.6 2.4-2.6 14.6 0 17" stroke-linecap="round"/></svg></span><span class="sr-main"><span data-i18n="language">Language</span><span class="sr-sub" data-i18n="langSub">Your chart readings come back in this language</span></span>
         <div class="seg" style="width:160px;" id="langSeg">
           <button data-lang-set="en">English</button><button data-lang-set="hi">हिंदी</button>
         </div>
       </div>
 
-      <div class="section-label">Help &amp; Legal</div>
-      <a class="srow" href="/support.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1-4.2A7.5 7.5 0 1 1 20 11.5Z" stroke-linejoin="round"/></svg></span><span class="sr-main">Help &amp; Support</span><span class="chev">›</span></a>
-      <a class="srow" href="/privacy.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l7 2.8v5c0 4.4-3 7.8-7 9.7-4-1.9-7-5.3-7-9.7v-5z" stroke-linejoin="round"/></svg></span><span class="sr-main">Privacy</span><span class="chev">›</span></a>
-      <a class="srow" href="/terms.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8z" stroke-linejoin="round"/><path d="M14 3.5V8h4.5M8.5 13h7M8.5 16.5h5" stroke-linecap="round"/></svg></span><span class="sr-main">About &amp; Terms</span><span class="chev">›</span></a>
-      <a class="srow" href="/delete-account.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7h13M10 7V5h4v2M7 7l.9 12.5h8.2L17 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main">Delete account<span class="sr-sub">Remove your account &amp; data</span></span><span class="chev">›</span></a>
+      <div class="section-label" data-i18n="secHelp">Help &amp; Legal</div>
+      <a class="srow" href="/support.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1-4.2A7.5 7.5 0 1 1 20 11.5Z" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="helpSupport">Help &amp; Support</span><span class="chev">›</span></a>
+      <a class="srow" href="/privacy.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l7 2.8v5c0 4.4-3 7.8-7 9.7-4-1.9-7-5.3-7-9.7v-5z" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="privacy">Privacy</span><span class="chev">›</span></a>
+      <a class="srow" href="/terms.html"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8z" stroke-linejoin="round"/><path d="M14 3.5V8h4.5M8.5 13h7M8.5 16.5h5" stroke-linecap="round"/></svg></span><span class="sr-main" data-i18n="aboutTerms">About &amp; Terms</span><span class="chev">›</span></a>
+      <a class="srow" href="/delete-account.html" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 7h13M10 7V5h4v2M7 7l.9 12.5h8.2L17 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main"><span data-i18n="deleteAccount">Delete account</span><span class="sr-sub" data-i18n="deleteAccountSub">Remove your account &amp; data</span></span><span class="chev">›</span></a>
 
       <div style="margin-top:1.5rem;">
-        <button class="srow" id="signOutBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6a1.5 1.5 0 0 0-1.5-1.5h-6A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5h6A1.5 1.5 0 0 0 14 18v-2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 12h11m0 0-3-3m3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main">Sign Out</span></button>
+        <button class="srow" id="signOutBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6a1.5 1.5 0 0 0-1.5-1.5h-6A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5h6A1.5 1.5 0 0 0 14 18v-2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 12h11m0 0-3-3m3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main" data-i18n="signOut">Sign Out</span></button>
         <div class="hint" style="text-align:center;margin-top:1rem;">Om.AI · Web <span id="appVersion"></span></div>
       </div>
     </div>
@@ -864,18 +898,18 @@
   <div id="profileView" class="modal-overlay">
     <div class="modal-card modal-lg">
       <div class="modal-head">
-        <h2>Profile</h2>
+        <h2 data-i18n="profile">Profile</h2>
         <button class="iconbtn" id="profileClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <div style="text-align:center;margin-bottom:1.25rem;">
         <div class="avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M5 20a7 7 0 0 1 14 0" stroke-linecap="round"/></svg></div>
-        <div class="serif" id="pfName" style="font-size:1.4rem;">User</div>
+        <div class="serif" id="pfName" style="font-size:var(--fs-xl);">User</div>
         <div class="hint" id="pfEmail"></div>
       </div>
-      <div class="section-label">Astrology Profile</div>
+      <div class="section-label" data-i18n="astrologyProfile">Astrology Profile</div>
       <button class="srow" id="editBirth">
         <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3" stroke-linecap="round"/></svg></span>
-        <span class="sr-main">Your Birth Details<span class="sr-sub" id="pfBirth">Not set</span></span>
+        <span class="sr-main"><span data-i18n="birthDetails">Your Birth Details</span><span class="sr-sub" id="pfBirth">Not set</span></span>
         <span class="chev">›</span>
       </button>
     </div>
@@ -885,7 +919,7 @@
   <div id="editBirthModal" class="modal-overlay">
     <div class="modal-card modal-lg">
       <div class="modal-head">
-        <h2>Edit Birth Details</h2>
+        <h2 data-i18n="editBirthTitle">Edit Birth Details</h2>
         <button class="iconbtn" id="editBirthClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <div id="editBirthBody"></div>
@@ -897,22 +931,22 @@
     <div class="sheet-grab" aria-hidden="true"></div>
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:680px;">
       <div style="position:relative;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem;">
-        <h2 style="font-size:1.6rem;margin:0;">Birth Chart</h2>
+        <h2 style="font-size:var(--fs-2xl);margin:0;" data-i18n="birthChart">Birth Chart</h2>
         <button class="iconbtn" id="chartBack" aria-label="Close" title="Close" style="position:absolute;right:0;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <div class="seg" id="chartDivSeg" style="max-width:280px;margin:0 auto 1rem;">
-        <button type="button" data-div="D1" class="active">Rasi (D1)</button>
-        <button type="button" data-div="D9">Navamsa (D9)</button>
+        <button type="button" data-div="D1" class="active" data-i18n="rasiD1">Rasi (D1)</button>
+        <button type="button" data-div="D9" data-i18n="navamsaD9">Navamsa (D9)</button>
       </div>
       <div class="kun-card"><div id="kunHost"></div></div>
-      <div class="kun-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke-linecap="round"/></svg>Tap any house for its planets &amp; aspects</div>
+      <div class="kun-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke-linecap="round"/></svg><span data-i18n="tapHouse">Tap any house for its planets &amp; aspects</span></div>
       <div class="kun-legend" aria-label="Planet dignity colours">
-        <span class="lg-item"><span class="lg-dot" style="background:var(--accent);"></span>Lagna</span>
-        <span class="lg-item"><span class="lg-dot" style="background:var(--success);"></span>Exalted</span>
-        <span class="lg-item"><span class="lg-dot" style="background:#5BA3D0;"></span>Friendly / Own</span>
-        <span class="lg-item"><span class="lg-dot" style="background:var(--text);opacity:.7;"></span>Neutral</span>
-        <span class="lg-item"><span class="lg-dot" style="background:var(--error);"></span>Debilitated</span>
-        <span class="lg-item"><span class="lg-dot" style="background:#E0975A;"></span>Enemy</span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--accent);"></span><span data-i18n="legLagna">Lagna</span></span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--success);"></span><span data-i18n="legExalted">Exalted</span></span>
+        <span class="lg-item"><span class="lg-dot" style="background:#5BA3D0;"></span><span data-i18n="legFriendlyOwn">Friendly / Own</span></span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--text);opacity:.7;"></span><span data-i18n="legNeutral">Neutral</span></span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--error);"></span><span data-i18n="legDebilitated">Debilitated</span></span>
+        <span class="lg-item"><span class="lg-dot" style="background:#E0975A;"></span><span data-i18n="legEnemy">Enemy</span></span>
       </div>
       <div id="chartExtras"></div>
     </div></div>
@@ -926,7 +960,9 @@
          vertical stack of label→value rows + koota bars, which look bad stretched wide. -->
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:720px;">
       <div style="position:relative;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem;">
-        <h2 style="font-size:1.6rem;margin:0;">Compatibility</h2>
+        <h2 style="font-size:var(--fs-2xl);margin:0;" data-i18n="compatibility">Compatibility</h2>
+        <!-- Edit partner (mirrors the app's report → edit affordance). Sits left of the close X. -->
+        <button class="iconbtn" id="reportEditPartner" aria-label="Edit partner" title="Edit partner" style="position:absolute;right:44px;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M4 20h4L18 10a2 2 0 0 0-2.83-2.83L5 17.17V20Z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4"/></svg></button>
         <button class="iconbtn" id="reportBack" aria-label="Close" title="Close" style="position:absolute;right:0;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <div id="reportHost"></div>
@@ -1024,8 +1060,91 @@
     applyTheme();
 
     // ── chat reply language (EN/HI) ────────────────────────────────
+    // ── Full UI i18n (EN / हिं) — the Language toggle translates the whole interface,
+    // not just the reply language. Brand astrology terms stay identical in both (Manglik,
+    // dasha, nakshatra, lagna, navamsa, Ashtakoot, Gun Milan, Rahu/Ketu, planet names).
+    const I18N = {
+      en: {
+        modePersonal:'Personal', modeRelationship:'Relationship', newChat:'New chat', birthDetails:'Your Birth Details', editProfile:'Edit Profile', getPremium:'Get Premium', settings:'Settings',
+        authTitle:'Ask your birth chart', authSub:'Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.',
+        authSubSignup:'Create your account to get your free Vedic reading.', authSubReset:'Enter your email and we’ll send you a password reset link.',
+        continueGoogle:'Continue with Google', continueApple:'Continue with Apple', orLabel:'or', emailPh:'Email', passwordPh:'Password', signIn:'Sign in', createAccountBtn:'Create account', sendReset:'Send reset link',
+        forgotPw:'Forgot password?', createAccount:'Create account', haveAccount:'Already have an account? Sign in', backToSignin:'Back to sign in',
+        termsPre:'By creating an account you agree to our', termsLink:'Terms', termsAnd:'&', privacyLink:'Privacy Policy',
+        trustClassical:'Real Vedic chart from classical texts (BPHS / Parashari)', trustReadings:'190,000+ readings', trustPrivate:'Your details stay private',
+        onboardSub:'Your first question is free. We compute your real Vedic chart from your birth details — they stay private to your reading.',
+        nameLabel:'Name', optional:'(optional)', namePh:'Your name', dobLabel:'Date of birth', timeLabel:'Time of birth', placeLabel:'Place of birth',
+        cityPh:'Start typing your birth city…', pickCity:'Pick your birth city from the list for an accurate chart.', tzPre:'Time zone', tzPost:'— detected from your birth place (handles DST automatically).', generateChart:'Generate my chart',
+        relMatch:'Relationship match', relSub:"Add your partner's birth details for a Vedic compatibility report — Gun Milan (Ashtakoot), Mangal dosha, navamsa and dasha timing.",
+        editPartnerTitle:"Edit partner's details", editPartnerSub:"Update your partner's birth details — we'll recompute the compatibility report.",
+        partnerName:"Partner's name", partnerNamePh:"Partner's name", partnerCityPh:'Start typing the birth city…', partnerGender:"Partner's gender", male:'Male', female:'Female',
+        gunMilanNote:'Gun Milan (Ashtakoot) matches an opposite-gender pair — your role is set automatically.', generateCompat:'Generate compatibility', back:'Back',
+        editPartner:'Edit partner', saveAndUpdate:'Save & update report', updatingCompat:'Updating compatibility…',
+        composerPh:'Type your message…', jumpLatest:'Jump to latest ↓', chartReady:'Your chart is ready', chartReadyName:'{name}, your chart is ready',
+        askAnything:'Ask me anything. Your first question is free.', askAnythingPremium:'Ask me anything — career, marriage, money, health, or timing.', askAnythingUsed:'Ask me anything about your chart.', quotaLeftOne:'{n} question left', quotaLeftMany:'{n} questions left', freeQUsed:'That was your free question. Continue for unlimited answers.',
+        starter1:"What's my next big career window?", starter2:'Walk me through 2027 — career, money, love', starter3:"Describe my future spouse — looks, profession, when we'll meet", starter4:'Am I in Sade Sati? When does it end?',
+        cStarter1:'How compatible are we overall?', cStarter2:'What are our biggest strengths as a couple?', cStarter3:'Are there any doshas we should know about?', cStarter4:'When is a good time for us to marry?',
+        yourChart:'Your chart', compatReport:'Compatibility report', generateReportBtn:'Generate report',
+        birthChart:'Birth Chart', rasiD1:'Rasi (D1)', navamsaD9:'Navamsa (D9)', tapHouse:'Tap any house for its planets & aspects',
+        legLagna:'Lagna', legExalted:'Exalted', legFriendlyOwn:'Friendly / Own', legNeutral:'Neutral', legDebilitated:'Debilitated', legEnemy:'Enemy', planetaryPositions:'Planetary positions',
+        compatibility:'Compatibility', compatHomeHint:'Ask anything about your compatibility',
+        pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
+        pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Compatibility & Gun Milan readings', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
+        omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
+        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 190,000+ seekers · 4.8★', pwBadge:'SAVE 40% · 5 MONTHS FREE',
+        secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
+        secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', signOut:'Sign Out',
+        astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
+        notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · ₹99', maybeLater:'Maybe later',
+      },
+      hi: {
+        modePersonal:'व्यक्तिगत', modeRelationship:'रिश्ता', newChat:'नई चैट', birthDetails:'आपकी जन्म जानकारी', editProfile:'प्रोफ़ाइल संपादित करें', getPremium:'प्रीमियम लें', settings:'सेटिंग्स',
+        authTitle:'अपनी जन्म कुंडली से पूछें', authSub:'अपनी निःशुल्क रीडिंग पाने के लिए साइन इन करें। हम आपकी असली वैदिक कुंडली बनाते हैं और किसी भी विषय पर उत्तर देते हैं — करियर, विवाह, धन, स्वास्थ्य, समय।',
+        authSubSignup:'अपनी निःशुल्क वैदिक रीडिंग पाने के लिए खाता बनाएं।', authSubReset:'अपना ईमेल दर्ज करें, हम पासवर्ड रीसेट लिंक भेजेंगे।',
+        continueGoogle:'Google से जारी रखें', continueApple:'Apple से जारी रखें', orLabel:'या', emailPh:'ईमेल', passwordPh:'पासवर्ड', signIn:'साइन इन करें', createAccountBtn:'खाता बनाएं', sendReset:'रीसेट लिंक भेजें',
+        forgotPw:'पासवर्ड भूल गए?', createAccount:'खाता बनाएं', haveAccount:'पहले से खाता है? साइन इन करें', backToSignin:'साइन इन पर वापस',
+        termsPre:'खाता बनाकर आप हमारी', termsLink:'शर्तों', termsAnd:'व', privacyLink:'गोपनीयता नीति',
+        trustClassical:'शास्त्रीय ग्रंथों से असली वैदिक कुंडली', trustReadings:'190,000+ रीडिंग', trustPrivate:'आपकी जानकारी निजी रहती है',
+        onboardSub:'आपका पहला प्रश्न निःशुल्क है। हम आपकी जन्म जानकारी से असली वैदिक कुंडली बनाते हैं — यह आपकी रीडिंग तक निजी रहती है।',
+        nameLabel:'नाम', optional:'(वैकल्पिक)', namePh:'आपका नाम', dobLabel:'जन्म तिथि', timeLabel:'जन्म समय', placeLabel:'जन्म स्थान',
+        cityPh:'अपना जन्म शहर लिखना शुरू करें…', pickCity:'सटीक कुंडली के लिए सूची में से अपना जन्म शहर चुनें।', tzPre:'समय क्षेत्र', tzPost:'— आपके जन्म स्थान से चयनित (DST स्वतः संभालता है)।', generateChart:'मेरी कुंडली बनाएं',
+        relMatch:'रिश्ता मिलान', relSub:'वैदिक अनुकूलता रिपोर्ट के लिए अपने साथी की जन्म जानकारी जोड़ें — Gun Milan (Ashtakoot), मांगलिक दोष, navamsa और dasha समय।',
+        editPartnerTitle:'साथी की जानकारी संपादित करें', editPartnerSub:'अपने साथी की जन्म जानकारी अपडेट करें — हम अनुकूलता रिपोर्ट दोबारा बनाएंगे।',
+        partnerName:'साथी का नाम', partnerNamePh:'साथी का नाम', partnerCityPh:'जन्म शहर लिखना शुरू करें…', partnerGender:'साथी का लिंग', male:'पुरुष', female:'स्त्री',
+        gunMilanNote:'Gun Milan (Ashtakoot) विपरीत-लिंग जोड़े का मिलान करता है — आपकी भूमिका स्वतः तय होती है।', generateCompat:'अनुकूलता बनाएं', back:'वापस',
+        editPartner:'साथी संपादित करें', saveAndUpdate:'सहेजें व रिपोर्ट अपडेट करें', updatingCompat:'अनुकूलता अपडेट हो रही है…',
+        composerPh:'अपना संदेश लिखें…', jumpLatest:'नवीनतम पर जाएं ↓', chartReady:'आपकी कुंडली तैयार है', chartReadyName:'{name}, आपकी कुंडली तैयार है',
+        askAnything:'कुछ भी पूछें। आपका पहला प्रश्न निःशुल्क है।', askAnythingPremium:'कुछ भी पूछें — करियर, विवाह, धन, स्वास्थ्य या समय।', askAnythingUsed:'अपनी कुंडली के बारे में कुछ भी पूछें।', quotaLeftOne:'{n} सवाल बाकी', quotaLeftMany:'{n} सवाल बाकी', freeQUsed:'यह आपका निःशुल्क प्रश्न था। असीमित उत्तरों के लिए जारी रखें।',
+        starter1:'मेरा अगला बड़ा करियर अवसर कब है?', starter2:'2027 बताइए — करियर, धन, प्रेम', starter3:'मेरे भावी जीवनसाथी का वर्णन करें — रूप, पेशा, कब मिलेंगे', starter4:'क्या मैं Sade Sati में हूँ? यह कब समाप्त होगी?',
+        cStarter1:'हम कुल मिलाकर कितने अनुकूल हैं?', cStarter2:'एक जोड़े के रूप में हमारी सबसे बड़ी ताकत क्या है?', cStarter3:'क्या कोई दोष है जो हमें जानना चाहिए?', cStarter4:'हमारे विवाह के लिए अच्छा समय कब है?',
+        yourChart:'आपकी कुंडली', compatReport:'अनुकूलता रिपोर्ट', generateReportBtn:'रिपोर्ट बनाएं',
+        birthChart:'जन्म कुंडली', rasiD1:'राशि (D1)', navamsaD9:'नवांश (D9)', tapHouse:'किसी भी भाव पर टैप करें — उसके ग्रह व दृष्टियाँ देखें',
+        legLagna:'लग्न', legExalted:'उच्च', legFriendlyOwn:'मित्र / स्व', legNeutral:'तटस्थ', legDebilitated:'नीच', legEnemy:'शत्रु', planetaryPositions:'ग्रह स्थिति',
+        compatibility:'अनुकूलता', compatHomeHint:'अपनी अनुकूलता के बारे में कुछ भी पूछें',
+        pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
+        pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'अनुकूलता व Gun Milan रीडिंग', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
+        omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
+        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'190,000+ जिज्ञासुओं का भरोसा · 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
+        secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
+        secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', signOut:'साइन आउट',
+        astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
+        notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>₹99 में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · ₹99', maybeLater:'शायद बाद में',
+      },
+    };
+    const t = (key, vars) => { let s = (I18N[state.lang] && I18N[state.lang][key] != null) ? I18N[state.lang][key] : (I18N.en[key] != null ? I18N.en[key] : key); if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]); return s; };
+    function applyI18n() {
+      document.documentElement.lang = state.lang;
+      document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+      document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
+      const db = document.getElementById('downsellBody'); if (db) db.innerHTML = t('downsellBody'); // has <b>, needs innerHTML
+    }
     function applyLangUI() {
       document.querySelectorAll('[data-lang-set]').forEach((b) => b.classList.toggle('active', b.dataset.langSet === state.lang));
+      applyI18n();
+      // Re-render dynamic views so already-rendered strings switch language too.
+      try { if (currentView() === 'chat') { state.mode === 'compat' ? renderCompatHome() : renderEmptyChat(); } } catch (_) {}
+      try { renderPaywallHero(); updateCtaLabel(); } catch (_) {}
+      try { refreshSubUI(); } catch (_) {}
     }
     document.querySelectorAll('[data-lang-set]').forEach((b) => b.addEventListener('click', () => {
       state.lang = b.dataset.langSet;
@@ -1079,8 +1198,9 @@
         // in the app skips web onboarding and lands straight in their chart.
         const coords = (d && (d.coordinates || d.birthCoordinates)) || null;
         if (d && d.dob && coords) {
-          show('chat');
-          $('chatInner').innerHTML = '<div class="starter"><span class="typing">Loading your chart…</span></div>';
+          // ONE loading state (like the app): stay on the boot splash while the chart loads,
+          // then reveal the chat fully ready. Showing 'chat' early made the header mode-toggle
+          // flash/jump in before the chart was ready.
           state.dateOfBirth = d.dob; state.coordinates = coords; state.birthPlace = d.birthPlace || null;
           state.birthTimezone = d.birthTimezone || null;
           state.userName = d.name || state.userName; state.timeUnknown = !!d.timeUnknown;
@@ -1092,6 +1212,7 @@
           });
           await refreshPremium();
           renderEmptyChat(); refreshProfileUI();
+          show('chat'); // chart ready → reveal the chat in one go
         } else {
           show('onboarding');
         }
@@ -1130,18 +1251,14 @@
       $('authSocial').style.display = isReset ? 'none' : '';
       $('f-pass').style.display = isReset ? 'none' : '';
       $('f-pass').setAttribute('autocomplete', isSignup ? 'new-password' : 'current-password');
-      $('emailSignInBtn').textContent = isReset ? 'Send reset link' : isSignup ? 'Create account' : 'Sign in';
+      $('emailSignInBtn').textContent = t(isReset ? 'sendReset' : isSignup ? 'createAccountBtn' : 'signIn');
       $('authTerms').style.display = isSignup ? '' : 'none';
       $('lnkForgot').style.display = isSignin ? '' : 'none';
       $('lnkSep').style.display = isSignin ? '' : 'none';
       $('lnkToSignup').style.display = isSignin ? '' : 'none';
       $('lnkToSignin').style.display = isSignin ? 'none' : '';
-      $('lnkToSignin').textContent = isSignup ? 'Already have an account? Sign in' : 'Back to sign in';
-      $('authSubtitle').textContent = isReset
-        ? 'Enter your email and we’ll send you a password reset link.'
-        : isSignup
-        ? 'Create your account to get your free Vedic reading.'
-        : 'Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.';
+      $('lnkToSignin').textContent = t(isSignup ? 'haveAccount' : 'backToSignin');
+      $('authSubtitle').textContent = t(isReset ? 'authSubReset' : isSignup ? 'authSubSignup' : 'authSub');
       $('authStatus').textContent = '';
     }
     $('lnkForgot').addEventListener('click', () => setAuthMode('reset'));
@@ -1436,22 +1553,19 @@
     });
 
     // ── chat ───────────────────────────────────────────────────────
-    const STARTERS = [
-      "What's my next big career window?",
-      "Walk me through 2027 — career, money, love",
-      "Describe my future spouse — looks, profession, when we'll meet",
-      "Am I in Sade Sati? When does it end?",
-    ];
+    const getStarters = () => ['starter1', 'starter2', 'starter3', 'starter4'].map((k) => t(k));
     function renderEmptyChat() {
-      const greet = state.userName ? `${state.userName}, your chart is ready` : 'Your chart is ready';
+      const greet = state.userName ? t('chartReadyName', { name: state.userName }) : t('chartReady');
+      // "Your first question is free" only while it actually IS free; otherwise a neutral prompt.
+      const subKey = state.premium ? 'askAnythingPremium' : ((state.freeUsed || (Number.isFinite(state.remaining) && state.remaining <= 0)) ? 'askAnythingUsed' : 'askAnything');
       const inner = $('chatInner');
       inner.innerHTML = `<div class="starter">
-        <h2>${greet}</h2>
-        <p class="hint">${state.premium ? 'Ask me anything — career, marriage, money, health, or timing.' : 'Ask me anything. Your first question is free.'}</p>
+        <h2>${esc(greet)}</h2>
+        <p class="hint">${esc(t(subKey))}</p>
         <div id="chips"></div>
       </div>`;
       const chips = inner.querySelector('#chips');
-      STARTERS.forEach((s) => {
+      getStarters().forEach((s) => {
         const b = document.createElement('button');
         b.className = 'chip'; b.textContent = s;
         b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); });
@@ -1637,8 +1751,8 @@
             state.freeUsed = true; // brand-new user just spent their one granted free question
           }
           $('chatStatus').textContent = state.freeUsed
-            ? 'That was your free question. Continue for unlimited answers.'
-            : `${state.remaining} question${state.remaining === 1 ? '' : 's'} left.`;
+            ? t('freeQUsed')
+            : t(state.remaining === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n: state.remaining }) + '.';
           refreshHeaderQuota();
         }
       }
@@ -1651,6 +1765,7 @@
 
     function startNewChat() {
       if (!state.chart) { show('onboarding'); return; }
+      isEditingPartner = false; setPartnerFormMode(false); // clear any pending partner-edit state so a later generate isn't taken for an edit
       if (state.mode === 'compat') { state.compatSessionId = null; state.compatConversationId = null; renderCompatHome(); }
       else { state.conversationId = null; state.sessionId = null; renderEmptyChat(); }
       $('chatStatus').textContent = ''; renderHistory(); show('chat');
@@ -1658,12 +1773,7 @@
     // New chat is reached from the drawer (drawerNewChat) only — no header duplicate.
 
     // ── Compatibility / Relationship mode ──────────────────────────────────
-    const COMPAT_STARTERS = [
-      "How compatible are we overall?",
-      "What are our biggest strengths as a couple?",
-      "Are there any doshas we should know about?",
-      "When is a good time for us to marry?",
-    ];
+    const getCompatStarters = () => ['cStarter1', 'cStarter2', 'cStarter3', 'cStarter4'].map((k) => t(k));
     const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
 
     // segmented gender pickers (setup view)
@@ -1679,6 +1789,56 @@
     // is not supported, so the user's gender is always derived as the opposite.
     const oppositeGender = (g) => (g === 'male' ? 'female' : g === 'female' ? 'male' : null);
     bindGenderSeg('partnerGenderSeg', (g) => { setupPartnerGender = g; setupUserGender = oppositeGender(g); });
+
+    // ── Edit partner (mirrors the app: from the compatibility report you can edit the
+    // partner's birth details; saving invalidates the cached partner chart + report and
+    // regenerates the report in place — replace, no history). The same #compatSetupView
+    // form is reused; a flag tells the Generate handler to run the in-place update path. ──
+    let isEditingPartner = false;
+    // Reverse a stored UTC-ISO birth instant back to the local wall-clock the form expects.
+    // Uses the partner's stored IANA tz so DST is handled (same source toUtcISO consumed).
+    function utcIsoToLocalParts(iso, tz) {
+      try {
+        const d = new Date(iso); if (isNaN(d)) return null;
+        const parts = new Intl.DateTimeFormat('en-CA', { timeZone: tz || 'Asia/Kolkata', year: 'numeric',
+          month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false })
+          .formatToParts(d).reduce((o, p) => (o[p.type] = p.value, o), {});
+        let hh = parts.hour === '24' ? '00' : parts.hour; // Intl can emit 24 for midnight
+        return { date: `${parts.year}-${parts.month}-${parts.day}`, time: `${hh}:${parts.minute}` };
+      } catch (_) { return null; }
+    }
+    // Swap the setup view's title / subtitle / submit-button wording between the first-run
+    // "add" copy and the "edit" copy. We swap the data-i18n KEY (not just textContent) so a
+    // language toggle while the form is open re-applies the correct (edit) strings.
+    function setPartnerFormMode(editing) {
+      const ttl = $('compatSetupTitle'), sub = $('compatSetupSub'), btn = $('compatGenBtn');
+      ttl.dataset.i18n = editing ? 'editPartnerTitle' : 'relMatch'; ttl.textContent = t(ttl.dataset.i18n);
+      sub.dataset.i18n = editing ? 'editPartnerSub' : 'relSub'; sub.textContent = t(sub.dataset.i18n);
+      btn.dataset.i18n = editing ? 'saveAndUpdate' : 'generateCompat'; btn.textContent = t(btn.dataset.i18n);
+    }
+    // Open the partner form pre-filled with the current partner (name/DOB/time/place/gender)
+    // and routed into "edit" mode so Save regenerates the report in place.
+    function openEditPartner() {
+      const p = state.partner; if (!p) { show('compatSetup'); return; }
+      isEditingPartner = true; setPartnerFormMode(true);
+      $('p-name').value = p.name || '';
+      $('p-place').value = p.birthPlace || '';
+      // Seed the city picker so a save without re-typing reuses the stored coordinates
+      // (resolvePlaceCoords returns the picked coords when label matches the input).
+      if (p.coordinates && p.birthPlace) cityPick['p-place'] = { label: p.birthPlace, coordinates: p.coordinates };
+      const local = p.dob ? utcIsoToLocalParts(p.dob, p.birthTimezone) : null;
+      $('p-dob').value = local ? local.date : ''; $('p-time').value = local ? local.time : '';
+      // Pre-select the partner's gender on the segmented control.
+      setupPartnerGender = p.gender || null; setupUserGender = oppositeGender(setupPartnerGender);
+      document.querySelectorAll('#partnerGenderSeg button').forEach((b) => b.classList.toggle('active', b.dataset.g === setupPartnerGender));
+      // Reflect the stored tz (avoids a blank tz row until re-resolve).
+      if (p.birthTimezone) { try { $('p-tz-detected').textContent = p.birthTimezone; $('p-tz-row').style.display = 'block'; } catch (_) {} }
+      $('compatSetupStatus').textContent = ''; $('compatGenBtn').disabled = false;
+      show('compatSetup');
+    }
+    // Reset the form back to first-run "add a partner" presentation (called when the dock
+    // "Generate report" button opens setup with no existing partner).
+    function openAddPartner() { isEditingPartner = false; setPartnerFormMode(false); show('compatSetup'); }
 
     // mode toggle (Personal ↔ Relationship)
     document.querySelectorAll('#modeSeg button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
@@ -1757,7 +1917,7 @@
 
       // Score header — "Overall Compatibility" + score/100 + verdict (always above the tabs).
       const scoreHtml = `<div class="report-score">
-          <div class="score-num" style="color:${pctColor(score)};">${score}<span style="font-size:1rem;color:var(--secondary);">/100</span></div>
+          <div class="score-num" style="color:${pctColor(score)};">${score}<span style="font-size:var(--fs-md);color:var(--secondary);">/100</span></div>
           <div class="score-meta">
             <div class="hint" style="margin-bottom:.1rem;">Overall Compatibility</div>
             <div class="score-verdict" style="color:${pctColor(score)};">${esc(r.verdict || 'Compatibility')}</div>
@@ -1935,11 +2095,11 @@
       // The report no longer lives in the chat scroll — it's its own screen (openReportScreen),
       // surfaced via the dock "View report" button. Chat stays a pure conversation (app parity).
       const wrap = document.createElement('div'); wrap.className = 'starter'; wrap.style.paddingTop = '.5rem';
-      const pname = state.partner?.name ? ` with ${esc(state.partner.name)}` : '';
-      wrap.innerHTML = `<p class="hint">Ask anything about your compatibility${pname}.</p><div id="chips"></div>`;
+      const pname = state.partner?.name ? ` ${state.lang === 'hi' ? '—' : 'with'} ${esc(state.partner.name)}` : '';
+      wrap.innerHTML = `<p class="hint">${esc(t('compatHomeHint'))}${pname}.</p><div id="chips"></div>`;
       inner.appendChild(wrap);
       const chips = wrap.querySelector('#chips');
-      COMPAT_STARTERS.forEach((s) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = s; b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); }); chips.appendChild(b); });
+      getCompatStarters().forEach((s) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = s; b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); }); chips.appendChild(b); });
       renderArtifactBar();
       maybeScroll(true);
     }
@@ -1966,13 +2126,20 @@
       const pname = $('p-name').value.trim() || null;
       if (!dob || !time || !place) { status.textContent = "Fill your partner's date, time and place of birth."; return; }
       if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = 'Enter a valid birth date in the past.'; return; }
-      // A compatibility REPORT is a metered "reading" — block a NEW one when the free
-      // question is used up (the server enforces too; this avoids computing a partner
-      // chart we can't deliver). Follow-up questions on an existing report stay free.
-      if (!state.premium && state.freeUsed) { openPaywall('compat_limit'); return; }
+      const editing = isEditingPartner;
+      // A compatibility REPORT is a metered "reading", but EDITING/regenerating an existing one
+      // is an in-place update of the SAME reading (app parity) — the request carries regenerate:true
+      // and the server skips the gate for it, so an edit is free and never paywalled. Only a
+      // brand-NEW report is metered: block it once the free question is used up (server enforces too).
+      if (!editing && !state.premium && state.freeUsed) { openPaywall('compat_limit'); return; }
       const btn = $('compatGenBtn'); btn.disabled = true;
+      // Snapshot the current chart+report so a failed/paywalled regen can roll back. The
+      // wipe below clears them up front so a partial regen can't leave a stale report
+      // showing the old partner; the catch restores them if the regen doesn't complete.
+      const prevPartnerChart = state.partnerChart, prevCompatReport = state.compatReport;
+      if (editing) { state.partnerChart = null; state.compatReport = null; }
       try {
-        status.textContent = "Looking up partner's birth place…";
+        status.textContent = editing ? t('updatingCompat') : "Looking up partner's birth place…";
         const pcoords = await resolvePlaceCoords('p-place', place);
         const ptzInfo = deriveTz(pcoords, dob, time);
         const offset = ptzInfo ? ptzInfo.offset : 5.5;
@@ -1981,7 +2148,7 @@
         const pdob = toUtcISO(dob, time, offset);
         state.partnerGender = setupPartnerGender; state.userGender = oppositeGender(setupPartnerGender);
 
-        status.textContent = 'Saving details…';
+        if (!editing) status.textContent = 'Saving details…';
         await setDoc(doc(db, `users/${state.uid}/metadata/dob`), { gender: state.userGender }, { merge: true });
         await setDoc(doc(db, `users/${state.uid}/metadata/partner_dob`), {
           dob: pdob, coordinates: pcoords, birthCoordinates: pcoords, birthPlace: place,
@@ -1989,7 +2156,7 @@
         }, { merge: true });
         state.partner = { dob: pdob, coordinates: pcoords, birthPlace: place, birthTimezone: ptz, gender: setupPartnerGender, name: pname };
 
-        status.textContent = "Computing partner's chart…";
+        if (!editing) status.textContent = "Computing partner's chart…";
         await ensureWS();
         const partnerChart = await new Promise((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error('Partner chart timed out — please retry.')), 120000);
@@ -2000,7 +2167,7 @@
         setDoc(doc(db, `users/${state.uid}/astroData/partner_chart`), partnerChart, { merge: true }).catch(() => {});
         if (partnerChart?.divisionalCharts?.D9) setDoc(doc(db, `users/${state.uid}/astroData/partner_d9_chart`), partnerChart.divisionalCharts.D9, { merge: true }).catch(() => {});
 
-        status.textContent = 'Analyzing compatibility…';
+        if (!editing) status.textContent = 'Analyzing compatibility…';
         const report = await new Promise((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error('Compatibility timed out — please retry.')), 120000);
           // onPaywall: the report is now metered server-side, so an over-quota user gets
@@ -2012,27 +2179,39 @@
             onError: (e) => { clearTimeout(timer); reject(new Error(e)); },
           };
           sendWS({ type: 'compatibility', userId: state.uid, threadId: `web-compat-${Date.now()}`,
+            regenerate: editing, // in-place partner edit → server skips the gate (free, app parity)
             userGender: state.userGender, partnerGender: state.partnerGender,
             astrologyData: { userChart: state.chart, partnerChart } });
         });
         state.compatReport = hydrateReportNames(report);
-        setDoc(doc(db, `users/${state.uid}/astroData/compatibility_report`), { ...report, generatedAt: serverTimestamp(), source: 'web' }, { merge: true }).catch(() => {});
-        // The server metered this report against the shared free-question quota — mirror
-        // it so the local guard knows the free reading is spent (a pack buyer keeps the
-        // rest of their balance; only remaining<=0 trips the paywall on the NEXT reading).
-        if (!state.premium) {
+        // On EDIT, REPLACE the cached report (no merge) so stale fields from the prior
+        // partner can't survive into the regenerated one. On a fresh generate, merge is fine.
+        setDoc(doc(db, `users/${state.uid}/astroData/compatibility_report`),
+          { ...report, generatedAt: serverTimestamp(), source: 'web' }, editing ? {} : { merge: true }).catch(() => {});
+        // The server metered this report against the shared free-question quota — mirror it
+        // so the local guard matches (a pack buyer keeps the rest of their balance; only
+        // remaining<=0 trips the paywall on the NEXT reading). An EDIT regenerates the SAME
+        // reading in place (server skips the gate for it), so it does NOT decrement.
+        if (!editing && !state.premium) {
           if (Number.isFinite(state.remaining)) { state.remaining = Math.max(0, state.remaining - 1); state.freeUsed = state.remaining <= 0; }
           else { state.freeUsed = true; }
           refreshHeaderQuota();
         }
 
         state.mode = 'compat'; setModeUI('compat');
-        state.compatSessionId = null; state.compatConversationId = null;
+        // Editing keeps the existing compat conversation (the report changed, not the thread);
+        // a fresh generate starts a clean compat chat.
+        if (!editing) { state.compatSessionId = null; state.compatConversationId = null; }
+        isEditingPartner = false; setPartnerFormMode(false); // restore add-mode copy for next time
         btn.disabled = false; status.textContent = '';
-        // Set up the (clean) compat chat, then open the freshly-generated report on its own
-        // screen — the payoff for hitting "Generate". Back returns to the chat (dock has "View report").
-        renderCompatHome(); renderHistory(); openReportScreen();
+        // Set up the (clean) compat chat, then open the freshly-generated/updated report on
+        // its own screen. Back returns to the chat (dock has "View report").
+        if (!editing) renderCompatHome();
+        renderHistory(); openReportScreen();
       } catch (e) {
+        // Failed/paywalled regen → roll back to the report we had, so an edit never erases
+        // the existing compatibility report from the UI (Firestore was only written on success).
+        if (editing) { state.partnerChart = prevPartnerChart; state.compatReport = prevCompatReport; }
         // Over-quota → the report onPaywall rejected with this sentinel; show the
         // paywall instead of a scary error under the setup form.
         if (e.message === '__paywall__') { openPaywall('server_gate'); }
@@ -2267,6 +2446,9 @@
       openSheet('report');
     }
     $('reportBack').addEventListener('click', () => closeSheet('report'));
+    // Edit partner from the report header: close the report sheet, then open the pre-filled
+    // partner form in edit mode (save → regenerates the report in place).
+    $('reportEditPartner').addEventListener('click', () => { closeSheet('report'); openEditPartner(); });
     // Paywall is a modal-style screen: dismiss with a top-right ✕ or ESC (web + a11y best practice;
     // matches the app's close-X paywall). Returns to wherever it was opened from.
     // Paywall is a centered modal popup (same component as Settings/Profile). It replaces
@@ -2275,6 +2457,7 @@
       _pwSrc = src || 'direct';
       try { closeModal('settingsView'); closeModal('profileView'); } catch (_) {}
       try { renderPaywallHero(); } catch (_) {}
+      try { updateCtaLabel(); } catch (_) {} // sync CTA + billing line to the active plan
       { const ps = $('paywallStatus'); if (ps) ps.textContent = ''; } // clear stale status from a prior visit
       track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
       openModal('paywallView');
@@ -2288,19 +2471,23 @@
     const ICON_EYE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2"/></svg>';
     const ICON_REPORT = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 8.5h8M8 12h8M8 15.5h5" stroke-linecap="round"/></svg>';
     const ICON_FILECHART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V9z" stroke-linejoin="round"/><path d="M13 3v6h6" stroke-linejoin="round"/><path d="M8.5 17.5v-3M12 17.5v-5M15.5 17.5v-2" stroke-linecap="round"/></svg>';
+    // Pencil (edit) — matches the app's MaterialCommunityIcons "pencil-outline" used on the partner card.
+    const ICON_PENCIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10a2 2 0 0 0-2.83-2.83L5 17.17V20Z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4"/></svg>';
     // Contextual dock button (mirrors the app's in-chat dock): Personal → Your chart;
-    // Relationship → Compatibility report (if generated) / Generate. Re-rendered on every chat render.
+    // Relationship → Compatibility report + Edit partner (if generated) / Generate. Re-rendered on every chat render.
     function renderArtifactBar() {
       const bar = $('artifactBar'); if (!bar) return;
       if (state.mode === 'compat') {
         bar.innerHTML = state.compatReport
-          ? `<button type="button" class="artifact-btn" id="abReport">${ICON_REPORT}Compatibility report</button>`
-          : `<button type="button" class="artifact-btn" id="abGen">${ICON_FILECHART}Generate report</button>`;
+          ? `<button type="button" class="artifact-btn" id="abReport">${ICON_REPORT}${esc(t('compatReport'))}</button>`
+            + `<button type="button" class="artifact-btn" id="abEditPartner">${ICON_PENCIL}${esc(t('editPartner'))}</button>`
+          : `<button type="button" class="artifact-btn" id="abGen">${ICON_FILECHART}${esc(t('generateReportBtn'))}</button>`;
       } else {
-        bar.innerHTML = state.chart ? `<button type="button" class="artifact-btn" id="abChart">${ICON_EYE}Your chart</button>` : '';
+        bar.innerHTML = state.chart ? `<button type="button" class="artifact-btn" id="abChart">${ICON_EYE}${esc(t('yourChart'))}</button>` : '';
       }
       const r = $('abReport'); if (r) r.onclick = openReportScreen;
-      const g = $('abGen'); if (g) g.onclick = () => show('compatSetup');
+      const ep = $('abEditPartner'); if (ep) ep.onclick = openEditPartner;
+      const g = $('abGen'); if (g) g.onclick = openAddPartner;
       const c = $('abChart'); if (c) c.onclick = openChartScreen;
     }
 
@@ -2342,6 +2529,7 @@
       if ($('drawer').classList.contains('open')) applyDrawerState(true);
     });
     $('menuBtn').addEventListener('click', toggleDrawer);
+    $('drawerToggle').addEventListener('click', toggleDrawer); // toggle on the drawer itself (rail ↔ expanded on desktop)
     $('drawerOverlay').addEventListener('click', closeDrawer);
     $('drawerNewChat').addEventListener('click', () => { closeDrawerMobile(); startNewChat(); });
     $('diBirth').addEventListener('click', () => { closeDrawerMobile(); openBirthModal(); });
@@ -2360,12 +2548,16 @@
       else if ($('drawer').classList.contains('open')) closeDrawer();
     });
     function openBirthModal() {
+      closeSheetsIfOpen();
       $('bmDob').textContent = state.dateOfBirth ? new Date(state.dateOfBirth).toLocaleString() : 'Not set';
       $('bmPlace').textContent = state.birthPlace || 'Not set';
       $('birthModal').classList.add('open');
     }
+    // A drawer action while the chart/report sheet is up must close the sheet first —
+    // sheets are z-index 60, the modals 50, so otherwise the modal opens hidden behind it.
+    const closeSheetsIfOpen = () => { ['chartScreen','report'].forEach(n => { if (views[n] && views[n].classList.contains('up')) closeSheet(n); }); };
     // ── Settings / Profile / Edit-birth modal popups (GPT/Claude-style) ───────
-    const openModal = (id) => $(id).classList.add('open');
+    const openModal = (id) => { closeSheetsIfOpen(); $(id).classList.add('open'); };
     const closeModal = (id) => $(id).classList.remove('open');
     function openSettings() { refreshSubUI(); openModal('settingsView'); }
     function editBirth() {
@@ -2390,15 +2582,17 @@
       if (state.premium) {
         el.className = 'hdr-quota is-premium';
         el.style.display = 'inline-flex';
-        el.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l3.6 2.6L12 5l4.4 6.6L20 9l-1.7 9.6a1 1 0 0 1-1 .8H6.7a1 1 0 0 1-1-.8L4 9z" stroke-linejoin="round"/></svg><span class="pl">Premium</span>';
-        el.setAttribute('aria-label', 'Premium');
-        el.title = 'Premium';
+        el.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l3.6 2.6L12 5l4.4 6.6L20 9l-1.7 9.6a1 1 0 0 1-1 .8H6.7a1 1 0 0 1-1-.8L4 9z" stroke-linejoin="round"/></svg><span class="pl">' + esc(t('pwPremium')) + '</span>';
+        el.setAttribute('aria-label', t('pwPremium'));
+        el.title = t('pwPremium');
       } else if (Number.isFinite(state.remaining)) {
+        const n = Math.max(0, state.remaining);
+        const label = t(n === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n });
         el.className = 'hdr-quota is-count';
         el.style.display = 'inline-flex';
-        el.innerHTML = '<span class="qchip">' + Math.max(0, state.remaining) + '</span>';
-        el.setAttribute('aria-label', state.remaining + ' free question' + (state.remaining === 1 ? '' : 's') + ' left, tap to upgrade');
-        el.title = 'Tap to upgrade';
+        el.innerHTML = '<span class="qcount">' + esc(label) + '</span>';
+        el.setAttribute('aria-label', label);
+        el.title = label;
       } else {
         el.style.display = 'none';
       }
@@ -2511,7 +2705,12 @@
     $('settingsBtn').addEventListener('click', () => { closeDrawerMobile(); openSettings(); });
     document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => {
       const t = b.dataset.back;
-      if (t === 'chat') { setMode('personal'); return; } // leaving partner setup → back to personal chat
+      if (t === 'chat') {
+        // Cancelling an in-progress EDIT: drop edit state, restore add-mode copy, and stay in
+        // Relationship mode (the report is intact) rather than flipping back to Personal.
+        if (isEditingPartner) { isEditingPartner = false; setPartnerFormMode(false); show('chat'); renderArtifactBar(); return; }
+        setMode('personal'); return; // leaving fresh partner setup → back to personal chat
+      }
       show(t === '1' ? prevView : t);
     }));
     // Settings popup: X / backdrop close it.
@@ -2536,10 +2735,10 @@
       if (!state.premium) { openPaywall('manage_subscription'); return; }
       if (!confirm('Cancel your subscription? You keep access until the end of your current billing period.')) return;
       try {
-        const t = await token();
-        const r = await fetch(`${API}/api/web/razorpay/cancel`, { method: 'POST', headers: { 'Authorization': `Bearer ${t}` } });
+        const tok = await token();
+        const r = await fetch(`${API}/api/web/razorpay/cancel`, { method: 'POST', headers: { 'Authorization': `Bearer ${tok}` } });
         if (!r.ok) throw new Error('Could not cancel');
-        $('subSub').textContent = 'Cancels at period end';
+        $('subSub').textContent = t('subCancels');
         alert('Your subscription will not renew. You keep access until the end of your current period.');
       } catch (e) { alert(e.message || 'Could not cancel — please try again.'); }
     });
@@ -2554,7 +2753,7 @@
       refreshDrawer();
     }
     function refreshSubUI() {
-      $('subSub').textContent = state.premium ? 'Premium · tap to cancel' : 'Free plan · tap to upgrade';
+      $('subSub').textContent = state.premium ? t('subPremium') : t('subFree');
     }
 
     // ── premium status ─────────────────────────────────────────────
@@ -2603,13 +2802,12 @@
       const end = antar && antar.end ? new Date(antar.end) : null;
       if (maha && maha.lord && antar && antar.lord && end && !isNaN(end.getTime()) && end.getTime() > Date.now()) {
         const dateStr = `${PW_MONTHS[end.getMonth()]} ${end.getFullYear()}`;
-        titleEl.textContent = name
-          ? `${name}, your ${maha.lord}–${antar.lord} period runs through ${dateStr}`
-          : `Your ${maha.lord}–${antar.lord} period runs through ${dateStr}`;
-        subEl.textContent = 'Find out what it means for you';
+        const vars = { name, maha: maha.lord, antar: antar.lord, date: dateStr };
+        titleEl.textContent = name ? t('pwHeroPeriodName', vars) : t('pwHeroPeriod', vars);
+        subEl.textContent = t('pwHeroMeans');
       } else {
-        titleEl.textContent = name ? `${name}, unlock unlimited questions` : 'Continue your reading';
-        subEl.textContent = "You've used your free question. Unlock unlimited questions about your chart.";
+        titleEl.textContent = name ? t('pwHeroUnlockName', { name }) : t('pwHero');
+        subEl.textContent = t('pwHeroSub');
       }
     }
 
@@ -2617,8 +2815,10 @@
     let chosenPlan = 'yearly';   // 'yearly' | 'monthly' when chosenKind === 'sub'
     let chosenKind = 'sub';      // 'sub' (recurring) | 'pack' (one-time 5-question)
     function updateCtaLabel() {
-      const btn = $('subscribeBtn');
-      btn.textContent = chosenKind === 'pack' ? 'Buy 5 questions · ₹99' : 'Subscribe';
+      // CTA + contextual billing line match the app paywall exactly.
+      $('subscribeBtn').textContent = t(chosenKind === 'pack' ? 'getQuestions' : 'getUnlimited');
+      const bill = $('paywallBilling');
+      if (bill) bill.textContent = t(chosenKind === 'pack' ? 'oneTimePurchase' : 'autoRenewCancel');
     }
     document.querySelectorAll('.plan').forEach((b) => b.addEventListener('click', () => {
       document.querySelectorAll('.plan').forEach((x) => { x.classList.remove('active'); x.setAttribute('aria-checked', 'false'); });
