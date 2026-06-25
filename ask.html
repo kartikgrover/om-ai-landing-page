@@ -451,8 +451,12 @@
     .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:480px; width:100%; }
     /* GPT/Claude-style settings popup: a wider, scrollable centered card. */
     .modal-card.modal-lg { max-width:560px; max-height:86vh; overflow-y:auto; text-align:left; }
-    .modal-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:0 0 .9rem; }
-    .modal-head h2 { font-size:var(--fs-2xl); margin:0; }
+    /* Sticky, centered modal header (mirrors the app's centered screen titles). The title
+       centers; the close pins top-right and stays reachable while the card scrolls. Negative
+       margins bleed the header over the card's 1.25rem padding so its background covers the gap. */
+    .modal-head { position:sticky; top:0; z-index:3; display:flex; align-items:center; justify-content:center; gap:.5rem; background:var(--card); margin:-1.25rem -1.25rem .9rem; padding:1.15rem 1.25rem .7rem; border-radius:16px 16px 0 0; }
+    .modal-head h2 { font-size:var(--fs-2xl); margin:0; text-align:center; }
+    .modal-head .iconbtn { position:absolute; right:1rem; top:.9rem; }
     .info-row { display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:var(--fs-md); }
     .info-row:last-child { border-bottom:none; }
 
@@ -2805,6 +2809,7 @@
     $('editBirthClose').addEventListener('click', closeEditBirth);
     $('editBirthModal').addEventListener('click', (e) => { if (e.target === $('editBirthModal')) closeEditBirth(); });
     $('signOutBtn').addEventListener('click', async () => {
+      closeModal('settingsView'); // don't leave Settings hanging open behind the auth screen
       try { await signOut(auth); } catch (_) {}
       Object.assign(state, { chart: null, conversationId: null, premium: false, freeUsed: false, uid: null });
       if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
