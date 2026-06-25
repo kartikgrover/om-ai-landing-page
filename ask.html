@@ -524,7 +524,7 @@
     /* ── Birth chart — North-Indian kundali (replica of the app AstroChartScreen) ── */
     /* Kundali card — fills the column as a 1:1 square (mirrors the app's diamond chart:
        chart width = container width, square). Content stacks below it. */
-    .kun-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; max-width:100%; margin:0 auto .9rem; }
+    .kun-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; max-width:min(560px,100%); margin:0 auto .9rem; }
     /* Dignity legend (mirrors the app's chart legend): explains the planet colours. */
     .kun-legend { display:flex; flex-wrap:wrap; gap:.4rem; justify-content:center; margin:0 0 1.1rem; }
     .kun-legend .lg-item { display:inline-flex; align-items:center; gap:.4rem; font-size:var(--fs-sm); color:var(--secondary);
@@ -610,7 +610,7 @@
   <div id="drawerOverlay" class="drawer-overlay"></div>
   <aside id="drawer" class="drawer" aria-label="Menu">
     <div class="drawer-head">
-      <span class="brand" style="display:inline-flex;align-items:center;line-height:0;"><picture><source srcset="/assets/logo-mark.webp" type="image/webp"><img src="/assets/logo-mark.png" alt="Om.AI" width="613" height="362" style="height:26px;width:auto;display:block;"></picture></span>
+      <span class="brand" id="brandNewChat" role="button" tabindex="0" title="New chat" style="display:inline-flex;align-items:center;line-height:0;cursor:pointer;"><picture><source srcset="/assets/logo-mark.webp" type="image/webp"><img src="/assets/logo-mark.png" alt="Om.AI" width="613" height="362" style="height:26px;width:auto;display:block;"></picture></span>
       <button class="iconbtn" id="drawerToggle" aria-label="Toggle sidebar" title="Toggle sidebar">
         <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M9.5 5v14" stroke-linecap="round"/></svg>
       </button>
@@ -938,6 +938,12 @@
         <h2 style="font-size:var(--fs-2xl);margin:0;" data-i18n="birthChart">Birth Chart</h2>
         <button class="iconbtn" id="chartBack" aria-label="Close" title="Close" style="position:absolute;right:0;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
+      <!-- Whose chart — shown only in compatibility (when a partner chart exists); mirrors the
+           app's separate partner-chart view, collapsed here into a toggle on the one sheet. -->
+      <div class="seg" id="chartWhoSeg" style="max-width:280px;margin:0 auto 1rem;display:none;">
+        <button type="button" data-who="self" class="active" data-i18n="chartYou">You</button>
+        <button type="button" data-who="partner" data-i18n="chartPartner">Partner</button>
+      </div>
       <div class="seg" id="chartDivSeg" style="max-width:280px;margin:0 auto 1rem;">
         <button type="button" data-div="D1" class="active" data-i18n="rasiD1">Rasi (D1)</button>
         <button type="button" data-div="D9" data-i18n="navamsaD9">Navamsa (D9)</button>
@@ -1090,7 +1096,7 @@
         askAnything:'Ask me anything. Your first question is free.', askAnythingPremium:'Ask me anything — career, marriage, money, health, or timing.', askAnythingUsed:'Ask me anything about your chart.', quotaLeftOne:'{n} question left', quotaLeftMany:'{n} questions left', freeQUsed:'That was your free question. Continue for unlimited answers.',
         starter1:"What's my next big career window?", starter2:'Walk me through 2027 — career, money, love', starter3:"Describe my future spouse — looks, profession, when we'll meet", starter4:'Am I in Sade Sati? When does it end?',
         cStarter1:'How compatible are we overall?', cStarter2:'What are our biggest strengths as a couple?', cStarter3:'Are there any doshas we should know about?', cStarter4:'When is a good time for us to marry?',
-        yourChart:'Your chart', compatReport:'Compatibility report', generateReportBtn:'Generate report',
+        yourChart:'Your chart', compatReport:'Compatibility report', generateReportBtn:'Generate report', viewCharts:'View charts', chartYou:'You', chartPartner:'Partner',
         birthChart:'Birth Chart', rasiD1:'Rasi (D1)', navamsaD9:'Navamsa (D9)', tapHouse:'Tap any house for its planets & aspects',
         legLagna:'Lagna', legExalted:'Exalted', legFriendlyOwn:'Friendly / Own', legNeutral:'Neutral', legDebilitated:'Debilitated', legEnemy:'Enemy', planetaryPositions:'Planetary positions',
         compatibility:'Compatibility', compatHomeHint:'Ask anything about your compatibility', compatWith:'with {name}',
@@ -1140,7 +1146,7 @@
         askAnything:'कुछ भी पूछें। आपका पहला प्रश्न निःशुल्क है।', askAnythingPremium:'कुछ भी पूछें — करियर, विवाह, धन, स्वास्थ्य या समय।', askAnythingUsed:'अपनी कुंडली के बारे में कुछ भी पूछें।', quotaLeftOne:'{n} सवाल बाकी', quotaLeftMany:'{n} सवाल बाकी', freeQUsed:'यह आपका निःशुल्क प्रश्न था। असीमित उत्तरों के लिए जारी रखें।',
         starter1:'मेरा अगला बड़ा करियर अवसर कब है?', starter2:'2027 बताइए — करियर, धन, प्रेम', starter3:'मेरे भावी जीवनसाथी का वर्णन करें — रूप, पेशा, कब मिलेंगे', starter4:'क्या मैं Sade Sati में हूँ? यह कब समाप्त होगी?',
         cStarter1:'हम कुल मिलाकर कितने अनुकूल हैं?', cStarter2:'एक जोड़े के रूप में हमारी सबसे बड़ी ताकत क्या है?', cStarter3:'क्या कोई दोष है जो हमें जानना चाहिए?', cStarter4:'हमारे विवाह के लिए अच्छा समय कब है?',
-        yourChart:'आपकी कुंडली', compatReport:'अनुकूलता रिपोर्ट', generateReportBtn:'रिपोर्ट बनाएं',
+        yourChart:'आपकी कुंडली', compatReport:'अनुकूलता रिपोर्ट', generateReportBtn:'रिपोर्ट बनाएं', viewCharts:'कुंडलियाँ देखें', chartYou:'आप', chartPartner:'साथी',
         birthChart:'जन्म कुंडली', rasiD1:'राशि (D1)', navamsaD9:'नवांश (D9)', tapHouse:'किसी भी भाव पर टैप करें — उसके ग्रह व दृष्टियाँ देखें',
         legLagna:'लग्न', legExalted:'उच्च', legFriendlyOwn:'मित्र / स्व', legNeutral:'तटस्थ', legDebilitated:'नीच', legEnemy:'शत्रु', planetaryPositions:'ग्रह स्थिति',
         compatibility:'अनुकूलता', compatHomeHint:'अपनी अनुकूलता के बारे में कुछ भी पूछें', compatWith:'{name} के साथ',
@@ -2335,6 +2341,7 @@
       return set;
     }
     let chartDiv = 'D1';
+    let chartWho = 'self'; // 'self' | 'partner' — which chart the sheet is showing (compat only)
     function renderKundali(chartData, host, variant) {
       variant = variant === 'D9' ? 'D9' : 'D1';
       let birthChart, lagna;
@@ -2457,8 +2464,14 @@
     }
 
     function setChartDivUI(div) { document.querySelectorAll('#chartDivSeg button').forEach((b) => b.classList.toggle('active', b.dataset.div === div)); }
-    function renderChartScreen() { renderKundali(state.chart, $('kunHost'), chartDiv); renderChartExtras(state.chart, chartDiv); }
+    function setChartWhoUI(who) { document.querySelectorAll('#chartWhoSeg button').forEach((b) => b.classList.toggle('active', b.dataset.who === who)); }
+    // Renders whichever chart the You/Partner toggle has selected (self → own chart, partner → partner's).
+    function renderChartScreen() {
+      const cd = chartWho === 'partner' ? state.partnerChart : state.chart;
+      renderKundali(cd, $('kunHost'), chartDiv); renderChartExtras(cd, chartDiv);
+    }
     document.querySelectorAll('#chartDivSeg button').forEach((b) => b.addEventListener('click', () => { chartDiv = b.dataset.div; setChartDivUI(chartDiv); renderChartScreen(); }));
+    document.querySelectorAll('#chartWhoSeg button').forEach((b) => b.addEventListener('click', () => { chartWho = b.dataset.who; setChartWhoUI(chartWho); renderChartScreen(); }));
     // ── Bottom-sheet presenters (chart + report) ───────────────────────────
     // Mirrors the app's modal presentation (forModalPresentationIOS): the sheet
     // slides up from the bottom OVER the current view (which stays mounted behind
@@ -2476,7 +2489,21 @@
       el.addEventListener('transitionend', done);
       setTimeout(done, 360); // fallback if transitionend doesn't fire
     }
-    function openChartScreen() { if (!state.chart) { show('onboarding'); return; } chartDiv = 'D1'; setChartDivUI('D1'); renderChartScreen(); openSheet('chartScreen'); }
+    // who: 'self' (default) or 'partner'. The partner branch needs a computed partner chart;
+    // the You/Partner toggle only appears when one exists (compatibility flow).
+    function openChartScreen(who) {
+      chartWho = (who === 'partner' && state.partnerChart) ? 'partner' : 'self';
+      if (chartWho === 'self' && !state.chart) { show('onboarding'); return; }
+      chartDiv = 'D1'; setChartDivUI('D1');
+      const whoSeg = $('chartWhoSeg');
+      if (state.partnerChart && state.chart) {
+        // Label the partner tab with their name when known (mirrors the app's "Partner's chart").
+        const pb = whoSeg.querySelector('[data-who="partner"]');
+        if (pb) pb.textContent = (state.partner && state.partner.name) ? state.partner.name : t('chartPartner');
+        whoSeg.style.display = ''; setChartWhoUI(chartWho);
+      } else { whoSeg.style.display = 'none'; }
+      renderChartScreen(); openSheet('chartScreen');
+    }
     $('chartBack').addEventListener('click', () => closeSheet('chartScreen'));
 
     // Compatibility report as its OWN screen (parity with the app's CompatibilityScreen),
@@ -2522,6 +2549,7 @@
         bar.innerHTML = state.compatReport
           ? `<button type="button" class="artifact-btn" id="abReport">${ICON_REPORT}${esc(t('compatReport'))}</button>`
             + `<button type="button" class="artifact-btn" id="abEditPartner">${ICON_PENCIL}${esc(t('editPartner'))}</button>`
+            + (state.partnerChart ? `<button type="button" class="artifact-btn" id="abCompatChart">${ICON_EYE}${esc(t('viewCharts'))}</button>` : '')
           : `<button type="button" class="artifact-btn" id="abGen">${ICON_FILECHART}${esc(t('generateReportBtn'))}</button>`;
       } else {
         bar.innerHTML = state.chart ? `<button type="button" class="artifact-btn" id="abChart">${ICON_EYE}${esc(t('yourChart'))}</button>` : '';
@@ -2529,7 +2557,8 @@
       const r = $('abReport'); if (r) r.onclick = openReportScreen;
       const ep = $('abEditPartner'); if (ep) ep.onclick = openEditPartner;
       const g = $('abGen'); if (g) g.onclick = openAddPartner;
-      const c = $('abChart'); if (c) c.onclick = openChartScreen;
+      const c = $('abChart'); if (c) c.onclick = () => openChartScreen('self');
+      const cc = $('abCompatChart'); if (cc) cc.onclick = () => openChartScreen('partner');
     }
 
 
@@ -2573,6 +2602,8 @@
     $('drawerToggle').addEventListener('click', toggleDrawer); // toggle on the drawer itself (rail ↔ expanded on desktop)
     $('drawerOverlay').addEventListener('click', closeDrawer);
     $('drawerNewChat').addEventListener('click', () => { closeDrawerMobile(); startNewChat(); });
+    // Brand logo → New chat (mirrors Claude/ChatGPT).
+    { const bn = $('brandNewChat'); if (bn) { bn.addEventListener('click', () => { closeDrawerMobile(); startNewChat(); }); bn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeDrawerMobile(); startNewChat(); } }); } }
     $('diBirth').addEventListener('click', () => { closeDrawerMobile(); openBirthModal(); });
     $('diEdit').addEventListener('click', () => { closeDrawerMobile(); editBirth(); });
     $('diPremium').addEventListener('click', () => openPaywall('drawer'));
