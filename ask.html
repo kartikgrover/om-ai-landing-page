@@ -138,7 +138,23 @@
       background:var(--header); border-bottom:1px solid var(--border);
       position:sticky; top:0; z-index:30;
     }
-    .appbar #newChatBtn { margin-left:auto; } /* brand lives in the drawer header only; keep new-chat pinned right */
+    .appbar #hdrQuota { margin-left:auto; } /* brand lives in the drawer header only; push the right-side group out */
+    /* Personal/Relationship mode toggle lives centered in the header (mirrors the Pro
+       console). Absolutely centered so it stays put regardless of the side controls. */
+    .hdr-modeseg { position:absolute; left:50%; transform:translateX(-50%); width:auto; max-width:300px; }
+    .hdr-modeseg button { flex:none; padding:.32rem .9rem; font-size:var(--fs-sm); }
+    @media (max-width:560px) { .hdr-modeseg button { padding:.32rem .55rem; font-size:var(--fs-xs); } }
+    /* Header free-question count / Premium badge (mirrors the app's headerRight). */
+    .hdr-quota { display:inline-flex; align-items:center; gap:.4rem; height:40px; padding:0 .35rem;
+      border:none; background:transparent; color:var(--text); cursor:pointer; font-family:inherit; }
+    .hdr-quota .qchip { width:27px; height:27px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+      font-size:.85rem; font-weight:600; line-height:1; color:var(--text);
+      border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); background:color-mix(in srgb, var(--accent) 13%, transparent); }
+    .hdr-quota.is-premium { cursor:default; }
+    .hdr-quota.is-premium svg { width:18px; height:18px; stroke:var(--accent); fill:none; stroke-width:1.7; }
+    .hdr-quota.is-premium .pl { font-size:.92rem; font-weight:600; opacity:.85; }
+    /* No app chrome (hamburger/drawer) before sign-in — the auth & boot views own the screen. */
+    body.chrome-off .appbar, body.chrome-off .drawer, body.chrome-off .drawer-overlay { display:none; }
     .iconbtn {
       display:inline-flex; align-items:center; justify-content:center;
       width:40px; height:40px; border-radius:12px; border:none; background:transparent;
@@ -186,6 +202,9 @@
     /* small grabber handle at the top of the sheet */
     .view.sheet .sheet-grab { flex:none; width:38px; height:4px; border-radius:3px;
       background:var(--border-strong); margin:.5rem auto .1rem; }
+    /* Bottom-sheet variant (paywall): doesn't cover the whole screen — anchored to the
+       bottom, sized to its content (capped), width-limited + centered on desktop, with a
+       dim scrim above so the chat stays visible behind. Mirrors a partial bottom sheet. */
 
     /* ── Cards / forms (onboarding, profile, settings) ───────────────────── */
     .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; }
@@ -393,6 +412,10 @@
     .modal-overlay { position:fixed; inset:0; background:var(--overlay); z-index:50; display:none; align-items:center; justify-content:center; padding:1rem; }
     .modal-overlay.open { display:flex; }
     .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:420px; width:100%; }
+    /* GPT/Claude-style settings popup: a wider, scrollable centered card. */
+    .modal-card.modal-lg { max-width:560px; max-height:86vh; overflow-y:auto; text-align:left; }
+    .modal-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:-.25rem 0 .9rem; }
+    .modal-head h2 { font-size:1.5rem; margin:0; }
     .info-row { display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:.95rem; }
     .info-row:last-child { border-bottom:none; }
 
@@ -403,7 +426,8 @@
     .gender-seg button { flex:1; background:transparent; color:var(--text); border:1px solid var(--border-strong);
       border-radius:10px; padding:.6rem; cursor:pointer; font-size:.95rem; }
     .gender-seg button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
-    .report-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.1rem 1.15rem; margin:.6rem 0 1rem; align-self:stretch; }
+    /* Flat report (no outer box) — sections sit directly on the sheet, like the app. */
+    .report-card { background:transparent; border:none; border-radius:0; padding:0; margin:.2rem 0 1rem; align-self:stretch; }
     .report-score { display:flex; align-items:center; gap:1rem; }
     .score-num { font-family:'DM Serif Display',serif; font-size:2.4rem; line-height:1; color:var(--accent); }
     .score-meta { flex:1; }
@@ -461,7 +485,14 @@
     .adv-desc { font-size:var(--fs-xs); color:var(--secondary); margin:.1rem 0 .35rem; }
 
     /* ── Birth chart — North-Indian kundali (replica of the app AstroChartScreen) ── */
-    .kun-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; max-width:min(520px,100%); margin:0 auto 1rem; }
+    /* Kundali card — fills the column as a 1:1 square (mirrors the app's diamond chart:
+       chart width = container width, square). Content stacks below it. */
+    .kun-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px; max-width:100%; margin:0 auto .9rem; }
+    /* Dignity legend (mirrors the app's chart legend): explains the planet colours. */
+    .kun-legend { display:flex; flex-wrap:wrap; gap:.4rem; justify-content:center; margin:0 0 1.1rem; }
+    .kun-legend .lg-item { display:inline-flex; align-items:center; gap:.4rem; font-size:var(--fs-sm); color:var(--secondary);
+      border:0.5px solid color-mix(in srgb, var(--border-strong) 60%, transparent); border-radius:999px; padding:.22rem .55rem; }
+    .kun-legend .lg-dot { width:11px; height:11px; border-radius:50%; flex:none; }
     .kun-svg { width:100%; height:auto; display:block; }
     .kun-frame { stroke:var(--border-strong); stroke-width:1; fill:none; }
     .kun-frame-soft { stroke:var(--border); stroke-width:.8; fill:none; }
@@ -474,28 +505,36 @@
     .kun-rel-friendly, .kun-rel-own { fill:#5BA3D0; }
     .kun-rel-enemy { fill:#E0975A; }
     .kun-rel-neutral { fill:var(--text); opacity:.85; }
-    .kun-empty { color:var(--secondary); font-size:.85rem; padding:.8rem 0; text-align:center; }
-    .kun-hit { cursor:pointer; }
+    .kun-empty { color:var(--secondary); font-size:var(--fs-sm); padding:.8rem 0; text-align:center; }
+    .kun-hit { cursor:pointer; transition:fill .12s; }
+    .kun-hit:hover { fill:color-mix(in srgb, var(--accent) 10%, transparent); }
     .kun-hit.sel { fill:color-mix(in srgb, var(--accent) 16%, transparent); }
+    /* Affordance that the houses are interactive (no hover on touch, so this is the cue there). */
+    .kun-hint { display:flex; align-items:center; justify-content:center; gap:.4rem; font-size:var(--fs-xs);
+      color:var(--secondary); margin:.1rem 0 1rem; }
+    .kun-hint svg { width:14px; height:14px; stroke:var(--secondary); fill:none; stroke-width:1.7; }
     .kun-detail { margin-top:.8rem; border-top:1px solid var(--border); padding-top:.7rem; }
-    .kun-dethead { font-weight:700; color:var(--accent); font-size:.9rem; margin-bottom:.4rem; }
-    .kun-detrow { display:flex; align-items:center; gap:.45rem; font-size:.85rem; padding:.2rem 0; color:var(--text); }
+    .kun-dethead { font-weight:700; color:var(--accent); font-size:var(--fs-sm); margin-bottom:.4rem; }
+    .kun-detrow { display:flex; align-items:center; gap:.45rem; font-size:var(--fs-sm); padding:.2rem 0; color:var(--text); }
     .kun-dot { width:9px; height:9px; border-radius:50%; flex:none; }
-    .kun-detmeta { color:var(--secondary); margin-left:auto; font-size:.78rem; }
+    .kun-detmeta { color:var(--secondary); margin-left:auto; font-size:var(--fs-xs); }
     .kun-retro { color:var(--accent); font-style:italic; }
     .cx-head { font-weight:700; font-size:var(--fs-xs); color:var(--secondary); text-transform:uppercase; letter-spacing:.04em; margin:1.1rem 0 .5rem; }
     .dasha-scroll { display:flex; gap:.5rem; overflow-x:auto; padding-bottom:.4rem; }
     .dasha-block { flex:none; min-width:96px; border:1px solid var(--border-strong); border-radius:10px; padding:.5rem .65rem; background:var(--card); }
     .dasha-block.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 9%, var(--card)); }
-    .dasha-lord { font-weight:700; font-size:.9rem; display:flex; align-items:center; gap:.35rem; }
+    .dasha-lord { font-weight:700; font-size:var(--fs-sm); display:flex; align-items:center; gap:.35rem; }
     .dasha-lord .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; }
-    .dasha-dates { font-size:.72rem; color:var(--secondary); margin-top:.2rem; white-space:nowrap; }
-    .ptable { width:100%; border-collapse:collapse; font-size:.82rem; margin-top:.3rem; }
-    .ptable th { text-align:left; color:var(--secondary); font-weight:600; padding:.4rem .35rem; border-bottom:1px solid var(--border-strong); font-size:.7rem; text-transform:uppercase; letter-spacing:.03em; }
-    .ptable td { padding:.4rem .35rem; border-bottom:1px solid var(--border); }
+    .dasha-dates { font-size:var(--fs-xs); color:var(--secondary); margin-top:.2rem; white-space:nowrap; }
+    /* Positions table scrolls horizontally if a narrow phone can't fit all 6 columns. */
+    .ptable-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:.3rem; }
+    .ptable { width:100%; border-collapse:collapse; font-size:var(--fs-sm); }
+    .ptable th { text-align:left; color:var(--secondary); font-weight:600; padding:.4rem .35rem; border-bottom:1px solid var(--border-strong); font-size:var(--fs-xs); text-transform:uppercase; letter-spacing:.03em; white-space:nowrap; }
+    .ptable td { padding:.4rem .35rem; border-bottom:1px solid var(--border); white-space:nowrap; }
+    @media (max-width:520px) { .ptable { font-size:var(--fs-xs); } .ptable th, .ptable td { padding:.38rem .3rem; } }
     .ptable td.dig { font-weight:600; }
     .ptable tr:last-child td { border-bottom:none; }
-    .varg-note { margin-top:.7rem; font-size:.85rem; color:var(--text); }
+    .varg-note { margin-top:.7rem; font-size:var(--fs-sm); color:var(--text); }
     .varg-note b { color:var(--accent); }
   </style>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -520,9 +559,14 @@
     <button class="iconbtn" id="menuBtn" title="Menu" aria-label="Open menu">
       <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
     </button>
-    <button class="iconbtn" id="newChatBtn" title="New chat" aria-label="New chat">
-      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
-    </button>
+    <!-- Free-question count / Premium badge — mirrors the app's headerRight.
+         Count chip taps through to the paywall; Premium badge is a static status.
+         (New chat lives in the drawer only — no duplicate in the header.) -->
+    <div class="seg hdr-modeseg" id="modeSeg" style="display:none;">
+      <button type="button" data-mode="personal" class="active">Personal</button>
+      <button type="button" data-mode="compat">Relationship</button>
+    </div>
+    <button class="hdr-quota" id="hdrQuota" style="display:none;" aria-label="Questions left"></button>
   </header>
 
   <!-- ── DRAWER (left slide-out, mirrors CustomAstroDrawerContent) ──────── -->
@@ -537,7 +581,6 @@
     </button>
     <div class="drawer-history" id="drawerHistory"></div>
     <div class="drawer-bottom">
-      <button class="drawer-item" id="diChart"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 16v-4M12 16V9M16 16v-2" stroke-linecap="round"/></svg></span>Birth Chart</button>
       <button class="drawer-item" id="diBirth"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3" stroke-linecap="round"/></svg></span>Your Birth Details</button>
       <button class="drawer-item" id="diEdit"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18 10a2 2 0 0 0-2.83-2.83L5 17.17V20Z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4"/></svg></span>Edit Profile</button>
       <button class="drawer-item" id="diPremium"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18h14l1.2-9-4.7 3.5L12 6l-3.5 6.5L3.8 9 5 18Z" stroke-linejoin="round"/></svg></span>Get Premium</button>
@@ -593,13 +636,11 @@
       <div class="card">
         <div id="authSocial">
           <button id="signInBtn" class="btn-primary" style="display:flex;align-items:center;justify-content:center;gap:.5rem;">
-            <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#fff;border-radius:3px;flex:none;">
-              <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18c-.44-1.32-.69-2.73-.69-4.18s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
-            </span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/></svg>
             Continue with Google
           </button>
           <button id="appleSignInBtn" class="btn-primary" style="margin-top:.6rem;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;gap:.5rem;">
-            <svg width="15" height="15" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+            <svg width="17" height="17" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
             Continue with Apple
           </button>
           <div class="hint" style="display:flex;align-items:center;gap:.6rem;margin:.9rem 0;">
@@ -631,7 +672,9 @@
     <div class="chat-scroll"><div class="scroll-pad">
       <h1 style="font-size:1.9rem;margin:.25rem 0 .35rem;">Ask your birth chart</h1>
       <p class="hint" style="margin-bottom:1.1rem;">Your first question is free. We compute your real Vedic chart from your birth details — they stay private to your reading.</p>
-      <div class="card">
+      <!-- The form card is relocatable: first-run it sits here; "Edit Profile" moves
+           this exact node into #editBirthModal so the wiring/autocomplete stays intact. -->
+      <div id="onboardCardHost"><div class="card" id="birthFormCard">
         <div style="margin-bottom:1rem;">
           <label for="f-name">Name <span class="hint">(optional)</span></label>
           <input id="f-name" class="field" type="text" placeholder="Your name" autocomplete="off">
@@ -657,7 +700,7 @@
         <div id="f-tz-row" class="hint" style="margin:-0.4rem 0 1.1rem;display:none;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Time zone <b id="f-tz-detected"></b> — detected from your birth place (handles DST automatically).</div>
         <button id="startBtn" class="btn-primary">Generate my chart</button>
         <div id="onboardStatus" class="status-line"></div>
-      </div>
+      </div></div>
       <div class="trust">
         <span>Real Vedic chart from classical texts <b>(BPHS / Parashari)</b></span>
         <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
@@ -706,12 +749,6 @@
 
   <!-- ── CHAT ─────────────────────────────────────────────────────────── -->
   <div id="chatView" class="view">
-    <div class="modebar">
-      <div class="seg" id="modeSeg">
-        <button type="button" data-mode="personal" class="active">Personal</button>
-        <button type="button" data-mode="compat">Relationship</button>
-      </div>
-    </div>
     <div id="chatScroll" class="chat-scroll">
       <div class="chat-inner" id="chatInner"></div>
     </div>
@@ -730,10 +767,10 @@
     </div>
   </div>
 
-  <!-- ── PAYWALL ──────────────────────────────────────────────────────── -->
-  <div id="paywallView" class="view">
-    <div class="chat-scroll"><div class="scroll-pad" style="max-width:480px;">
-      <div style="display:flex;justify-content:flex-end;margin:.1rem 0 -.4rem;">
+  <!-- ── PAYWALL (centered modal popup — same component as Settings/Profile) ─── -->
+  <div id="paywallView" class="modal-overlay">
+    <div class="modal-card modal-lg" style="max-width:480px;">
+      <div style="display:flex;justify-content:flex-end;margin:-.4rem -.4rem -.6rem;">
         <button class="iconbtn" id="paywallClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <h2 id="pwHeroTitle" style="font-size:var(--fs-2xl);text-align:center;margin:.5rem 0 .25rem;">Continue your reading</h2>
@@ -774,15 +811,15 @@
       <div class="trust" style="margin-top:.75rem;justify-content:center;">
         <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>Secure payment by <b>Razorpay</b></span><span>Cancel anytime</span><span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · 190,000+ readings</span>
       </div>
-    </div></div>
+    </div>
   </div>
 
   <!-- ── SETTINGS ─────────────────────────────────────────────────────── -->
-  <div id="settingsView" class="view">
-    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
-      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;">
-        <button class="iconbtn" data-back="1" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <h2 style="font-size:1.6rem;margin:0;">Settings</h2>
+  <div id="settingsView" class="modal-overlay">
+    <div class="modal-card modal-lg">
+      <div class="modal-head">
+        <h2>Settings</h2>
+        <button class="iconbtn" id="settingsClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
 
       <div class="section-label">Account</div>
@@ -815,15 +852,15 @@
         <button class="srow" id="signOutBtn"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5V6a1.5 1.5 0 0 0-1.5-1.5h-6A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5h6A1.5 1.5 0 0 0 14 18v-2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 12h11m0 0-3-3m3 3-3 3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="sr-main">Sign Out</span></button>
         <div class="hint" style="text-align:center;margin-top:1rem;">Om.AI · Web <span id="appVersion"></span></div>
       </div>
-    </div></div>
+    </div>
   </div>
 
   <!-- ── PROFILE ──────────────────────────────────────────────────────── -->
-  <div id="profileView" class="view">
-    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
-      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;">
-        <button class="iconbtn" data-back="settings" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <h2 style="font-size:1.6rem;margin:0;">Profile</h2>
+  <div id="profileView" class="modal-overlay">
+    <div class="modal-card modal-lg">
+      <div class="modal-head">
+        <h2>Profile</h2>
+        <button class="iconbtn" id="profileClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <div style="text-align:center;margin-bottom:1.25rem;">
         <div class="avatar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M5 20a7 7 0 0 1 14 0" stroke-linecap="round"/></svg></div>
@@ -836,22 +873,42 @@
         <span class="sr-main">Your Birth Details<span class="sr-sub" id="pfBirth">Not set</span></span>
         <span class="chev">›</span>
       </button>
-    </div></div>
+    </div>
+  </div>
+
+  <!-- ── EDIT BIRTH DETAILS (popup) — hosts the relocated #birthFormCard ─── -->
+  <div id="editBirthModal" class="modal-overlay">
+    <div class="modal-card modal-lg">
+      <div class="modal-head">
+        <h2>Edit Birth Details</h2>
+        <button class="iconbtn" id="editBirthClose" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
+      </div>
+      <div id="editBirthBody"></div>
+    </div>
   </div>
 
   <!-- ── BIRTH CHART (D1/D9 grid + planet table + dasha timelines) ──────── -->
   <div id="chartScreenView" class="view sheet">
     <div class="sheet-grab" aria-hidden="true"></div>
-    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
-      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;">
-        <button class="iconbtn" id="chartBack" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:680px;">
+      <div style="position:relative;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem;">
         <h2 style="font-size:1.6rem;margin:0;">Birth Chart</h2>
+        <button class="iconbtn" id="chartBack" aria-label="Close" title="Close" style="position:absolute;right:0;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
-      <div class="seg" id="chartDivSeg" style="max-width:280px;margin:0 0 1rem;">
+      <div class="seg" id="chartDivSeg" style="max-width:280px;margin:0 auto 1rem;">
         <button type="button" data-div="D1" class="active">Rasi (D1)</button>
         <button type="button" data-div="D9">Navamsa (D9)</button>
       </div>
       <div class="kun-card"><div id="kunHost"></div></div>
+      <div class="kun-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke-linecap="round"/></svg>Tap any house for its planets &amp; aspects</div>
+      <div class="kun-legend" aria-label="Planet dignity colours">
+        <span class="lg-item"><span class="lg-dot" style="background:var(--accent);"></span>Lagna</span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--success);"></span>Exalted</span>
+        <span class="lg-item"><span class="lg-dot" style="background:#5BA3D0;"></span>Friendly / Own</span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--text);opacity:.7;"></span>Neutral</span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--error);"></span>Debilitated</span>
+        <span class="lg-item"><span class="lg-dot" style="background:#E0975A;"></span>Enemy</span>
+      </div>
       <div id="chartExtras"></div>
     </div></div>
   </div>
@@ -860,10 +917,12 @@
        reached via the chat dock "View report" button, so the chat stays pure chat) ── -->
   <div id="reportView" class="view sheet">
     <div class="sheet-grab" aria-hidden="true"></div>
-    <div class="chat-scroll"><div class="scroll-pad" style="max-width:560px;">
-      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;">
-        <button class="iconbtn" id="reportBack" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <!-- Kept a comfortable reading column (not full-width like the chart): the report is a
+         vertical stack of label→value rows + koota bars, which look bad stretched wide. -->
+    <div class="chat-scroll"><div class="scroll-pad" style="max-width:720px;">
+      <div style="position:relative;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem;">
         <h2 style="font-size:1.6rem;margin:0;">Compatibility</h2>
+        <button class="iconbtn" id="reportBack" aria-label="Close" title="Close" style="position:absolute;right:0;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
       </div>
       <div id="reportHost"></div>
     </div></div>
@@ -913,27 +972,28 @@
 
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
+    // Settings/Profile/Edit are now modal overlays (not router views) — they float over
+    // the active view (chat stays behind, dimmed), GPT/Claude-style. See openSettings().
     const views = { boot: $('bootView'), auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
-                    chat: $('chatView'), chartScreen: $('chartScreenView'), report: $('reportView'), paywall: $('paywallView'),
-                    settings: $('settingsView'), profile: $('profileView') };
+                    chat: $('chatView'), chartScreen: $('chartScreenView'), report: $('reportView') };
     let prevView = 'onboarding';
     const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
-    let _pwSrc = 'direct'; // set by callers right before show('paywall') to label the funnel source
+    let _pwSrc = 'direct'; // funnel source; pass it to openPaywall(src) which slides the sheet up
     function show(name) {
       const cur = currentView();
       if (cur !== 'settings' && cur !== 'profile') prevView = cur; // remember where to return from overlay screens
       Object.entries(views).forEach(([k, el]) => el.classList.toggle('active', k === name));
+      // Hide app chrome (hamburger + drawer) on the pre-sign-in screens, and force the
+      // drawer shut so a leftover open state can't bleed onto the auth view after sign-out.
+      const noChrome = name === 'auth' || name === 'boot';
+      document.body.classList.toggle('chrome-off', noChrome);
+      if (noChrome) { try { closeDrawer(); } catch (_) {} }
+      // The Personal/Relationship toggle is header chrome scoped to the chat view.
+      { const ms = $('modeSeg'); if (ms) ms.style.display = name === 'chat' ? '' : 'none'; }
       // Reset any open bottom-sheet's slide state when routing to a non-sheet view.
       if (name !== 'chartScreen' && name !== 'report') { views.chartScreen.classList.remove('up'); views.report.classList.remove('up'); }
-      if (name === 'chat') { try { restoreDrawerOnChat(); } catch (_) {} }
-      if (name === 'paywall') {
-        try { renderPaywallHero(); } catch (_) {}
-        // Clear any stale status from a prior visit ("Checkout closed." / an error)
-        // so it doesn't sit under the button on a fresh open.
-        { const ps = $('paywallStatus'); if (ps) ps.textContent = ''; }
-        track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
-        _pwSrc = 'direct';
-      }
+      closeModal('paywallView'); // navigating anywhere closes the paywall popup
+      if (name === 'chat') { try { restoreDrawerOnChat(); } catch (_) {} try { refreshHeaderQuota(); } catch (_) {} }
       // a11y: move focus into the newly shown view so keyboard/SR users aren't
       // stranded on a now-hidden control. Prefer the primary input, else heading.
       const el = views[name];
@@ -1359,6 +1419,9 @@
 
         await refreshPremium();
         renderEmptyChat();
+        // If this generate came from the Edit-birth popup, return the form to its
+        // first-run host and dismiss the settings/profile/edit overlay stack.
+        try { closeEditBirth(); closeModal('profileView'); closeModal('settingsView'); } catch (_) {}
         show('chat');
         refreshProfileUI();
       } catch (e) {
@@ -1477,7 +1540,7 @@
       // never paywall someone chatting about a reading they already paid for. Only
       // NEW astro questions (below) and NEW reports (compatGenBtn) are gated.
       if (state.mode === 'compat') return askCompat(q);
-      if (!state.premium && state.freeUsed) { _pwSrc = 'question_limit'; show('paywall'); return; }
+      if (!state.premium && state.freeUsed) { openPaywall('question_limit'); return; }
 
       asking = true;
       input.value = ''; autosize(); $('sendBtn').disabled = true;
@@ -1503,7 +1566,7 @@
           pending = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
             onDone: () => { track('question', { status: 'answered', question_type: 'astrology' }); resolve(); },
-            onPaywall: () => { aiEl.remove(); paywalled = true; _pwSrc = 'server_gate'; show('paywall'); resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; openPaywall('server_gate'); resolve(); },
             onError: (e) => { errMsg = e || 'Something went wrong.'; track('question', { status: 'failed', question_type: 'astrology' }); resolve(); },
           };
           sendWS({
@@ -1550,6 +1613,7 @@
           $('chatStatus').textContent = state.freeUsed
             ? 'That was your free question. Continue for unlimited answers.'
             : `${state.remaining} question${state.remaining === 1 ? '' : 's'} left.`;
+          refreshHeaderQuota();
         }
       }
     }
@@ -1565,7 +1629,7 @@
       else { state.conversationId = null; state.sessionId = null; renderEmptyChat(); }
       $('chatStatus').textContent = ''; renderHistory(); show('chat');
     }
-    $('newChatBtn').addEventListener('click', startNewChat);
+    // New chat is reached from the drawer (drawerNewChat) only — no header duplicate.
 
     // ── Compatibility / Relationship mode ──────────────────────────────────
     const COMPAT_STARTERS = [
@@ -1879,7 +1943,7 @@
       // A compatibility REPORT is a metered "reading" — block a NEW one when the free
       // question is used up (the server enforces too; this avoids computing a partner
       // chart we can't deliver). Follow-up questions on an existing report stay free.
-      if (!state.premium && state.freeUsed) { _pwSrc = 'compat_limit'; show('paywall'); return; }
+      if (!state.premium && state.freeUsed) { openPaywall('compat_limit'); return; }
       const btn = $('compatGenBtn'); btn.disabled = true;
       try {
         status.textContent = "Looking up partner's birth place…";
@@ -1933,6 +1997,7 @@
         if (!state.premium) {
           if (Number.isFinite(state.remaining)) { state.remaining = Math.max(0, state.remaining - 1); state.freeUsed = state.remaining <= 0; }
           else { state.freeUsed = true; }
+          refreshHeaderQuota();
         }
 
         state.mode = 'compat'; setModeUI('compat');
@@ -1944,7 +2009,7 @@
       } catch (e) {
         // Over-quota → the report onPaywall rejected with this sentinel; show the
         // paywall instead of a scary error under the setup form.
-        if (e.message === '__paywall__') { _pwSrc = 'server_gate'; show('paywall'); }
+        if (e.message === '__paywall__') { openPaywall('server_gate'); }
         else { status.textContent = e.message || 'Something went wrong. Please retry.'; }
         btn.disabled = false;
       }
@@ -1966,7 +2031,7 @@
           pending = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
             onDone: () => { track('question', { status: 'answered', question_type: 'compatibility' }); resolve(); },
-            onPaywall: () => { aiEl.remove(); paywalled = true; _pwSrc = 'server_gate'; show('paywall'); resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; openPaywall('server_gate'); resolve(); },
             onError: (e) => { errMsg = e || 'Something went wrong.'; track('question', { status: 'failed', question_type: 'compatibility' }); resolve(); },
           };
           sendWS({
@@ -2127,7 +2192,7 @@
           return `<tr><td><b>${p}</b>${retro}${combust}</td><td>${esc(info.zodiac || '—')}</td><td>${info.house || '—'}</td><td>${deg}</td><td>${nak}</td><td class="dig" style="color:${col}">${esc(info.relationship || '—')}</td></tr>`;
         }).join('');
         html += `<div class="cx-head">Planetary positions${variant === 'D9' ? ' · Navāṁśa' : ''}</div>
-          <table class="ptable"><thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Deg</th><th>Nakshatra</th><th>Dignity</th></tr></thead><tbody>${rows}</tbody></table>`;
+          <div class="ptable-wrap"><table class="ptable"><thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Deg</th><th>Nakshatra</th><th>Dignity</th></tr></thead><tbody>${rows}</tbody></table></div>`;
       }
       if (variant === 'D9') {
         const vg = chartData.divisionalCharts?.D9?.vargottamaPlanets || [];
@@ -2178,8 +2243,19 @@
     $('reportBack').addEventListener('click', () => closeSheet('report'));
     // Paywall is a modal-style screen: dismiss with a top-right ✕ or ESC (web + a11y best practice;
     // matches the app's close-X paywall). Returns to wherever it was opened from.
-    const dismissPaywall = () => { if (currentView() === 'paywall') show(prevView); };
+    // Paywall is a centered modal popup (same component as Settings/Profile). It replaces
+    // (not stacks on) the settings/profile popups, so there's never a true modal-in-modal.
+    function openPaywall(src) {
+      _pwSrc = src || 'direct';
+      try { closeModal('settingsView'); closeModal('profileView'); } catch (_) {}
+      try { renderPaywallHero(); } catch (_) {}
+      { const ps = $('paywallStatus'); if (ps) ps.textContent = ''; } // clear stale status from a prior visit
+      track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
+      openModal('paywallView');
+    }
+    const dismissPaywall = () => { if ($('paywallView').classList.contains('open')) closeModal('paywallView'); };
     $('paywallClose').addEventListener('click', dismissPaywall);
+    $('paywallView').addEventListener('click', (e) => { if (e.target === $('paywallView')) dismissPaywall(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') dismissPaywall(); });
     // Stroke/outline icons — match the web's icon language AND the app's MaterialCommunityIcons
     // choices (eye = view chart, text-box-outline = report, file-chart-outline = generate report).
@@ -2242,16 +2318,19 @@
     $('menuBtn').addEventListener('click', toggleDrawer);
     $('drawerOverlay').addEventListener('click', closeDrawer);
     $('drawerNewChat').addEventListener('click', () => { closeDrawerMobile(); startNewChat(); });
-    $('diChart').addEventListener('click', () => { closeDrawerMobile(); openChartScreen(); });
     $('diBirth').addEventListener('click', () => { closeDrawerMobile(); openBirthModal(); });
     $('diEdit').addEventListener('click', () => { closeDrawerMobile(); editBirth(); });
-    $('diPremium').addEventListener('click', () => { closeDrawerMobile(); show('paywall'); });
+    $('diPremium').addEventListener('click', () => openPaywall('drawer'));
     $('birthModalClose').addEventListener('click', () => $('birthModal').classList.remove('open'));
     $('birthModal').addEventListener('click', (e) => { if (e.target === $('birthModal')) $('birthModal').classList.remove('open'); });
     // Escape closes whichever overlay is open (a11y).
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
-      if ($('birthModal').classList.contains('open')) $('birthModal').classList.remove('open');
+      // Close the top-most overlay only (popups stack: edit > profile > settings).
+      if ($('editBirthModal').classList.contains('open')) closeEditBirth();
+      else if ($('profileView').classList.contains('open')) { closeModal('profileView'); openModal('settingsView'); }
+      else if ($('settingsView').classList.contains('open')) closeModal('settingsView');
+      else if ($('birthModal').classList.contains('open')) $('birthModal').classList.remove('open');
       else if ($('drawer').classList.contains('open')) closeDrawer();
     });
     function openBirthModal() {
@@ -2259,12 +2338,46 @@
       $('bmPlace').textContent = state.birthPlace || 'Not set';
       $('birthModal').classList.add('open');
     }
+    // ── Settings / Profile / Edit-birth modal popups (GPT/Claude-style) ───────
+    const openModal = (id) => $(id).classList.add('open');
+    const closeModal = (id) => $(id).classList.remove('open');
+    function openSettings() { refreshSubUI(); openModal('settingsView'); }
     function editBirth() {
       if (state.userName) $('f-name').value = state.userName;
       if (state.birthPlace) $('f-place').value = state.birthPlace;
-      show('onboarding');
+      $('onboardStatus').textContent = '';
+      $('startBtn').disabled = false;
+      $('editBirthBody').appendChild($('birthFormCard')); // relocate the live form node (keeps wiring)
+      openModal('editBirthModal');
     }
-    function refreshDrawer() { $('diPremium').style.display = state.premium ? 'none' : 'flex'; }
+    function closeEditBirth() {
+      $('onboardCardHost').appendChild($('birthFormCard')); // return it to the first-run host
+      closeModal('editBirthModal');
+    }
+    function refreshDrawer() { $('diPremium').style.display = state.premium ? 'none' : 'flex'; refreshHeaderQuota(); }
+
+    // Header free-question count / Premium badge — mirrors the app's headerRight:
+    // a crown + "Premium" once subscribed, otherwise a circular count chip that
+    // taps through to the paywall. Hidden until we have a real signal.
+    function refreshHeaderQuota() {
+      const el = $('hdrQuota'); if (!el) return;
+      if (state.premium) {
+        el.className = 'hdr-quota is-premium';
+        el.style.display = 'inline-flex';
+        el.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l3.6 2.6L12 5l4.4 6.6L20 9l-1.7 9.6a1 1 0 0 1-1 .8H6.7a1 1 0 0 1-1-.8L4 9z" stroke-linejoin="round"/></svg><span class="pl">Premium</span>';
+        el.setAttribute('aria-label', 'Premium');
+        el.title = 'Premium';
+      } else if (Number.isFinite(state.remaining)) {
+        el.className = 'hdr-quota is-count';
+        el.style.display = 'inline-flex';
+        el.innerHTML = '<span class="qchip">' + Math.max(0, state.remaining) + '</span>';
+        el.setAttribute('aria-label', state.remaining + ' free question' + (state.remaining === 1 ? '' : 's') + ' left, tap to upgrade');
+        el.title = 'Tap to upgrade';
+      } else {
+        el.style.display = 'none';
+      }
+    }
+    $('hdrQuota').addEventListener('click', () => { if (!state.premium) { openPaywall('header_count'); } });
 
     // ── Astro session persistence (same Firestore model as the app) ────────
     // Sessions: users/{uid}/astro_sessions ; messages: users/{uid}/astro_chats
@@ -2369,19 +2482,23 @@
     }
 
     // ── settings / profile navigation ──────────────────────────────
-    $('settingsBtn').addEventListener('click', () => { closeDrawer(); refreshSubUI(); show('settings'); });
+    $('settingsBtn').addEventListener('click', () => { closeDrawerMobile(); openSettings(); });
     document.querySelectorAll('[data-back]').forEach((b) => b.addEventListener('click', () => {
       const t = b.dataset.back;
       if (t === 'chat') { setMode('personal'); return; } // leaving partner setup → back to personal chat
       show(t === '1' ? prevView : t);
     }));
-    $('goProfile').addEventListener('click', () => { refreshProfileUI(); show('profile'); });
-    $('editBirth').addEventListener('click', () => {
-      // prefill known values and return to onboarding
-      if (state.userName) $('f-name').value = state.userName;
-      if (state.birthPlace) $('f-place').value = state.birthPlace;
-      show('onboarding');
-    });
+    // Settings popup: X / backdrop close it.
+    $('settingsClose').addEventListener('click', () => closeModal('settingsView'));
+    $('settingsView').addEventListener('click', (e) => { if (e.target === $('settingsView')) closeModal('settingsView'); });
+    // Profile popup: opens over Settings; closing returns to Settings.
+    $('goProfile').addEventListener('click', () => { refreshProfileUI(); openModal('profileView'); });
+    $('profileClose').addEventListener('click', () => { closeModal('profileView'); openModal('settingsView'); });
+    $('profileView').addEventListener('click', (e) => { if (e.target === $('profileView')) { closeModal('profileView'); openModal('settingsView'); } });
+    // Edit-birth popup (Profile → Your Birth Details, and the drawer's Edit Profile).
+    $('editBirth').addEventListener('click', editBirth);
+    $('editBirthClose').addEventListener('click', closeEditBirth);
+    $('editBirthModal').addEventListener('click', (e) => { if (e.target === $('editBirthModal')) closeEditBirth(); });
     $('signOutBtn').addEventListener('click', async () => {
       try { await signOut(auth); } catch (_) {}
       Object.assign(state, { chart: null, conversationId: null, premium: false, freeUsed: false, uid: null });
@@ -2390,7 +2507,7 @@
       if (LOCAL) await signInAnonymously(auth).catch(() => {});
     });
     $('manageSub').addEventListener('click', async () => {
-      if (!state.premium) { show('paywall'); return; }
+      if (!state.premium) { openPaywall('manage_subscription'); return; }
       if (!confirm('Cancel your subscription? You keep access until the end of your current billing period.')) return;
       try {
         const t = await token();
@@ -2421,7 +2538,7 @@
         const t = await token();
         if (!t) return;
         const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${t}` } }).then(r => r.json()).catch(() => ({}));
-        if (s && s.active) { state.premium = true; state.freeUsed = false; return; }
+        if (s && s.active) { state.premium = true; state.freeUsed = false; refreshHeaderQuota(); return; }
         state.premium = false;
         // Not premium → derive freeUsed from the shared question ledger, so a
         // returning free user who already spent their question on a fresh page
@@ -2435,6 +2552,7 @@
           state.remaining = Number.isFinite(remaining) ? remaining : null;
           if (Number.isFinite(remaining)) state.freeUsed = remaining <= 0;
         } catch (_) { /* leave freeUsed as-is */ }
+        refreshHeaderQuota();
       } catch (_) { /* ignore — fall back to free-Q flow */ }
     }
 
