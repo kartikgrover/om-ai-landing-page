@@ -261,6 +261,11 @@
     .typing-dots i:nth-child(2) { animation-delay:.18s; }
     .typing-dots i:nth-child(3) { animation-delay:.36s; }
     @keyframes typingdot { 0%,70%,100% { opacity:.3; transform:translateY(0); } 35% { opacity:1; transform:translateY(-4px); } }
+    /* Bot loading indicator — matches the app's InlineLoader (mode='astro'): a small
+       spinner + a typewriter line rotating through astrology messages. */
+    .inline-loader { display:inline-flex; align-items:center; gap:.55rem; color:var(--secondary); }
+    .il-spin { width:16px; height:16px; flex:none; border:2px solid var(--border-strong); border-top-color:var(--accent); border-radius:50%; animation:bootspin .8s linear infinite; }
+    .il-text { font-size:var(--fs-md); }
 
     /* Copy / Share controls under an AI answer (mirrors app ShareButton row) */
     .msg-actions { display:flex; gap:.1rem; margin:.1rem 0 .5rem .1rem; align-self:stretch; }
@@ -1477,6 +1482,27 @@
       return el;
     }
 
+    // Bot loading indicator — mirrors the app's InlineLoader mode='astro' (spinner +
+    // typewriter rotating through shuffled astrology messages, 18ms/char, 1.5s pause).
+    // Self-stops once `el`'s content is replaced (stream begins) or it leaves the DOM.
+    const ASTRO_LOAD_MSGS = ['Studying your Kundali…', 'Analyzing the Grahas…', 'Consulting the Nakshatras…', 'Calculating planetary influences…', 'Calculating…', 'Interpreting positions…'];
+    function startInlineLoader(el, msgs) {
+      const set = (msgs || ASTRO_LOAD_MSGS).slice();
+      for (let i = set.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [set[i], set[j]] = [set[j], set[i]]; }
+      el.innerHTML = '<span class="inline-loader"><span class="il-spin" aria-hidden="true"></span><span class="il-text"></span></span>';
+      const textEl = el.querySelector('.il-text');
+      let mi = 0, ci = 0, timer = null, stopped = false;
+      const stop = () => { stopped = true; if (timer) clearTimeout(timer); };
+      const tick = () => {
+        if (stopped || !document.body.contains(textEl)) { stop(); return; } // content replaced → stop
+        const full = set[mi];
+        if (ci < full.length) { ci++; textEl.textContent = full.slice(0, ci); timer = setTimeout(tick, 18); }
+        else { timer = setTimeout(() => { mi = (mi + 1) % set.length; ci = 0; tick(); }, 1500); }
+      };
+      tick();
+      return stop;
+    }
+
     // ── Copy / Share controls under an AI answer (mirrors app ShareButton) ──
     // `getText()` is read lazily so streamed answers share their final text.
     function attachMsgActions(aiEl, getText) {
@@ -1555,7 +1581,7 @@
 
       addMsg('user', q);
       saveMessage('user', q);
-      const aiEl = addMsg('ai', ''); aiEl.innerHTML = '<span class="typing">consulting your chart<span class="typing-dots"><i></i><i></i><i></i></span></span>';
+      const aiEl = addMsg('ai', ''); startInlineLoader(aiEl);
       let acc = '', errMsg = null, paywalled = false;
       // Re-send the same question (composer already holds it via the restore below).
       const retry = () => { $('composerInput').value = q; ask(); };
@@ -2022,7 +2048,7 @@
       if (!state.compatSessionId) { try { state.compatSessionId = await createCompatSession(); firstMsg = true; } catch (_) {} }
       addMsg('user', q); saveCompatMessage('user', q);
       track('question', { status: 'asked', question_type: 'compatibility' });
-      const aiEl = addMsg('ai', ''); aiEl.innerHTML = '<span class="typing">analyzing your compatibility<span class="typing-dots"><i></i><i></i><i></i></span></span>';
+      const aiEl = addMsg('ai', ''); startInlineLoader(aiEl);
       let acc = '', errMsg = null, paywalled = false;
       const retry = () => { $('composerInput').value = q; askCompat(q); };
       try {
