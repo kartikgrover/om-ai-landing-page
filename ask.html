@@ -1028,6 +1028,19 @@
                     partner: null, partnerChart: null, compatReport: null,
                     compatSessionId: null, compatConversationId: null };
 
+    // User-scoped fields wiped on sign-out / delete / account-switch (in the same tab).
+    // Keeps `lang` (a persisted device pref) and ws/wsUid (the caller closes the socket
+    // explicitly). Resetting only a subset previously leaked the prior user's partner,
+    // compatibility report, chart and name into the next account signed in on the same tab.
+    const FRESH_USER_STATE = {
+      uid: null, chart: null, conversationId: null, sessionId: null,
+      freeUsed: false, premium: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
+      timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
+      mode: 'personal', userGender: null, partnerGender: null,
+      partner: null, partnerChart: null, compatReport: null,
+      compatSessionId: null, compatConversationId: null,
+    };
+
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
     // Settings/Profile/Edit are now modal overlays (not router views) — they float over
@@ -1216,11 +1229,15 @@
       const signedIn = user && (!user.isAnonymous || LOCAL); // prod needs a real account; ?local allows anon for testing
       if (user) {
         const changed = state.uid && state.uid !== user.uid;
+        // A different account in the same tab: wipe the prior user's data (partner/compat/
+        // chart/name/quota) so nothing leaks across accounts, and drop the WS — it was authed
+        // for the OLD uid and the server enforces decoded.uid===userId, so the next request
+        // must reconnect under the new identity.
+        if (changed) {
+          if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
+          Object.assign(state, FRESH_USER_STATE);
+        }
         state.uid = user.uid;
-        // H2 fix: if the uid changed, the open WS was authed for the OLD uid and
-        // the server enforces decoded.uid===userId. Drop it so the next request
-        // reconnects under the new identity.
-        if (changed && state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
         refreshProfileUI();
         // Login funnel (mirrors the app's auth_interaction family). Once per session,
         // real accounts only (anon ?local sessions don't count).
@@ -1725,6 +1742,35 @@
       return row;
     }
 
+    // Re-read the authoritative free-question balance after an answer — mirrors the app's
+    // billingService.getRemainingQuestions (AstroScreen re-reads after each question). The web
+    // decrement is server-owned (consumeFreeQuota in the entitlement gate), which already honours
+    // the greeting / short-follow-up exemptions, so trusting the ledger here keeps the UI in lock-
+    // step with the server instead of simulating those rules client-side (which drifted and
+    // paywalled pack buyers early). Reads users/{uid}/questions/purchased — the same doc as the
+    // initial refreshPremium() load.
+    async function refreshRemaining() {
+      if (state.premium || !state.uid) return;
+      try {
+        const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
+        const remaining = snap.exists() ? Number(snap.data()?.remaining) : null;
+        if (Number.isFinite(remaining)) {
+          // A charged answer always leaves a ledger doc (a new user's first real question is
+          // granted+spent at remaining 0), so a finite value is authoritative.
+          state.remaining = remaining;
+          state.freeUsed = remaining <= 0;
+          $('chatStatus').textContent = state.freeUsed
+            ? t('freeQUsed')
+            : t(state.remaining === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n: state.remaining }) + '.';
+        } else {
+          // No doc → the server didn't spend (e.g. a greeting / short follow-up). The free
+          // question is still intact — don't flip freeUsed, or we'd block a real question next.
+          state.remaining = null;
+        }
+        refreshHeaderQuota();
+      } catch (_) { /* leave state as-is on a transient read failure */ }
+    }
+
     let asking = false; // single shared WS `pending` slot → serialize requests
     async function ask() {
       if (asking) return; // a stream is already in flight — ignore Enter/click spam
@@ -1794,22 +1840,10 @@
           touchSession(firstMsg ? q : null);
           if (firstMsg) fetchSessions(); // surface the new session in the drawer
         }
-        if (!state.premium && acc) {
-          // The server (consumeFreeQuota) already decremented the shared ledger for
-          // this astro answer. Mirror it locally: a pack buyer with questions left is
-          // NOT blocked; only remaining<=0 trips the paywall. (A blanket freeUsed=true
-          // here used to paywall pack buyers after one of their five questions.)
-          if (Number.isFinite(state.remaining)) {
-            state.remaining = Math.max(0, state.remaining - 1);
-            state.freeUsed = state.remaining <= 0;
-          } else {
-            state.freeUsed = true; // brand-new user just spent their one granted free question
-          }
-          $('chatStatus').textContent = state.freeUsed
-            ? t('freeQUsed')
-            : t(state.remaining === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n: state.remaining }) + '.';
-          refreshHeaderQuota();
-        }
+        // The server owns the web free-question decrement (consumeFreeQuota in the entitlement
+        // gate) and only charges a real question — never a greeting or a short follow-up that
+        // continues the chat. Re-read the authoritative balance (app parity) rather than guessing.
+        if (!state.premium && acc) await refreshRemaining();
       }
     }
 
@@ -1820,6 +1854,13 @@
 
     function startNewChat() {
       if (!state.chart) { show('onboarding'); return; }
+      // A stream is in flight (single shared `pending` + one chat container). Wiping the chat
+      // here would detach the element the answer renders into → it vanishes. Same guard as setMode().
+      if (asking) {
+        const s = $('chatStatus');
+        if (s) { s.textContent = 'Please wait for the current answer to finish.'; setTimeout(() => { if (s.textContent === 'Please wait for the current answer to finish.') s.textContent = ''; }, 2500); }
+        return;
+      }
       isEditingPartner = false; setPartnerFormMode(false); // clear any pending partner-edit state so a later generate isn't taken for an edit
       if (state.mode === 'compat') { state.compatSessionId = null; state.compatConversationId = null; renderCompatHome(); }
       else { state.conversationId = null; state.sessionId = null; renderEmptyChat(); }
@@ -2304,20 +2345,10 @@
           attachMsgActions(aiEl, () => acc);
         }
         if (acc) { saveCompatMessage('bot', acc); touchCompatSession(firstMsg ? q : null); if (firstMsg) fetchSessions(); }
-        // A compat follow-up is a metered QUESTION (app parity) — mirror the server's
-        // decrement of the shared free-question ledger, exactly like an astro question.
-        if (!state.premium && acc) {
-          if (Number.isFinite(state.remaining)) {
-            state.remaining = Math.max(0, state.remaining - 1);
-            state.freeUsed = state.remaining <= 0;
-          } else {
-            state.freeUsed = true;
-          }
-          $('chatStatus').textContent = state.freeUsed
-            ? t('freeQUsed')
-            : t(state.remaining === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n: state.remaining }) + '.';
-          refreshHeaderQuota();
-        }
+        // A compat follow-up is a metered QUESTION (app parity), drawn from the same shared
+        // free-question ledger as an astro question. Re-read the authoritative balance the server
+        // already updated (it skips greetings / short follow-ups) rather than guessing locally.
+        if (!state.premium && acc) await refreshRemaining();
       }
     }
 
@@ -2506,7 +2537,13 @@
       if (state.partnerChart && state.chart) {
         // Label the partner tab with their name when known (mirrors the app's "Partner's chart").
         const pb = whoSeg.querySelector('[data-who="partner"]');
-        if (pb) pb.textContent = (state.partner && state.partner.name) ? state.partner.name : t('chartPartner');
+        if (pb) {
+          const pname = state.partner && state.partner.name;
+          // Drop data-i18n when showing a real name so a later language switch (applyI18n
+          // rewrites every [data-i18n]) doesn't clobber it back to the generic "Partner".
+          if (pname) { pb.removeAttribute('data-i18n'); pb.textContent = pname; }
+          else { pb.setAttribute('data-i18n', 'chartPartner'); pb.textContent = t('chartPartner'); }
+        }
         whoSeg.style.display = ''; setChartWhoUI(chartWho);
       } else { whoSeg.style.display = 'none'; }
       renderChartScreen(); openSheet('chartScreen');
@@ -2814,7 +2851,7 @@
     $('signOutBtn').addEventListener('click', async () => {
       closeModal('settingsView'); // don't leave Settings hanging open behind the auth screen
       try { await signOut(auth); } catch (_) {}
-      Object.assign(state, { chart: null, conversationId: null, premium: false, freeUsed: false, uid: null });
+      Object.assign(state, FRESH_USER_STATE);
       if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
       show('auth'); // onAuthStateChanged(null) also routes here; for ?local it re-anons
       if (LOCAL) await signInAnonymously(auth).catch(() => {});
@@ -2857,7 +2894,7 @@
         if (!res.ok) throw new Error('delete-data ' + res.status);
         // Step 3 — delete the Firebase auth user, clear local state, route to signed-out view.
         await deleteUser(user);
-        Object.assign(state, { chart: null, conversationId: null, premium: false, freeUsed: false, uid: null });
+        Object.assign(state, FRESH_USER_STATE);
         if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
         await signOut(auth).catch(() => {}); // belt-and-suspenders; deleteUser already clears currentUser
         closeModal('settingsView');
