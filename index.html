@@ -1560,7 +1560,7 @@
   // is a dead end for them — so lead them to the web ask experience. Mobile keeps
   // the store-first flow (better UX + native billing). Flip WEB_ENABLED at launch.
   (function () {
-    var WEB_ENABLED = false;                       // ← true once omai.app/ask is public
+    var WEB_ENABLED = true;                        // ON — web MVP (omai.app/ask.html) is public (2026-06-26)
     var web = document.getElementById('btn-web');
     if (!WEB_ENABLED || !web) return;
     var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
