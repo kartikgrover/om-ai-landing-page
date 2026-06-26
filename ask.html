@@ -3076,11 +3076,11 @@
     async function runPackCheckout({ status, onDismiss } = {}) {
       const setStatus = (s) => { if (status) status.textContent = s; };
       setStatus('Signing you in…');
-      const { t, attribution } = await prepareAccountForCheckout();
+      const { t: idToken, attribution } = await prepareAccountForCheckout();
       setStatus('Starting your purchase…');
       const r = await fetch(`${API}/api/web/razorpay/create-order`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
         body: JSON.stringify({ pack: 'basic', ...attribution }),
       });
       if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start purchase');
@@ -3151,13 +3151,13 @@
         }
 
         status.textContent = t('authSigningIn');
-        const { t, attribution } = await prepareAccountForCheckout();
+        const { t: idToken, attribution } = await prepareAccountForCheckout();
 
         // ── recurring subscription (Razorpay Subscriptions API) ───────
         status.textContent = t('subStartingMvp');
         const r = await fetch(`${API}/api/web/razorpay/create-subscription`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` },
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
           body: JSON.stringify({ plan: chosenPlan, ...attribution }),
         });
         if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start subscription');
