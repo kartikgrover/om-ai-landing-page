@@ -147,7 +147,7 @@
     .seg.hdr-modeseg { position:absolute; left:50%; transform:translateX(-50%); width:auto; max-width:300px; border-radius:8px; }
     .hdr-modeseg button { flex:none; padding:.3rem .8rem; font-size:var(--fs-sm); font-weight:600; line-height:1.2; }
     @media (max-width:560px) { .hdr-modeseg button { padding:.28rem .5rem; font-size:var(--fs-xs); }
-      .hdr-quota .qfull { display:none; } .hdr-quota .qnum { display:inline; } /* number-only so it can't collide with the centered toggle */ }
+      .hdr-quota.is-count .qfull { display:none; } .hdr-quota.is-count .qnum { display:inline; } /* number-only so it can't collide with the centered toggle (.is-count beats the base qnum:none below regardless of source order) */ }
     /* Header free-question count / Premium badge (mirrors the app's headerRight). */
     .hdr-quota { display:inline-flex; align-items:center; gap:.4rem; height:40px; padding:0 .35rem;
       border:none; background:transparent; color:var(--text); cursor:pointer; font-family:inherit; }
@@ -454,7 +454,10 @@
     /* Sticky, centered modal header (mirrors the app's centered screen titles). The title
        centers; the close pins top-right and stays reachable while the card scrolls. Negative
        margins bleed the header over the card's 1.25rem padding so its background covers the gap. */
-    .modal-head { position:sticky; top:0; z-index:3; display:flex; align-items:center; justify-content:center; gap:.5rem; background:var(--card); margin:-1.25rem -1.25rem .9rem; padding:1.15rem 1.25rem .7rem; border-radius:16px 16px 0 0; }
+    /* Header flush at the card top so the sticky bar fully covers scrolled content (the
+       negative-top-margin bleed showed through on mobile Safari). */
+    .modal-card:has(.modal-head) { padding-top:0; }
+    .modal-head { position:sticky; top:0; z-index:3; display:flex; align-items:center; justify-content:center; gap:.5rem; background:var(--card); margin:0 -1.25rem .9rem; padding:1.15rem 1.25rem .7rem; border-radius:16px 16px 0 0; }
     .modal-head h2 { font-size:var(--fs-2xl); margin:0; text-align:center; }
     .modal-head .iconbtn { position:absolute; right:1rem; top:.9rem; }
     .info-row { display:flex; justify-content:space-between; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:var(--fs-md); }
