@@ -45,36 +45,7 @@
     // out of the shared landing property without a separate GA4 property.
     window.track = function (name, params) { try { gtag('event', name, Object.assign({ surface: 'web_ask' }, params || {})); } catch (_) {} };
   </script>
-  <!-- ── PREVIEW GATE ───────────────────────────────────────────────────────
-       Hides the web app from the public while it's being finished. Bypass with
-       ?preview=omai-preview-2026 (persisted to localStorage → once per browser).
-       To relaunch: delete this <script>+<style>, the #omaiMaintenance div in
-       <body>, and the `window.__OMAI_LOCKED__` guard at the top of the module. -->
-  <script>
-    (function () {
-      var TOKEN = 'omai-preview-2026';
-      var ok = false;
-      try {
-        var q = new URLSearchParams(location.search).get('preview');
-        if (q === TOKEN) localStorage.setItem('omai_preview', TOKEN);
-        ok = (q === TOKEN) || (localStorage.getItem('omai_preview') === TOKEN);
-      } catch (e) { ok = false; }
-      if (!ok) { window.__OMAI_LOCKED__ = true; document.documentElement.className += ' locked'; }
-    })();
-  </script>
-  <style>
-    #omaiMaintenance { display: none; }
-    html.locked body > *:not(#omaiMaintenance) { display: none !important; }
-    html.locked #omaiMaintenance {
-      display: flex; position: fixed; inset: 0; z-index: 99999; box-sizing: border-box;
-      flex-direction: column; align-items: center; justify-content: center; text-align: center;
-      gap: 1rem; padding: 2rem; background: #1a1714; color: #f3ede3;
-      font-family: 'Source Sans 3', system-ui, -apple-system, sans-serif;
-    }
-    html.locked #omaiMaintenance h1 { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; font-size: clamp(1.8rem, 5vw, 2.6rem); margin: .25rem 0 0; }
-    html.locked #omaiMaintenance p { color: #b8ad9c; max-width: 30rem; line-height: 1.55; margin: 0; }
-    html.locked #omaiMaintenance a.cta { margin-top: .6rem; background: #D97757; color: #fff; text-decoration: none; padding: .85rem 1.7rem; border-radius: 12px; font-weight: 600; }
-  </style>
+  <!-- Preview gate removed — public launch (2026-06-26). -->
   <title>Ask Om.AI — Free Vedic Astrology Chat from Your Birth Chart</title>
   <meta name="description" content="Ask your real Vedic birth chart anything — career, marriage, money, health. Your first question is free, 24/7.">
   <link rel="canonical" href="https://omai.app/ask.html">
@@ -578,13 +549,6 @@
 </head>
 <body class="chrome-off"><!-- starts chrome-free for a clean boot splash; show() clears it on the chat view -->
   <!-- Preview-gate screen (shown when not bypassed — see <head>). Must be a direct child of <body>. -->
-  <div id="omaiMaintenance" aria-hidden="true">
-    <picture><source srcset="/assets/logo-mark.webp" type="image/webp"><img src="/assets/logo-mark.png" alt="Om.AI" width="613" height="362" style="width:92px;height:auto;"></picture>
-    <h1>Coming soon to web</h1>
-    <p>We're putting the finishing touches on the Om.AI web experience — it'll be live here shortly.</p>
-    <p>Meanwhile, get the full app for the complete experience.</p>
-    <a class="cta" href="/">Get the Om.AI app →</a>
-  </div>
   <!-- ── App bar (mirrors AstroScreen: hamburger ↔ drawer, new chat) ────── -->
   <header class="appbar">
     <button class="iconbtn" id="menuBtn" title="Menu" aria-label="Open menu">
@@ -981,9 +945,6 @@
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, deleteUser, reauthenticateWithPopup, reauthenticateWithCredential, EmailAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-
-    // Preview gate (see <head>): when locked, bail before any Firebase/WS init.
-    if (window.__OMAI_LOCKED__) throw new Error('Om.AI web is in preview — gated.');
 
     // Public Firebase web config (same project as the app — client config is not secret).
     const firebaseApp = initializeApp({
@@ -1741,6 +1702,24 @@
     // the ledger here keeps the UI in lock-step with the server instead of simulating any rules
     // client-side (which drifted and paywalled pack buyers early). Reads users/{uid}/questions/purchased — the same doc as the
     // initial refreshPremium() load.
+    // ── device-level free-trial guard ───────────────────────────────
+    // Mirrors the app's @device_free_astro flag: a localStorage marker (per-origin; survives
+    // sign-out AND account deletion, which only clear Firestore + the auth user) so a user can't
+    // reclaim the free question by deleting and recreating their account in the same browser.
+    // Soft / client-side — clearing site data or incognito bypasses it (acceptable; the app accepts
+    // the same). The backend stays authoritative; this only tightens the local gate.
+    const FREE_USED_KEY = 'omai_free_trial_used';
+    const deviceTrialUsed = () => { try { return localStorage.getItem(FREE_USED_KEY) === '1'; } catch (_) { return false; } };
+    const markDeviceTrialUsed = () => { try { localStorage.setItem(FREE_USED_KEY, '1'); } catch (_) {} };
+    // Reconcile state.freeUsed with the device marker (non-premium only): remember exhaustion, and
+    // deny a fresh free question to a brand-new account (no paid balance) on a device that already
+    // used its trial. A premium user or a pack buyer with remaining > 0 is never blocked.
+    function syncDeviceTrialGuard() {
+      if (state.premium) return;
+      const hasPaid = Number.isFinite(state.remaining) && state.remaining > 0;
+      if (state.freeUsed) markDeviceTrialUsed();
+      else if (deviceTrialUsed() && !hasPaid) state.freeUsed = true;
+    }
     async function refreshRemaining() {
       if (state.premium || !state.uid) return;
       try {
@@ -1759,6 +1738,7 @@
           // question is still intact — don't flip freeUsed, or we'd block a real question next.
           state.remaining = null;
         }
+        syncDeviceTrialGuard();
         refreshHeaderQuota();
       } catch (_) { /* leave state as-is on a transient read failure */ }
     }
@@ -2705,6 +2685,15 @@
         el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">' + esc(String(n)) + '</span></span>';
         el.setAttribute('aria-label', label);
         el.title = label;
+      } else if (state.freeUsed) {
+        // No ledger doc but the device already used its free trial (device guard) → show 0 left,
+        // not "1 question left", so the chip matches the paywall the ask will hit.
+        const label = t('quotaLeftMany', { n: 0 });
+        el.className = 'hdr-quota is-count';
+        el.style.display = 'inline-flex';
+        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">0</span></span>';
+        el.setAttribute('aria-label', label);
+        el.title = label;
       } else {
         // Brand-new free user: no questions doc yet → state.remaining is null. The free tier is
         // 1 question, so surface "1 question left" up front (app parity) instead of hiding the chip
@@ -2980,6 +2969,7 @@
           state.remaining = Number.isFinite(remaining) ? remaining : null;
           if (Number.isFinite(remaining)) state.freeUsed = remaining <= 0;
         } catch (_) { /* leave freeUsed as-is */ }
+        syncDeviceTrialGuard();
         refreshHeaderQuota();
       } catch (_) { /* ignore — fall back to free-Q flow */ }
     }
