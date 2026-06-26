@@ -278,12 +278,6 @@
     .msg.ai ul,.msg.ai ol { margin:.4rem 0; padding-left:1.2rem; }
     .msg.ai strong { font-weight:700; }
     .typing { color:var(--secondary); font-style:italic; }
-    /* App-style animated typing indicator (shown while awaiting/streaming a response). */
-    .typing-dots { display:inline-flex; gap:4px; margin-left:5px; vertical-align:middle; }
-    .typing-dots i { width:6px; height:6px; border-radius:50%; background:currentColor; opacity:.35; animation:typingdot 1.2s infinite ease-in-out; }
-    .typing-dots i:nth-child(2) { animation-delay:.18s; }
-    .typing-dots i:nth-child(3) { animation-delay:.36s; }
-    @keyframes typingdot { 0%,70%,100% { opacity:.3; transform:translateY(0); } 35% { opacity:1; transform:translateY(-4px); } }
     /* Bot loading indicator — matches the app's InlineLoader (mode='astro'): a small
        spinner + a typewriter line rotating through astrology messages. */
     .inline-loader { display:inline-flex; align-items:center; gap:.55rem; color:var(--secondary); }
@@ -312,7 +306,6 @@
 
     /* Empty-state starter chips */
     .starter { max-width:560px; margin:auto; padding:1.5rem 0; text-align:center; }
-    .starter .hero-icon { font-size:2.6rem; color:var(--accent); line-height:1; }
     .starter h2 { font-size:var(--fs-2xl); margin:.5rem 0 .25rem; }
     /* Flat starter suggestions (mirrors app SuggestionBubble: transparent, 0.5px @30%
        hairline border, radius 12, centered body text — not a boxy card). */
@@ -364,8 +357,6 @@
        Matches the drawer/settings icon language: outline, accent stroke, ~1em, stroke-width 1.7. */
     .ico { width:1.05em; height:1.05em; flex:none; stroke:currentColor; fill:none; stroke-width:1.7; vertical-align:-.15em; }
     .ico-star { fill:var(--accent); stroke:var(--accent); }
-    /* Brand mark (ॐ Aum) — mirrors the app's MaterialCommunityIcons "om" glyph used as its brand mark. */
-    .brand-mark { color:var(--accent); font-weight:400; line-height:1; }
 
     /* ── Paywall ─────────────────────────────────────────────────────────── */
     .plan { display:flex; align-items:center; gap:.75rem; width:100%; text-align:left; color:var(--text);
@@ -373,7 +364,7 @@
     .plan.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, var(--card)); }
     .plan .radio { width:20px; height:20px; border-radius:50%; border:2px solid var(--border-strong); flex:none; }
     .plan.active .radio { border-color:var(--accent); background:radial-gradient(circle, var(--accent) 45%, transparent 50%); }
-    .plan .pl-main { flex:1; } .plan .pl-title { font-weight:600; display:block; } .plan .pl-sub { font-size:var(--fs-sm); color:var(--secondary); display:block; }
+    .plan .pl-main { flex:1; } .plan .pl-title { font-weight:600; display:block; }
     .plan .pl-price { text-align:right; font-weight:700; } .plan .pl-price s { color:var(--secondary); font-weight:400; font-size:var(--fs-xs); margin-right:.35rem; }
     .badge { position:absolute; top:-10px; right:14px; background:var(--accent); color:#fff; font-size:var(--fs-2xs); font-weight:700;
       padding:.15rem .5rem; border-radius:7px; letter-spacing:.02em; }
@@ -386,8 +377,6 @@
     .pw-div { display:flex; align-items:center; gap:.6rem; margin:1.1rem 0 .2rem; }
     .pw-div::before, .pw-div::after { content:''; flex:1; height:1px; background:var(--border); }
     .pw-div span { font-size:var(--fs-xs); font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--secondary); white-space:nowrap; }
-    /* one-time question pack: reuses .plan scan-pattern, no recurring sub */
-    .plan.pack .pl-sub { color:var(--secondary); }
     .pw-billing { text-align:center; font-size:var(--fs-xs); color:var(--secondary); margin-top:.4rem; }
 
     /* ── Settings / Profile rows ─────────────────────────────────────────── */
@@ -425,7 +414,7 @@
       border:none; border-radius:10px; color:var(--text); font-size:var(--fs-sm); font-weight:600; cursor:pointer; }
     .drawer-newchat:hover { background:var(--border); }
     .drawer-history { flex:1; overflow-y:auto; padding:.25rem .5rem; }
-    .drawer-bottom { margin-top:auto; } /* pin utilities to the bottom (New chat stays up top) */
+    .drawer-bottom { margin-top:auto; border-top:1px solid var(--border); padding:.4rem .5rem max(.5rem,env(safe-area-inset-bottom)); } /* pin utilities to the bottom (New chat stays up top) */
     .drawer-history .empty { color:var(--secondary); font-size:var(--fs-sm); padding:.75rem; text-align:center; }
     .sess { display:flex; align-items:center; gap:.4rem; border-radius:8px; padding:.55rem .6rem; cursor:pointer; }
     .sess:hover { background:var(--border); }
@@ -435,7 +424,6 @@
     .sess .del svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; display:block; }
     .sess:hover .del { opacity:1; }
     .sess .del:hover { color:var(--error); }
-    .drawer-bottom { border-top:1px solid var(--border); padding:.4rem .5rem max(.5rem,env(safe-area-inset-bottom)); }
     .drawer-item { display:flex; align-items:center; gap:.7rem; width:100%; text-align:left; background:transparent; border:none;
       color:var(--text); font-size:var(--fs-sm); padding:.7rem .6rem; border-radius:10px; cursor:pointer; }
     .drawer-item:hover { background:var(--border); }
@@ -464,8 +452,6 @@
     .info-row:last-child { border-bottom:none; }
 
     /* ── Compatibility (Relationship mode) ───────────────────────────────── */
-    .modebar { max-width:760px; margin:0 auto; width:100%; padding:.5rem .75rem 0; }
-    .modebar .seg { max-width:340px; margin:0 auto; }
     .gender-seg { display:flex; gap:.5rem; }
     .gender-seg button { flex:1; background:transparent; color:var(--text); border:1px solid var(--border-strong);
       border-radius:10px; padding:.6rem; cursor:pointer; font-size:var(--fs-md); }
@@ -486,7 +472,6 @@
     .k-bar > i { display:block; height:100%; border-radius:4px; }
     .adv-asp { display:flex; align-items:flex-start; gap:.5rem; font-size:var(--fs-sm); padding:.22rem 0; }
     .adv-dot { width:7px; height:7px; border-radius:50%; flex:none; margin-top:.42rem; }
-    .adv-dasha { font-size:var(--fs-sm); padding:.22rem 0; }
     .report-card .rtabs { margin:.9rem 0; }
     .report-card [data-rpane][hidden] { display:none; }
     .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:var(--fs-sm); }
@@ -1019,7 +1004,10 @@
     // Web app version line (shown in Settings). Bump alongside notable web releases.
     const APP_VERSION = '1.0';
     const state = { uid: null, chart: null, conversationId: null, sessionId: null, ws: null, wsUid: null,
-                    freeUsed: false, premium: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
+                    // premiumChecked: did the /status endpoint actually answer this session? false = unverified
+                    // (token/5xx/network blip) → the local paywall gate stays open and defers to the server,
+                    // so a transient failure never locally locks out a paying user.
+                    freeUsed: false, premium: false, premiumChecked: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
                     // Chat reply language (persisted). 'en' | 'hi' — default English.
                     lang: (function(){ try { return localStorage.getItem('omai-lang') || 'en'; } catch(_) { return 'en'; } })(),
                     timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
@@ -1034,7 +1022,7 @@
     // compatibility report, chart and name into the next account signed in on the same tab.
     const FRESH_USER_STATE = {
       uid: null, chart: null, conversationId: null, sessionId: null,
-      freeUsed: false, premium: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
+      freeUsed: false, premium: false, premiumChecked: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
       timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
       mode: 'personal', userGender: null, partnerGender: null,
       partner: null, partnerChart: null, compatReport: null,
@@ -1110,7 +1098,7 @@
         relMatch:'Relationship match', relSub:"Add your partner's birth details for a Vedic compatibility report — Gun Milan (Ashtakoot), Mangal dosha, navamsa and dasha timing.",
         editPartnerTitle:"Edit partner's details", editPartnerSub:"Update your partner's birth details — we'll recompute the compatibility report.",
         partnerName:"Partner's name", partnerNamePh:"Partner's name", partnerCityPh:'Start typing the birth city…', partnerGender:"Partner's gender", male:'Male', female:'Female',
-        gunMilanNote:'Gun Milan (Ashtakoot) matches an opposite-gender pair — your role is set automatically.', generateCompat:'Generate compatibility', back:'Back',
+        gunMilanNote:'Gun Milan (Ashtakoot) matches an opposite-gender pair — your role is set automatically.', generateCompat:'Generate compatibility',
         editPartner:'Edit partner', saveAndUpdate:'Save & update report', updatingCompat:'Updating compatibility…',
         composerPh:'Type your message…', jumpLatest:'Jump to latest ↓', chartReady:'Your chart is ready', chartReadyName:'{name}, your chart is ready',
         askAnything:'Ask me anything. Your first question is free.', askAnythingPremium:'Ask me anything — career, marriage, money, health, or timing.', askAnythingUsed:'Ask me anything about your chart.', quotaLeftOne:'{n} question left', quotaLeftMany:'{n} questions left', freeQUsed:'That was your free question. Continue for unlimited answers.',
@@ -1160,7 +1148,7 @@
         relMatch:'रिश्ता मिलान', relSub:'वैदिक अनुकूलता रिपोर्ट के लिए अपने साथी की जन्म जानकारी जोड़ें — Gun Milan (Ashtakoot), मांगलिक दोष, navamsa और dasha समय।',
         editPartnerTitle:'साथी की जानकारी संपादित करें', editPartnerSub:'अपने साथी की जन्म जानकारी अपडेट करें — हम अनुकूलता रिपोर्ट दोबारा बनाएंगे।',
         partnerName:'साथी का नाम', partnerNamePh:'साथी का नाम', partnerCityPh:'जन्म शहर लिखना शुरू करें…', partnerGender:'साथी का लिंग', male:'पुरुष', female:'स्त्री',
-        gunMilanNote:'Gun Milan (Ashtakoot) विपरीत-लिंग जोड़े का मिलान करता है — आपकी भूमिका स्वतः तय होती है।', generateCompat:'अनुकूलता बनाएं', back:'वापस',
+        gunMilanNote:'Gun Milan (Ashtakoot) विपरीत-लिंग जोड़े का मिलान करता है — आपकी भूमिका स्वतः तय होती है।', generateCompat:'अनुकूलता बनाएं',
         editPartner:'साथी संपादित करें', saveAndUpdate:'सहेजें व रिपोर्ट अपडेट करें', updatingCompat:'अनुकूलता अपडेट हो रही है…',
         composerPh:'अपना संदेश लिखें…', jumpLatest:'नवीनतम पर जाएं ↓', chartReady:'आपकी कुंडली तैयार है', chartReadyName:'{name}, आपकी कुंडली तैयार है',
         askAnything:'कुछ भी पूछें। आपका पहला प्रश्न निःशुल्क है।', askAnythingPremium:'कुछ भी पूछें — करियर, विवाह, धन, स्वास्थ्य या समय।', askAnythingUsed:'अपनी कुंडली के बारे में कुछ भी पूछें।', quotaLeftOne:'{n} सवाल बाकी', quotaLeftMany:'{n} सवाल बाकी', freeQUsed:'यह आपका निःशुल्क प्रश्न था। असीमित उत्तरों के लिए जारी रखें।',
@@ -1236,6 +1224,8 @@
         if (changed) {
           if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
           Object.assign(state, FRESH_USER_STATE);
+          window.__sessions = null;      // drop the prior account's drawer chat list (refetched for the new uid)
+          window.__loginTracked = false; // re-track the new account's login below
         }
         state.uid = user.uid;
         refreshProfileUI();
@@ -1744,10 +1734,10 @@
 
     // Re-read the authoritative free-question balance after an answer — mirrors the app's
     // billingService.getRemainingQuestions (AstroScreen re-reads after each question). The web
-    // decrement is server-owned (consumeFreeQuota in the entitlement gate), which already honours
-    // the greeting / short-follow-up exemptions, so trusting the ledger here keeps the UI in lock-
-    // step with the server instead of simulating those rules client-side (which drifted and
-    // paywalled pack buyers early). Reads users/{uid}/questions/purchased — the same doc as the
+    // decrement is server-owned (consumeFreeQuota in the entitlement gate), which since v440
+    // charges every answer (greetings + short follow-ups included, same as the app), so trusting
+    // the ledger here keeps the UI in lock-step with the server instead of simulating any rules
+    // client-side (which drifted and paywalled pack buyers early). Reads users/{uid}/questions/purchased — the same doc as the
     // initial refreshPremium() load.
     async function refreshRemaining() {
       if (state.premium || !state.uid) return;
@@ -1780,7 +1770,11 @@
       // draw the shared free-question quota. REPORTS (birth chart + compat report) are
       // free — see compatGenBtn. So apply the quota guard BEFORE delegating to the compat
       // follow-up flow; askCompat mirrors the decrement on success.
-      if (!state.premium && state.freeUsed) { openPaywall('question_limit'); return; }
+      // Only enforce the local paywall when premium status is KNOWN. If /status couldn't be
+      // verified this session (premiumChecked false), defer to the server gate rather than risk
+      // locally locking out a paying user whose check blipped — the server is authoritative and
+      // returns a paywall frame if they really are out of quota.
+      if (!state.premium && state.freeUsed && state.premiumChecked) { openPaywall('question_limit'); return; }
       if (state.mode === 'compat') return askCompat(q);
 
       asking = true;
@@ -2794,6 +2788,15 @@
       });
     }
     async function loadSession(id) {
+      // A stream is in flight (single shared `pending` + one #chatInner). Switching to another
+      // session reassigns state.sessionId, so the in-flight answer's finally would persist the bot
+      // reply into the WRONG chat and render into a detached node. Block until it finishes — same
+      // guard as startNewChat()/setMode().
+      if (asking) {
+        const s = $('chatStatus');
+        if (s) { s.textContent = 'Please wait for the current answer to finish.'; setTimeout(() => { if (s.textContent === 'Please wait for the current answer to finish.') s.textContent = ''; }, 2500); }
+        return;
+      }
       closeDrawerMobile();
       if (!state.chart) { show('onboarding'); return; } // need a chart to continue the thread
       const compat = state.mode === 'compat';
@@ -2814,6 +2817,13 @@
       } catch (e) { renderEmptyChat(); }
     }
     async function deleteSession(id, title) {
+      // Don't delete the session an answer is currently streaming into — its finally would
+      // persist into / touch a just-deleted chat. Block until the stream finishes.
+      if (asking) {
+        const s = $('chatStatus');
+        if (s) { s.textContent = 'Please wait for the current answer to finish.'; setTimeout(() => { if (s.textContent === 'Please wait for the current answer to finish.') s.textContent = ''; }, 2500); }
+        return;
+      }
       if (!confirm(`Delete “${title}”?`)) return;
       try {
         const q = query(collection(db, `users/${state.uid}/astro_chats`), where('session_id', '==', id));
@@ -2852,6 +2862,7 @@
       closeModal('settingsView'); // don't leave Settings hanging open behind the auth screen
       try { await signOut(auth); } catch (_) {}
       Object.assign(state, FRESH_USER_STATE);
+      window.__sessions = null; window.__loginTracked = false; // drop the prior account's drawer list + login-tracking flag
       if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
       show('auth'); // onAuthStateChanged(null) also routes here; for ?local it re-anons
       if (LOCAL) await signInAnonymously(auth).catch(() => {});
@@ -2942,10 +2953,20 @@
       try {
         const t = await token();
         if (!t) return;
-        const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${t}` } }).then(r => r.json()).catch(() => ({}));
+        // A 5xx/network blip must NOT silently downgrade a paying user to the free-Q gate for the
+        // rest of the session. Only a response that actually arrives (statusOk) is allowed to flip
+        // premium / derive freeUsed; on failure premiumChecked stays false and the gate defers to
+        // the server.
+        let statusOk = false, s = {};
+        try {
+          const r = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${t}` } });
+          if (r.ok) { s = await r.json(); statusOk = true; }
+        } catch (_) { /* leave unverified */ }
+        state.premiumChecked = statusOk; // false → unverified; the local gate stays open and defers to the server
+        if (!statusOk) { refreshHeaderQuota(); return; } // couldn't verify — leave premium/freeUsed untouched
         if (s && s.active) { state.premium = true; state.freeUsed = false; refreshHeaderQuota(); return; }
         state.premium = false;
-        // Not premium → derive freeUsed from the shared question ledger, so a
+        // Confirmed non-premium → derive freeUsed from the shared question ledger, so a
         // returning free user who already spent their question on a fresh page
         // load (freeUsed defaults false) doesn't get a second free answer.
         try {
