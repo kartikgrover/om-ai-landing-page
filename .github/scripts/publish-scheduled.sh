@@ -26,6 +26,21 @@ for FILE in $(jq -r "to_entries[] | select(.value.date <= \"$TODAY\") | .key" "$
   # Move draft to blog/
   mv "$DRAFT_PATH" "$PUBLISH_PATH"
 
+  # Strip the draft-only noindex robots tag so the published post is indexable.
+  # Drafts ship with a belt-and-suspenders <meta name="robots" content="noindex, nofollow">
+  # (so accidentally-crawlable blog/drafts/* URLs stay out of the index) alongside the
+  # intended index,follow tag. Google honors the strictest of conflicting robots tags, so
+  # leaving the noindex in deindexes the live post — this silently killed two publish
+  # batches (fixed manually in ad6b5ef 2026-05-19 and 7ac5e8f 2026-06-13). Remove only the
+  # noindex variant; if it was the lone robots tag, absence defaults to indexable anyway.
+  sed -i '/<meta[^>]*name="robots"[^>]*noindex[^>]*>/d' "$PUBLISH_PATH"
+
+  # Guard: never let a noindexed post ship. Fail the run loudly if one slips through.
+  if grep -qiE '<meta[^>]*name="robots"[^>]*noindex' "$PUBLISH_PATH"; then
+    echo "::error::$PUBLISH_PATH still contains a noindex robots tag after publish — aborting." >&2
+    exit 1
+  fi
+
   # Get metadata from schedule.json
   TAG=$(jq -r ".[\"$FILE\"].tag" "$SCHEDULE_FILE")
   TITLE=$(jq -r ".[\"$FILE\"].title" "$SCHEDULE_FILE")
