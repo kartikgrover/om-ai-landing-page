@@ -334,6 +334,15 @@
         gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 });
     }, true);
     </script>
+    <!-- Mobile sticky install CTA bar -->
+    <style>
+.mobile-cta-bar{display:none}
+@media (max-width:768px){
+  .mobile-cta-bar{display:flex;gap:.6rem;position:fixed;left:0;right:0;bottom:0;z-index:1040;padding:.55rem .7rem;padding-bottom:calc(.55rem + env(safe-area-inset-bottom));background:rgba(31,30,29,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(217,119,87,.3)}
+  .mobile-cta-bar .btn{flex:1 1 0;min-width:0;padding:.6rem .4rem;font-size:.9rem;line-height:1.2;white-space:nowrap}
+  body{padding-bottom:4.75rem}
+}
+</style>
 </head>
 
 <body>
@@ -391,24 +400,24 @@
         <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
             <div class="container">
                 <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">AI ज्योतिष चैट</h1>
-                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
-                    करियर, विवाह, स्वास्थ्य या आर्थिक स्थिति के बारे में सवाल पूछें और अपनी असली कुंडली के आधार पर जवाब पाएं — सामान्य राशिफल नहीं। Om.AI का AI आपकी कुंडली को एक शास्त्रीय ज्योतिषी की तरह पढ़ता है।
-                </p>
                 <div class="d-flex justify-content-center mt-4">
-                    <a href="/ask.html?utm_source=website&utm_medium=referral&utm_campaign=seo_page&utm_content=hindi_ai_chat_hero" class="btn btn-primary btn-lg px-4" onclick="try{gtag('event','web_ask_click',{event_category:'Web MVP',event_label:'hindi_ai_chat_hero'})}catch(e){}">
+                    <a href="/ask.html?utm_source=website&utm_medium=referral&utm_campaign=seo_page&utm_content=hindi_ai_chat_hero" class="btn btn-outline-light btn-sm px-4" onclick="try{gtag('event','web_ask_click',{event_category:'Web MVP',event_label:'hindi_ai_chat_hero'})}catch(e){}">
                         अपना पहला सवाल फ्री पूछें <span aria-hidden="true">→</span>
                     </a>
                 </div>
                 <p class="text-center mb-2 mt-4" style="color:rgba(255,255,255,0.5); font-size:0.9rem;">या ऐप डाउनलोड करें:</p>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_ai_chat" class="btn btn-outline-light btn-sm px-3" rel="noopener noreferrer" target="_blank">
+                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_ai_chat" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
                         <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
                     </a>
-                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_ai_chat&mt=8" class="btn btn-outline-light btn-sm px-3" rel="noopener noreferrer" target="_blank">
+                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_ai_chat&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
                         <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
                     </a>
                 </div>
-                <p style="color:rgba(255,255,255,0.55); margin-top:1.5rem; font-size:0.95rem;">
+                <p class="lead" style="max-width:720px; margin:1.75rem auto 0; color:rgba(255,255,255,0.8); font-size:1.25rem;">
+                    करियर, विवाह, स्वास्थ्य या आर्थिक स्थिति के बारे में सवाल पूछें और अपनी असली कुंडली के आधार पर जवाब पाएं — सामान्य राशिफल नहीं। Om.AI का AI आपकी कुंडली को एक शास्त्रीय ज्योतिषी की तरह पढ़ता है।
+                </p>
+                <p style="color:rgba(255,255,255,0.55); margin-top:1.25rem; font-size:0.95rem;">
                     कोई डाउनलोड नहीं, कोई साइनअप नहीं — आपका पहला सवाल फ्री है। <a href="/ai-astrology-chat.html" style="color:#D97757;">Read in English →</a>
                 </p>
             </div>
@@ -837,6 +846,12 @@
             </div>
         </div>
     </footer>
+
+    <!-- Mobile sticky install CTA bar (mobile only) -->
+    <div class="mobile-cta-bar" role="region" aria-label="Download the Om.AI app">
+        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_ai_chat" class="btn btn--primary" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play</a>
+        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_ai_chat&mt=8" class="btn btn--outline" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
