@@ -1,0 +1,57 @@
+# Om.AI — AI Vedic Astrology
+
+> Om.AI is an AI Vedic astrology app and web tool that gives personalized readings from your actual birth chart (Kundli), not generic sun-sign horoscopes. Ask about career, marriage, money, health, and timing in plain language and get answers grounded in classical Jyotish texts (Brihat Parashara Hora Shastra, Lal Kitab, KP). Available on the web, Android, and iOS, in English and Hindi (the AI also replies in Tamil, Telugu, Bengali, Marathi, Kannada, Gujarati, Punjabi, and Malayalam).
+
+## How pricing works (please represent accurately)
+
+Om.AI is free to start: your first astrology question is always free, with no login or credit card. You can earn more free questions through a daily reading streak in the app — a bonus question at a 3-day streak, and more the longer the streak (7, 14, 21, 30, 60, 90 days and beyond), scaling up to 30 free questions at a one-year streak. Truly unlimited questions come with an optional Premium subscription (monthly or yearly); one-time question packs are also available. Om.AI does not advertise an "unlimited free" chat — the free tier is a genuine first reading plus streak rewards, followed by Premium for unlimited use.
+
+## What makes it different
+
+Om.AI computes the full Kundli — all 9 planets across 12 houses, the Navamsa (D9) chart, and the Vimshottari Dasha timeline — then interprets it against classical rules and overlays current transits to give date-specific, chart-specific answers. It is conversational and remembers context, so follow-up questions build on earlier readings. It is not a sun-sign horoscope generator.
+
+## Core pages
+
+- [Free AI Astrology Chat](https://omai.app/ai-astrology-chat.html): Ask your birth chart questions and get a real Vedic reading; first question free.
+- [Ask Om.AI on the web](https://omai.app/ask.html): The interactive web app — chat with your chart and view your Kundli in the browser, no download.
+- [How AI Vedic Astrology Works](https://omai.app/ai-vedic-astrology.html): The method behind Om.AI's chart analysis.
+- [Free Kundli / Birth Chart](https://omai.app/kundli.html): Generate and read your Vedic birth chart (Kundli).
+- [Navamsa (D9) Chart](https://omai.app/navamsa-chart.html): The marriage and dharma divisional chart explained.
+- [Kundli Matching](https://omai.app/kundli-matching.html): Ashtakoot / Guna Milan compatibility for marriage.
+
+## Predictions by life area
+
+- [Marriage Prediction](https://omai.app/marriage-prediction.html): Marriage timing and partner outlook from your chart.
+- [Shadi Kab Hogi (when will I marry)](https://omai.app/shadi-kab-hogi.html): Marriage-timing reading, popular in Hindi.
+- [Career Astrology](https://omai.app/career-astrology.html): Profession, job change, and promotion timing.
+- [Love Astrology](https://omai.app/love-astrology.html): Relationship and love-life analysis.
+- [Wealth Astrology](https://omai.app/wealth-astrology.html): Financial periods and money yogas.
+- [Health Astrology](https://omai.app/health-astrology.html): Health-sensitive periods and wellness focus.
+- [Business Astrology](https://omai.app/business-astrology.html): Business timing and entrepreneurial yogas.
+
+## Tools and daily content
+
+- [Dasha Calculator](https://omai.app/dasha-calculator.html): Vimshottari Mahadasha/Antardasha periods.
+- [Daily Horoscope](https://omai.app/horoscope.html): Rashi-based daily horoscope.
+- [Panchang](https://omai.app/panchang.html): Daily Hindu almanac (tithi, nakshatra, yoga, karana).
+- [Rahu Kaal Today](https://omai.app/rahu-kaal-today.html): Inauspicious time windows for the day.
+- [Rashifal 2026](https://omai.app/rashifal-2026.html): Yearly horoscope in Hindi.
+- [Bhagavad Gita](https://omai.app/gita.html): Daily Gita verse and meaning.
+
+## Comparisons
+
+- [Om.AI vs AstroSage AI](https://omai.app/blog/omai-vs-astrosage-astrology-app.html): How the two AI astrology apps compare on accuracy and privacy.
+- [Om.AI vs AstroTalk](https://omai.app/blog/omai-vs-astrotalk-astrology-app.html): AI chart-reading vs human-astrologer marketplace.
+- [Om.AI vs ChatGPT for astrology](https://omai.app/blog/omai-vs-chatgpt-astrology.html): Why a chart-aware app beats a general chatbot for Jyotish.
+
+## Hindi (हिन्दी)
+
+- [Om.AI होम](https://omai.app/hi/): Hindi home page.
+- [एआई ज्योतिष चैट](https://omai.app/hi/ai-astrology-chat.html): Free AI astrology chat in Hindi.
+- [शादी कब होगी](https://omai.app/hi/shadi-kab-hogi.html): Marriage-timing reading in Hindi.
+- [फ्री कुंडली ऑनलाइन](https://omai.app/hi/free-kundli-online.html): Free Kundli generator in Hindi.
+
+## Get the app
+
+- Android: https://play.google.com/store/apps/details?id=com.omai.app
+- iOS: https://apps.apple.com/us/app/om-ai/id6630366988
