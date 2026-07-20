@@ -90,3 +90,23 @@ Use these numbers to anchor SEO decisions rather than guessing:
 
 ## macOS Reminders
 When adding a macOS Reminder (recheck/follow-up TODOs), always create it under the **Om.AI** list (create the list if missing) — never the default Reminders list.
+
+## Doc Reading Practice (how to USE a doc — added 2026-07-20)
+
+**Docs assert; only code decides.** Every dated doc is a snapshot of one moment. Treat its claims
+as leads to verify, never as current fact — especially audit findings, which are written in the
+present tense and read months later as if still true.
+
+- **Before repeating a finding, re-check it against code.** In the 2026-07-20 app sweep, three
+  findings marked "STILL REAL (code re-read)" turned out to be false, and were each repeated as
+  fact before anyone checked.
+- **A checklist of finished work is worse than no checklist** — open boxes on shipped work invite
+  re-implementation. Archive it instead.
+- **Fix a wrong doc in place, dated, rather than silently.** Record retractions explicitly; "the
+  auditor retracted something" is the signal that the rest was actually checked.
+- **Verify tooling before trusting its output.** A "zero offers configured" reading from the Play
+  API turned out to be a wrong-response-key bug, not a config problem.
+- **In living docs prefer symbol names over `file.js:123`** — line numbers rot silently. They're
+  fine in dated snapshots.
+- Source comments are docs too and go stale the same way — fix them when you find them.
+
