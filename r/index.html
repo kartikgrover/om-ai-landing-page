@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Om.AI — Get the app</title>
+<meta property="og:title" content="Om.AI — Vedic astrology">
+<meta property="og:description" content="Personalized Vedic astrology: birth chart, daily horoscope, and compatibility.">
+<!--
+  Referral / share redirect page.
+
+  Every share link in the app points here (see om1 src/utils/constants.js
+  generateAppLink): https://omai.app/r?utm_*&referral_code=OMAI-XXXXXX
+
+  When the app is installed, iOS Universal Links / Android App Links open the
+  app directly and this page never loads (the app's utmService reads the query
+  params). When it does load, we forward to the platform store, rebuilding the
+  attribution params the app's old direct store links carried:
+    - Android: Play `referrer` param -> Install Referrer API -> the app's
+      utmService.setUTMFromStoreInstall picks up the referral code after
+      install. Full-loop attribution, no typing.
+    - iOS: the App Store can't carry data through install, so the page shows
+      the referral code and asks the user to enter it after install (ct/pt
+      campaign params preserved for Apple analytics).
+-->
+<style>
+  :root { --bg:#262624; --card:#30302E; --text:#FAF9F5; --muted:#C2C0B6; --accent:#D97757; --border:#3D3D3A; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .wrap { max-width:420px; width:100%; text-align:center; }
+  .om { color:var(--accent); font-size:56px; line-height:1; margin-bottom:16px; }
+  h1 { font-size:26px; font-weight:600; letter-spacing:-0.3px; margin-bottom:8px; }
+  p  { color:var(--muted); font-size:15px; line-height:1.5; }
+  .code-block { margin:28px auto 8px; display:none; }
+  .code-chip { display:inline-block; border:1.5px solid var(--accent); border-radius:10px;
+               padding:10px 22px; color:var(--accent); font-size:22px; font-weight:700; letter-spacing:2px; }
+  .code-hint { margin-top:10px; font-size:13px; }
+  .btn { display:inline-block; margin-top:28px; background:var(--accent); color:#fff; text-decoration:none;
+         font-size:17px; font-weight:600; padding:14px 36px; border-radius:12px; }
+  .btn.secondary { background:none; border:1px solid var(--border); color:var(--muted); font-weight:400;
+                   font-size:14px; padding:10px 22px; margin-top:14px; }
+  .stores { display:none; margin-top:28px; }
+  .stores a { display:block; margin:10px auto; color:var(--accent); font-size:16px; text-decoration:none; }
+  .foot { margin-top:40px; font-size:12px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="om">&#2384;</div>
+  <h1>Om.AI &mdash; Vedic astrology</h1>
+  <p id="lead">Taking you to the app&hellip;</p>
+
+  <div class="code-block" id="codeBlock">
+    <span class="code-chip" id="codeChip"></span>
+    <p class="code-hint" id="codeHint">Enter this code in the app after installing &mdash; you both get 3 free questions.</p>
+  </div>
+
+  <a class="btn" id="storeBtn" href="#" style="display:none">Get Om.AI</a>
+  <br>
+  <a class="btn secondary" id="openApp" href="#" style="display:none">Already have the app? Open it</a>
+
+  <div class="stores" id="stores">
+    <a id="iosLink" href="#">Download on the App Store</a>
+    <a id="androidLink" href="#">Get it on Google Play</a>
+  </div>
+
+  <p class="foot">omai.app</p>
+</div>
+
+<noscript>
+  <div style="text-align:center">
+    <a href="https://apps.apple.com/app/om-ai-vedic-astrology/id6630366988?mt=8">App Store</a> &middot;
+    <a href="https://play.google.com/store/apps/details?id=com.omai.app">Google Play</a>
+  </div>
+</noscript>
+
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  // Path form /r/CODE tolerated for hand-typed links (GH Pages serves this
+  // page only at /r/, so the path form matters only if hosting later gains
+  // rewrites — query form is canonical).
+  var pathCode = (location.pathname.match(/^\/r\/([A-Z0-9-]+)\/?$/i) || [])[1];
+  var code = q.get('referral_code') || q.get('utm_term') || pathCode || '';
+  var campaign = q.get('utm_campaign') || 'r_page';
+  var refUid = q.get('utm_content') || 'anonymous';
+
+  var IOS_ID = 'id6630366988';
+  var ct = (code ? 'referral_' : 'app_') + campaign;
+  var iosUrl = 'https://apps.apple.com/app/om-ai-vedic-astrology/' + IOS_ID +
+    '?ct=' + encodeURIComponent(ct) + '&mt=8&pt=referrer_' + encodeURIComponent(refUid) +
+    (code ? '&referral_code=' + encodeURIComponent(code) : '');
+
+  // Same referrer payload the app's old direct Play links used — the app's
+  // Install Referrer parsing depends on these exact keys.
+  var referrerParts = [
+    'utm_source=om_app', 'utm_medium=share',
+    'utm_campaign=' + campaign, 'utm_content=' + refUid
+  ];
+  if (code) { referrerParts.push('utm_term=' + code, 'referral_code=' + code); }
+  var androidUrl = 'https://play.google.com/store/apps/details?id=com.omai.app&referrer=' +
+    encodeURIComponent(referrerParts.join('&'));
+
+  // Deep link for the "already installed but App Link verification didn't
+  // intercept" case — the app's omai:// scheme handler parses the same params.
+  var appUrl = 'omai://open?utm_source=om_web&utm_medium=landing&utm_campaign=' +
+    encodeURIComponent(campaign) + (code ? '&referral_code=' + encodeURIComponent(code) : '');
+
+  var ua = navigator.userAgent || '';
+  var isAndroid = /android/i.test(ua);
+  var isIOS = /iphone|ipad|ipod/i.test(ua);
+
+  var lead = document.getElementById('lead');
+  var storeBtn = document.getElementById('storeBtn');
+  var openApp = document.getElementById('openApp');
+  document.getElementById('iosLink').href = iosUrl;
+  document.getElementById('androidLink').href = androidUrl;
+  openApp.href = appUrl;
+
+  if (code && (isIOS || !isAndroid)) {
+    // iOS installs can't carry the code through the store — surface it.
+    document.getElementById('codeChip').textContent = code;
+    document.getElementById('codeBlock').style.display = 'block';
+  }
+
+  if (isAndroid) {
+    lead.textContent = 'Taking you to Google Play…';
+    storeBtn.href = androidUrl; storeBtn.style.display = 'inline-block';
+    openApp.style.display = 'inline-block';
+    setTimeout(function () { location.replace(androidUrl); }, 600);
+  } else if (isIOS) {
+    lead.textContent = code
+      ? 'Note your code, then continue to the App Store.'
+      : 'Taking you to the App Store…';
+    storeBtn.href = iosUrl; storeBtn.style.display = 'inline-block';
+    openApp.style.display = 'inline-block';
+    // Give the user a beat to notice the code before redirecting.
+    setTimeout(function () { location.replace(iosUrl); }, code ? 3500 : 800);
+  } else {
+    lead.textContent = 'Get the app:';
+    document.getElementById('stores').style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>

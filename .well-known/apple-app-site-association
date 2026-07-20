@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["7VT3RTJ4R7.com.omai.app"],
+        "components": [
+          { "/": "/r", "comment": "Referral/share redirect — opens app when installed" },
+          { "/": "/r/*", "comment": "Path-form referral links" }
+        ]
+      }
+    ]
+  }
+}
