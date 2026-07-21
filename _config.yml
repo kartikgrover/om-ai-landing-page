@@ -1,0 +1,8 @@
+# Jekyll drops dot-directories from the build output by default, which silently
+# 404'd /.well-known/* even with .nojekyll present (verified live: /r/ served
+# fine from the same commit while /.well-known/ and /.nojekyll both 404'd).
+# Both files below are load-bearing and must be reachable at these exact paths:
+#   .well-known/apple-app-site-association -> iOS universal links (omai.app/r)
+#   .well-known/assetlinks.json            -> Android App Links
+include:
+  - .well-known
