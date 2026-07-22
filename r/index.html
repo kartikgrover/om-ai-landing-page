@@ -20,9 +20,14 @@
     - Android: Play `referrer` param -> Install Referrer API -> the app's
       utmService.setUTMFromStoreInstall picks up the referral code after
       install. Full-loop attribution, no typing.
-    - iOS: the App Store can't carry data through install, so the page shows
-      the referral code and asks the user to enter it after install (ct/pt
-      campaign params preserved for Apple analytics).
+    - iOS: the App Store can't carry data through install, so the code is
+      handed over via the clipboard — the "Copy code & get the app" button
+      copies it, then forwards to the App Store; after install the app's
+      referral fields offer Paste (PasteCodeChip). Same mechanism as Branch
+      NativeLink, self-hosted. The copy is button-gated (owner call
+      2026-07-22): no auto-redirect when a code is present, so every store
+      visit is guaranteed to carry the code. (ct/pt campaign params preserved
+      for Apple analytics.)
 -->
 <style>
   :root { --bg:#262624; --card:#30302E; --text:#FAF9F5; --muted:#C2C0B6; --accent:#D97757; --border:#3D3D3A; }
@@ -125,19 +130,57 @@
     document.getElementById('codeBlock').style.display = 'block';
   }
 
+  // Copy `text`, then call done() regardless — the copy must never strand the
+  // user on this page. navigator.clipboard needs HTTPS (omai.app qualifies);
+  // the textarea/execCommand fallback covers older Safari.
+  function copyThen(text, done) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () {
+          legacyCopy(text); done();
+        });
+        return;
+      }
+    } catch (_) {}
+    legacyCopy(text); done();
+  }
+  function legacyCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    } catch (_) {}
+  }
+
   if (isAndroid) {
     lead.textContent = 'Taking you to Google Play…';
     storeBtn.href = androidUrl; storeBtn.style.display = 'inline-block';
     openApp.style.display = 'inline-block';
     setTimeout(function () { location.replace(androidUrl); }, 600);
-  } else if (isIOS) {
-    lead.textContent = code
-      ? 'Note your code, then continue to the App Store.'
-      : 'Taking you to the App Store…';
+  } else if (isIOS && code) {
+    // Button-gated: the tap is what carries the code through the App Store
+    // (clipboard), so no auto-redirect — see header comment.
+    lead.textContent = 'Your invite code is ready.';
+    document.getElementById('codeHint').textContent =
+      'Tap the button — your code copies automatically. Paste it in the app after installing.';
+    storeBtn.textContent = 'Copy code & get the app';
     storeBtn.href = iosUrl; storeBtn.style.display = 'inline-block';
     openApp.style.display = 'inline-block';
-    // Give the user a beat to notice the code before redirecting.
-    setTimeout(function () { location.replace(iosUrl); }, code ? 3500 : 800);
+    storeBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      copyThen(code, function () {
+        storeBtn.textContent = 'Copied! Opening the App Store…';
+        setTimeout(function () { location.href = iosUrl; }, 600);
+      });
+    });
+  } else if (isIOS) {
+    lead.textContent = 'Taking you to the App Store…';
+    storeBtn.href = iosUrl; storeBtn.style.display = 'inline-block';
+    openApp.style.display = 'inline-block';
+    setTimeout(function () { location.replace(iosUrl); }, 800);
   } else {
     lead.textContent = 'Get the app:';
     document.getElementById('stores').style.display = 'block';
