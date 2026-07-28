@@ -45,6 +45,32 @@
     // out of the shared landing property without a separate GA4 property.
     window.track = function (name, params) { try { gtag('event', name, Object.assign({ surface: 'web_ask' }, params || {})); } catch (_) {} };
   </script>
+  <!-- Meta Pixel — dataset 1678262729978200, the SAME dataset the backend posts CAPI to
+       (META_DATASET_ID). It must stay in sync with services/metaCapiService.js or browser and
+       server events land in different datasets and never deduplicate.
+       Loaded eagerly (not deferred behind `load`) because its only job that matters here is
+       minting the `_fbp` cookie BEFORE the user reaches checkout — a delay means the fbp/fbc
+       that prepareAccountForCheckout() ships to the server is empty and attribution is lost. -->
+  <script>
+    // Mirrors window.track above, for Meta standard events. Defined BEFORE the snippet so it
+    // exists even if the pixel fails to install — openPaywall() calls it inline, and a
+    // ReferenceError there would stop the paywall modal from ever opening.
+    // Purchase does NOT go through here: it needs a dedup event_id, see fbPurchase() below.
+    window.fbTrack = function (name, params) { try { fbq('track', name, params || {}); } catch (_) {} };
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1678262729978200');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" alt=""
+  src="https://www.facebook.com/tr?id=1678262729978200&ev=PageView&noscript=1"
+  /></noscript>
   <!-- Preview gate removed — public launch (2026-06-26). -->
   <title>Ask Om.AI — Free Vedic Astrology Chat from Your Birth Chart</title>
   <meta name="description" content="Ask your real Vedic birth chart anything — career, marriage, money, health. Your first question is free, 24/7.">
@@ -2548,6 +2574,7 @@
       try { updateCtaLabel(); } catch (_) {} // sync CTA + billing line to the active plan
       { const ps = $('paywallStatus'); if (ps) ps.textContent = ''; } // clear stale status from a prior visit
       track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
+      fbTrack('ViewContent', { content_name: 'paywall', content_category: 'subscription' });
       openModal('paywallView');
     }
     const dismissPaywall = () => { if ($('paywallView').classList.contains('open')) closeModal('paywallView'); };
@@ -3007,6 +3034,11 @@
     // ── paywall: plan/pack select + account link + Razorpay checkout ─
     let chosenPlan = 'yearly';   // 'yearly' | 'monthly' when chosenKind === 'sub'
     let chosenKind = 'sub';      // 'sub' (recurring) | 'pack' (one-time 5-question)
+    // Rupee value per plan for ad-platform conversion events. create-subscription returns only
+    // { subscriptionId, keyId, plan } — no amount — so the browser has no server-side source for
+    // this. Mirrors the .pl-price copy below and the Razorpay plan config; change all three together.
+    // (The pack path doesn't need this — create-order returns its amount in paise.)
+    const PLAN_VALUE_INR = { yearly: 1499, monthly: 199 };
     function updateCtaLabel() {
       // CTA + contextual billing line match the app paywall exactly.
       $('subscribeBtn').textContent = t(chosenKind === 'pack' ? 'getQuestions' : 'getUnlimited');
@@ -3041,6 +3073,21 @@
       const c = cookie('_fbc'); if (c) return c;
       const fbclid = new URLSearchParams(location.search).get('fbclid');
       return fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined;
+    }
+
+    // Browser-side Purchase, deduplicated against the server CAPI copy. The backend derives
+    // the same id in services/metaCapiService.js sendCapiEvent():
+    //   sha256(`${eventName}:${dedupeKey}`).digest('hex').slice(0, 32)
+    // with eventName='Purchase' and dedupeKey = the Razorpay payment id (web-payments.js
+    // fireWebPurchaseEvent call sites). Any drift in that string and Meta counts the sale twice.
+    // No payment id → don't fire at all: an un-deduplicated Purchase is worse than a missing one.
+    async function fbPurchase(paymentId, value, currency) {
+      try {
+        if (typeof fbq !== 'function' || !paymentId) return;
+        const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`Purchase:${paymentId}`));
+        const eventID = Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 32);
+        fbq('track', 'Purchase', { value: Number(value) || 0, currency: currency || 'INR' }, { eventID });
+      } catch (_) { /* pixel failure must never block the post-payment flow */ }
     }
 
     // Sign in / link the account and migrate birth details if the uid collided.
@@ -3094,9 +3141,10 @@
         description: `${questions} questions`,
         prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
         theme: { color: '#D97757' },
-        handler: async () => {
+        handler: async (resp) => {
           track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
           track('purchase', { transaction_id: orderId, value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 monetization
+          await fbPurchase(resp && resp.razorpay_payment_id, (amount || 0) / 100, currency); // Meta, deduped vs CAPI
           setStatus('Adding your questions…');
           // Poll the shared question ledger — the webhook credits remaining +N.
           for (let i = 0; i < 10; i++) {
@@ -3117,6 +3165,7 @@
       });
       track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
       track('begin_checkout', { value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 standard
+      fbTrack('InitiateCheckout', { value: (amount || 0) / 100, currency: currency || 'INR' });
       rzp.open();
     }
 
@@ -3170,9 +3219,10 @@
           description: `Om.AI Premium (${chosenPlan})`,
           prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
           theme: { color: '#D97757' },
-          handler: async () => {
+          handler: async (resp) => {
             track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
             track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 monetization
+            await fbPurchase(resp && resp.razorpay_payment_id, PLAN_VALUE_INR[chosenPlan], 'INR'); // Meta, deduped vs CAPI
             status.textContent = t('subActivatingMvp');
             for (let i = 0; i < 10; i++) {
               await new Promise((res) => setTimeout(res, 2000));
@@ -3190,6 +3240,7 @@
         });
         track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
         track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 standard
+        fbTrack('InitiateCheckout', { value: PLAN_VALUE_INR[chosenPlan], currency: 'INR' });
         rzp.open();
       } catch (e) {
         status.textContent = e.message || t('genericErr');

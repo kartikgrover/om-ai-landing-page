@@ -323,25 +323,27 @@
         }
     </script>
 
-    <!-- Meta Pixel (deferred) -->
+    <!-- Meta Pixel — dataset 1678262729978200. Was 819993440663760, which is shared only with the
+         retired US ad account act_1704926593380350, so nothing it collected reached the live INR
+         account act_223330353092043 (fixed 2026-07-28).
+         NOT deferred behind load+2s like Hotjar below: this pixel writes the _fbp/_fbc cookies that
+         ask.html forwards to the server-side CAPI. A visitor who lands here from an ad and clicks
+         through to /ask.html inside 2s would otherwise carry no _fbc, and the fbclid is gone by then
+         because it only ever sat on THIS page's URL. The fbevents.js load itself is already async. -->
     <script>
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '819993440663760');
-            fbq('track', 'PageView');
-        }, 2000);
-    });
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1678262729978200');
+    fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none" alt=""
-    src="https://www.facebook.com/tr?id=819993440663760&ev=PageView&noscript=1"
+    src="https://www.facebook.com/tr?id=1678262729978200&ev=PageView&noscript=1"
     /></noscript>
 
     <!-- Hotjar (deferred) -->
