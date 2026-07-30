@@ -519,7 +519,7 @@
                     </p>
 
                     <button id="mw-go" class="btn btn--primary btn-lg w-100 mt-3">Show My Marriage Windows</button>
-                    <div id="mw-error" class="mw-error" hidden></div>
+                    <div id="mw-error" class="mw-error" role="alert" hidden></div>
                 </div>
 
                 <div id="mw-result" hidden></div>
@@ -671,9 +671,9 @@
         <section class="content-section">
             <div class="container" style="max-width:860px;">
                 <div class="cta-box">
-                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Find Your Marriage Window — Free</h2>
+                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">Now Ask Why — Not Just When</h2>
                     <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
-                        Stop guessing. Ask Om.AI's Vedic AI when your shaadi window opens — based on your real Dasha and transits, not a generic horoscope.
+                        The calculator above reads two signals: your Dasha and the Jupiter–Saturn transit over your 7th house. Om.AI reads the whole Kundli — what your 7th lord says about your partner, whether a Manglik or delay pattern is in play, which of your windows is strongest — and it answers your follow-ups in Hindi, English or Hinglish. First reading free.
                     </p>
 
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -973,6 +973,8 @@
             if (c) tzEl.value = String(c[2]);
         });
 
+        var cache = {};
+
         var showError = function (msg) {
             errEl.textContent = msg;
             errEl.hidden = false;
@@ -987,17 +989,35 @@
 
         var TIER_EN = { strongest: 'Strongest', strong: 'Strong', supportive: 'Dasha support only' };
 
+        // The API's own error strings are internal ("too many requests"), and its limit is per-IP
+        // at 12/min — behind carrier NAT that can trip for someone on their first attempt, so the
+        // status decides what the visitor reads, not the server's wording.
+        var errorFor = function (status) {
+            if (status === 429) return 'The free calculator is busy right now — please try again in a minute, or ask Om.AI for your timing directly.';
+            if (status === 400) return 'Those birth details did not compute. Check the date, time and city — and note the calculator is for adults (18+).';
+            return 'We could not work out your windows just now. Please try again in a moment.';
+        };
+
         var render = function (data) {
             var html = '';
             if (data.summary && data.summary.en) {
                 html += '<p style="color:rgba(255,255,255,0.75);margin-bottom:1.25rem;">' + esc(data.summary.en) + '</p>';
             }
-            data.windows.forEach(function (w) {
+            (data.windows || []).forEach(function (w) {
                 html += '<div class="mw-window">';
                 html += '<span class="mw-tier">' + esc(TIER_EN[w.tier] || w.tier) + '</span>';
                 html += '<h4>' + esc(w.label.en) + '</h4>';
                 html += '<ul class="mw-reasons">';
-                w.reasons.forEach(function (r) { html += '<li>' + esc(r.en) + '</li>'; });
+                // The service emits one reason per favourable dasha lord, so a period whose
+                // mahadasha and antardasha lord are the same planet (Jupiter–Jupiter) sends the
+                // identical sentence twice. Deduping here keeps the list readable; the emit-side
+                // fix belongs in the backend's marriage-window service.
+                var seen = Object.create(null);
+                w.reasons.forEach(function (r) {
+                    if (seen[r.en]) return;
+                    seen[r.en] = 1;
+                    html += '<li>' + esc(r.en) + '</li>';
+                });
                 html += '</ul></div>';
             });
             html += '<p class="mw-chart">Your lagna <strong>' + esc(data.lagna.en) + '</strong> · '
@@ -1026,19 +1046,38 @@
             var utcMs = Date.UTC(+p[0], +p[1] - 1, +p[2], +q[0], +q[1]) - tz * 3600000;
             var dob = new Date(utcMs).toISOString();
 
+            var url = API + '/api/public/marriage-window?dob=' + encodeURIComponent(dob)
+                    + '&lat=' + city[0] + '&lon=' + city[1];
+
+            var done = function (data) {
+                cache[url] = data;
+                render(data);
+                if (window.gtag) window.gtag('event', 'marriage_window_calculated');
+            };
+            // Same details, same answer for the day — so a visitor tweaking one field back to what
+            // it was doesn't spend another request out of the per-IP budget.
+            if (cache[url]) return done(cache[url]);
+
             goEl.disabled = true;
             goEl.textContent = 'Calculating…';
             errEl.hidden = true;
 
-            fetch(API + '/api/public/marriage-window?dob=' + encodeURIComponent(dob)
-                  + '&lat=' + city[0] + '&lon=' + city[1])
-                .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, body: b }; }); })
-                .then(function (res) {
-                    if (!res.ok) throw new Error(res.body && res.body.error ? res.body.error : 'Calculation failed');
-                    render(res.body);
-                    if (window.gtag) window.gtag('event', 'marriage_window_calculated');
+            fetch(url)
+                .then(function (r) {
+                    return r.json().catch(function () { return {}; }).then(function (b) {
+                        if (!r.ok) {
+                            var err = new Error(errorFor(r.status));
+                            err.shown = true; // already visitor-facing; don't overwrite below
+                            throw err;
+                        }
+                        return b;
+                    });
                 })
-                .catch(function (e) { showError(e.message || 'Something went wrong. Please try again.'); })
+                .then(done)
+                .catch(function (e) {
+                    showError(e && e.shown ? e.message
+                        : 'We could not reach the calculator. Check your connection and try again.');
+                })
                 .finally(function () {
                     goEl.disabled = false;
                     goEl.textContent = 'Show My Marriage Windows';
