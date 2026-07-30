@@ -26,7 +26,7 @@ Om.AI is an AI-powered Vedic astrology app that reads your birth chart (Kundli) 
 - **Conversational**: Ask follow-up questions — the AI remembers context from previous readings
 - **Timing predictions**: Specific dates based on Dasha periods and transit windows, not vague "this month" predictions
 - **Beyond horoscopes**: Ashtakoot compatibility matching (free), Bhagavad Gita with 700 verses + audio, sacred mantras, daily Panchang
-- **Earn questions through streaks**: Daily reading builds a streak; milestones at 3, 7, 14, 21, 30, 45, and 60 days earn additional AI questions
+- **Earn questions through streaks**: Opening the app each day builds a streak; nine milestones (3, 7, 14, 21, 30, 45, 60, 75, 90 days) pay out 19 free AI questions plus 3 days of Premium at day 30, a free month-ahead forecast at day 60, and 7 days of Premium at day 90. Two banked freezes absorb missed days; a broken streak is restored by opening the app 3 of the next 7 days.
 
 ## Key Features
 
@@ -73,7 +73,7 @@ Om.AI is an AI-powered Vedic astrology app that reads your birth chart (Kundli) 
 ## Pricing Model
 
 - **Included with app**: Birth chart, today's planetary positions, daily horoscope scores, initial AI question, compatibility reports, Gita & mantras, Panchang
-- **Streak rewards**: Earn additional AI questions by reading daily — milestones at 3, 7, 14, 21, 30, 45, 60 days
+- **Streak rewards**: Earn free AI questions, free days of Premium, and a free month-ahead forecast by opening the app daily — nine milestones from day 3 to day 90, with freezes and free earn-back so a missed day doesn't reset you
 - **Question packs**: One-time purchases for additional questions
 - **Premium subscription**: Unlimited questions, personalized remedies, tomorrow's horoscope, monthly forecasts, Lagna timing, Dasha alerts
 

@@ -187,7 +187,7 @@
                 "name": "What's included in Premium?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn additional questions through daily reading streaks — hit milestones at 3, 7, 14, 21, 30, 60, and 90 days for bonus questions. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription."
+                    "text": "Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn more just by opening the app each day — milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days pay out 19 free questions across the ladder, plus 3 days of Premium at day 30, a free month-ahead forecast at day 60, and 7 days of Premium at day 90, and two banked streak freezes cover the days you miss. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription."
                 }
             },
             {
@@ -227,7 +227,7 @@
                 "name": "Is my first astrology chat really free? How do I start?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes — Om.AI is free to download and your first astrology questions are free with no credit card required. Just install the app, enter your birth date, exact time of birth, and city, and you can start chatting with the AI astrologer right away. Your first question goes through the same pipeline Premium users get — full Kundli (birth chart) analysis, current planetary transits, active Dasha periods, and classical Vedic interpretation based on Brihat Parashara Hora Shastra — so you can judge the quality before subscribing. You can earn more free questions through daily reading streaks by opening the app each day and hitting milestones at 3, 7, 14, 21, 30, 60, and 90 days. Available free on Android and iOS."
+                    "text": "Yes — Om.AI is free to download and your first astrology questions are free with no credit card required. Just install the app, enter your birth date, exact time of birth, and city, and you can start chatting with the AI astrologer right away. Your first question goes through the same pipeline Premium users get — full Kundli (birth chart) analysis, current planetary transits, active Dasha periods, and classical Vedic interpretation based on Brihat Parashara Hora Shastra — so you can judge the quality before subscribing. You can earn more free questions just by opening the app each day: milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days pay out 19 free questions across the ladder, plus 3 days of Premium at day 30, a free month-ahead forecast at day 60, and 7 days of Premium at day 90. Miss a day and two banked streak freezes apply automatically; if a streak still breaks, opening the app on 3 of the next 7 days restores it. Available free on Android and iOS."
                 }
             },
             {
@@ -243,7 +243,7 @@
                 "name": "What makes Om.AI a good AI astrology app?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Om.AI is a top-rated AI astrology app on the Play Store and App Store with a 4.8-star rating, 40,000+ downloads, and 190,000+ readings delivered. What sets it apart from other AI astrology apps: every reading is computed from your real birth chart (Kundli) — exact planetary positions, Navamsa D9, and active Vimshottari Dasha — not a generic sun-sign. The AI is grounded in classical Vedic texts including Brihat Parashara Hora Shastra, Jataka Parijata, and Lal Kitab, so its interpretations follow the same logic a traditional Jyotishi would use. Your first astrology question is free with no credit card required, and you can earn more free questions by maintaining a daily reading streak (bonuses at 3, 7, 14, 21, 30, 60, and 90 days). The chat works 24/7 in English, Hindi, Hinglish, or any regional language, and the app also includes Kundli generation, Ashtakoot matching, real-time transit tracking, and the complete Bhagavad Gita."
+                    "text": "Om.AI is a top-rated AI astrology app on the Play Store and App Store with a 4.8-star rating, 40,000+ downloads, and 190,000+ readings delivered. What sets it apart from other AI astrology apps: every reading is computed from your real birth chart (Kundli) — exact planetary positions, Navamsa D9, and active Vimshottari Dasha — not a generic sun-sign. The AI is grounded in classical Vedic texts including Brihat Parashara Hora Shastra, Jataka Parijata, and Lal Kitab, so its interpretations follow the same logic a traditional Jyotishi would use. Your first astrology question is free with no credit card required, and you can earn more free questions — and free days of Premium — just by opening the app each day (milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days, with 3 days of Premium at day 30 and 7 days at day 90). The chat works 24/7 in English, Hindi, Hinglish, or any regional language, and the app also includes Kundli generation, Ashtakoot matching, real-time transit tracking, and the complete Bhagavad Gita."
                 }
             },
             {
@@ -700,6 +700,43 @@
     .tool h3 { font-family: var(--serif); font-weight: 400; font-size: 19px; letter-spacing: -0.01em; margin: 0 0 8px; transition: color .2s; }
     .tool p { color: var(--fg2); font-size: 14px; line-height: 1.55; margin: 0; }
 
+    /* ───── Streak ladder ─────
+       The rail is the cells' shared top border, so it can never dangle past the
+       ends and it re-segments per row when the grid reflows on mobile. Dots sit
+       on that border with a --bg fill punching a hole through it. */
+    .streak-ladder { display: grid; grid-template-columns: repeat(9, 1fr); margin: 0 0 40px; }
+    .rung { padding: 0 6px 4px; text-align: center; border-top: 1px solid var(--hair2); }
+    .rung__dot {
+        width: 9px; height: 9px; border-radius: 50%; margin: -5px auto 20px;
+        background: var(--bg); border: 1px solid var(--fg3);
+    }
+    .rung__day { font-family: var(--serif); font-weight: 400; font-size: 27px; line-height: 1; }
+    .rung__unit {
+        font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+        color: var(--fg3); margin: 7px 0 12px;
+    }
+    .rung__gain { color: var(--fg2); font-size: 13px; line-height: 1.45; }
+    .rung__gain b { display: block; font-weight: 600; color: var(--brand); }
+    /* Rungs that pay in something other than questions — the three that matter. */
+    .rung--gift .rung__dot { background: var(--brand); border-color: var(--brand); }
+    .rung--gift .rung__day { color: var(--brand); }
+
+    .streak-guard {
+        display: grid; grid-template-columns: repeat(2, 1fr);
+        border-top: 1px solid var(--hair); border-left: 1px solid var(--hair);
+    }
+    .guard {
+        display: flex; gap: 16px; padding: 26px 24px;
+        border-right: 1px solid var(--hair); border-bottom: 1px solid var(--hair);
+    }
+    .guard__icon {
+        flex: 0 0 32px; width: 32px; height: 32px; border-radius: 8px;
+        background: var(--brand-tint); color: var(--brand);
+        display: flex; align-items: center; justify-content: center;
+    }
+    .guard h3 { font-family: var(--serif); font-weight: 400; font-size: 18px; letter-spacing: -0.01em; margin: 0 0 6px; }
+    .guard p { color: var(--fg2); font-size: 14px; line-height: 1.55; margin: 0; }
+
     /* ───── Blog ───── */
     .blog-grid {
         display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 40px;
@@ -828,11 +865,16 @@
         .sample__intro { position: static; }
         .tools-grid { grid-template-columns: repeat(2, 1fr); }
         .blog-grid { grid-template-columns: 1fr; }
+        .streak-ladder { grid-template-columns: repeat(3, 1fr); row-gap: 28px; }
+        .streak-guard { grid-template-columns: 1fr; }
+        .guard { border-right: none; }
     }
     @media (max-width: 540px) {
         .footer__top { grid-template-columns: 1fr; }
         .sample__card { padding: 24px; }
         .faq { padding: 48px 20px; }
+        .rung__day { font-size: 23px; }
+        .rung__gain { font-size: 12px; }
     }
 
     /* ───── Reduced motion ───── */
@@ -1132,6 +1174,89 @@
     </div>
 </section>
 
+<!-- ============ STREAK LADDER (mirrors STREAK_REWARDS in the app — keep in sync) ============ -->
+<section class="section">
+    <div class="container">
+        <div class="tools-intro">
+            <p class="eyebrow">Streak rewards</p>
+            <h2>Open it daily. It <em>pays you back</em>.</h2>
+            <p>Opening the app is the whole requirement — nothing to read, nothing to buy. Nine milestones from day 3 to day 90.</p>
+        </div>
+        <div class="streak-ladder">
+            <div class="rung">
+                <div class="rung__dot"></div>
+                <div class="rung__day">3</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain">1 question</div>
+            </div>
+            <div class="rung">
+                <div class="rung__dot"></div>
+                <div class="rung__day">7</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain">2 questions</div>
+            </div>
+            <div class="rung">
+                <div class="rung__dot"></div>
+                <div class="rung__day">14</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain">3 questions</div>
+            </div>
+            <div class="rung">
+                <div class="rung__dot"></div>
+                <div class="rung__day">21</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain">2 questions</div>
+            </div>
+            <div class="rung rung--gift">
+                <div class="rung__dot"></div>
+                <div class="rung__day">30</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain">5 questions <b>+ 3 days Premium</b></div>
+            </div>
+            <div class="rung">
+                <div class="rung__dot"></div>
+                <div class="rung__day">45</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain">3 questions</div>
+            </div>
+            <div class="rung rung--gift">
+                <div class="rung__dot"></div>
+                <div class="rung__day">60</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain"><b>Month-ahead forecast</b></div>
+            </div>
+            <div class="rung">
+                <div class="rung__dot"></div>
+                <div class="rung__day">75</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain">3 questions</div>
+            </div>
+            <div class="rung rung--gift">
+                <div class="rung__dot"></div>
+                <div class="rung__day">90</div>
+                <div class="rung__unit">days</div>
+                <div class="rung__gain"><b>7 days Premium</b></div>
+            </div>
+        </div>
+        <div class="streak-guard">
+            <div class="guard">
+                <div class="guard__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M4.2 7l15.6 10M19.8 7L4.2 17M12 5.6l2.6-2.6M12 5.6L9.4 3M12 18.4l2.6 2.6M12 18.4L9.4 21"/></svg></div>
+                <div>
+                    <h3>Two streak freezes</h3>
+                    <p>Miss a day and a banked freeze applies overnight, on its own. You earn one at day 7, another at day 21, and replacements every 15 days after.</p>
+                </div>
+            </div>
+            <div class="guard">
+                <div class="guard__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.7L3 8"/><path d="M3 3v5h5"/></svg></div>
+                <div>
+                    <h3>Broke it? Earn it back</h3>
+                    <p>Open the app on 3 of the next 7 days and your old streak comes back — the whole count, not a fresh start. Free, and there's nothing to buy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ============ TESTIMONIALS ============ -->
 <section class="section">
     <div class="container">
@@ -1239,7 +1364,7 @@
         </details>
         <details class="faq__item">
             <summary>What's included in Premium?</summary>
-            <p>Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn additional questions through daily reading streaks — hit milestones at 3, 7, 14, 21, 30, 60, and 90 days for bonus questions. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription.</p>
+            <p>Om.AI Premium unlocks the full power of the app. New users get an initial astrology question to try the service, and can earn more just by opening the app each day — milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days pay out 19 free questions across the ladder, plus 3 days of Premium at day 30, a free month-ahead forecast at day 60, and 7 days of Premium at day 90, and two banked streak freezes cover the days you miss. Premium subscribers get: unlimited astrology questions covering career, love, health, finances, and spirituality; unlimited scripture questions for Bhagavad Gita wisdom; tomorrow's horoscope and upcoming transit predictions available a day early; personalized best-hours timing for career, money, love and wellness based on your birth chart; a month-ahead personal forecast with key transit dates; Dasha transition alerts when your planetary periods change; detailed planetary insights and strength analysis (Shadbala) with Dasha period breakdowns; and personalized daily remedies including gemstones, mantras, and rituals based on your chart. One-time question packs are also available for those who don't need a subscription.</p>
         </details>
         <details class="faq__item">
             <summary>How much does it cost? What's the refund policy?</summary>
@@ -1259,7 +1384,7 @@
         </details>
         <details class="faq__item">
             <summary>Is my first astrology chat really free? How do I start?</summary>
-            <p>Yes — Om.AI is free to download and your first astrology questions are free with no credit card required. Just install the app, enter your birth date, exact time of birth, and city, and you can start chatting with the AI astrologer right away. Your first question goes through the same pipeline Premium users get — full Kundli (birth chart) analysis, current planetary transits, active Dasha periods, and classical Vedic interpretation based on Brihat Parashara Hora Shastra — so you can judge the quality before subscribing. You can earn more free questions through daily reading streaks by opening the app each day and hitting milestones at 3, 7, 14, 21, 30, 60, and 90 days. Available free on Android and iOS.</p>
+            <p>Yes — Om.AI is free to download and your first astrology questions are free with no credit card required. Just install the app, enter your birth date, exact time of birth, and city, and you can start chatting with the AI astrologer right away. Your first question goes through the same pipeline Premium users get — full Kundli (birth chart) analysis, current planetary transits, active Dasha periods, and classical Vedic interpretation based on Brihat Parashara Hora Shastra — so you can judge the quality before subscribing. You can earn more free questions just by opening the app each day: milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days pay out 19 free questions across the ladder, plus 3 days of Premium at day 30, a free month-ahead forecast at day 60, and 7 days of Premium at day 90. Miss a day and two banked streak freezes apply automatically; if a streak still breaks, opening the app on 3 of the next 7 days restores it. Available free on Android and iOS.</p>
         </details>
         <details class="faq__item">
             <summary>Can I chat with the AI astrologer 24/7 with unlimited questions?</summary>
@@ -1267,7 +1392,7 @@
         </details>
         <details class="faq__item">
             <summary>What makes Om.AI a good AI astrology app?</summary>
-            <p>Om.AI is a top-rated AI astrology app on the Play Store and App Store with a 4.8-star rating, 40,000+ downloads, and 190,000+ readings delivered. What sets it apart from other AI astrology apps: every reading is computed from your real birth chart (Kundli) — exact planetary positions, Navamsa D9, and active Vimshottari Dasha — not a generic sun-sign. The AI is grounded in classical Vedic texts including Brihat Parashara Hora Shastra, Jataka Parijata, and Lal Kitab, so its interpretations follow the same logic a traditional Jyotishi would use. Your first astrology question is free with no credit card required, and you can earn more free questions by maintaining a daily reading streak (bonuses at 3, 7, 14, 21, 30, 60, and 90 days). The chat works 24/7 in English, Hindi, Hinglish, or any regional language, and the app also includes Kundli generation, Ashtakoot matching, real-time transit tracking, and the complete Bhagavad Gita.</p>
+            <p>Om.AI is a top-rated AI astrology app on the Play Store and App Store with a 4.8-star rating, 40,000+ downloads, and 190,000+ readings delivered. What sets it apart from other AI astrology apps: every reading is computed from your real birth chart (Kundli) — exact planetary positions, Navamsa D9, and active Vimshottari Dasha — not a generic sun-sign. The AI is grounded in classical Vedic texts including Brihat Parashara Hora Shastra, Jataka Parijata, and Lal Kitab, so its interpretations follow the same logic a traditional Jyotishi would use. Your first astrology question is free with no credit card required, and you can earn more free questions — and free days of Premium — just by opening the app each day (milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days, with 3 days of Premium at day 30 and 7 days at day 90). The chat works 24/7 in English, Hindi, Hinglish, or any regional language, and the app also includes Kundli generation, Ashtakoot matching, real-time transit tracking, and the complete Bhagavad Gita.</p>
         </details>
         <details class="faq__item">
             <summary>Is Om.AI an AI Jyotish app for Hindi users? क्या यह हिन्दी में उपलब्ध है?</summary>
