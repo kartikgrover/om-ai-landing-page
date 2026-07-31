@@ -3,9 +3,6 @@
 ## Project
 Om.ai (Vedic astrology app) website, hosted via GitHub Pages on `omai.app` (custom domain). Two surfaces in one repo: (1) the static landing/SEO/marketing + legal pages, and (2) the **consumer web MVP** `ask.html` — an interactive single-file web app (chat + charts) that shares the app's Firebase account and backend. See the "Web Consumer MVP" section below.
 
-## Response Accuracy
-**If you are not confident about a factual claim (pricing, industry norms, competitor data, best practices, etc.), do a web search BEFORE responding.** Do not guess or state things as fact when unsure — verify first. Getting it wrong wastes time and erodes trust.
-
 ## Workspace Context
 This is part of a multi-project VS Code workspace (5 projects):
 - **om-ai-landing-page** (this project) — Landing page website + consumer web MVP (`ask.html` on `omai.app`) → `/Users/kartikgrover/Documents/Projects/om-ai-landing-page`
@@ -54,12 +51,7 @@ This repo also serves **the consumer web app** at `omai.app/ask.html` — a sing
 - Do not modify `CNAME`, `app-ads.txt`, or `docs/` without permission
 
 ## Analytics & Ad Data Access
-
-### Google Analytics (GA4) via BigQuery
-`bq` CLI is authed as `groverkartik25@gmail.com`. Tables: `` `omai-1ea53.analytics_498597496.events_YYYYMMDD` `` (daily export, data from 2026-01-17). Standard GA4 schema — `event_name`, `event_date`, `user_pseudo_id`, `geo.country`, `traffic_source.*`, `device`, `platform`, `event_value_in_usd`, plus `collected_traffic_source` (gclid for Google Ads). Common events: `first_open`, `session_start`, `in_app_purchase`, `page_view`, `user_engagement`. For landing-page-only traffic, filter by `event_dimensions.hostname` or `traffic_source.source = 'website'` / `medium = 'landing'`. Query with `bq query --use_legacy_sql=false --format=json 'SELECT … FROM \`omai-1ea53.analytics_498597496.events_*\` WHERE _TABLE_SUFFIX BETWEEN "YYYYMMDD" AND "YYYYMMDD"'`.
-
-### Meta Ads API
-Available via the backend project (`../om.ai-backend/server.js:3008`). Current account `act_223330353092043` ("Om.AI Ad Account", live); legacy `act_1704926593380350` (USD) is paused — don't use. Token in `META_ADS_ACCESS_TOKEN` env var. Read-only.
+Canonical access details (GA4/BigQuery incl. `collected_traffic_source` gclid, Meta Ads, P&L) are in the backend's **`data-sources` skill** — read `../om.ai-backend/.claude/skills/data-sources/SKILL.md`; don't duplicate. Landing-page-only traffic: filter GA4 by `event_dimensions.hostname` or `traffic_source.source = 'website'` / `medium = 'landing'`.
 
 ## IMPORTANT: No Mention of Internal Tools/Vendors
 - **NEVER mention Swiss Ephemeris** on any public-facing page (no license yet)
@@ -88,25 +80,4 @@ Use these numbers to anchor SEO decisions rather than guessing:
 ## Existing Analysis Docs
 - `AUDIT_FINDINGS.md` — prior site audit.
 
-## macOS Reminders
-When adding a macOS Reminder (recheck/follow-up TODOs), always create it under the **Om.AI** list (create the list if missing) — never the default Reminders list.
-
-## Doc Reading Practice (how to USE a doc — added 2026-07-20)
-
-**Docs assert; only code decides.** Every dated doc is a snapshot of one moment. Treat its claims
-as leads to verify, never as current fact — especially audit findings, which are written in the
-present tense and read months later as if still true.
-
-- **Before repeating a finding, re-check it against code.** In the 2026-07-20 app sweep, three
-  findings marked "STILL REAL (code re-read)" turned out to be false, and were each repeated as
-  fact before anyone checked.
-- **A checklist of finished work is worse than no checklist** — open boxes on shipped work invite
-  re-implementation. Archive it instead.
-- **Fix a wrong doc in place, dated, rather than silently.** Record retractions explicitly; "the
-  auditor retracted something" is the signal that the rest was actually checked.
-- **Verify tooling before trusting its output.** A "zero offers configured" reading from the Play
-  API turned out to be a wrong-response-key bug, not a config problem.
-- **In living docs prefer symbol names over `file.js:123`** — line numbers rot silently. They're
-  fine in dated snapshots.
-- Source comments are docs too and go stale the same way — fix them when you find them.
 
