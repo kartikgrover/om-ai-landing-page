@@ -341,13 +341,6 @@
             // Collect form data
             const formData = new FormData(this);
 
-            // Prepare data for Google Apps Script
-            const submitData = new FormData();
-            submitData.append('email', formData.get('email') || '');
-            submitData.append('reason', formData.get('reason') || 'Not specified');
-            submitData.append('comments', formData.get('comments') || '');
-            submitData.append('timestamp', new Date().toISOString());
-
             // Track unsubscribe submission
             gtag('event', 'unsubscribe_submit', {
                 'event_category': 'Email',
@@ -355,15 +348,25 @@
                 'value': 1
             });
 
-            // Submit to Google Apps Script
-            fetch('https://script.google.com/macros/s/AKfycbz_TPsNSbaLDJRr_zTrBX7fBPvfTx9qM_HXpjdvLnnis-n7FBVbA8fwiRKxBXx7AF8/exec', {
+            // Suppress for real. This writes to the shared emailSuppression list
+            // that every Om.AI email checks before sending, and carries the churn
+            // reason onto the same doc. Until 2026-07-31 this form posted only to
+            // a Google Apps Script spreadsheet: it never stopped a single email,
+            // and because that call was mode:'no-cors' the page could not read the
+            // response and reported success unconditionally.
+            fetch('https://om-ai-backend-4f29d7469ff6.herokuapp.com/email/unsubscribe-request', {
                 method: 'POST',
-                mode: 'no-cors',
-                body: submitData
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: formData.get('email') || '',
+                    reason: formData.get('reason') || '',
+                    comments: formData.get('comments') || ''
+                })
             })
-            .then(response => {
-                // With no-cors, we can't read the response, so assume success
-                return { status: 'success', message: 'Unsubscribe request submitted successfully!' };
+            .then(async response => {
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(result.error || 'Submission failed');
+                return { status: 'success' };
             })
             .then(data => {
                 if (data.status === 'success') {
