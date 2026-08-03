@@ -119,6 +119,89 @@
             letter-spacing: 0.06em;
             margin-bottom: 0.75rem;
         }
+        /* Career-window calculator — same .mw-* contract as hi/shadi-kab-hogi.html so the two
+           tools stay visually identical; only the endpoint and the copy differ. */
+        .mw-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 14px;
+            padding: 1.75rem;
+            margin-top: 1.5rem;
+        }
+        .mw-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem 1.25rem;
+        }
+        @media (max-width: 575px) { .mw-grid { grid-template-columns: 1fr; } }
+        .mw-label {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.4rem;
+        }
+        .mw-input {
+            width: 100%;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #fff;
+            padding: 0.7rem 0.85rem;
+            font-size: 1rem;
+        }
+        .mw-input:focus { outline: none; border-color: #D97757; }
+        /* Native pickers render black-on-black in dark themes without this. */
+        .mw-input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
+        .mw-input option { background: #1a1a1a; color: #fff; }
+        .mw-note {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin: 1rem 0 0;
+            line-height: 1.6;
+        }
+        .mw-error {
+            color: #ff9b8a;
+            background: rgba(255,90,60,0.10);
+            border: 1px solid rgba(255,90,60,0.25);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            margin-top: 1rem;
+            font-size: 0.92rem;
+        }
+        .mw-window {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-left: 3px solid #D97757;
+            border-radius: 10px;
+            padding: 1.25rem 1.4rem;
+            margin-bottom: 1rem;
+        }
+        .mw-window h4 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.45rem;
+            margin: 0 0 0.35rem;
+            color: #fff;
+        }
+        .mw-tier {
+            display: inline-block;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #D97757;
+            border: 1px solid rgba(217,119,87,0.4);
+            border-radius: 999px;
+            padding: 0.15rem 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+        .mw-reasons { margin: 0.6rem 0 0; padding-left: 1.1rem; color: rgba(255,255,255,0.7); }
+        .mw-reasons li { margin-bottom: 0.3rem; font-size: 0.95rem; }
+        .mw-chart {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.9rem;
+            margin: 1.25rem 0 0;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
         .cta-box {
             background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
             border: 1px solid rgba(217,119,87,0.3);
@@ -153,6 +236,7 @@
         "@graph": [
             {
                 "@type": "WebPage",
+                "@id": "https://omai.app/hi/naukri-kab-milegi.html",
                 "name": "नौकरी कब मिलेगी? मुफ़्त AI करियर भविष्यवाणी जन्म तिथि से | Om.AI",
                 "description": "नौकरी कब मिलेगी? जन्म तिथि से मुफ़्त AI करियर भविष्यवाणी। वैदिक AI आपके दशम भाव, शनि, गुरु, दशा और दशांश (D10) का विश्लेषण कर बताता है नौकरी कब मिलेगी।",
                 "url": "https://omai.app/hi/naukri-kab-milegi.html",
@@ -162,6 +246,17 @@
                     "name": "Om.AI",
                     "url": "https://omai.app"
                 }
+            },
+            {
+                "@type": "WebApplication",
+                "name": "नौकरी कब मिलेगी कैलकुलेटर",
+                "url": "https://omai.app/hi/naukri-kab-milegi.html#calculator",
+                "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": "Any",
+                "inLanguage": "hi-IN",
+                "description": "जन्म तिथि, समय और स्थान से अगले 10 वर्षों की नौकरी की खिड़कियाँ — दशा और दशम भाव पर गुरु-शनि के गोचर के संगम से। कोई साइन-अप नहीं।",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+                "isPartOf": { "@id": "https://omai.app/hi/naukri-kab-milegi.html" }
             },
             {
                 "@type": "FAQPage",
@@ -360,6 +455,12 @@
                 <p style="color:rgba(255,255,255,0.55); margin-top:1.5rem; font-size:0.95rem;">
                     पहली रीडिंग मुफ़्त। हिंदी और English दोनों में। <a href="/career-astrology.html" style="color:#D97757;">Read in English →</a>
                 </p>
+                <!-- The calculator is the page's only thing a stranger can use without installing
+                     anything, and it sits below the fold. Kept as a text link rather than a third
+                     button so it doesn't compete with the store CTAs for the primary click. -->
+                <p style="margin-top:0.75rem; font-size:0.95rem;">
+                    <a href="#calculator" style="color:#D97757;">↓ बिना ऐप के, अभी अपनी नौकरी की खिड़की निकालें</a>
+                </p>
             </div>
         </section>
 
@@ -383,6 +484,60 @@
                 <p style="color:rgba(255,255,255,0.75);">
                     Om.AI का AI सूर्य राशि से राशिफल नहीं पढ़ता। यह आपकी <em>असली</em> जन्म कुंडली पढ़ता है — एक पारंपरिक ज्योतिषी की तरह — लेकिन 30 सेकंड में, सरल भाषा में, हिंदी या अंग्रेज़ी में।
                 </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Career-window calculator -->
+        <section class="content-section" id="calculator">
+            <div class="container" style="max-width:860px;">
+                <h2>अपनी नौकरी की खिड़की निकालें</h2>
+                <p style="color:rgba(255,255,255,0.75);">
+                    जन्म विवरण भरें। आपकी कुंडली की दशा और दशम भाव पर गुरु-शनि के गोचर के संगम से
+                    अगले 10 वर्षों की खिड़कियाँ निकाली जाएँगी। कोई साइन-अप नहीं, कोई शुल्क नहीं।
+                </p>
+
+                <div class="mw-card">
+                    <div class="mw-grid">
+                        <div>
+                            <label class="mw-label" for="mw-date">जन्म तिथि</label>
+                            <input type="date" id="mw-date" class="mw-input" min="1900-01-01" max="2099-12-31">
+                        </div>
+                        <div>
+                            <label class="mw-label" for="mw-time">जन्म समय</label>
+                            <input type="time" id="mw-time" class="mw-input">
+                        </div>
+                        <div>
+                            <label class="mw-label" for="mw-city">जन्म स्थान</label>
+                            <input list="mw-cities" id="mw-city" class="mw-input" placeholder="शहर चुनें या लिखें" autocomplete="off">
+                            <datalist id="mw-cities"></datalist>
+                        </div>
+                        <div>
+                            <label class="mw-label" for="mw-tz">समय क्षेत्र</label>
+                            <select id="mw-tz" class="mw-input">
+                                <option value="5.5" selected>भारत (IST, +5:30)</option>
+                                <option value="5.75">नेपाल (+5:45)</option>
+                                <option value="6">बांग्लादेश (+6:00)</option>
+                                <option value="4">खाड़ी / UAE (+4:00)</option>
+                                <option value="0">UK / UTC (+0:00)</option>
+                                <option value="-5">US Eastern (-5:00)</option>
+                                <option value="8">सिंगापुर (+8:00)</option>
+                                <option value="10">सिडनी (+10:00)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p class="mw-note">
+                        दशम भाव लग्न से तय होता है, और लग्न हर दो घंटे में बदलता है — इसलिए जन्म समय
+                        ज़रूरी है। अनुमान लगाने पर उत्तर भरोसेमंद नहीं रहेगा।
+                    </p>
+
+                    <button id="mw-go" class="btn btn--primary btn-lg w-100 mt-3">नौकरी की खिड़की दिखाएँ</button>
+                    <div id="mw-error" class="mw-error" role="alert" hidden></div>
+                </div>
+
+                <div id="mw-result" hidden></div>
             </div>
         </section>
 
@@ -726,6 +881,226 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <script>
+    (function () {
+        var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+
+        // City → [lat, lon, tzOffsetHours]. Bundled rather than geocoded: a geocoding API would
+        // add a key, a second network hop and a rate limit to a page whose whole point is that it
+        // answers instantly. India has no DST, so a fixed offset is exact for every Indian city.
+        // Kept byte-identical to the copy in hi/shadi-kab-hogi.html — the English twin's map has
+        // different keys, so the three are not yet worth a shared file. Edit both Hindi pages
+        // together; a lat/lon that drifts between them silently shifts the lagna on one of them.
+        var CITIES = {
+            'दिल्ली / Delhi': [28.6139, 77.2090, 5.5],
+            'मुंबई / Mumbai': [19.0760, 72.8777, 5.5],
+            'कोलकाता / Kolkata': [22.5726, 88.3639, 5.5],
+            'चेन्नई / Chennai': [13.0827, 80.2707, 5.5],
+            'बेंगलुरु / Bengaluru': [12.9716, 77.5946, 5.5],
+            'हैदराबाद / Hyderabad': [17.3850, 78.4867, 5.5],
+            'पुणे / Pune': [18.5204, 73.8567, 5.5],
+            'अहमदाबाद / Ahmedabad': [23.0225, 72.5714, 5.5],
+            'जयपुर / Jaipur': [26.9124, 75.7873, 5.5],
+            'लखनऊ / Lucknow': [26.8467, 80.9462, 5.5],
+            'कानपुर / Kanpur': [26.4499, 80.3319, 5.5],
+            'नागपुर / Nagpur': [21.1458, 79.0882, 5.5],
+            'इंदौर / Indore': [22.7196, 75.8577, 5.5],
+            'भोपाल / Bhopal': [23.2599, 77.4126, 5.5],
+            'पटना / Patna': [25.5941, 85.1376, 5.5],
+            'लुधियाना / Ludhiana': [30.9010, 75.8573, 5.5],
+            'आगरा / Agra': [27.1767, 78.0081, 5.5],
+            'वाराणसी / Varanasi': [25.3176, 82.9739, 5.5],
+            'सूरत / Surat': [21.1702, 72.8311, 5.5],
+            'वडोदरा / Vadodara': [22.3072, 73.1812, 5.5],
+            'चंडीगढ़ / Chandigarh': [30.7333, 76.7794, 5.5],
+            'अमृतसर / Amritsar': [31.6340, 74.8723, 5.5],
+            'जोधपुर / Jodhpur': [26.2389, 73.0243, 5.5],
+            'रायपुर / Raipur': [21.2514, 81.6296, 5.5],
+            'रांची / Ranchi': [23.3441, 85.3096, 5.5],
+            'गुवाहाटी / Guwahati': [26.1445, 91.7362, 5.5],
+            'भुवनेश्वर / Bhubaneswar': [20.2961, 85.8245, 5.5],
+            'कोयंबटूर / Coimbatore': [11.0168, 76.9558, 5.5],
+            'कोच्चि / Kochi': [9.9312, 76.2673, 5.5],
+            'तिरुवनंतपुरम / Thiruvananthapuram': [8.5241, 76.9366, 5.5],
+            'विशाखापत्तनम / Visakhapatnam': [17.6868, 83.2185, 5.5],
+            'विजयवाड़ा / Vijayawada': [16.5062, 80.6480, 5.5],
+            'मदुरै / Madurai': [9.9252, 78.1198, 5.5],
+            'मैसूरु / Mysuru': [12.2958, 76.6394, 5.5],
+            'नासिक / Nashik': [19.9975, 73.7898, 5.5],
+            'राजकोट / Rajkot': [22.3039, 70.8022, 5.5],
+            'जबलपुर / Jabalpur': [23.1815, 79.9864, 5.5],
+            'ग्वालियर / Gwalior': [26.2183, 78.1828, 5.5],
+            'मेरठ / Meerut': [28.9845, 77.7064, 5.5],
+            'प्रयागराज / Prayagraj': [25.4358, 81.8463, 5.5],
+            'देहरादून / Dehradun': [30.3165, 78.0322, 5.5],
+            'शिमला / Shimla': [31.1048, 77.1734, 5.5],
+            'श्रीनगर / Srinagar': [34.0837, 74.7973, 5.5],
+            'जम्मू / Jammu': [32.7266, 74.8570, 5.5],
+            'नोएडा / Noida': [28.5355, 77.3910, 5.5],
+            'गुरुग्राम / Gurugram': [28.4595, 77.0266, 5.5],
+            'गाज़ियाबाद / Ghaziabad': [28.6692, 77.4538, 5.5],
+            'ठाणे / Thane': [19.2183, 72.9781, 5.5],
+            'जमशेदपुर / Jamshedpur': [22.8046, 86.2029, 5.5],
+            'धनबाद / Dhanbad': [23.7957, 86.4304, 5.5],
+            'उदयपुर / Udaipur': [24.5854, 73.7125, 5.5],
+            'अजमेर / Ajmer': [26.4499, 74.6399, 5.5],
+            'बीकानेर / Bikaner': [28.0229, 73.3119, 5.5],
+            'कोटा / Kota': [25.2138, 75.8648, 5.5],
+            'बरेली / Bareilly': [28.3670, 79.4304, 5.5],
+            'अलीगढ़ / Aligarh': [27.8974, 78.0880, 5.5],
+            'गोरखपुर / Gorakhpur': [26.7606, 83.3732, 5.5],
+            'जालंधर / Jalandhar': [31.3260, 75.5762, 5.5],
+            'पणजी / Panaji': [15.4909, 73.8278, 5.5],
+            'कटक / Cuttack': [20.4625, 85.8828, 5.5],
+            'सेलम / Salem': [11.6643, 78.1460, 5.5],
+            'तिरुचिरापल्ली / Tiruchirappalli': [10.7905, 78.7047, 5.5],
+            'वारंगल / Warangal': [17.9689, 79.5941, 5.5],
+            'गुंटूर / Guntur': [16.3067, 80.4365, 5.5],
+            'सोलापुर / Solapur': [17.6599, 75.9064, 5.5],
+            'कोल्हापुर / Kolhapur': [16.7050, 74.2433, 5.5],
+            'सिलीगुड़ी / Siliguri': [26.7271, 88.3953, 5.5],
+            'काठमांडू / Kathmandu': [27.7172, 85.3240, 5.75],
+            'दुबई / Dubai': [25.2048, 55.2708, 4],
+            'सिंगापुर / Singapore': [1.3521, 103.8198, 8],
+            'लंदन / London': [51.5074, -0.1278, 0],
+            'न्यूयॉर्क / New York': [40.7128, -74.0060, -5],
+            'टोरंटो / Toronto': [43.6532, -79.3832, -5],
+            'सिडनी / Sydney': [-33.8688, 151.2093, 10]
+        };
+
+        var $ = function (id) { return document.getElementById(id); };
+        var dateEl = $('mw-date'), timeEl = $('mw-time'), cityEl = $('mw-city');
+        var tzEl = $('mw-tz'), goEl = $('mw-go'), errEl = $('mw-error'), outEl = $('mw-result');
+        if (!goEl) return;
+
+        var list = $('mw-cities');
+        Object.keys(CITIES).forEach(function (name) {
+            var o = document.createElement('option');
+            o.value = name;
+            list.appendChild(o);
+        });
+
+        // Picking a known city also fixes its timezone — the offset is a property of the place,
+        // and asking twice invites a mismatch that silently shifts the lagna.
+        cityEl.addEventListener('change', function () {
+            var c = CITIES[cityEl.value];
+            if (c) tzEl.value = String(c[2]);
+        });
+
+        var cache = {};
+
+        var showError = function (msg) {
+            errEl.textContent = msg;
+            errEl.hidden = false;
+            outEl.hidden = true;
+        };
+
+        var esc = function (s) {
+            return String(s).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        };
+
+        // 'strongest' costs both halves of Rao's rule plus both dasha lords, so it is rare by
+        // design — see the backend's event-window-service.js. Do not soften these labels into
+        // ratings; the API deliberately ships no numbers.
+        var TIER_HI = { strongest: 'सबसे मज़बूत', strong: 'मज़बूत', supportive: 'केवल दशा के आधार पर' };
+
+        // The API's own error strings are internal English ("too many requests"), and its limit is
+        // per-IP at 12/min — behind carrier NAT that can trip for someone on their first attempt,
+        // so the status decides what the visitor reads, not the server's wording.
+        var errorFor = function (status) {
+            if (status === 429) return 'अभी बहुत लोग कैलकुलेटर चला रहे हैं — एक मिनट बाद दोबारा कोशिश करें, या सीधे Om.AI से अपना समय पूछें।';
+            if (status === 400) return 'इन जन्म विवरणों से गणना नहीं हो सकी। जन्म तिथि, समय और शहर जाँच लें।';
+            return 'अभी आपकी खिड़कियाँ नहीं निकल सकीं। थोड़ी देर में दोबारा कोशिश करें।';
+        };
+
+        var render = function (data) {
+            var html = '';
+            if (data.summary && data.summary.hi) {
+                html += '<p style="color:rgba(255,255,255,0.75);margin-bottom:1.25rem;">' + esc(data.summary.hi) + '</p>';
+            }
+            (data.windows || []).forEach(function (w) {
+                html += '<div class="mw-window">';
+                html += '<span class="mw-tier">' + esc(TIER_HI[w.tier] || w.tier) + '</span>';
+                html += '<h4>' + esc(w.label.hi) + '</h4>';
+                html += '<ul class="mw-reasons">';
+                // The backend already collapses a repeated (planet, reason) sentence; this is
+                // belt-and-braces so a future reason string can't render the same line twice.
+                var seen = Object.create(null);
+                w.reasons.forEach(function (r) {
+                    if (seen[r.hi]) return;
+                    seen[r.hi] = 1;
+                    html += '<li>' + esc(r.hi) + '</li>';
+                });
+                html += '</ul></div>';
+            });
+            html += '<p class="mw-chart">आपका लग्न <strong>' + esc(data.lagna.hi) + '</strong> · '
+                 +  'दशम भाव <strong>' + esc(data.tenthSign.hi) + '</strong> · '
+                 +  'दशमेश <strong>' + esc(data.tenthLord.hi) + '</strong>'
+                 +  (data.currentDasha && data.currentDasha.mahadasha
+                        ? ' · चालू दशा <strong>' + esc(data.currentDasha.mahadashaHi) + '–' + esc(data.currentDasha.antardashaHi) + '</strong>'
+                        : '')
+                 + '</p>';
+            html += '<p class="mw-note">यह खिड़की बताती है कि समय कब अनुकूल है — निश्चित तारीख़ नहीं, और न ही कौन-सी नौकरी। '
+                 +  'अपनी कुंडली पर पूरा उत्तर पाने के लिए <a href="/ask.html" style="color:#D97757;">Om.AI से पूछें</a>।</p>';
+            outEl.innerHTML = html;
+            outEl.hidden = false;
+            errEl.hidden = true;
+        };
+
+        goEl.addEventListener('click', function () {
+            var d = dateEl.value, t = timeEl.value, city = CITIES[cityEl.value];
+            if (!d) return showError('जन्म तिथि भरें।');
+            if (!t) return showError('जन्म समय भरें — लग्न के बिना दशम भाव तय नहीं होता।');
+            if (!city) return showError('सूची में से जन्म स्थान चुनें।');
+
+            var tz = parseFloat(tzEl.value);
+            var p = d.split('-'), q = t.split(':');
+            // Local wall-clock at birth → UTC instant, which is what the API expects.
+            var utcMs = Date.UTC(+p[0], +p[1] - 1, +p[2], +q[0], +q[1]) - tz * 3600000;
+            var dob = new Date(utcMs).toISOString();
+
+            var url = API + '/api/public/career-window?dob=' + encodeURIComponent(dob)
+                    + '&lat=' + city[0] + '&lon=' + city[1];
+
+            var done = function (data) {
+                cache[url] = data;
+                render(data);
+                if (window.gtag) window.gtag('event', 'career_window_calculated');
+            };
+            // Same details, same answer for the day — so a visitor tweaking one field back to what
+            // it was doesn't spend another request out of the per-IP budget.
+            if (cache[url]) return done(cache[url]);
+
+            goEl.disabled = true;
+            goEl.textContent = 'गणना हो रही है…';
+            errEl.hidden = true;
+
+            fetch(url)
+                .then(function (r) {
+                    return r.json().catch(function () { return {}; }).then(function (b) {
+                        if (!r.ok) {
+                            var err = new Error(errorFor(r.status));
+                            err.shown = true; // already visitor-facing; don't overwrite below
+                            throw err;
+                        }
+                        return b;
+                    });
+                })
+                .then(done)
+                .catch(function (e) {
+                    showError(e && e.shown ? e.message
+                        : 'कैलकुलेटर तक पहुँच नहीं बनी। अपना इंटरनेट जाँचकर दोबारा कोशिश करें।');
+                })
+                .finally(function () {
+                    goEl.disabled = false;
+                    goEl.textContent = 'नौकरी की खिड़की दिखाएँ';
+                });
+        });
+    })();
+    </script>
 </body>
 
 </html>

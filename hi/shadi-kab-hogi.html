@@ -240,6 +240,7 @@
         "@graph": [
             {
                 "@type": "WebPage",
+                "@id": "https://omai.app/hi/shadi-kab-hogi.html",
                 "name": "शादी कब होगी? मुफ़्त AI विवाह भविष्यवाणी जन्म तिथि से | Om.AI",
                 "description": "शादी कब होगी? जन्म तिथि से मुफ़्त AI विवाह भविष्यवाणी। वैदिक AI आपके सप्तम भाव, शुक्र, गुरु, दशा और नवांश का विश्लेषण कर बताता है शादी कब होगी।",
                 "url": "https://omai.app/hi/shadi-kab-hogi.html",
@@ -251,6 +252,17 @@
                 }
             },
             {
+                "@type": "WebApplication",
+                "name": "शादी कब होगी कैलकुलेटर",
+                "url": "https://omai.app/hi/shadi-kab-hogi.html#calculator",
+                "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": "Any",
+                "inLanguage": "hi-IN",
+                "description": "जन्म तिथि, समय और स्थान से अगले 10 वर्षों की विवाह खिड़कियाँ — दशा और सप्तम भाव पर गुरु-शनि के गोचर के संगम से। कोई साइन-अप नहीं।",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+                "isPartOf": { "@id": "https://omai.app/hi/shadi-kab-hogi.html" }
+            },
+            {
                 "@type": "FAQPage",
                 "mainEntity": [
                     {
@@ -259,6 +271,14 @@
                         "acceptedAnswer": {
                             "@type": "Answer",
                             "text": "Om.AI का AI आपकी कुंडली को उसी तरह पढ़ता है जैसे एक पारंपरिक ज्योतिषी पढ़ता है। यह सप्तम भाव और उसके स्वामी, शुक्र और गुरु की स्थिति, चालू विंशोत्तरी दशा-अंतर्दशा और आने वाले गुरु-शनि गोचर की जाँच करता है। जब विवाह से जुड़े ग्रह की दशा और सप्तम भाव पर शुभ गोचर एक साथ आते हैं, तो वह समय विवाह की संभावित खिड़की होती है — आमतौर पर कुछ महीनों की।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "जन्म तिथि से शादी कब होगी — क्या सिर्फ़ date of birth से पता चल सकता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "अकेली जन्म तिथि काफ़ी नहीं है। सप्तम भाव लग्न से तय होता है और लग्न हर दो घंटे में बदल जाता है, इसलिए जन्म समय और जन्म स्थान भी चाहिए — इनके बिना \"meri shaadi kab hogi\" का उत्तर किसी और की कुंडली का उत्तर बन जाता है। इस पेज का मुफ़्त कैलकुलेटर तीनों लेता है और आपकी असली दशा तथा गुरु-शनि के गोचर के संगम से अगले 10 वर्षों की खिड़कियाँ निकालता है। जन्म समय याद न हो तो अनुमानित समय से निकली खिड़की को पक्का न मानें।"
                         }
                     },
                     {
@@ -445,6 +465,12 @@
                 </div>
                 <p style="color:rgba(255,255,255,0.55); margin-top:1.5rem; font-size:0.95rem;">
                     पहली रीडिंग मुफ़्त। हिंदी और English दोनों में। <a href="/shadi-kab-hogi.html" style="color:#D97757;">Read in English →</a>
+                </p>
+                <!-- The calculator is the page's only thing a stranger can use without installing
+                     anything, and it sits below the fold. Kept as a text link rather than a third
+                     button so it doesn't compete with the store CTAs for the primary click. -->
+                <p style="margin-top:0.75rem; font-size:0.95rem;">
+                    <a href="#calculator" style="color:#D97757;">↓ बिना ऐप के, अभी अपनी विवाह खिड़की निकालें</a>
                 </p>
             </div>
         </section>
@@ -749,6 +775,17 @@
                 </div>
 
                 <div class="faq-item">
+                    <h3>जन्म तिथि से शादी कब होगी — क्या सिर्फ़ date of birth से पता चल सकता है?</h3>
+                    <p>
+                        अकेली जन्म तिथि काफ़ी नहीं है। सप्तम भाव लग्न से तय होता है और लग्न हर दो घंटे में बदल जाता है, इसलिए
+                        जन्म समय और जन्म स्थान भी चाहिए — इनके बिना "meri shaadi kab hogi" का उत्तर किसी और की कुंडली का उत्तर
+                        बन जाता है। ऊपर दिया गया <a href="#calculator" style="color:#D97757;">मुफ़्त कैलकुलेटर</a> तीनों लेता है
+                        और आपकी असली दशा तथा गुरु-शनि के गोचर के संगम से अगले 10 वर्षों की खिड़कियाँ निकालता है। जन्म समय याद
+                        न हो तो अनुमानित समय से निकली खिड़की को पक्का न मानें।
+                    </p>
+                </div>
+
+                <div class="faq-item">
                     <h3>क्या AI विवाह भविष्यवाणी मुफ़्त है?</h3>
                     <p>
                         हाँ — Om.AI पर आपकी पहली रीडिंग मुफ़्त है। उसके बाद रोज़ ऐप खोलकर streak बनाएँ और ज़्यादा सवाल कमाएँ (3, 7, 14, 21, 30, 45, 60, 75 और 90 दिन के milestones पर) — कुल 19 मुफ़्त सवाल, दिन 30 पर 3 दिन Premium और दिन 90 पर 7 दिन Premium। दिन छूट जाए तो 2 streak freeze अपने-आप लग जाते हैं। Premium subscription में unlimited सवाल मिलते हैं। कुंडली मिलान की रिपोर्ट सभी users के लिए मुफ़्त है।
@@ -1010,10 +1047,9 @@
                 html += '<span class="mw-tier">' + esc(TIER_HI[w.tier] || w.tier) + '</span>';
                 html += '<h4>' + esc(w.label.hi) + '</h4>';
                 html += '<ul class="mw-reasons">';
-                // The service emits one reason per favourable dasha lord, so a period whose
-                // mahadasha and antardasha lord are the same planet (गुरु–गुरु) sends the identical
-                // sentence twice. Deduping here keeps the list readable; the emit-side fix belongs
-                // in the backend's marriage-window service.
+                // The backend collapses a repeated (planet, reason) sentence at the source since
+                // 2026-07-30 (the गुरु–गुरु case); this is belt-and-braces so a future reason
+                // string can't render the same line twice.
                 var seen = Object.create(null);
                 w.reasons.forEach(function (r) {
                     if (seen[r.hi]) return;
