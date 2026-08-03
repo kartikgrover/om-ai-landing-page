@@ -240,6 +240,9 @@
     <noscript><img height="1" width="1" style="display:none" alt=""
     src="https://www.facebook.com/tr?id=1678262729978200&ev=PageView&noscript=1"
     /></noscript>
+    <script src="/assets/js/hi-terms.js"></script>
+    <script>var HI = window.OMAI_HI;
+    var DAY_LABEL = { 'Good Day': 'शुभ दिन', 'Balanced Day': 'संतुलित दिन', 'Challenging Day': 'चुनौतीपूर्ण दिन' };</script>
 </head>
 
 <body>
@@ -607,14 +610,14 @@
             var ds = data.day_score || {};
             var badgeEl = document.getElementById('day-badge');
             if (ds.label) {
-                badgeEl.innerHTML = '<span class="day-badge ' + (ds.level || 'moderate') + '">' + esc(ds.label) + ' (' + esc(String(ds.score)) + '\x2F100)<\/span>';
+                badgeEl.innerHTML = '<span class="day-badge ' + (ds.level || 'moderate') + '">' + esc(DAY_LABEL[ds.label] || ds.label) + ' (' + esc(String(ds.score)) + '\x2F100)<\/span>';
             } else {
                 badgeEl.innerHTML = '';
             }
 
             // Title + Summary
             document.getElementById('detail-title').textContent = sign.symbol + ' ' + sign.name + ' (' + sign.hindi + ') — आज का राशिफल';
-            document.getElementById('detail-summary').textContent = data.summary || '';
+            document.getElementById('detail-summary').textContent = data.summary_hi || data.summary || '';
 
             // Life scores
             var scoresEl = document.getElementById('detail-scores');
@@ -631,7 +634,7 @@
                 if (!area) return;
                 var val = area.score || 0;
                 var color = scoreColor(val);
-                var insight = area.insight || '';
+                var insight = area.insight_hi || area.insight || '';
                 var item = document.createElement('div');
                 item.className = 'score-item';
                 item.innerHTML = '<div class="score-label"><span><i class="fas fa-' + a.icon + ' me-1" aria-hidden="true" style="color:' + color + '"></i> ' + a.label + '</span><span>' + val + '/100</span></div>' +
@@ -642,9 +645,9 @@
 
             // Moon tip
             var moonEnergy = data.moon_energy;
-            if (moonEnergy && moonEnergy.tip) {
+            if (moonEnergy && (moonEnergy.tip_hi || moonEnergy.tip)) {
                 document.getElementById('detail-moon-tip').style.display = 'block';
-                document.getElementById('moon-tip-text').textContent = moonEnergy.tip;
+                document.getElementById('moon-tip-text').textContent = moonEnergy.tip_hi || moonEnergy.tip;
             } else {
                 document.getElementById('detail-moon-tip').style.display = 'none';
             }
@@ -653,7 +656,7 @@
             var remedy = data.remedy;
             if (remedy) {
                 document.getElementById('detail-remedy').style.display = 'block';
-                var txt = remedy.text || remedy.description || '';
+                var txt = remedy.text_hi || remedy.text || remedy.description || '';
                 if (remedy.mantra) txt += ' मंत्र: ' + remedy.mantra;
                 document.getElementById('detail-remedy-text').textContent = txt || JSON.stringify(remedy);
             } else {
@@ -667,10 +670,10 @@
             if (timing && (timing.best_time || timing.avoid_time)) {
                 document.getElementById('detail-timing').style.display = 'block';
                 if (timing.best_time) {
-                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">शुभ समय</div><div class="t-time">' + esc(timing.best_time.window) + '</div><div class="t-note">' + esc(timing.best_time.hora || '') + ' होरा</div></div>';
+                    timingRow.innerHTML += '<div class="timing-item best"><div class="t-label">शुभ समय</div><div class="t-time">' + esc(timing.best_time.window) + '</div><div class="t-note">' + esc(HI.planet(timing.best_time.hora)) + ' होरा</div></div>';
                 }
                 if (timing.avoid_time) {
-                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">राहु काल</div><div class="t-time">' + esc(timing.avoid_time.window) + '</div><div class="t-note">' + esc(timing.avoid_time.reason || 'नए कार्य आरंभ करने से बचें') + '</div></div>';
+                    timingRow.innerHTML += '<div class="timing-item avoid"><div class="t-label">राहु काल</div><div class="t-time">' + esc(timing.avoid_time.window) + '</div><div class="t-note">' + 'नए कार्य आरंभ करने से बचें' + '</div></div>';
                 }
             } else {
                 document.getElementById('detail-timing').style.display = 'none';
@@ -748,8 +751,8 @@
                 var p = pp[planet];
                 if (!p) return;
                 var retro = p.retrograde ? '<span class="planet-retro">(वक्री)</span>' : '';
-                var nak = p.nakshatra ? ' · ' + esc(p.nakshatra) + (p.pada ? ' पाद ' + esc(String(p.pada)) : '') : '';
-                list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + esc(planetHindi[planet] || planet) + '</span><span class="planet-pos">' + esc(p.zodiac || '') + nak + retro + '</span></div>';
+                var nak = p.nakshatra ? ' · ' + esc(HI.nakshatra(p.nakshatra)) + (p.pada ? ' पाद ' + esc(String(p.pada)) : '') : '';
+                list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + esc(planetHindi[planet] || planet) + '</span><span class="planet-pos">' + esc(HI.sign(p.zodiac)) + nak + retro + '</span></div>';
             });
         }
 

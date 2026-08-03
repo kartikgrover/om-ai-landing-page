@@ -193,6 +193,8 @@
     <noscript><img height="1" width="1" style="display:none" alt=""
     src="https://www.facebook.com/tr?id=1678262729978200&ev=PageView&noscript=1"
     /></noscript>
+    <script src="/assets/js/hi-terms.js"></script>
+    <script>var HI = window.OMAI_HI;</script>
 </head>
 
 <body>
@@ -476,13 +478,13 @@
                 // Build panchang grid
                 var grid = document.getElementById('panchang-grid');
                 var items = [
-                    { icon: 'fa-moon', label: 'तिथि', value: panchang.tithi || '—', sub: panchang.paksha || '' },
-                    { icon: 'fa-star', label: 'नक्षत्र', value: panchang.nakshatra || '—', sub: panchang.pada ? 'पाद ' + panchang.pada : '' },
-                    { icon: 'fa-check-circle', label: 'तिथि गुणवत्ता', value: panchang.tithiQuality || '—', sub: '' }
+                    { icon: 'fa-moon', label: 'तिथि', value: HI.tithi(panchang.tithi) || '—', sub: HI.paksha(panchang.paksha) },
+                    { icon: 'fa-star', label: 'नक्षत्र', value: HI.nakshatra(panchang.nakshatra) || '—', sub: panchang.pada ? 'पाद ' + panchang.pada : '' },
+                    { icon: 'fa-check-circle', label: 'तिथि गुणवत्ता', value: HI.quality(panchang.tithiQuality) || '—', sub: '' }
                 ];
 
                 if (pp.Moon && pp.Moon.zodiac) {
-                    items.push({ icon: 'fa-circle', label: 'चंद्र राशि', value: pp.Moon.zodiac, sub: pp.Moon.nakshatra || '' });
+                    items.push({ icon: 'fa-circle', label: 'चंद्र राशि', value: HI.sign(pp.Moon.zodiac), sub: HI.nakshatra(pp.Moon.nakshatra) });
                 }
 
                 items.forEach(function(it) {
@@ -506,8 +508,8 @@
                     var p = pp[planet];
                     if (!p) return;
                     var retro = p.retrograde ? '<span class="planet-retro">(वक्री)</span>' : '';
-                    var nak = p.nakshatra ? ' · ' + esc(p.nakshatra) + (p.pada ? ' पाद ' + esc(String(p.pada)) : '') : '';
-                    list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + esc(planetNames[planet] || planet) + '</span><span class="planet-pos">' + esc(p.zodiac || '') + nak + retro + '</span></div>';
+                    var nak = p.nakshatra ? ' · ' + esc(HI.nakshatra(p.nakshatra)) + (p.pada ? ' पाद ' + esc(String(p.pada)) : '') : '';
+                    list.innerHTML += '<div class="transit-planet"><span class="planet-name">' + esc(planetNames[planet] || planet) + '</span><span class="planet-pos">' + esc(HI.sign(p.zodiac)) + nak + retro + '</span></div>';
                 });
 
                 gtag('event', 'panchang_view', { 'event_category': 'Free Tools' });
