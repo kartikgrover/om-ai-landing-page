@@ -1010,7 +1010,7 @@
                       if (q === 'hi' || q === 'en') { try { localStorage.setItem('omai-lang', q); } catch(_) {} return q; }
                       try { return localStorage.getItem('omai-lang') || 'en'; } catch(_) { return 'en'; }
                     })(),
-                    timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
+                    timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null, birthLocalTime: null,
                     // Relationship (compatibility) mode — mirrors the app's Personal↔Relationship toggle.
                     mode: 'personal', userGender: null, partnerGender: null,
                     partner: null, partnerChart: null, compatReport: null,
@@ -1023,7 +1023,7 @@
     const FRESH_USER_STATE = {
       uid: null, chart: null, conversationId: null, sessionId: null,
       freeUsed: false, premium: false, premiumChecked: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
-      timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
+      timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null, birthLocalTime: null,
       mode: 'personal', userGender: null, partnerGender: null,
       partner: null, partnerChart: null, compatReport: null,
       compatSessionId: null, compatConversationId: null,
@@ -1274,6 +1274,7 @@
           state.dateOfBirth = d.dob; state.coordinates = coords; state.birthPlace = d.birthPlace || null;
           state.birthTimezone = d.birthTimezone || null;
           state.userName = d.name || state.userName; state.timeUnknown = !!d.timeUnknown;
+          state.birthLocalTime = d.birthLocalTime || null;
           await ensureWS();
           state.chart = await new Promise((resolve, reject) => {
             const timer = setTimeout(() => reject(new Error('Chart timed out')), 120000);
@@ -1320,6 +1321,7 @@
           state.birthTimezone = d.birthTimezone || state.birthTimezone;
           state.userName = d.name || state.userName;
           state.timeUnknown = !!d.timeUnknown;
+          state.birthLocalTime = d.birthLocalTime || null;
         }
         // Same readiness bar as the app's isChartReady(): a half-written doc is worse
         // than none, since the backend would answer from a chart missing its Moon.
@@ -1658,8 +1660,14 @@
           // the web's legacy ones, so the doc is fully readable by the mobile app.
           dob: dateOfBirth, coordinates, birthCoordinates: coordinates,
           birthPlace: place, birthOffsetHours: offset, birthTimezone,
+          // The wall clock exactly as typed, no zone (the app's birthLocalTime, same
+          // `YYYY-MM-DDTHH:MM` shape its parseBirthLocalTime accepts). Both surfaces prefer it
+          // when re-opening the form, so an edit round-trips to the identical value instead of
+          // drifting through a UTC conversion.
+          birthLocalTime: `${dob}T${time}`,
           name: state.userName, source: 'web', updatedAt: serverTimestamp(),
         }, { merge: true });
+        state.birthLocalTime = `${dob}T${time}`;
 
         status.textContent = t('obComputingChart');
         await ensureWS();
@@ -2873,9 +2881,27 @@
     const openModal = (id) => { closeSheetsIfOpen(); $(id).classList.add('open'); };
     const closeModal = (id) => $(id).classList.remove('open');
     function openSettings() { refreshSubUI(); openModal('settingsView'); }
+    // Editing existing details prefills all of them — app parity (AstroOnboardingScreen loads
+    // date, time, place and coordinates back when a metadata doc exists). Only a FIRST-RUN entry
+    // stays blank there, deliberately: seeding a plausible-looking date/time got ~1,000 users a
+    // chart cast for the minute they tapped through onboarding, because nothing prompted them to
+    // correct it. Prefilling a genuine stored value has the opposite property — it's the answer
+    // they already gave, and leaving it blank is what invites a re-typed mistake.
     function editBirth() {
       if (state.userName) $('f-name').value = state.userName;
       if (state.birthPlace) $('f-place').value = state.birthPlace;
+      // Seed the city picker so saving without re-typing reuses the STORED coordinates. Without
+      // it the place is re-geocoded from its label, and coordinates that come back a hair
+      // different read as a real edit — which now invalidates every compatibility report.
+      if (state.birthPlace && state.coordinates) cityPick['f-place'] = { label: state.birthPlace, coordinates: state.coordinates };
+      // birthLocalTime is the wall time as last entered, so prefer it; charts written before we
+      // stored it (and every app-written doc predating the field) fall back to converting the
+      // stored UTC instant through the birth timezone.
+      const local = (state.birthLocalTime && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(state.birthLocalTime))
+        ? { date: state.birthLocalTime.slice(0, 10), time: state.birthLocalTime.slice(11, 16) }
+        : (state.dateOfBirth ? utcIsoToLocalParts(state.dateOfBirth, state.birthTimezone) : null);
+      if (local) { $('f-dob').value = local.date; $('f-time').value = local.time; }
+      if (state.birthTimezone) { try { $('f-tz-detected').textContent = state.birthTimezone; $('f-tz-row').style.display = 'block'; } catch (_) {} }
       $('onboardStatus').textContent = '';
       $('startBtn').disabled = false;
       $('editBirthBody').appendChild($('birthFormCard')); // relocate the live form node (keeps wiring)
@@ -2884,6 +2910,19 @@
     function closeEditBirth() {
       $('onboardCardHost').appendChild($('birthFormCard')); // return it to the first-run host
       closeModal('editBirthModal');
+    }
+    // Both birth forms are single DOM nodes reused for every account on this tab, and signing out
+    // never touched their values — it only reset `state`. Now that an edit prefills a real birth
+    // date, the next person to sign in on the same device would find the previous user's details
+    // sitting in a first-run form, and a form that looks answered is one nobody re-reads. Cleared
+    // on every account exit (sign-out and delete).
+    function clearBirthForms() {
+      ['f-name', 'f-dob', 'f-time', 'f-place', 'p-name', 'p-dob', 'p-time', 'p-place'].forEach((id) => { const el = $(id); if (el) el.value = ''; });
+      delete cityPick['f-place']; delete cityPick['p-place'];
+      ['f-tz-row', 'p-tz-row'].forEach((id) => { const el = $(id); if (el) el.style.display = 'none'; });
+      document.querySelectorAll('#partnerGenderSeg button').forEach((b) => b.classList.remove('active'));
+      setupPartnerGender = null; setupUserGender = null;
+      isEditingPartner = false; setPartnerFormMode(false);
     }
     function refreshDrawer() { $('diPremium').style.display = state.premium ? 'none' : 'flex'; refreshHeaderQuota(); }
 
@@ -3087,6 +3126,7 @@
       closeModal('settingsView'); // don't leave Settings hanging open behind the auth screen
       try { await signOut(auth); } catch (_) {}
       Object.assign(state, FRESH_USER_STATE);
+      clearBirthForms();
       window.__sessions = null; window.__loginTracked = false; // drop the prior account's drawer list + login-tracking flag
       if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
       show('auth'); // onAuthStateChanged(null) also routes here; for ?local it re-anons
@@ -3131,6 +3171,7 @@
         // Step 3 — delete the Firebase auth user, clear local state, route to signed-out view.
         await deleteUser(user);
         Object.assign(state, FRESH_USER_STATE);
+        clearBirthForms(); // a deleted account must not leave its birth details in the form
         if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
         await signOut(auth).catch(() => {}); // belt-and-suspenders; deleteUser already clears currentUser
         closeModal('settingsView');
