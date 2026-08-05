@@ -88,6 +88,29 @@
         gtag('config', 'G-EPT0NFE087');
         gtag('config', 'AW-16691222744');
     </script>
+    <!-- App store CTA tracking (download_click) -->
+    <script>
+    document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a[href*="play.google.com"], a[href*="apps.apple.com"]');
+        if(!a || typeof gtag !== 'function') return;
+        var platform = a.href.indexOf('apps.apple.com') > -1 ? 'ios' : 'android';
+        gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 });
+    }, true);
+    </script>
+    <script>
+    // The in-article CTA's "Download the app" button used to point at /#download — an extra hop
+    // to the homepage that the store-href listener above is structurally blind to. Retarget it to
+    // the reader's own store on load; the listener then reports it like any other download_click.
+    document.addEventListener('DOMContentLoaded', function(){
+        var ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+        var store = ios
+            ? 'https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_blog&mt=8'
+            : 'https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dblog%26utm_content%3Dblog_cta_download';
+        Array.prototype.forEach.call(document.querySelectorAll('a[href="/#download"]'), function(a){
+            a.href = store; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        });
+    });
+    </script>
     <!-- Meta Pixel — dataset 1678262729978200, shared with the live INR ad account.
          Mints the _fbp/_fbc cookies that /ask.html forwards to the server-side CAPI, so a
          visitor who arrives on this page from an ad stays attributable through checkout. -->

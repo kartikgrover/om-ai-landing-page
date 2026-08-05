@@ -367,6 +367,9 @@
     .plan .pl-price { text-align:right; font-weight:700; } .plan .pl-price s { color:var(--secondary); font-weight:400; font-size:var(--fs-xs); margin-right:.35rem; }
     .badge { position:absolute; top:-10px; right:14px; background:var(--accent); color:#fff; font-size:var(--fs-2xs); font-weight:700;
       padding:.15rem .5rem; border-radius:7px; letter-spacing:.02em; }
+    /* The badge overhangs its card by 10px, but the inter-card gap is only 8px — a badged
+       card that isn't first would clip the card above it. Yearly sits second since 2026-08-05. */
+    .plan:has(.badge) { margin-top:1.1rem; }
     .feature-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:var(--fs-sm); }
     .feature-table td { padding:.45rem .25rem; border-bottom:1px solid var(--border); }
     .feature-table td:last-child { text-align:right; }
@@ -810,16 +813,16 @@
 
       <div class="pw-div"><span style="text-transform:none;font-size:var(--fs-sm);" data-i18n="omaiPremium">Om.AI Premium</span></div>
       <div id="planChoices" role="radiogroup" aria-label="Choose a plan">
-        <button type="button" class="plan active" data-plan="yearly" role="radio" aria-checked="true">
+        <button type="button" class="plan active" data-plan="monthly" role="radio" aria-checked="true">
+          <span class="radio"></span>
+          <span class="pl-main"><span class="pl-title" data-i18n="planMonthly">Monthly</span></span>
+          <span class="pl-price">₹199</span>
+        </button>
+        <button type="button" class="plan" data-plan="yearly" role="radio" aria-checked="false">
           <span class="badge" data-i18n="pwBadge">SAVE 40% · 5 MONTHS FREE</span>
           <span class="radio"></span>
           <span class="pl-main"><span class="pl-title" data-i18n="planYearly">Yearly</span></span>
           <span class="pl-price"><s>₹2,388</s>₹1,499</span>
-        </button>
-        <button type="button" class="plan" data-plan="monthly" role="radio" aria-checked="false">
-          <span class="radio"></span>
-          <span class="pl-main"><span class="pl-title" data-i18n="planMonthly">Monthly</span></span>
-          <span class="pl-price">₹199</span>
         </button>
 
         <div class="pw-div"><span data-i18n="orPayPerQ">Or pay per question</span></div>
@@ -998,7 +1001,15 @@
                     // so a transient failure never locally locks out a paying user.
                     freeUsed: false, premium: false, premiumChecked: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
                     // Chat reply language (persisted). 'en' | 'hi' — default English.
-                    lang: (function(){ try { return localStorage.getItem('omai-lang') || 'en'; } catch(_) { return 'en'; } })(),
+                    // ?lang=hi wins over the stored pref so the Hindi pages (/hi/*) can hand a
+                    // Hindi reader straight into a Hindi chat; without it they landed in English
+                    // and had to find the toggle. Explicit intent from the link beats a stale
+                    // localStorage value, but only for a language the UI actually has.
+                    lang: (function(){
+                      const q = new URLSearchParams(location.search).get('lang');
+                      if (q === 'hi' || q === 'en') { try { localStorage.setItem('omai-lang', q); } catch(_) {} return q; }
+                      try { return localStorage.getItem('omai-lang') || 'en'; } catch(_) { return 'en'; }
+                    })(),
                     timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null,
                     // Relationship (compatibility) mode — mirrors the app's Personal↔Relationship toggle.
                     mode: 'personal', userGender: null, partnerGender: null,
@@ -3125,7 +3136,13 @@
     }
 
     // ── paywall: plan/pack select + account link + Razorpay checkout ─
-    let chosenPlan = 'yearly';   // 'yearly' | 'monthly' when chosenKind === 'sub'
+    // Default is MONTHLY, not yearly. Measured 2026-08-05 over the Razorpay ledger
+    // (subs created since 07-14): yearly 69 abandoned / 1 charged (1.4%), monthly 14/11
+    // (44%), pack 63%. Every abandoned yearly sub had auth_attempts=0 — nobody was
+    // declined, they closed the modal before picking a method. Defaulting to yearly sent
+    // ~77% of subscribe clicks into the one option nobody completes. Yearly stays on the
+    // paywall with its SAVE 40% badge for anyone who actively wants it.
+    let chosenPlan = 'monthly';  // 'yearly' | 'monthly' when chosenKind === 'sub'
     let chosenKind = 'sub';      // 'sub' (recurring) | 'pack' (one-time 5-question)
     // Rupee value per plan for ad-platform conversion events. create-subscription returns only
     // { subscriptionId, keyId, plan } — no amount — so the browser has no server-side source for
@@ -3255,7 +3272,9 @@
           state.freeUsed = false;
           if (afterPurchaseRoute(t('buyQuestionsPending'))) addMsg('ai', t('buyQuestionsPending'));
         },
-        modal: { ondismiss: () => { setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
+        modal: { ondismiss: () => { // pairs with the subscription dismissal event — see there for why
+          track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack' });
+          setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
       });
       track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
       track('begin_checkout', { value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 standard
@@ -3332,6 +3351,11 @@
           },
           // Subscription dismissed → exit-intent downsell to the ₹99 pack (once/session).
           modal: { ondismiss: () => {
+            // Closing the modal is the dominant loss on this surface and, until 2026-08-05, was
+            // invisible: purchase_attempted fired and nothing followed, so an abandoned checkout
+            // and a declined card looked identical in GA4 (the yearly collapse had to be
+            // diagnosed off the Razorpay ledger instead). Track it with the plan attached.
+            track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
             btn.disabled = false; status.textContent = t('subCheckoutClosedMvp');
             if (!downsellShownThisSession) setTimeout(openDownsell, 250);
           } },
