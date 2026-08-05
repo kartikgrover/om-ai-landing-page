@@ -1226,6 +1226,7 @@
         if (changed) {
           if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
           Object.assign(state, FRESH_USER_STATE);
+          clearBirthForms();             // the prior account's birth details must not sit in the new user's form
           window.__sessions = null;      // drop the prior account's drawer chat list (refetched for the new uid)
           window.__loginTracked = false; // re-track the new account's login below
         }
@@ -1244,7 +1245,12 @@
       // Route off the boot splash (or the login gate) once auth resolves: signed-in users go
       // straight to their chat/onboarding (never flashing the login screen); otherwise show login.
       if (signedIn) { const cv = currentView(); if (cv === 'auth' || cv === 'boot') restoreOrRoute(); }
-      else if (!user || currentView() === 'boot') { show('auth'); }
+      // Not every sign-out comes from the button: a revoked token, another tab, or an expired
+      // session lands here instead, and this is the path that actually routes the user out. The
+      // button's own cleanup would miss all of those, so it happens here too — modals float above
+      // the router and would otherwise sit on the sign-in screen, and the birth form would keep
+      // the previous account's details. No-ops on the first boot with nothing filled in.
+      else if (!user || currentView() === 'boot') { closeAllModals(); clearBirthForms(); show('auth'); }
     });
 
     // Returning signed-in user: restore birth details + regenerate the chart, so old
@@ -2916,6 +2922,18 @@
     // date, the next person to sign in on the same device would find the previous user's details
     // sitting in a first-run form, and a form that looks answered is one nobody re-reads. Cleared
     // on every account exit (sign-out and delete).
+    // Modals float ABOVE the router, so show('auth') doesn't touch them — signing out with one
+    // open leaves it sitting over the sign-in screen for whoever comes next. (Sheets are entries
+    // in `views`, so show() already deactivates those.) editBirthModal gets its own close rather
+    // than a class strip: it BORROWS the birth-form node out of the onboarding view, so dropping
+    // the overlay without handing the node back leaves the next account's onboarding screen with
+    // no form in it at all.
+    function closeAllModals() {
+      try { closeEditBirth(); } catch (_) {}
+      ['settingsView', 'profileView', 'paywallView', 'downsellModal', 'birthModal'].forEach((id) => {
+        const el = $(id); if (el) el.classList.remove('open');
+      });
+    }
     function clearBirthForms() {
       ['f-name', 'f-dob', 'f-time', 'f-place', 'p-name', 'p-dob', 'p-time', 'p-place'].forEach((id) => { const el = $(id); if (el) el.value = ''; });
       delete cityPick['f-place']; delete cityPick['p-place'];
@@ -3123,7 +3141,7 @@
     $('editBirthClose').addEventListener('click', closeEditBirth);
     $('editBirthModal').addEventListener('click', (e) => { if (e.target === $('editBirthModal')) closeEditBirth(); });
     $('signOutBtn').addEventListener('click', async () => {
-      closeModal('settingsView'); // don't leave Settings hanging open behind the auth screen
+      closeAllModals(); // no overlay may outlive the account that opened it
       try { await signOut(auth); } catch (_) {}
       Object.assign(state, FRESH_USER_STATE);
       clearBirthForms();
@@ -3172,9 +3190,9 @@
         await deleteUser(user);
         Object.assign(state, FRESH_USER_STATE);
         clearBirthForms(); // a deleted account must not leave its birth details in the form
+        closeAllModals();
         if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
         await signOut(auth).catch(() => {}); // belt-and-suspenders; deleteUser already clears currentUser
-        closeModal('settingsView');
         show('auth');
         if (LOCAL) await signInAnonymously(auth).catch(() => {});
       } catch (e) {
