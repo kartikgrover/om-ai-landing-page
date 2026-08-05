@@ -1129,6 +1129,7 @@
         authOpeningGoogle:'Opening Google sign-in…', authOpeningApple:'Opening Apple sign-in…', authEnterEmail:'Enter your email.', authSendingReset:'Sending reset link…', authResetSent:'Check your email for a password reset link.', authEnterBoth:'Enter your email and password.', authPwShort:'Password must be at least 6 characters.', authCreating:'Creating your account…', authEmailRegistered:'That email is already registered — sign in instead.', authSigningIn:'Signing you in…', authTrouble:'Trouble signing in? Reset your password below.', authWrong:'Email or password is incorrect.',
         obFillBirth:'Please fill date, time and place of birth.', obValidDate:'Please enter a valid birth date in the past.', needBirthDetails:'Add your birth details below and your chart is ready in seconds.', obLookupPlace:'Looking up your birth place…', obSavingDetails:'Saving your birth details…', obComputingChart:'Computing your Vedic chart… (this can take a few seconds)',
         cpValidDate:'Enter a valid birth date in the past.', cpSavingDetails:'Saving details…', cpAnalyzing:'Analyzing compatibility…',
+        cpAdultsOnly:'Gun Milan is for adults — both people must be 18 or older.', compatOneMatch:'The web shows one match — add more in the app.',
         subStartingMvp:'Starting your subscription…', subActivatingMvp:'Activating your premium…', subCheckoutClosedMvp:'Checkout closed.',
         genericErr:'Something went wrong. Please retry.', genericErrShort:'Something went wrong.', copyDone:'Copied', copyLabel:'Copy', shareLabel:'Share', copyAria:'Copy answer', shareAria:'Share answer', profUser:'User', profGuest:'Guest',
       },
@@ -1179,6 +1180,7 @@
         authOpeningGoogle:'Google साइन-इन खुल रहा है…', authOpeningApple:'Apple साइन-इन खुल रहा है…', authEnterEmail:'अपना ईमेल दर्ज करें।', authSendingReset:'रीसेट लिंक भेजा जा रहा है…', authResetSent:'पासवर्ड रीसेट लिंक के लिए अपना ईमेल देखें।', authEnterBoth:'अपना ईमेल और पासवर्ड दर्ज करें।', authPwShort:'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।', authCreating:'आपका खाता बन रहा है…', authEmailRegistered:'यह ईमेल पहले से पंजीकृत है — इसके बजाय साइन इन करें।', authSigningIn:'आपको साइन इन किया जा रहा है…', authTrouble:'साइन इन में परेशानी? नीचे अपना पासवर्ड रीसेट करें।', authWrong:'ईमेल या पासवर्ड गलत है।',
         obFillBirth:'कृपया जन्म तिथि, समय और स्थान भरें।', obValidDate:'कृपया अतीत की एक मान्य जन्म तिथि दर्ज करें।', needBirthDetails:'नीचे अपनी जन्म जानकारी भरें, आपकी कुंडली कुछ ही क्षणों में तैयार हो जाएगी।', obLookupPlace:'आपका जन्म स्थान खोजा जा रहा है…', obSavingDetails:'आपकी जन्म जानकारी सहेजी जा रही है…', obComputingChart:'आपकी वैदिक कुंडली बन रही है… (इसमें कुछ क्षण लग सकते हैं)',
         cpValidDate:'अतीत की एक मान्य जन्म तिथि दर्ज करें।', cpSavingDetails:'जानकारी सहेजी जा रही है…', cpAnalyzing:'अनुकूलता का विश्लेषण हो रहा है…',
+        cpAdultsOnly:'गुण मिलान वयस्कों के लिए है — दोनों की आयु 18 वर्ष या अधिक होनी चाहिए।', compatOneMatch:'वेब पर एक ही मैच दिखता है — और जोड़ने के लिए ऐप खोलें।',
         subStartingMvp:'आपकी सदस्यता शुरू हो रही है…', subActivatingMvp:'आपका प्रीमियम सक्रिय हो रहा है…', subCheckoutClosedMvp:'चेकआउट बंद किया गया।',
         genericErr:'कुछ गलत हुआ। कृपया पुनः प्रयास करें।', genericErrShort:'कुछ गलत हुआ।', copyDone:'कॉपी हो गया', copyLabel:'कॉपी', shareLabel:'शेयर', copyAria:'उत्तर कॉपी करें', shareAria:'उत्तर साझा करें', profUser:'उपयोगकर्ता', profGuest:'अतिथि',
       },
@@ -1643,6 +1645,14 @@
         const dateOfBirth = toUtcISO(dob, time, offset);
 
         status.textContent = t('obSavingDetails');
+        // This handler doubles as "edit my birth details". A real change to them invalidates every
+        // compatibility report the user has — the score is computed from BOTH charts — so sweep
+        // them the way the app does before the new details land. First-run onboarding has no
+        // previous dob and skips this entirely.
+        const detailsMoved = state.dateOfBirth && (state.dateOfBirth !== dateOfBirth
+          || state.coordinates?.latitude !== coordinates.latitude
+          || state.coordinates?.longitude !== coordinates.longitude);
+        if (detailsMoved) await invalidateCompatReports();
         await setDoc(doc(db, `users/${state.uid}/metadata/dob`), {
           // Write BOTH the app's field names (birthCoordinates/birthTimezone) and
           // the web's legacy ones, so the doc is fully readable by the mobile app.
@@ -1975,6 +1985,74 @@
     const oppositeGender = (g) => (g === 'male' ? 'female' : g === 'female' ? 'male' : null);
     bindGenderSeg('partnerGenderSeg', (g) => { setupPartnerGender = g; setupUserGender = oppositeGender(g); });
 
+    // Gun Milan is marriage matching, so it's adults-only for BOTH people (mirrors the app's
+    // matchesService.isAdultDob). The backend enforces this on the REST report routes the app
+    // uses, but not on the WebSocket path this page uses — so the check has to live here.
+    // Accepts a stored UTC-ISO instant or a form date; the ±hours of timezone slop is
+    // irrelevant at an 18-year scale.
+    const isAdultDob = (dob) => {
+      const d = new Date(dob || NaN);
+      if (isNaN(d.getTime())) return false;
+      const cutoff = new Date(); cutoff.setFullYear(cutoff.getFullYear() - 18);
+      return d <= cutoff;
+    };
+
+    // The app's Relationship tab lists matches off a DENORMALIZED summary stored on the details
+    // doc, and treats a present-but-null `summary` as "no report" without ever opening the report
+    // doc (matchesService.loadMatches → RelationshipHubScreen). Since the app writes summary:null
+    // whenever a partner is added or edited, a report generated here would show as an
+    // ungenerated "Generate" card in the app unless we denormalize it the same way.
+    // Shape mirrors matchesService.summarize(); `identity` is friend-report-only, so always null.
+    function compatSummary(report) {
+      const s = report?.ashtakoot?.match_summary;
+      if (!s) return null;
+      return { totalScore: s.total_score ?? null, outOf: s.total_out_of ?? 36, identity: null, verdict: s.verdict ?? null };
+    }
+
+    // A compatibility report is a function of BOTH charts plus (for romantic matches) gender, so
+    // a change to the USER's own birth details or role invalidates every report they have. The
+    // app does this in matchesService.invalidateAllReports; without the same sweep here, editing
+    // birth details on the web leaves a score computed against the old chart standing on both
+    // surfaces, with nothing that would ever heal it.
+    //
+    // Matches #2+ live in users/{uid}/matches/{id} — app-only (this page is single-partner), but
+    // swept anyway because nothing else will: the app can't tell that the web changed anything.
+    // `genderOnly` skips friend matches; that scorer carries no Varna term, so gender doesn't
+    // move its score.
+    //
+    // Summary clears land BEFORE the report deletes. If the sweep dies half-done, that ordering
+    // strands "no report yet" (harmless — the next generate overwrites it) instead of a card
+    // showing a score whose report is already gone.
+    async function invalidateCompatReports({ genderOnly = false } = {}) {
+      const uid = state.uid; if (!uid) return;
+      const legacyDetails = doc(db, `users/${uid}/metadata/partner_dob`);
+      let others = [];
+      let hasLegacy = false;
+      try {
+        const [pSnap, mSnap] = await Promise.all([
+          getDoc(legacyDetails),
+          getDocs(collection(db, `users/${uid}/matches`)),
+        ]);
+        hasLegacy = pSnap.exists();
+        others = mSnap.docs.filter((d) => !(genderOnly && String(d.data()?.relationType || '').trim().toLowerCase() === 'friend'));
+      } catch (_) { /* a read failure must not block the birth-detail edit that triggered this */ }
+      // Only touch the legacy details doc if it exists — a merge-write would otherwise CREATE it
+      // holding just {summary:null}, which the app renders as a partner card with no details.
+      await Promise.allSettled([
+        ...(hasLegacy ? [setDoc(legacyDetails, { summary: null }, { merge: true })] : []),
+        // update, not merge-set: a merge would resurrect a match deleted moments ago as a doc with
+        // no createdAt, which the app's ordered query never returns — invisible and unreachable.
+        ...others.map((d) => updateDoc(doc(db, `users/${uid}/matches/${d.id}`), { summary: null })),
+      ]);
+      await Promise.allSettled([
+        deleteDoc(doc(db, `users/${uid}/astroData/compatibility_report`)),
+        ...others.map((d) => deleteDoc(doc(db, `users/${uid}/matches/${d.id}/astroData/compatibility_report`))),
+      ]);
+      // Partner charts are deliberately left alone: they describe the other person and don't
+      // depend on the user at all. Only the comparison is stale.
+      state.compatReport = null;
+    }
+
     // ── Edit partner (mirrors the app: from the compatibility report you can edit the
     // partner's birth details; saving invalidates the cached partner chart + report and
     // regenerates the report in place — replace, no history). The same #compatSetupView
@@ -2041,7 +2119,11 @@
       setModeUI(mode); state.mode = mode; $('chatStatus').textContent = '';
       if (mode === 'compat') {
         if (!state.compatReport) await loadCompatExisting();
-        if (!state.compatReport) { show('compatSetup'); return; }
+        // Partner on file but no report — either surface can invalidate one when the user's own
+        // birth details change (invalidateCompatReports here, invalidateAllReports in the app).
+        // Reopen the form PRE-FILLED so regenerating doesn't mean retyping the partner from
+        // scratch; only a genuinely new partner gets the blank first-run form.
+        if (!state.compatReport) { state.partner?.dob ? openEditPartner() : show('compatSetup'); return; }
         state.compatSessionId = null; state.compatConversationId = null; renderCompatHome(); show('chat');
       } else {
         state.sessionId = null; state.conversationId = null; renderEmptyChat(); show('chat');
@@ -2281,7 +2363,11 @@
       // surfaced via the dock "View report" button. Chat stays a pure conversation (app parity).
       const wrap = document.createElement('div'); wrap.className = 'starter'; wrap.style.paddingTop = '.5rem';
       const pname = state.partner?.name ? ' ' + t('compatWith', { name: esc(state.partner.name) }) : '';
-      wrap.innerHTML = `<p class="hint">${esc(t('compatHomeHint'))}${pname}.</p><div id="chips"></div>`;
+      // The app supports several matches (and platonic friend matches); the web is single-partner
+      // by design and shows only match #1. Say so, or a user with more of them in the app reads
+      // the difference as missing data.
+      wrap.innerHTML = `<p class="hint">${esc(t('compatHomeHint'))}${pname}.</p><div id="chips"></div>`
+        + `<p class="hint" style="margin-top:.9rem;font-size:var(--fs-xs);opacity:.75;">${esc(t('compatOneMatch'))}</p>`;
       inner.appendChild(wrap);
       const chips = wrap.querySelector('#chips');
       getCompatStarters().forEach((s) => { const b = document.createElement('button'); b.className = 'chip'; b.textContent = s; b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); }); chips.appendChild(b); });
@@ -2292,7 +2378,10 @@
     // Compat session persistence (isCompatibility:true → shows in the app too).
     async function createCompatSession() {
       const ref = await addDoc(collection(db, `users/${state.uid}/astro_sessions`),
-        { lastActive: serverTimestamp(), isCompatibility: true, createdAt: serverTimestamp(), source: 'web' });
+        // matchId stamps which match the thread belongs to — the app scopes compat history per
+        // match. This page only ever talks about the legacy/primary partner, so it's always
+        // 'primary' (the app's PRIMARY_MATCH_ID, and what it assumes when the field is absent).
+        { lastActive: serverTimestamp(), isCompatibility: true, matchId: 'primary', createdAt: serverTimestamp(), source: 'web' });
       return ref.id;
     }
     async function saveCompatMessage(sender, text) {
@@ -2311,7 +2400,17 @@
       const pname = $('p-name').value.trim() || null;
       if (!dob || !time || !place) { status.textContent = "Fill your partner's date, time and place of birth."; return; }
       if (new Date(`${dob}T${time}`) >= new Date()) { status.textContent = t('cpValidDate'); return; }
+      // Adults-only, both sides — see isAdultDob. Checked before any network work so an
+      // under-18 birth date costs nothing.
+      // The user's own dob is checked only when we have it: a chart can be restored without the
+      // dob doc (see ensureChartForSend), and blocking a legitimate adult on missing data is
+      // worse than leaning on the app's onboarding gate for that rare case.
+      if (!isAdultDob(`${dob}T${time}`) || (state.dateOfBirth && !isAdultDob(state.dateOfBirth))) { status.textContent = t('cpAdultsOnly'); return; }
       const editing = isEditingPartner;
+      // The user's role is the partner's opposite, so a changed partner gender re-stales every
+      // ROMANTIC report the user has. The primary is regenerated a few lines below; matches #2+
+      // are app-only, so this sweep is the only thing that will ever clear them.
+      const prevPartnerGender = state.partner?.gender || null;
       // A compatibility REPORT is always FREE (app parity: birth chart + compat report cost
       // nothing — only QUESTIONS are metered), so there's no paywall gate here.
       const btn = $('compatGenBtn'); btn.disabled = true;
@@ -2331,6 +2430,7 @@
         state.partnerGender = setupPartnerGender; state.userGender = oppositeGender(setupPartnerGender);
 
         if (!editing) status.textContent = t('cpSavingDetails');
+        if (prevPartnerGender && prevPartnerGender !== setupPartnerGender) await invalidateCompatReports({ genderOnly: true });
         await setDoc(doc(db, `users/${state.uid}/metadata/dob`), { gender: state.userGender }, { merge: true });
         await setDoc(doc(db, `users/${state.uid}/metadata/partner_dob`), {
           dob: pdob, coordinates: pcoords, birthCoordinates: pcoords, birthPlace: place,
@@ -2369,6 +2469,10 @@
         // partner can't survive into the regenerated one. On a fresh generate, merge is fine.
         setDoc(doc(db, `users/${state.uid}/astroData/compatibility_report`),
           { ...report, generatedAt: serverTimestamp(), source: 'web' }, editing ? {} : { merge: true }).catch(() => {});
+        // Denormalize the score onto the details doc the way the app's saveMatchReport does —
+        // without it the app's Relationship tab shows this report as ungenerated (see compatSummary).
+        setDoc(doc(db, `users/${state.uid}/metadata/partner_dob`),
+          { summary: compatSummary(report), reportGeneratedAt: serverTimestamp() }, { merge: true }).catch(() => {});
         // Report generation is free — no quota decrement (only questions are metered).
 
         state.mode = 'compat'; setModeUI('compat');
@@ -2379,7 +2483,10 @@
         btn.disabled = false; status.textContent = '';
         // Set up the (clean) compat chat, then open the freshly-generated/updated report on
         // its own screen. Back returns to the chat (dock has "View report").
-        if (!editing) renderCompatHome();
+        // Also render the compat home when an "edit" had no thread behind it — that's the
+        // regenerate-after-invalidation path (setMode opens the pre-filled form), and without
+        // this the chat behind the report sheet would be blank.
+        if (!editing || !state.compatSessionId) renderCompatHome();
         renderHistory(); openReportScreen();
       } catch (e) {
         // Failed/paywalled regen → roll back to the report we had, so an edit never erases
@@ -2848,10 +2955,19 @@
       if (!state.uid) { host.innerHTML = '<div class="empty">' + esc(t('historySignIn')) + '</div>'; return; }
       host.innerHTML = '<div class="empty">' + esc(t('historyLoading')) + '</div>';
       try {
+        const compat = state.mode === 'compat';
+        // Compat threads are per-match in the app, and this page only knows the primary partner.
+        // Listing another match's threads here isn't just clutter: opening one loads partner B's
+        // messages, and the follow-up goes out with partner A's report and charts attached.
+        // Filtered in memory on the existing (isCompatibility, lastActive) index — no new index —
+        // and over-fetched first so a page full of other matches can't hide the primary's threads.
+        // Sessions written before matchId existed belonged to the one original partner: primary.
         const q = query(collection(db, `users/${state.uid}/astro_sessions`),
-          where('isCompatibility', '==', state.mode === 'compat'), orderBy('lastActive', 'desc'), limit(20));
+          where('isCompatibility', '==', compat), orderBy('lastActive', 'desc'), limit(compat ? 60 : 20));
         const snap = await getDocs(q);
-        window.__sessions = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        let rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        if (compat) rows = rows.filter((s) => (s.matchId ?? 'primary') === 'primary').slice(0, 20);
+        window.__sessions = rows;
         renderHistory();
         backfillSessionTitles();
       } catch (e) { host.innerHTML = '<div class="empty">' + esc(t('historyError')) + '</div>'; }
@@ -2947,7 +3063,11 @@
       if (t === 'chat') {
         // Cancelling an in-progress EDIT: drop edit state, restore add-mode copy, and stay in
         // Relationship mode (the report is intact) rather than flipping back to Personal.
-        if (isEditingPartner) { isEditingPartner = false; setPartnerFormMode(false); show('chat'); renderArtifactBar(); return; }
+        // Only when a report is actually there to go back to. setMode() also opens this form in
+        // edit mode to REGENERATE an invalidated report — cancelling that leaves nothing behind
+        // it, so it exits to personal chat like the first-run setup form does.
+        if (isEditingPartner && state.compatReport) { isEditingPartner = false; setPartnerFormMode(false); show('chat'); renderArtifactBar(); return; }
+        isEditingPartner = false; setPartnerFormMode(false);
         setMode('personal'); return; // leaving fresh partner setup → back to personal chat
       }
       show(t === '1' ? prevView : t);
