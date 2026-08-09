@@ -332,10 +332,12 @@
     <!-- Meta Pixel — dataset 1678262729978200. Was 819993440663760, which is shared only with the
          retired US ad account act_1704926593380350, so nothing it collected reached the live INR
          account act_223330353092043 (fixed 2026-07-28).
-         NOT deferred behind load+2s like Hotjar below: this pixel writes the _fbp/_fbc cookies that
-         ask.html forwards to the server-side CAPI. A visitor who lands here from an ad and clicks
-         through to /ask.html inside 2s would otherwise carry no _fbc, and the fbclid is gone by then
-         because it only ever sat on THIS page's URL. The fbevents.js load itself is already async. -->
+         Ad traffic is NOT deferred (see the fbclid branch in the loader): this pixel writes the
+         _fbp/_fbc cookies that ask.html forwards to the server-side CAPI. A visitor who lands here
+         from an ad and clicks through to /ask.html inside 2s would otherwise carry no _fbc, and the
+         fbclid is gone by then because it only ever sat on THIS page's URL. Visitors without an
+         fbclid have no such cookie to lose, so they take the deferred path that keeps mobile INP
+         under Google's 200ms threshold. -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -348,8 +350,14 @@
        whichever comes first. _fbp/_fbc still get minted for CAPI. */
     t=function(){if(s)return;s=1;var o=b.createElement(e);o.async=!0;o.src=v;
     var g=b.getElementsByTagName(e)[0];g.parentNode.insertBefore(o,g)};
-    f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)});
-    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})})}(window, document,'script',
+    /* Ad clicks land with ?fbclid=, and that param only ever sits on THIS page's URL: the
+       pixel has to write _fbc before the visitor can click through to /ask.html, which reads
+       the cookie for CAPI. So ad traffic keeps the eager load and eats the INP cost; organic
+       traffic (the overwhelming majority, and all of what CrUX measures here) has no fbclid
+       to lose and takes the deferred path. */
+    /[?&]fbclid=/.test(f.location.search)?t():
+    (f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)}),
+    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})}))}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1678262729978200');
     fbq('track', 'PageView');

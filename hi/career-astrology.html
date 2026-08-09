@@ -256,8 +256,14 @@
        whichever comes first. _fbp/_fbc still get minted for CAPI. */
     t=function(){if(s)return;s=1;var o=b.createElement(e);o.async=!0;o.src=v;
     var g=b.getElementsByTagName(e)[0];g.parentNode.insertBefore(o,g)};
-    f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)});
-    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})})}(window, document,'script',
+    /* Ad clicks land with ?fbclid=, and that param only ever sits on THIS page's URL: the
+       pixel has to write _fbc before the visitor can click through to /ask.html, which reads
+       the cookie for CAPI. So ad traffic keeps the eager load and eats the INP cost; organic
+       traffic (the overwhelming majority, and all of what CrUX measures here) has no fbclid
+       to lose and takes the deferred path. */
+    /[?&]fbclid=/.test(f.location.search)?t():
+    (f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)}),
+    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})}))}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1678262729978200');
     fbq('track', 'PageView');
