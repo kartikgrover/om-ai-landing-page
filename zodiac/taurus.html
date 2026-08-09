@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taurus (Vrishabha) — Vedic Astrology Traits | Om.AI</title>
-    <meta name="description" content="Taurus (Vrishabha) in Vedic astrology — personality traits, ruler Venus, lucky gems, compatible signs and today's horoscope.">
-    <meta name="keywords" content="Taurus Vedic astrology, Vrishabha rashi, Taurus traits Jyotish, Taurus horoscope, Venus ruled sign, Taurus personality, Vrishabha rashi traits, Taurus compatibility">
+    <title>Vrishabha / Vrishabh Rashi in English (Taurus) — Lord, Dates & Traits | Om.AI</title>
+    <meta name="description" content="Vrishabha (Vrishabh) Rashi in English is Taurus, ruled by lord Venus (Shukra). See Vrishabha rashi dates, nakshatras, personality traits, compatible signs & daily horoscope in Vedic astrology.">
+    <meta name="keywords" content="Vrishabha rashi in english, Vrishabh rashi in english, Taurus rashi lord, Vrishabha rashi lord, taurus means which rashi, Vrishabha rashi, Taurus Vedic astrology, Vrishabha rashi traits, Taurus horoscope, Taurus compatibility">
 
-    <meta property="og:title" content="Taurus (Vrishabha) — Vedic Astrology Traits | Om.AI">
-    <meta property="og:description" content="Taurus (Vrishabha) in Vedic astrology — personality traits, ruler Venus, lucky gems, compatible signs and today's horoscope.">
+    <meta property="og:title" content="Vrishabha / Vrishabh Rashi in English (Taurus) — Lord, Dates & Traits | Om.AI">
+    <meta property="og:description" content="Vrishabha (Vrishabh) Rashi in English is Taurus, ruled by lord Venus (Shukra). See Vrishabha rashi dates, nakshatras, personality traits, compatible signs & daily horoscope in Vedic astrology.">
     <meta property="og:url" content="https://omai.app/zodiac/taurus.html">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
@@ -61,8 +61,8 @@
         "@graph": [
             {
                 "@type": "WebPage",
-                "name": "Taurus (Vrishabha) — Vedic Astrology Traits & Horoscope | Om.AI",
-                "description": "Taurus in Vedic astrology: personality traits, ruling planet Venus, lucky gems, compatible signs & today's horoscope.",
+                "name": "Vrishabha / Vrishabh Rashi in English (Taurus) — Lord, Dates & Traits | Om.AI",
+                "description": "Vrishabha (Vrishabh) Rashi in English is Taurus, ruled by lord Venus (Shukra). Vrishabha rashi dates, nakshatras, personality traits, compatible signs & daily horoscope in Vedic astrology.",
                 "url": "https://omai.app/zodiac/taurus.html",
                 "publisher": { "@type": "Organization", "name": "Om.AI", "url": "https://omai.app" }
             },
@@ -143,9 +143,15 @@
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    n.queue=[];
+    /* fbevents.js (~140KB of JS) was tipping mobile INP just past Google's 200ms
+       line, so it no longer loads up front: the fbq stub above queues init/PageView,
+       and the script itself loads after window load (idle) or on first interaction,
+       whichever comes first. _fbp/_fbc still get minted for CAPI. */
+    t=function(){if(s)return;s=1;var o=b.createElement(e);o.async=!0;o.src=v;
+    var g=b.getElementsByTagName(e)[0];g.parentNode.insertBefore(o,g)};
+    f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)});
+    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})})}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1678262729978200');
     fbq('track', 'PageView');
@@ -206,7 +212,7 @@
                 <div class="hero-symbol" aria-hidden="true">&#9801;</div>
                 <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">Taurus — Vrishabha (वृषभ)</h1>
                 <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
-                    The second sign of the Vedic zodiac. Grounded, sensual, and blessed by Venus — Vrishabha rashi natives are the steady builders who create lasting wealth and beauty.
+                    Vrishabha (Vrishabh) Rashi in English is <strong>Taurus</strong> — the second sign of the Vedic zodiac, ruled by lord <strong>Venus (Shukra)</strong>. Grounded, sensual, and blessed by Venus, Vrishabha rashi natives are the steady builders who create lasting wealth and beauty.
                 </p>
             </div>
         </section>

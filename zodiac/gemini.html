@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini (Mithuna) — Vedic Astrology Traits | Om.AI</title>
-    <meta name="description" content="Gemini (Mithuna) in Vedic astrology — personality traits, ruler Mercury, lucky gems, compatible signs and today's horoscope.">
-    <meta name="keywords" content="Gemini Vedic astrology, Mithuna rashi, Gemini traits Jyotish, Gemini horoscope, Mercury ruled sign, Gemini personality, Mithuna rashi traits, Gemini compatibility">
+    <title>Mithuna / Mithun Rashi in English (Gemini) — Lord, Dates & Traits | Om.AI</title>
+    <meta name="description" content="Mithuna (Mithun) Rashi in English is Gemini, ruled by lord Mercury (Budh). See Mithuna rashi dates, nakshatras, personality traits, compatible signs & daily horoscope in Vedic astrology.">
+    <meta name="keywords" content="Mithuna rashi in english, Mithun rashi in english, Gemini rashi lord, Mithuna rashi lord, gemini means which rashi, Mithuna rashi, Gemini Vedic astrology, Mithuna rashi traits, Gemini horoscope, Gemini compatibility">
 
-    <meta property="og:title" content="Gemini (Mithuna) — Vedic Astrology Traits | Om.AI">
-    <meta property="og:description" content="Gemini (Mithuna) in Vedic astrology — personality traits, ruler Mercury, lucky gems, compatible signs and today's horoscope.">
+    <meta property="og:title" content="Mithuna / Mithun Rashi in English (Gemini) — Lord, Dates & Traits | Om.AI">
+    <meta property="og:description" content="Mithuna (Mithun) Rashi in English is Gemini, ruled by lord Mercury (Budh). See Mithuna rashi dates, nakshatras, personality traits, compatible signs & daily horoscope in Vedic astrology.">
     <meta property="og:url" content="https://omai.app/zodiac/gemini.html">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
@@ -61,8 +61,8 @@
         "@graph": [
             {
                 "@type": "WebPage",
-                "name": "Gemini (Mithuna) — Vedic Astrology Traits & Horoscope | Om.AI",
-                "description": "Gemini in Vedic astrology: personality traits, ruling planet Mercury, lucky gems, compatible signs & today's horoscope.",
+                "name": "Mithuna / Mithun Rashi in English (Gemini) — Lord, Dates & Traits | Om.AI",
+                "description": "Mithuna (Mithun) Rashi in English is Gemini, ruled by lord Mercury (Budh). Mithuna rashi dates, nakshatras, personality traits, compatible signs & daily horoscope in Vedic astrology.",
                 "url": "https://omai.app/zodiac/gemini.html",
                 "publisher": { "@type": "Organization", "name": "Om.AI", "url": "https://omai.app" }
             },
@@ -143,9 +143,15 @@
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    n.queue=[];
+    /* fbevents.js (~140KB of JS) was tipping mobile INP just past Google's 200ms
+       line, so it no longer loads up front: the fbq stub above queues init/PageView,
+       and the script itself loads after window load (idle) or on first interaction,
+       whichever comes first. _fbp/_fbc still get minted for CAPI. */
+    t=function(){if(s)return;s=1;var o=b.createElement(e);o.async=!0;o.src=v;
+    var g=b.getElementsByTagName(e)[0];g.parentNode.insertBefore(o,g)};
+    f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)});
+    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})})}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1678262729978200');
     fbq('track', 'PageView');
@@ -203,7 +209,7 @@
                 <div class="hero-symbol" aria-hidden="true">&#9802;</div>
                 <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">Gemini — Mithuna (मिथुन)</h1>
                 <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
-                    The third sign of the Vedic zodiac. Curious, communicative, and guided by Mercury — Mithuna rashi natives are the intellectuals and storytellers of the zodiac.
+                    Mithuna (Mithun) Rashi in English is <strong>Gemini</strong> — the third sign of the Vedic zodiac, ruled by lord <strong>Mercury (Budh)</strong>. Curious, communicative, and guided by Mercury, Mithuna rashi natives are the intellectuals and storytellers of the zodiac.
                 </p>
             </div>
         </section>

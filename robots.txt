@@ -1,5 +1,5 @@
 # Om.AI Robots.txt
-# Updated: May 7, 2026
+# Updated: Aug 9, 2026
 
 User-agent: *
 Allow: /
@@ -12,8 +12,12 @@ Disallow: /blog/drafts/
 Disallow: /daily-horoscope/v2/
 Disallow: /daily-verse
 
-# Disallow URLs with query parameters (static site — no server-side params)
-Disallow: /*?
+# Query-string URLs are deliberately NOT disallowed. A previous "Disallow: /*?"
+# also matched the cache-busted stylesheet (/styles/styles.min.css?v=NN) on every
+# page, so Googlebot rendered the whole site unstyled; and it kept the AppAgg
+# homepage backlink (?from=AppAgg...) uncrawlable, so its equity never
+# consolidated. Every indexable page carries rel=canonical — that handles
+# parameter dedup without robots rules.
 
 # Disallow certain file types
 Disallow: /*.pdf$

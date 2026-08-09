@@ -228,9 +228,15 @@
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    n.queue=[];
+    /* fbevents.js (~140KB of JS) was tipping mobile INP just past Google's 200ms
+       line, so it no longer loads up front: the fbq stub above queues init/PageView,
+       and the script itself loads after window load (idle) or on first interaction,
+       whichever comes first. _fbp/_fbc still get minted for CAPI. */
+    t=function(){if(s)return;s=1;var o=b.createElement(e);o.async=!0;o.src=v;
+    var g=b.getElementsByTagName(e)[0];g.parentNode.insertBefore(o,g)};
+    f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)});
+    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})})}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1678262729978200');
     fbq('track', 'PageView');
