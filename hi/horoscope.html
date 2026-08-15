@@ -602,16 +602,7 @@
                     saveCache();
                     renderV2(data, sign);
                 })
-                .catch(function() {
-                    fetch(API + '/daily-horoscope/' + sign.id)
-                        .then(function(res) { return res.json(); })
-                        .then(function(data) {
-                            cache.signs[sign.id] = data;
-                            saveCache();
-                            renderV1(data, sign);
-                        })
-                        .catch(function() { renderError(sign); });
-                });
+                .catch(function() { renderError(sign); });
         }
 
         function renderV2(data, sign) {

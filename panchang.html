@@ -444,10 +444,6 @@
                 if (!r.ok) throw new Error('metadata failed');
                 return r.json();
             })
-            .catch(function() {
-                // Fallback: fetch any sign and extract metadata
-                return fetch(API + '/daily-horoscope/aries').then(function(r) { return r.json(); });
-            })
             .then(function(data) {
                 // Cache it
                 try { sessionStorage.setItem('omai_panchang', JSON.stringify({ date: today, data: data })); } catch(e) {}
