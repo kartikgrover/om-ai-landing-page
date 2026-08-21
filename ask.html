@@ -1134,6 +1134,7 @@
         cpValidDate:'Enter a valid birth date in the past.', cpSavingDetails:'Saving details…', cpAnalyzing:'Analyzing compatibility…',
         cpAdultsOnly:'Gun Milan is for adults — both people must be 18 or older.', compatOneMatch:'The web shows one match — add more in the app.',
         subStartingMvp:'Starting your subscription…', subActivatingMvp:'Activating your premium…', subCheckoutClosedMvp:'Checkout closed.',
+        msgTooLong:'That message is too long ({n} characters). Please shorten it to {max} or less, or send it in a few parts.',
         genericErr:'Something went wrong. Please retry.', genericErrShort:'Something went wrong.', copyDone:'Copied', copyLabel:'Copy', shareLabel:'Share', copyAria:'Copy answer', shareAria:'Share answer', profUser:'User', profGuest:'Guest',
       },
       hi: {
@@ -1185,6 +1186,7 @@
         cpValidDate:'अतीत की एक मान्य जन्म तिथि दर्ज करें।', cpSavingDetails:'जानकारी सहेजी जा रही है…', cpAnalyzing:'अनुकूलता का विश्लेषण हो रहा है…',
         cpAdultsOnly:'गुण मिलान वयस्कों के लिए है — दोनों की आयु 18 वर्ष या अधिक होनी चाहिए।', compatOneMatch:'वेब पर एक ही मैच दिखता है — और जोड़ने के लिए ऐप खोलें।',
         subStartingMvp:'आपकी सदस्यता शुरू हो रही है…', subActivatingMvp:'आपका प्रीमियम सक्रिय हो रहा है…', subCheckoutClosedMvp:'चेकआउट बंद किया गया।',
+        msgTooLong:'यह संदेश बहुत लंबा है ({n} अक्षर)। कृपया इसे {max} अक्षरों तक छोटा करें, या कुछ हिस्सों में भेजें।',
         genericErr:'कुछ गलत हुआ। कृपया पुनः प्रयास करें।', genericErrShort:'कुछ गलत हुआ।', copyDone:'कॉपी हो गया', copyLabel:'कॉपी', shareLabel:'शेयर', copyAria:'उत्तर कॉपी करें', shareAria:'उत्तर साझा करें', profUser:'उपयोगकर्ता', profGuest:'अतिथि',
       },
     };
@@ -1807,6 +1809,17 @@
       return bar;
     }
 
+    // Standalone notice in the chat stream — same styling as renderErrorRow but no Retry,
+    // for failures where re-sending the identical text can only fail again.
+    function showChatNotice(message) {
+      const row = document.createElement('div');
+      row.className = 'err-row'; row.setAttribute('role', 'alert');
+      const span = document.createElement('span'); span.className = 'err-text'; span.textContent = message;
+      row.appendChild(span);
+      $('chatInner').appendChild(row);
+      maybeScroll(true);
+    }
+
     // ── Error row + Retry (mirrors app ChatUIComponents ErrorMessage). Replaces
     // the in-flight AI bubble with a styled error; `onRetry` re-sends the last
     // question. The composer text is always restored by the caller so nothing is lost.
@@ -1873,11 +1886,21 @@
       } catch (_) { /* leave state as-is on a transient read failure */ }
     }
 
+    const MAX_MSG_CHARS = 10000; // keep in sync with server.js MAX_MESSAGE_CHARS
     let asking = false; // single shared WS `pending` slot → serialize requests
     async function ask() {
       if (asking) return; // a stream is already in flight — ignore Enter/click spam
       const input = $('composerInput'); const q = input.value.trim();
       if (!q) return;
+      // Mirror of the server's cap (server.js MAX_MESSAGE_CHARS). Without this the server
+      // bounces the send with an untranslated string AFTER saveMessage has already persisted
+      // the question, leaving an orphan in astro_chats with no reply under it. Guard here so
+      // the text stays in the composer and the count says how much to cut. Covers compat too:
+      // askCompat is only reachable through this function.
+      if (q.length > MAX_MSG_CHARS) {
+        showChatNotice(t('msgTooLong', { n: q.length.toLocaleString('en-IN'), max: MAX_MSG_CHARS.toLocaleString('en-IN') }));
+        return;
+      }
       // No chart → nothing to read from. Heal or route to onboarding BEFORE the quota
       // gate, so a blocked send can never spend a question. Keep the typed text: the
       // user comes back to this composer once their details are in.
