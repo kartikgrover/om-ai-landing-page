@@ -4,7 +4,7 @@
 Om.ai (Vedic astrology app) website, hosted via GitHub Pages on `omai.app` (custom domain). Two surfaces in one repo: (1) the static landing/SEO/marketing + legal pages, and (2) the **consumer web MVP** `ask.html` — an interactive single-file web app (chat + charts) that shares the app's Firebase account and backend. See the "Web Consumer MVP" section below.
 
 ## Workspace Context
-This is part of a multi-project VS Code workspace (5 projects):
+This is part of a multi-project VS Code workspace (7 folders as of 2026-08-31 — the 5 below plus `om-ai-veo` and `email-sender`):
 - **om-ai-landing-page** (this project) — Landing page website + consumer web MVP (`ask.html` on `omai.app`) → `/Users/kartikgrover/Documents/Projects/om-ai-landing-page`
 - **om/om1** — React Native frontend (Expo) → `/Users/kartikgrover/Documents/Projects/om/om1`
 - **om.ai-backend** — Node.js API server, Heroku-deployed → `/Users/kartikgrover/Documents/Projects/om.ai-backend`
@@ -78,6 +78,6 @@ Use these numbers to anchor SEO decisions rather than guessing:
 - **Pricing decisions**: canonical in `om-ai-ops/docs/pricing/PRICING_TIMELINE.md` — reference, don't duplicate.
 
 ## Existing Analysis Docs
-- `AUDIT_FINDINGS.md` — prior site audit.
+- `docs/internal/AUDIT_FINDINGS.md` — prior site audit; moved out of the public repo root and gitignored 2026-05-04 (`95729aa`), so it is local-only.
 
 
