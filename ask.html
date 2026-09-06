@@ -819,13 +819,13 @@
         <button type="button" class="plan active" data-plan="monthly" role="radio" aria-checked="true">
           <span class="radio"></span>
           <span class="pl-main"><span class="pl-title" data-i18n="planMonthly">Monthly</span></span>
-          <span class="pl-price">₹199</span>
+          <span class="pl-price" id="plPriceMonthly">₹199</span>
         </button>
         <button type="button" class="plan" data-plan="yearly" role="radio" aria-checked="false">
           <span class="badge" data-i18n="pwBadge">SAVE 40% · 5 MONTHS FREE</span>
           <span class="radio"></span>
           <span class="pl-main"><span class="pl-title" data-i18n="planYearly">Yearly</span></span>
-          <span class="pl-price"><s>₹2,388</s>₹1,499</span>
+          <span class="pl-price" id="plPriceYearly"><s>₹2,388</s>₹1,499</span>
         </button>
 
         <div class="pw-div"><span data-i18n="orPayPerQ">Or pay per question</span></div>
@@ -1002,7 +1002,7 @@
                     // premiumChecked: did the /status endpoint actually answer this session? false = unverified
                     // (token/5xx/network blip) → the local paywall gate stays open and defers to the server,
                     // so a transient failure never locally locks out a paying user.
-                    freeUsed: false, premium: false, premiumChecked: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
+                    freeUsed: false, premium: false, premiumChecked: false, remaining: null, winback: null, userName: null, dateOfBirth: null, coordinates: null,
                     // Chat reply language (persisted). 'en' | 'hi' — default English.
                     // ?lang=hi wins over the stored pref so the Hindi pages (/hi/*) can hand a
                     // Hindi reader straight into a Hindi chat; without it they landed in English
@@ -1025,7 +1025,7 @@
     // compatibility report, chart and name into the next account signed in on the same tab.
     const FRESH_USER_STATE = {
       uid: null, chart: null, conversationId: null, sessionId: null,
-      freeUsed: false, premium: false, premiumChecked: false, remaining: null, userName: null, dateOfBirth: null, coordinates: null,
+      freeUsed: false, premium: false, premiumChecked: false, remaining: null, winback: null, userName: null, dateOfBirth: null, coordinates: null,
       timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null, birthLocalTime: null,
       mode: 'personal', userGender: null, partnerGender: null,
       partner: null, partnerChart: null, compatReport: null,
@@ -1123,7 +1123,7 @@
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroSubFresh:'Your first question is free. Premium unlocks unlimited questions about your chart.', pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
         pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Birth chart & Gun Milan reports', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
-        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 190,000+ seekers · 4.8★', pwBadge:'SAVE 40% · 5 MONTHS FREE',
+        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 190,000+ seekers · 4.8★', pwBadge:'SAVE 40% · 5 MONTHS FREE',
         secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
@@ -1175,7 +1175,7 @@
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroSubFresh:'आपका पहला प्रश्न निःशुल्क है। प्रीमियम असीमित प्रश्न अनलॉक करता है।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
         pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'जन्म कुंडली व Gun Milan रिपोर्ट', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
-        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'190,000+ जिज्ञासुओं का भरोसा · 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
+        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'190,000+ जिज्ञासुओं का भरोसा · 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
         secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
@@ -2804,7 +2804,7 @@
     function openPaywall(src) {
       _pwSrc = src || 'direct';
       try { closeModal('settingsView'); closeModal('profileView'); } catch (_) {}
-      try { renderPaywallHero(); } catch (_) {}
+      try { renderPaywallHero(); renderPlanPrices(); updateCtaLabel(); } catch (_) {}
       try { updateCtaLabel(); } catch (_) {} // sync CTA + billing line to the active plan
       { const ps = $('paywallStatus'); if (ps) ps.textContent = ''; } // clear stale status from a prior visit
       track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
@@ -3285,6 +3285,10 @@
         } catch (_) { /* leave unverified */ }
         state.premiumChecked = statusOk; // false → unverified; the local gate stays open and defers to the server
         if (!statusOk) { refreshHeaderQuota(); return; } // couldn't verify — leave premium/freeUsed untouched
+        // Returning-subscriber pricing. Server decides eligibility; null until the
+        // Razorpay offer exists, in which case the paywall keeps showing list price.
+        state.winback = (s && s.winback) || null;
+        try { renderPlanPrices(); updateCtaLabel(); } catch (_) {}
         if (s && s.active) {
           state.premium = true; state.freeUsed = false;
           // Cancelled-but-active detection for the subscription row (see refreshSubUI).
@@ -3355,11 +3359,23 @@
     // this. Mirrors the .pl-price copy below and the Razorpay plan config; change all three together.
     // (The pack path doesn't need this — create-order returns its amount in paise.)
     const PLAN_VALUE_INR = { yearly: 1499, monthly: 199 };
+    // List price unless the server says this user gets the returning-subscriber price.
+    function renderPlanPrices() {
+      const wb = state.winback || {};
+      const m = $('plPriceMonthly'), y = $('plPriceYearly');
+      if (m) m.innerHTML = wb.monthly ? '<s>₹199</s>₹' + wb.monthly : '₹199';
+      if (y) y.innerHTML = wb.yearly ? '<s>₹1,499</s>₹' + Number(wb.yearly).toLocaleString('en-IN') : '<s>₹2,388</s>₹1,499';
+    }
     function updateCtaLabel() {
       // CTA + contextual billing line match the app paywall exactly.
       $('subscribeBtn').textContent = t(chosenKind === 'pack' ? 'getQuestions' : 'getUnlimited');
       const bill = $('paywallBilling');
-      if (bill) bill.textContent = t(chosenKind === 'pack' ? 'oneTimePurchase' : 'autoRenewCancel');
+      if (!bill) return;
+      // A discounted first cycle must say what the second one costs, on the same line.
+      const wbPrice = chosenKind === 'sub' && state.winback ? state.winback[chosenPlan] : null;
+      bill.textContent = wbPrice
+        ? t(chosenPlan === 'yearly' ? 'winbackBillYearly' : 'winbackBillMonthly', { p: Number(wbPrice).toLocaleString('en-IN') })
+        : t(chosenKind === 'pack' ? 'oneTimePurchase' : 'autoRenewCancel');
     }
     document.querySelectorAll('.plan').forEach((b) => b.addEventListener('click', () => {
       document.querySelectorAll('.plan').forEach((x) => { x.classList.remove('active'); x.setAttribute('aria-checked', 'false'); });
@@ -3529,7 +3545,7 @@
           body: JSON.stringify({ plan: chosenPlan, ...attribution }),
         });
         if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start subscription');
-        const { subscriptionId, keyId } = await r.json();
+        const { subscriptionId, keyId, firstCyclePrice } = await r.json();
 
         const rzp = new Razorpay({
           key: keyId,
@@ -3541,7 +3557,7 @@
           handler: async (resp) => {
             track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
             track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 monetization
-            await fbPurchase(resp && resp.razorpay_payment_id, PLAN_VALUE_INR[chosenPlan], 'INR'); // Meta, deduped vs CAPI
+            await fbPurchase(resp && resp.razorpay_payment_id, firstCyclePrice || PLAN_VALUE_INR[chosenPlan], 'INR'); // Meta, deduped vs CAPI
             status.textContent = t('subActivatingMvp');
             for (let i = 0; i < 10; i++) {
               await new Promise((res) => setTimeout(res, 2000));
