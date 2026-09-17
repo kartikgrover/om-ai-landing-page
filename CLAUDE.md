@@ -47,7 +47,7 @@ This repo also serves **the consumer web app** at `omai.app/ask.html` — a sing
 
 ## Notes
 - Static HTML/CSS/JS — no build system
-- Hosted on GitHub Pages
+- Hosted on GitHub Pages, which runs Jekyll over the repo (no `.nojekyll` since 2026-09-17). Pages have no front matter, so they're copied as-is; repo-only files must be listed under `exclude:` in `_config.yml` or they're published.
 - **Bootstrap CSS is a purged subset**, `styles/bootstrap-subset.min.css`, loaded render-blocking (the async CDN copy caused 0.3–0.9 CLS as of 2026-09-17). A page that uses a Bootstrap class no other page uses needs a rebuild, then a `?v=` bump on its link: `curl -sL https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css -o /tmp/bootstrap-subset.min.css && npx purgecss@6 --config tools/purgecss.config.cjs --css /tmp/bootstrap-subset.min.css --output styles/`. Bootstrap JS is not loaded: `assets/js/nav.js` handles `data-bs-toggle="collapse"`/`"dropdown"` only, so any other Bootstrap JS component needs its own code.
 - **Icons are Font Awesome Free 6.4.0 class names without Font Awesome.** Keep writing `<i class="fas fa-name">`, then run `node tools/build-icons.mjs`: it regenerates `styles/icons.min.css` (shapes as CSS masks, loaded async) and the sizing block between the `icons:start`/`icons:end` markers in both stylesheets, then bump both `?v=`. Class names built in JS must be added to its `FROM_JS` list. Pro-only icons render blank.
 - **Font stacks carry metric-matched fallbacks** (`@font-face` at the top of `styles/styles.css`): write `'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif` and `'Source Sans 3', 'Source Sans Fallback', 'Source Sans Fallback Android', …` in new pages so the font swap doesn't reflow text.
