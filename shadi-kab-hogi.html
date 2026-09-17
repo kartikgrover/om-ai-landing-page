@@ -894,7 +894,7 @@
     (function () {
         var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
-        // City → [lat, lon, tzOffsetHours]. Bundled rather than geocoded: a geocoding API would
+        // City → [lat, lon, tzOffsetHours, ianaZone?]. Bundled rather than geocoded: a geocoding API would
         // add a key, a second network hop and a rate limit to a page whose whole point is that it
         // answers instantly. Not the shared cities.js either — that table carries no timezone
         // offset, and the offset is what turns a wall-clock birth time into the right lagna.
@@ -967,13 +967,13 @@
             'Solapur': [17.6599, 75.9064, 5.5],
             'Kolhapur': [16.7050, 74.2433, 5.5],
             'Siliguri': [26.7271, 88.3953, 5.5],
-            'Kathmandu': [27.7172, 85.3240, 5.75],
-            'Dubai': [25.2048, 55.2708, 4],
-            'Singapore': [1.3521, 103.8198, 8],
-            'London': [51.5074, -0.1278, 0],
-            'New York': [40.7128, -74.0060, -5],
-            'Toronto': [43.6532, -79.3832, -5],
-            'Sydney': [-33.8688, 151.2093, 10]
+            'Kathmandu': [27.7172, 85.3240, 5.75, 'Asia/Kathmandu'],
+            'Dubai': [25.2048, 55.2708, 4, 'Asia/Dubai'],
+            'Singapore': [1.3521, 103.8198, 8, 'Asia/Singapore'],
+            'London': [51.5074, -0.1278, 0, 'Europe/London'],
+            'New York': [40.7128, -74.0060, -5, 'America/New_York'],
+            'Toronto': [43.6532, -79.3832, -5, 'America/Toronto'],
+            'Sydney': [-33.8688, 151.2093, 10, 'Australia/Sydney']
         };
 
         var $ = function (id) { return document.getElementById(id); };
@@ -994,6 +994,25 @@
             var c = CITIES[cityEl.value];
             if (c) tzEl.value = String(c[2]);
         });
+
+        // Foreign cities carry an IANA zone: London/New York/Toronto/Sydney keep DST and Singapore/Kathmandu
+        // changed offset in the 1980s, so their offset comes from the birth date, not the dropdown default.
+        // Indian cities keep their fixed +5:30.
+        function zoneOffsetAt(zone, ms) {
+            var g = {};
+            new Intl.DateTimeFormat('en-US', { timeZone: zone, hourCycle: 'h23', year: 'numeric', month: 'numeric',
+                day: 'numeric', hour: 'numeric', minute: 'numeric' }).formatToParts(new Date(ms))
+                .forEach(function (x) { g[x.type] = +x.value; });
+            return (Date.UTC(g.year, g.month - 1, g.day, g.hour, g.minute) - Math.floor(ms / 60000) * 60000) / 3600000;
+        }
+        function birthOffset(city, picked, y, mo, d, h, mi) {
+            var manual = parseFloat(picked);
+            if (!city[3] || picked !== String(city[2])) return manual;
+            try {
+                var wall = Date.UTC(y, mo - 1, d, h, mi);
+                return zoneOffsetAt(city[3], wall - zoneOffsetAt(city[3], wall) * 3600000);
+            } catch (e) { return manual; }
+        }
 
         var cache = {};
 
@@ -1062,8 +1081,8 @@
             if (!t) return showError('Please enter your time of birth — without the lagna there is no 7th house.');
             if (!city) return showError('Please pick your place of birth from the list.');
 
-            var tz = parseFloat(tzEl.value);
             var p = d.split('-'), q = t.split(':');
+            var tz = birthOffset(city, tzEl.value, +p[0], +p[1], +p[2], +q[0], +q[1]);
             // Local wall-clock at birth → UTC instant, which is what the API expects.
             var utcMs = Date.UTC(+p[0], +p[1] - 1, +p[2], +q[0], +q[1]) - tz * 3600000;
             var dob = new Date(utcMs).toISOString();

@@ -514,7 +514,7 @@
 
         // Display date
         var now = new Date();
-        document.getElementById('horoscope-date').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('horoscope-date').textContent = now.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' });
 
         // Client-side cache: metadata fetched once, sign data cached per session
         // Cache key uses IST date (UTC+5:30) to match backend's daily cycle

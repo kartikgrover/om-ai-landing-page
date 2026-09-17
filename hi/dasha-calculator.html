@@ -326,6 +326,7 @@
                             <li><a class="dropdown-item" href="/hi/ai-astrology-chat.html">AI ज्योतिष चैट</a></li>
                             <li><a class="dropdown-item" href="/hi/kundli.html">कुंडली</a></li>
                             <li><a class="dropdown-item" href="/hi/paisa-kab-aayega.html">पैसा कब आएगा</a></li>
+                            <li><a class="dropdown-item" href="/hi/ghar-kab-banega.html">घर कब बनेगा</a></li>
                             <li><a class="dropdown-item" href="/hi/marriage-prediction.html">विवाह भविष्यवाणी</a></li>
                             <li><a class="dropdown-item" href="/hi/shadi-kab-hogi.html">शादी कब होगी</a></li>
                             <li><a class="dropdown-item" href="/hi/shadi-kisse-hogi.html">शादी किससे होगी</a></li>
@@ -495,8 +496,8 @@
                 if(y < 2150){ return -20 + 32*Math.pow((y-1820)/100,2) - 0.5628*(2150 - y); }
                 u = (y-1820)/100; return -20 + 32*u*u;
             }
-            // Lahiri (Chitrapaksha) ayanamsa: J2000 value + IAU general precession in longitude
-            function ayanamsa(jde){ var T = (jde - 2451545.0)/36525; return 23.85291792 + (5028.796195*T + 1.1054348*T*T)/3600; }
+            // Lahiri ayanamsa: J2000 value matches the backend's Lahiri, plus IAU general precession
+            function ayanamsa(jde){ var T = (jde - 2451545.0)/36525; return 23.85709235 + (5028.796195*T + 1.1054348*T*T)/3600; }
 
             var NAK = ['अश्विनी','भरणी','कृत्तिका','रोहिणी','मृगशिरा','आर्द्रा','पुनर्वसु','पुष्य','आश्लेषा','मघा','पूर्वा फाल्गुनी','उत्तरा फाल्गुनी','हस्त','चित्रा','स्वाति','विशाखा','अनुराधा','ज्येष्ठा','मूल','पूर्वाषाढ़ा','उत्तराषाढ़ा','श्रवण','धनिष्ठा','शतभिषा','पूर्वा भाद्रपद','उत्तरा भाद्रपद','रेवती'];
             var RASHI = ['मेष','वृषभ','मिथुन','कर्क','सिंह','कन्या','तुला','वृश्चिक','धनु','मकर','कुंभ','मीन'];
@@ -539,7 +540,7 @@
                 var lordIdx = nak % 9;
                 var elapsedYears = frac*SEQ[lordIdx][1];
                 var balanceYears = SEQ[lordIdx][1] - elapsedYears;
-                var birth = new Date(Y, Mo-1, Da, hh, mm).getTime();
+                var birth = utMs;
                 var now = Date.now();
 
                 // Build one full Mahadasha cycle from the (partial) starting period
@@ -1120,6 +1121,7 @@
                         <li><a href="/hi/ai-astrology-chat.html" class="text-white-50">AI ज्योतिष चैट</a></li>
                         <li><a href="/hi/kundli.html" class="text-white-50">कुंडली</a></li>
                         <li><a href="/hi/paisa-kab-aayega.html" class="text-white-50">पैसा कब आएगा</a></li>
+                        <li><a href="/hi/ghar-kab-banega.html" class="text-white-50">घर कब बनेगा</a></li>
                         <li><a href="/hi/dasha-calculator.html" class="text-white-50">दशा कैलकुलेटर</a></li>
                         <li><a href="/hi/marriage-prediction.html" class="text-white-50">विवाह भविष्यवाणी</a></li>
                         <li><a href="/hi/shadi-kab-hogi.html" class="text-white-50">शादी कब होगी</a></li>

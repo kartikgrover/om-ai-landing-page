@@ -431,6 +431,7 @@
                             <li><a class="dropdown-item" href="/hi/career-astrology.html">करियर ज्योतिष</a></li>
                             <li><a class="dropdown-item" href="/hi/naukri-kab-milegi.html">नौकरी कब मिलेगी</a></li>
                             <li><a class="dropdown-item" href="/hi/paisa-kab-aayega.html">पैसा कब आएगा</a></li>
+                            <li><a class="dropdown-item" href="/hi/ghar-kab-banega.html">घर कब बनेगा</a></li>
                             <li><a class="dropdown-item" href="/hi/shadi-kab-hogi.html">शादी कब होगी</a></li>
                             <li><a class="dropdown-item" href="/hi/shadi-kisse-hogi.html">शादी किससे होगी</a></li>
                             <li><a class="dropdown-item" href="/kundli-matching.html">कुंडली मिलान</a></li>
@@ -740,6 +741,11 @@
                         </a>
                     </div>
                     <div class="col-md-4">
+                        <a href="/hi/ghar-kab-banega.html" class="insight-link">
+                            <i class="fas fa-house" aria-hidden="true"></i> घर कब बनेगा
+                        </a>
+                    </div>
+                    <div class="col-md-4">
                         <a href="/hi/career-astrology.html" class="insight-link">
                             <i class="fas fa-briefcase" aria-hidden="true"></i> AI करियर ज्योतिष
                         </a>
@@ -879,6 +885,7 @@
                         <li><a href="/hi/career-astrology.html" class="text-white-50">करियर ज्योतिष</a></li>
                         <li><a href="/hi/naukri-kab-milegi.html" class="text-white-50">नौकरी कब मिलेगी</a></li>
                         <li><a href="/hi/paisa-kab-aayega.html" class="text-white-50">पैसा कब आएगा</a></li>
+                        <li><a href="/hi/ghar-kab-banega.html" class="text-white-50">घर कब बनेगा</a></li>
                         <li><a href="/hi/shadi-kab-hogi.html" class="text-white-50">शादी कब होगी</a></li>
                         <li><a href="/hi/shadi-kisse-hogi.html" class="text-white-50">शादी किससे होगी</a></li>
                     </ul>
@@ -929,7 +936,7 @@
     (function () {
         var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
-        // City → [lat, lon, tzOffsetHours]. Bundled rather than geocoded: a geocoding API would
+        // City → [lat, lon, tzOffsetHours, ianaZone?]. Bundled rather than geocoded: a geocoding API would
         // add a key, a second network hop and a rate limit to a page whose whole point is that it
         // answers instantly. India has no DST, so a fixed offset is exact for every Indian city.
         // Kept byte-identical to the copy in hi/shadi-kab-hogi.html — the English twin's map has
@@ -1003,13 +1010,13 @@
             'सोलापुर / Solapur': [17.6599, 75.9064, 5.5],
             'कोल्हापुर / Kolhapur': [16.7050, 74.2433, 5.5],
             'सिलीगुड़ी / Siliguri': [26.7271, 88.3953, 5.5],
-            'काठमांडू / Kathmandu': [27.7172, 85.3240, 5.75],
-            'दुबई / Dubai': [25.2048, 55.2708, 4],
-            'सिंगापुर / Singapore': [1.3521, 103.8198, 8],
-            'लंदन / London': [51.5074, -0.1278, 0],
-            'न्यूयॉर्क / New York': [40.7128, -74.0060, -5],
-            'टोरंटो / Toronto': [43.6532, -79.3832, -5],
-            'सिडनी / Sydney': [-33.8688, 151.2093, 10]
+            'काठमांडू / Kathmandu': [27.7172, 85.3240, 5.75, 'Asia/Kathmandu'],
+            'दुबई / Dubai': [25.2048, 55.2708, 4, 'Asia/Dubai'],
+            'सिंगापुर / Singapore': [1.3521, 103.8198, 8, 'Asia/Singapore'],
+            'लंदन / London': [51.5074, -0.1278, 0, 'Europe/London'],
+            'न्यूयॉर्क / New York': [40.7128, -74.0060, -5, 'America/New_York'],
+            'टोरंटो / Toronto': [43.6532, -79.3832, -5, 'America/Toronto'],
+            'सिडनी / Sydney': [-33.8688, 151.2093, 10, 'Australia/Sydney']
         };
 
         var $ = function (id) { return document.getElementById(id); };
@@ -1030,6 +1037,25 @@
             var c = CITIES[cityEl.value];
             if (c) tzEl.value = String(c[2]);
         });
+
+        // Foreign cities carry an IANA zone: London/New York/Toronto/Sydney keep DST and Singapore/Kathmandu
+        // changed offset in the 1980s, so their offset comes from the birth date, not the dropdown default.
+        // Indian cities keep their fixed +5:30.
+        function zoneOffsetAt(zone, ms) {
+            var g = {};
+            new Intl.DateTimeFormat('en-US', { timeZone: zone, hourCycle: 'h23', year: 'numeric', month: 'numeric',
+                day: 'numeric', hour: 'numeric', minute: 'numeric' }).formatToParts(new Date(ms))
+                .forEach(function (x) { g[x.type] = +x.value; });
+            return (Date.UTC(g.year, g.month - 1, g.day, g.hour, g.minute) - Math.floor(ms / 60000) * 60000) / 3600000;
+        }
+        function birthOffset(city, picked, y, mo, d, h, mi) {
+            var manual = parseFloat(picked);
+            if (!city[3] || picked !== String(city[2])) return manual;
+            try {
+                var wall = Date.UTC(y, mo - 1, d, h, mi);
+                return zoneOffsetAt(city[3], wall - zoneOffsetAt(city[3], wall) * 3600000);
+            } catch (e) { return manual; }
+        }
 
         var cache = {};
 
@@ -1099,8 +1125,8 @@
             if (!t) return showError('जन्म समय भरें — लग्न के बिना दशम भाव तय नहीं होता।');
             if (!city) return showError('सूची में से जन्म स्थान चुनें।');
 
-            var tz = parseFloat(tzEl.value);
             var p = d.split('-'), q = t.split(':');
+            var tz = birthOffset(city, tzEl.value, +p[0], +p[1], +p[2], +q[0], +q[1]);
             // Local wall-clock at birth → UTC instant, which is what the API expects.
             var utcMs = Date.UTC(+p[0], +p[1] - 1, +p[2], +q[0], +q[1]) - tz * 3600000;
             var dob = new Date(utcMs).toISOString();

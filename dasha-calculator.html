@@ -490,8 +490,8 @@
                 if(y < 2150){ return -20 + 32*Math.pow((y-1820)/100,2) - 0.5628*(2150 - y); }
                 u = (y-1820)/100; return -20 + 32*u*u;
             }
-            // Lahiri (Chitrapaksha) ayanamsa: J2000 value + IAU general precession in longitude
-            function ayanamsa(jde){ var T = (jde - 2451545.0)/36525; return 23.85291792 + (5028.796195*T + 1.1054348*T*T)/3600; }
+            // Lahiri ayanamsa: J2000 value matches the backend's Lahiri, plus IAU general precession
+            function ayanamsa(jde){ var T = (jde - 2451545.0)/36525; return 23.85709235 + (5028.796195*T + 1.1054348*T*T)/3600; }
 
             var NAK = ['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishta','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
             var RASHI = ['Aries (Mesha)','Taurus (Vrishabha)','Gemini (Mithuna)','Cancer (Karka)','Leo (Simha)','Virgo (Kanya)','Libra (Tula)','Scorpio (Vrishchika)','Sagittarius (Dhanu)','Capricorn (Makara)','Aquarius (Kumbha)','Pisces (Meena)'];
@@ -530,7 +530,7 @@
                 var lordIdx = nak % 9;
                 var elapsedYears = frac*SEQ[lordIdx][1];
                 var balanceYears = SEQ[lordIdx][1] - elapsedYears;
-                var birth = new Date(Y, Mo-1, Da, hh, mm).getTime();
+                var birth = utMs;
                 var now = Date.now();
 
                 // Build one full Mahadasha cycle from the (partial) starting period

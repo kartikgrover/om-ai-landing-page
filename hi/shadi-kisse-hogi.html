@@ -452,6 +452,7 @@
                             <li><a class="dropdown-item" href="/hi/ai-astrology-chat.html">AI ज्योतिष चैट</a></li>
                             <li><a class="dropdown-item" href="/hi/kundli.html">कुंडली</a></li>
                             <li><a class="dropdown-item" href="/hi/paisa-kab-aayega.html">पैसा कब आएगा</a></li>
+                            <li><a class="dropdown-item" href="/hi/ghar-kab-banega.html">घर कब बनेगा</a></li>
                             <li><a class="dropdown-item" href="/hi/marriage-prediction.html">विवाह भविष्यवाणी</a></li>
                             <li><a class="dropdown-item" href="/hi/shadi-kab-hogi.html">शादी कब होगी</a></li>
                             <li><a class="dropdown-item" href="/hi/shadi-kisse-hogi.html">शादी किससे होगी</a></li>
@@ -1059,6 +1060,7 @@
                         <li><a href="/hi/ai-astrology-chat.html" class="text-white-50">AI ज्योतिष चैट</a></li>
                         <li><a href="/hi/kundli.html" class="text-white-50">कुंडली</a></li>
                         <li><a href="/hi/paisa-kab-aayega.html" class="text-white-50">पैसा कब आएगा</a></li>
+                        <li><a href="/hi/ghar-kab-banega.html" class="text-white-50">घर कब बनेगा</a></li>
                         <li><a href="/hi/marriage-prediction.html" class="text-white-50">विवाह भविष्यवाणी</a></li>
                         <li><a href="/hi/shadi-kab-hogi.html" class="text-white-50">शादी कब होगी</a></li>
                         <li><a href="/hi/shadi-kisse-hogi.html" class="text-white-50">शादी किससे होगी</a></li>
@@ -1112,7 +1114,7 @@
     (function () {
         var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
-        // City → [lat, lon, tzOffsetHours]. Bundled rather than geocoded: a geocoding API would
+        // City → [lat, lon, tzOffsetHours, ianaZone?]. Bundled rather than geocoded: a geocoding API would
         // add a key, a second network hop and a rate limit to a page whose whole point is that it
         // answers instantly. India has no DST, so a fixed offset is exact for every Indian city.
         var CITIES = {
@@ -1183,13 +1185,13 @@
             'सोलापुर / Solapur': [17.6599, 75.9064, 5.5],
             'कोल्हापुर / Kolhapur': [16.7050, 74.2433, 5.5],
             'सिलीगुड़ी / Siliguri': [26.7271, 88.3953, 5.5],
-            'काठमांडू / Kathmandu': [27.7172, 85.3240, 5.75],
-            'दुबई / Dubai': [25.2048, 55.2708, 4],
-            'सिंगापुर / Singapore': [1.3521, 103.8198, 8],
-            'लंदन / London': [51.5074, -0.1278, 0],
-            'न्यूयॉर्क / New York': [40.7128, -74.0060, -5],
-            'टोरंटो / Toronto': [43.6532, -79.3832, -5],
-            'सिडनी / Sydney': [-33.8688, 151.2093, 10]
+            'काठमांडू / Kathmandu': [27.7172, 85.3240, 5.75, 'Asia/Kathmandu'],
+            'दुबई / Dubai': [25.2048, 55.2708, 4, 'Asia/Dubai'],
+            'सिंगापुर / Singapore': [1.3521, 103.8198, 8, 'Asia/Singapore'],
+            'लंदन / London': [51.5074, -0.1278, 0, 'Europe/London'],
+            'न्यूयॉर्क / New York': [40.7128, -74.0060, -5, 'America/New_York'],
+            'टोरंटो / Toronto': [43.6532, -79.3832, -5, 'America/Toronto'],
+            'सिडनी / Sydney': [-33.8688, 151.2093, 10, 'Australia/Sydney']
         };
 
         // Only the seven graha that own signs can be a 7th lord, so this table is total for
@@ -1268,6 +1270,25 @@
             if (c) tzEl.value = String(c[2]);
         });
 
+        // Foreign cities carry an IANA zone: London/New York/Toronto/Sydney keep DST and Singapore/Kathmandu
+        // changed offset in the 1980s, so their offset comes from the birth date, not the dropdown default.
+        // Indian cities keep their fixed +5:30.
+        function zoneOffsetAt(zone, ms) {
+            var g = {};
+            new Intl.DateTimeFormat('en-US', { timeZone: zone, hourCycle: 'h23', year: 'numeric', month: 'numeric',
+                day: 'numeric', hour: 'numeric', minute: 'numeric' }).formatToParts(new Date(ms))
+                .forEach(function (x) { g[x.type] = +x.value; });
+            return (Date.UTC(g.year, g.month - 1, g.day, g.hour, g.minute) - Math.floor(ms / 60000) * 60000) / 3600000;
+        }
+        function birthOffset(city, picked, y, mo, d, h, mi) {
+            var manual = parseFloat(picked);
+            if (!city[3] || picked !== String(city[2])) return manual;
+            try {
+                var wall = Date.UTC(y, mo - 1, d, h, mi);
+                return zoneOffsetAt(city[3], wall - zoneOffsetAt(city[3], wall) * 3600000);
+            } catch (e) { return manual; }
+        }
+
         var cache = {};
 
         var showError = function (msg) {
@@ -1323,12 +1344,17 @@
             }
 
             if (lord && sign && ELEM[sign.elem]) {
-                var same = lord.dir.indexOf(ELEM[sign.elem].dir) === 0;
+                var elemDir = ELEM[sign.elem].dir;
+                var same = lord.dir === elemDir;
+                // Moon, Jupiter and Venus point to corners; a corner that contains the sign's direction overlaps it.
+                var near = !same && lord.dir.indexOf(elemDir) !== -1;
                 html += trait('दिशा',
                     'सप्तमेश ' + esc(data.seventhLord.hi) + ' की दिशा <strong>' + esc(lord.dir) + '</strong> है; '
                     + 'सप्तम राशि के ' + esc(sign.elem) + ' तत्व की दिशा <strong>' + esc(ELEM[sign.elem].dir) + '</strong>। '
                     + (same
                         ? 'दोनों एक ही दिशा दे रहे हैं — इस कुंडली में दिशा का संकेत अपेक्षाकृत मज़बूत है।'
+                        : near
+                        ? 'दोनों पास-पास की दिशाएँ दे रहे हैं — ' + esc(lord.dir) + ' में ' + esc(elemDir) + ' शामिल है, इसलिए यह संकेत काफ़ी हद तक मेल खाता है।'
                         : 'दोनों अलग दिशा दे रहे हैं — इसलिए दिशा को यहाँ हल्का संकेत मानें, निष्कर्ष नहीं।'));
             }
 
@@ -1359,8 +1385,8 @@
             if (!t) return showError('जन्म समय भरें — लग्न के बिना सप्तम भाव तय नहीं होता।');
             if (!city) return showError('सूची में से जन्म स्थान चुनें।');
 
-            var tz = parseFloat(tzEl.value);
             var p = d.split('-'), q = t.split(':');
+            var tz = birthOffset(city, tzEl.value, +p[0], +p[1], +p[2], +q[0], +q[1]);
             // Local wall-clock at birth → UTC instant, which is what the API expects.
             var utcMs = Date.UTC(+p[0], +p[1] - 1, +p[2], +q[0], +q[1]) - tz * 3600000;
             var dob = new Date(utcMs).toISOString();
