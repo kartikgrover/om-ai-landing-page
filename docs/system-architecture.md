@@ -1,24 +1,33 @@
 # Om.AI Landing Page — System Architecture
 
+Living reference. Verified against the repo on **2026-09-17**.
+
 ## Overview
 
-Static marketing website for **Om.AI**, an AI-powered Vedic astrology mobile app. Hosted on **GitHub Pages** at [omai.app](https://omai.app). No backend, no build tools, no framework — pure HTML/CSS/JS with CDN dependencies.
+Two surfaces in one static repo, served by **GitHub Pages** at [omai.app](https://omai.app):
+
+1. **Marketing / SEO site** — ~148 HTML pages: the landing page, topic pages, free tools, legal pages, a Hindi set under `/hi/`, and the blog.
+2. **Consumer web MVP** — `ask.html`, a single-file interactive app (chat + charts) sharing the mobile app's Firebase account and Heroku backend. See `CLAUDE.md` for its scope; it is not covered in detail here.
+
+No framework and no build step. Pages that need live data call the backend directly.
 
 ---
 
 ## Technology Stack
 
-| Layer        | Technology                        |
-|-------------|-----------------------------------|
-| Markup       | HTML5 (semantic)                  |
-| Styling      | CSS3 + Bootstrap 5.3.0 (CDN)     |
-| Scripts      | Vanilla JS (ES6+)                |
-| Fonts        | Google Fonts (DM Serif Display, Source Sans 3) |
-| Icons        | Font Awesome 6.4.0 (CDN)         |
-| Video        | Video.js 8.17.3 (npm)            |
-| Hosting      | GitHub Pages (custom domain)      |
-| CI/CD        | GitHub Actions                    |
-| Analytics    | Google Analytics 4 (G-EPT0NFE087)|
+| Layer     | Technology |
+|-----------|------------|
+| Markup    | HTML5, hand-written per page |
+| Styling   | `styles/styles.css` + a purged Bootstrap 5.3.0 subset, both self-hosted |
+| Scripts   | Vanilla JS, inline per page; three shared files in `assets/js/` |
+| Fonts     | Google Fonts (DM Serif Display, Source Sans 3) with metric-matched local fallbacks |
+| Icons     | Font Awesome Free 6.4.0 class names rendered as self-hosted CSS masks |
+| Hosting   | GitHub Pages (Jekyll), custom domain via `CNAME` |
+| CI/CD     | GitHub Actions — blog auto-publish only |
+| Analytics | GA4 `G-EPT0NFE087`, Google Ads, Meta Pixel |
+| Backend   | `https://om-ai-backend-4f29d7469ff6.herokuapp.com` (public endpoints only) |
+
+Nothing is loaded from jsdelivr or cdnjs any more. `ask.html` is the exception: it still pulls marked and dompurify from jsdelivr.
 
 ---
 
@@ -26,94 +35,96 @@ Static marketing website for **Om.AI**, an AI-powered Vedic astrology mobile app
 
 ```
 om-ai-landing-page/
-├── index.html                  # Main landing page
-├── horoscope.html              # Daily Moon sign Rashifal (free tool)
-├── panchang.html               # Daily Panchang with Tithi/Nakshatra (free tool)
-├── gita.html                   # Bhagavad Gita verse of the day (free tool)
-├── rahu-kaal-today.html        # Daily Rahu Kaal timings (free tool)
-├── rashifal-2026.html          # Yearly horoscope for all signs (SEO content)
-├── ai-vedic-astrology.html     # AI astrology explainer (SEO content)
-├── lal-kitab-remedies.html     # Lal Kitab remedies reference (SEO content)
-├── support.html                # Help center
-├── feedback.html               # Feedback form
-├── privacy-policy.html         # Legal
-├── terms-of-service.html       # Legal
-├── refund-policy.html          # Legal
-├── delete-account.html         # Account deletion (noindex)
-├── unsubscribe.html            # Email unsubscribe (noindex)
-├── 404.html                    # Custom error page (noindex)
+├── index.html                  # Landing page
+├── ask.html                    # Consumer web MVP (chat + charts)
+├── compare.html                # Om.AI vs other apps
+│
+├── <topic>.html                # SEO topic pages — kundli, marriage-prediction,
+│                               #   career-astrology, ai-vedic-astrology, health-,
+│                               #   love-, wealth-, business-astrology, birth-chart,
+│                               #   navamsa-chart, kundli-matching, free-kundli-online,
+│                               #   ai-astrology-chat, lal-kitab-remedies, rashifal-2026
+├── horoscope.html              # Free tools — live backend data
+├── panchang.html
+├── rahu-kaal-today.html
+├── gita.html
+├── dasha-calculator.html       # Client-side Meeus approximation, not the backend
+├── shadi-kab-hogi.html         # English "kab" twin (see the kab-family playbook)
+├── bacha-kab-hoga.html         # Redirect stub → /hi/ twin
+├── naukri-kab-milegi.html      # Redirect stub → /hi/ twin
+├── zodiac/*.html               # 12 sign pages
+├── daily-horoscope/index.html  # Redirect stub (as are privacy.html and the two
+│                               #   retired English kab twins above)
+├── r/index.html                # Universal-link landing (omai.app/r)
+│
+├── hi/                         # 15 Hindi pages, incl. the "kab" calculators
+│   ├── index.html
+│   ├── shadi-kab-hogi.html · naukri-kab-milegi.html · bacha-kab-hoga.html
+│   ├── paisa-kab-aayega.html · ghar-kab-banega.html · shadi-kisse-hogi.html
+│   └── kundli.html · career-astrology.html · marriage-prediction.html · …
+│
+├── support.html · feedback.html · privacy-policy.html
+├── terms-of-service.html · refund-policy.html
+├── delete-account.html · unsubscribe.html · 404.html       # noindex
 │
 ├── blog/
-│   ├── index.html              # Blog listing with ItemList schema
-│   ├── feed.xml                # RSS feed
-│   ├── *.html                  # Published articles (~14)
-│   └── drafts/
-│       ├── schedule.json       # Auto-publish schedule
-│       └── *.html              # Queued articles (~54)
+│   ├── index.html              # Listing with CollectionPage + ItemList schema
+│   ├── feed.xml                # RSS
+│   ├── *.html                  # ~84 published articles
+│   └── drafts/                 # Queue + schedule.json
 │
 ├── styles/
-│   ├── styles.css              # Full source (~5,400 lines)
-│   └── styles.min.css          # Minified production (versioned ?v=62)
-│
-├── scripts/
-│   ├── main.js                 # Full source (~715 lines)
-│   └── main.min.js             # Minified production
+│   ├── styles.css              # Source (~4,500 lines)
+│   ├── styles.min.css          # Hand-synced minified copy, ?v=69
+│   ├── bootstrap-subset.min.css# PurgeCSS subset of Bootstrap 5.3.0, ?v=1
+│   └── icons.min.css           # Icon shapes as CSS masks, ?v=1
 │
 ├── assets/
-│   ├── logo.png / logo.webp    # Brand logos
-│   ├── favicon/                # 5 sizes (32–512px) + favicon.ico
-│   ├── om-ai-demo.mp4/.webm    # Hero video + poster + VTT captions
-│   └── screenshots/            # App screenshots (PNG + WebP pairs)
+│   ├── js/nav.js               # Navbar collapse + dropdowns
+│   ├── js/ads-referrer.js      # Click id → Play install referrer
+│   ├── js/hi-terms.js          # Devanagari names for backend English astro terms
+│   ├── logo.png/.webp · og-image.jpg · favicon/ · screenshots/
 │
-├── .github/
-│   ├── workflows/
-│   │   └── scheduled-publish.yml   # Daily blog auto-publish
-│   └── scripts/
-│       └── publish-scheduled.sh    # Publish logic
-│
-├── robots.txt                  # Crawler rules
-├── sitemap.xml                 # All pages with priority/changefreq
-├── site.webmanifest            # PWA manifest
-├── CNAME                       # GitHub Pages custom domain (omai.app)
-├── app-ads.txt                 # Google Ad Manager IDs
-└── package.json                # video.js dependency only
+├── tools/                      # Repo-only: build-icons.mjs, purgecss.config.cjs
+├── docs/                       # Repo-only (this file)
+├── .well-known/                # App-link association files
+├── _config.yml                 # Jekyll exclude list — repo-only files
+├── robots.txt · sitemap.xml · site.webmanifest · CNAME · app-ads.txt
+└── package.json                # No dependencies
 ```
 
 ---
 
 ## Page Architecture
 
-### Page Categories
+### Categories
 
-1. **Landing Page** (`index.html`) — Hero video, features, AI chat demo, screenshots, testimonials, FAQ, download CTAs
-2. **Free Tools** — Dynamic daily content pages (horoscope, panchang, gita, rahu-kaal) targeting high-volume search queries
-3. **SEO Content** — Long-form reference pages (rashifal-2026, ai-vedic-astrology, lal-kitab-remedies) for organic traffic
-4. **Blog** — Educational articles on Vedic astrology topics, auto-published on schedule
-5. **Utility** — Support, feedback, legal policies, account management
+1. **Landing page** (`index.html`) — features, screenshots, testimonials, FAQ, download CTAs. Carries its own inline navbar script and inline SVG icons, so it does not use `nav.js` or the icon CSS.
+2. **Free tools** — `horoscope`, `panchang`, `rahu-kaal-today`, `gita` fetch daily data from the backend's public endpoints.
+3. **"Kab" calculators** — the `/hi/` pages plus `shadi-kab-hogi.html` post birth details to `api/public/{marriage,career,children,wealth,property}-window` and render event windows. The backend ships labels, never scores.
+4. **SEO topic pages** — long-form pages aimed at one query cluster each; see the page-intent map for the anti-cannibalization rule.
+5. **Hindi set** (`/hi/`) — the Devanagari surface, linked by `hreflang`.
+6. **Blog** — educational articles, auto-published on a schedule.
+7. **Utility** — support, feedback, legal, account management.
 
-### Common Page Template
+### Common page template
 
-Every page follows this structure:
 ```
 <head>
-  Meta tags (charset, viewport, title, description, keywords)
-  Open Graph tags (title, description, url, type, image, image:alt, site_name)
-  Robots directive + canonical URL
-  Favicons (5 sizes) + apple-touch-icon + manifest
-  Resource hints (preconnect, dns-prefetch)
-  Bootstrap CSS (CDN)
-  Custom styles (styles.min.css, versioned)
-  Font Awesome (non-blocking, media="print" trick)
-  Google Fonts (non-blocking, media="print" trick)
-  JSON-LD structured data
-  Google Analytics (async)
+  Meta tags, Open Graph (no Twitter cards — deliberate), robots, canonical
+  Favicons + manifest + theme-color
+  preconnect: fonts.googleapis.com, fonts.gstatic.com
+  bootstrap-subset.min.css   (render-blocking)
+  styles.min.css             (render-blocking, versioned)
+  icons.min.css              (media="print" onload, + noscript)
+  Google Fonts               (media="print" onload, + noscript)
+  Page-specific <style> block
+  JSON-LD graph
+  GA4 + Ads (async), Meta Pixel (eager only on ?fbclid= URLs)
 </head>
 <body>
-  Navbar (shared across all pages)
-  Main content
-  Footer with app store links + nav links
-  Bootstrap JS (CDN, defer)
-  main.min.js (defer)
+  Navbar → main → footer with store links
+  nav.js (defer) + page-specific inline scripts
 </body>
 ```
 
@@ -121,58 +132,68 @@ Every page follows this structure:
 
 ## CSS Architecture
 
-### Design System (CSS Custom Properties)
+### Design tokens
 
 ```
 Brand:      #D97757 (coral/terracotta)
 Background: #262624 (base) → #30302E (elevated) → #1F1E1D (subtle) → #141413 (footer)
 Text:       #FFFFFF (primary) → #D4D2C8 (secondary) → #A8A599 (tertiary)
 Typography: DM Serif Display (headings), Source Sans 3 (body)
-Spacing:    4px–64px scale (--space-1 through --space-16)
-Radius:     10–12px (matching mobile app)
-Shadows:    None (flat design)
-Borders:    0.5px, 30% opacity
+Spacing:    4px–64px scale (--space-1 … --space-16)
+Radius:     10–12px (matching the mobile app)
+Borders:    0.5px, 30% opacity; no shadows
 ```
 
-### Responsive Strategy
+### Bootstrap subset
 
-- Mobile-first with fluid typography via `clamp()`
-- Bootstrap 5 grid (lg/md/sm breakpoints)
-- Fluid section padding: `clamp(2rem, 5vw, 4rem)`
-- Hamburger navigation on mobile
+`styles/bootstrap-subset.min.css` is PurgeCSS run over the official minified Bootstrap 5.3.0 file (32 KB raw, 6.7 KB gzipped, from 233 KB / 31 KB). It is render-blocking on purpose: loaded async it caused 0.3–0.9 CLS. A page using a Bootstrap class no other page uses needs a rebuild and a `?v=` bump — the command is in `CLAUDE.md`.
+
+Bootstrap's JavaScript is not loaded at all. `assets/js/nav.js` reimplements `data-bs-toggle="collapse"` and `"dropdown"` only, setting the same classes and attributes the CSS reads. Any other Bootstrap component would need its own code.
+
+### Icons
+
+Pages keep writing `<i class="fas fa-name">`, but there is no Font Awesome. `tools/build-icons.mjs` reads the icon metadata and generates:
+
+- `styles/icons.min.css` — one rule per icon, the shape as an SVG data URI in `--fa-i`, painted with a CSS mask in `currentColor`. Loaded async.
+- The sizing block between the `icons:start` / `icons:end` markers in both stylesheets, which is render-blocking so icons don't shift the layout when the shapes arrive.
+
+Class names assembled in JavaScript can't be scanned, so they live in the script's `FROM_JS` list. Pro-only icons render blank.
+
+### Fonts
+
+Google Fonts still serves the two web fonts, but every stack carries metric-matched fallbacks (`@font-face` at the top of `styles/styles.css`) built with `size-adjust` and the ascent/descent overrides, so the swap doesn't reflow text. New pages must include the fallback names.
+
+### Responsive strategy
+
+Mobile-first, fluid type via `clamp()`, the Bootstrap grid for layout, fluid section padding, hamburger navigation.
 
 ---
 
 ## JavaScript Architecture
 
-`scripts/main.js` (~715 lines) — No framework, no modules, vanilla ES6+.
+No framework, no modules, no bundler. Three shared files, everything else inline per page.
 
-### Modules
+| File | Purpose |
+|------|---------|
+| `assets/js/nav.js` | Navbar collapse + dropdowns, replacing `bootstrap.bundle.js` |
+| `assets/js/ads-referrer.js` | Carries the ad click id into the Play Store install referrer so paid installs attribute to their campaign |
+| `assets/js/hi-terms.js` | Devanagari names for the astro vocabulary the backend returns in English |
 
-| Module | Purpose |
-|--------|---------|
-| Section Animations | IntersectionObserver scroll-triggered fade-ins with staggered card delays |
-| Hero Video | Video.js initialization, autoplay with fallback, loading states |
-| Mobile Carousel | Horizontal scroll with dot indicators for feature/how-it-works cards |
-| Back-to-Top | Scroll-triggered button at 300px threshold |
-| Navbar Effects | Add scrolled class at 50px for background change |
-| Smart Downloads | Device detection (iOS/Android/Mac) → dynamic app store link routing |
-| Word Animation | `data-animate-words` attribute for word-by-word text reveal |
-| Accessibility | `prefers-reduced-motion` respected, keyboard navigation detection |
+Inline per page: the tool and calculator logic, the download-click GA delegation, and the analytics blocks.
 
-### App Store Links
+### App store links
 
 - **Android**: `https://play.google.com/store/apps/details?id=com.omai.app`
 - **iOS**: `https://apps.apple.com/us/app/om-ai/id6630366988`
+
+Both carry per-page campaign parameters.
 
 ---
 
 ## Blog & Content Pipeline
 
-### Automated Publishing System
-
 ```
-blog/drafts/schedule.json  →  GitHub Actions (daily cron at 00:00 UTC)
+blog/drafts/schedule.json  →  GitHub Actions (daily cron, 00:00 UTC)
                                     ↓
                            publish-scheduled.sh
                                     ↓
@@ -180,134 +201,97 @@ blog/drafts/schedule.json  →  GitHub Actions (daily cron at 00:00 UTC)
                            ├── Adds card to blog/index.html
                            ├── Updates sitemap.xml
                            ├── Updates blog/feed.xml (RSS)
-                           ├── Updates ItemList JSON-LD schema
+                           ├── Updates ItemList JSON-LD
                            ├── Removes from schedule.json
-                           └── Auto-commits via github-actions bot
+                           └── Auto-commits via the github-actions bot
 ```
 
-### schedule.json Format
+### schedule.json format
 
 ```json
 {
   "article-slug.html": {
     "date": "2026-03-15",
     "title": "Article Title",
-    "excerpt": "Short description for blog card",
+    "excerpt": "Short description for the blog card",
     "tag": "Category Tag"
   }
 }
 ```
 
-### Blog Article Template
-
-Each article includes:
-- Article JSON-LD schema (headline, datePublished, author, publisher)
-- BreadcrumbList schema (Home → Blog → Article)
-- Internal links to related articles and free tools
-- Consistent navbar/footer from main site
-- RSS entry in `blog/feed.xml`
+Each article carries Article + BreadcrumbList JSON-LD, internal links to related articles and tools, the shared navbar/footer, and an RSS entry.
 
 ---
 
 ## SEO Architecture
 
-### Structured Data (JSON-LD)
+### Structured data (JSON-LD), by count across the site
 
-| Schema Type | Used On |
-|------------|---------|
-| MobileApplication | index.html (rating: 4.8/5, 2500 reviews) |
-| Organization | index.html |
-| WebSite | index.html (with SearchAction) |
-| FAQPage | index.html |
-| WebPage | All content & utility pages |
-| BreadcrumbList | Tool pages, blog articles |
-| Article | Blog articles |
-| CollectionPage + ItemList | blog/index.html |
+| Schema type | Used on |
+|-------------|---------|
+| Organization | every page (publisher block) |
+| WebPage | ~132 pages |
+| BreadcrumbList | ~127 pages |
+| Article | blog articles |
+| FAQPage | ~45 pages |
+| WebApplication | the calculator pages |
+| WebSite | homepages (with SearchAction) |
+| MobileApplication | `index.html` (4.8, ratingCount 2000) |
+| SoftwareApplication | `navamsa-chart.html` |
+| CollectionPage + ItemList | `blog/index.html` |
 
-### Crawl Configuration
+An `FAQPage` block and its visible FAQ must stay in sync — Search Console flags a mismatch.
 
-- `robots.txt`: Allow all except `/blog/drafts/`, `/delete-account.html`, `/unsubscribe.html`, PDFs, ZIPs
-- `sitemap.xml`: All public pages with priority scaling (1.0 home → 0.8 blog → 0.3 account pages)
-- Canonical URLs on every page
-- `noindex` on delete-account, unsubscribe, 404
+### Crawl configuration
 
-### Social Sharing
+- `robots.txt`: allows everything except `/blog/drafts/`, `/node_modules/`, the backend API paths referenced from inline JS, and PDF/ZIP files. Query strings are deliberately crawlable — the comment in the file explains why.
+- `sitemap.xml`: every public page with priority scaling and `lastmod`.
+- `rel=canonical` on every page; `hreflang` pairs the English and Hindi twins.
+- `noindex` on `delete-account`, `unsubscribe`, `404`.
 
-- Open Graph tags on all pages (title, description, url, type, image with alt, site_name)
-- `og:locale` set to `en_IN` on homepage
+### Social sharing
+
+Open Graph on all pages. The English pages use `assets/og-image.jpg` at 1200×630 with alt text. Twitter Card tags are deliberately absent — there is no account.
 
 ---
 
-## Performance Optimizations
+## Performance
 
 | Technique | Implementation |
-|-----------|---------------|
-| Non-blocking fonts | Font Awesome & Google Fonts use `media="print" onload="this.media='all'"` |
-| Image optimization | WebP with PNG fallback via `<picture>` elements |
-| Lazy loading | `loading="lazy"` on all below-fold images |
-| Resource hints | `preconnect` for CDNs, `dns-prefetch` for analytics |
-| CSS versioning | `styles.min.css?v=62` for cache busting |
-| Video optimization | Dual format (MP4 + WebM), poster image, VTT captions |
-| Async analytics | Google Analytics loaded with `async` attribute |
-| Minification | Separate `.min.css` and `.min.js` production files |
+|-----------|----------------|
+| Self-hosted CSS | Bootstrap subset + icons replaced ~330 KB of CDN transfer with ~36 KB on our own domain |
+| Render-blocking where it prevents shift | Bootstrap subset, `styles.min.css` and the icon sizing block block; icon shapes and fonts don't |
+| Font fallbacks | Metric-matched `@font-face` so the web-font swap doesn't reflow |
+| Image optimization | WebP with PNG fallback via `<picture>` |
+| Lazy loading | `loading="lazy"` below the fold |
+| Cache busting | `?v=` on every stylesheet |
+| Analytics | GA4 and Ads async; the Meta Pixel is eager only on `?fbclid=` URLs, because deferring it breaks `_fbc` attribution |
+
+Lab CLS after the 2026-09-17 changes is 0.00–0.06 on the pages measured, except `ai-vedic-astrology.html` on desktop at 0.11.
 
 ---
 
 ## Asset Pipeline
 
-No automated build tool. Manual workflow:
+No bundler. Manual workflow:
 
-1. Edit `styles/styles.css` → manually minify to `styles/styles.min.css`
-2. Edit `scripts/main.js` → manually minify to `scripts/main.min.js`
-3. Bump `?v=` query string on CSS link for cache busting
-4. Images: Create WebP variants alongside PNG originals
-
-### Image Sizes
-
-| Asset | PNG | WebP | Savings |
-|-------|-----|------|---------|
-| Logo | 374 KB | 46 KB | 87% |
-| AI Chat screenshot | 643 KB | 118 KB | 82% |
-| Horoscope screenshot | 956 KB | 110 KB | 88% |
-| Home screen screenshot | 896 KB | 97 KB | 89% |
-| Birth chart screenshot | 363 KB | 47 KB | 87% |
-| Hero video | 1.7 MB (MP4) | 1.4 MB (WebM) | 18% |
+1. Edit `styles/styles.css`, then hand-sync `styles/styles.min.css`.
+2. Bump the `?v=` on the changed stylesheet.
+3. New icon → `node tools/build-icons.mjs`, then bump both `?v=`.
+4. New Bootstrap class → rebuild the subset (command in `CLAUDE.md`), then bump `?v=`.
+5. Images: create WebP variants alongside the PNG originals.
 
 ---
 
 ## PWA Support
 
-`site.webmanifest` enables basic PWA capabilities:
-- App name: "Om.AI - Vedic Astrology & Spiritual Wisdom"
-- Display: standalone
-- Theme color: `#D97757`
-- Icons: 192x192, 512x512
-- Linked from all pages via `<link rel="manifest">`
-
-No service worker currently implemented.
-
----
-
-## External Dependencies (CDN)
-
-| Resource | CDN | Version |
-|----------|-----|---------|
-| Bootstrap CSS | jsdelivr.net | 5.3.0 |
-| Bootstrap JS | jsdelivr.net | 5.3.0 |
-| Font Awesome | cdnjs.cloudflare.com | 6.4.0 |
-| DM Serif Display | fonts.googleapis.com | — |
-| Source Sans 3 | fonts.googleapis.com | — |
-| Google Analytics | googletagmanager.com | GA4 |
-
-### npm Dependency
-
-- `video.js@^8.17.3` — Used only for hero video on index.html
+`site.webmanifest` gives basic install metadata: name "Om.AI - Vedic Astrology & Spiritual Wisdom", standalone display, theme `#D97757`, 192 and 512 px icons, linked from every page. No service worker.
 
 ---
 
 ## Deployment
 
-1. Push to `main` branch
-2. GitHub Pages automatically deploys from root
-3. Custom domain `omai.app` configured via `CNAME` file
-4. Blog articles auto-published daily via GitHub Actions cron job
+1. Push to `main`. **There is no staging — a push is a production deploy.**
+2. GitHub Pages builds the repo with Jekyll. There is no `.nojekyll` (removed 2026-09-17), so repo-only files must be listed under `exclude:` in `_config.yml` or they are published; `.well-known` is re-included because Jekyll drops dot-directories.
+3. Pages builds are atomic — a failed build leaves the previous site up.
+4. `CNAME` maps the custom domain; blog articles publish themselves daily via the Actions cron.
