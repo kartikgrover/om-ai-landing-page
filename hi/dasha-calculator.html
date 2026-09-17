@@ -32,16 +32,13 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#D97757">
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=69">
+    <link rel="stylesheet" href="/styles/icons.min.css?v=1" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/icons.min.css?v=1"></noscript>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
@@ -62,7 +59,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             font-size: 1.2rem;
             color: #D97757;
         }
@@ -103,7 +100,7 @@
         .dasha-table th {
             background: rgba(217,119,87,0.15);
             color: #D97757;
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             padding: 0.85rem 1.25rem;
             text-align: left;
             font-weight: normal;
@@ -127,7 +124,7 @@
             margin-bottom: 1.25rem;
         }
         .planet-card h4 {
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             color: #D97757;
             margin-bottom: 0.5rem;
         }
@@ -361,7 +358,7 @@
         <!-- Hero Section -->
         <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
             <div class="container">
-                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">दशा कैलकुलेटर — वर्तमान महादशा और अंतर्दशा</h1>
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif;">दशा कैलकुलेटर — वर्तमान महादशा और अंतर्दशा</h1>
                 <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
                     अपने चंद्र नक्षत्र के आधार पर पूरी विंशोत्तरी दशा तालिका देखें। जानें कि <em>इस समय</em> कौन-सी ग्रह-अवधि चल रही है — और आगे महादशा, अंतर्दशा तथा प्रत्यंतर्दशा में क्या आने वाला है।
                 </p>
@@ -389,7 +386,7 @@
             #dasha-calc .dc-err{color:#ff9b8a;margin-top:0.75rem;font-size:0.9rem;}
             #dasha-calc .dc-disclaimer{font-size:0.8rem;color:rgba(255,255,255,0.45);margin-top:1.25rem;}
             #dasha-calc .dc-now{background:linear-gradient(135deg,rgba(217,119,87,0.18),rgba(217,119,87,0.06));border:1px solid rgba(217,119,87,0.4);border-radius:14px;padding:1.25rem 1.5rem;margin:1.5rem 0;}
-            #dasha-calc .dc-now h3{font-family:'DM Serif Display',serif;margin-bottom:0.5rem;}
+            #dasha-calc .dc-now h3{font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif;margin-bottom:0.5rem;}
             #dasha-calc .dc-pill{display:inline-block;background:rgba(217,119,87,0.2);color:#D97757;border-radius:999px;padding:0.15rem 0.7rem;font-size:0.8rem;margin:0 0.4rem 0.4rem 0;}
             #dasha-calc .dc-hl{color:#D97757;font-weight:600;}
             #dasha-calc .dc-sub{font-size:0.85rem;color:rgba(255,255,255,0.55);}
@@ -637,7 +634,7 @@
 
                 // CTA
                 html += '<div class="text-center" style="margin-top:1.75rem;">';
-                html += '<p style="font-family:\'DM Serif Display\',serif;font-size:1.25rem;color:rgba(255,255,255,0.92);margin-bottom:1rem;">जानना चाहते हैं कि आपकी '+esc(runMaha?runMaha.lord:'वर्तमान')+' अवधि करियर, विवाह और धन के लिए क्या लेकर आ रही है?</p>';
+                html += '<p style="font-family:\'DM Serif Display\',\'DM Serif Fallback\',\'DM Serif Fallback Android\',serif;font-size:1.25rem;color:rgba(255,255,255,0.92);margin-bottom:1rem;">जानना चाहते हैं कि आपकी '+esc(runMaha?runMaha.lord:'वर्तमान')+' अवधि करियर, विवाह और धन के लिए क्या लेकर आ रही है?</p>';
                 html += '<div class="d-flex justify-content-center gap-3 flex-wrap">';
                 html += '<a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_dasha_calc" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>मेरी दशा पढ़ें — Android</a>';
                 html += '<a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_dasha_calc&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>मेरी दशा पढ़ें — iOS</a>';
@@ -971,7 +968,7 @@
         <section class="content-section">
             <div class="container" style="max-width:860px;">
                 <div class="cta-box">
-                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">अपनी दशा तालिका देखें</h2>
+                    <h2 style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:2rem; margin-bottom:1rem;">अपनी दशा तालिका देखें</h2>
                     <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
                         Om.AI डाउनलोड करें, जन्म जानकारी भरें और तुरंत देखें कि इस समय कौन-सी ग्रह-अवधि आपके जीवन को दिशा दे रही है — और आगे क्या आने वाला है।
                     </p>
@@ -1168,6 +1165,6 @@
         <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_dasha&mt=8" class="btn btn--outline" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/assets/js/nav.js?v=1" defer></script>
 </body>
 </html>

@@ -31,34 +31,31 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#D97757">
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=69">
+    <link rel="stylesheet" href="/styles/icons.min.css?v=1" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/icons.min.css?v=1"></noscript>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
     <style>
         body {
-            font-family: 'Noto Sans Devanagari', 'Source Sans 3', sans-serif;
+            font-family: 'Noto Sans Devanagari', 'Source Sans 3', 'Source Sans Fallback', 'Source Sans Fallback Android', sans-serif;
         }
         .content-section {
             padding: 4rem 0;
         }
         .content-section h2 {
-            font-family: 'DM Serif Display', 'Noto Sans Devanagari', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', 'Noto Sans Devanagari', serif;
             color: #D97757;
             font-size: 2rem;
             margin-bottom: 1.25rem;
         }
         .content-section h3 {
-            font-family: 'DM Serif Display', 'Noto Sans Devanagari', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', 'Noto Sans Devanagari', serif;
             color: #D97757;
             font-size: 1.4rem;
             margin-bottom: 0.75rem;
@@ -102,7 +99,7 @@
             margin-bottom: 0.5rem;
         }
         .kundli-card h4 {
-            font-family: 'Noto Sans Devanagari', 'DM Serif Display', serif;
+            font-family: 'Noto Sans Devanagari', 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             color: #fff;
             font-size: 1.05rem;
             margin-bottom: 0.35rem;
@@ -129,7 +126,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             font-size: 1.2rem;
             color: #D97757;
         }
@@ -430,7 +427,7 @@
         <!-- Hero Section -->
         <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
             <div class="container">
-                <h1 class="display-4 mb-3" style="font-family:'Noto Sans Devanagari','DM Serif Display',serif; font-weight:700;">फ्री कुंडली ऑनलाइन — जन्म कुंडली बनाएं</h1>
+                <h1 class="display-4 mb-3" style="font-family:'Noto Sans Devanagari','DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-weight:700;">फ्री कुंडली ऑनलाइन — जन्म कुंडली बनाएं</h1>
                 <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
                     बस जन्म तिथि, समय और स्थान डालें और सेकंडों में अपनी पूरी जन्म कुंडली मुफ़्त बनाएं। शास्त्रीय वैदिक ग्रंथों पर प्रशिक्षित AI सटीक ग्रह स्थिति, योग, दोष और दशा काल निकालता है — फिर <a href="/hi/kundli.html" style="color:#D97757;">AI से अपनी कुंडली पढ़वाएं</a> और पूछें कि इसका आपके जीवन पर क्या प्रभाव है।
                 </p>
@@ -698,7 +695,7 @@
         <section class="content-section">
             <div class="container" style="max-width:860px;">
                 <div class="cta-box">
-                    <h2 style="font-family:'Noto Sans Devanagari','DM Serif Display',serif; font-size:2rem; margin-bottom:1rem; font-weight:700;">अभी अपनी कुंडली देखें</h2>
+                    <h2 style="font-family:'Noto Sans Devanagari','DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:2rem; margin-bottom:1rem; font-weight:700;">अभी अपनी कुंडली देखें</h2>
                     <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
                         Om.AI डाउनलोड करें, जन्म विवरण दर्ज करें, और एक मिनट से कम में अपनी संपूर्ण जन्म कुंडली देखें। फिर AI से पूछें कि इसका आपके जीवन पर क्या अर्थ है।
                     </p>
@@ -904,6 +901,6 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/assets/js/nav.js?v=1" defer></script>
 </body>
 </html>

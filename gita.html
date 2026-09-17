@@ -12,10 +12,10 @@
     <meta property="og:description" content="Read today's Bhagavad Gita verse with Sanskrit original and English translation. Updated daily.">
     <meta property="og:url" content="https://omai.app/gita.html">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
-    <meta property="og:image:alt" content="Om.AI - Vedic Astrology & Spiritual Wisdom App">
+    <meta property="og:image" content="https://omai.app/assets/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Om.AI, the AI Vedic astrology app, answering a question from a birth chart">
     <meta property="og:site_name" content="Om.AI">
 
     <meta name="robots" content="index, follow">
@@ -28,16 +28,13 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#D97757">
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=69">
+    <link rel="stylesheet" href="/styles/icons.min.css?v=1" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/icons.min.css?v=1"></noscript>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
@@ -74,7 +71,7 @@
             border-left: 3px solid #D97757;
             padding-left: 1.5rem;
             margin-bottom: 1.5rem;
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
         }
         .verse-translation {
             font-size: 1.15rem;
@@ -149,7 +146,7 @@
                 "name": "In what languages is the Bhagavad Gita available on Om.AI?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Om.AI provides the Bhagavad Gita with the original Sanskrit text along with English and Hindi translations. The app also offers audio recitation and AI-powered explanations that relate each verse to modern life situations, making the ancient wisdom accessible and personally relevant."
+                    "text": "Om.AI's daily Gita verse shows the original Sanskrit, a transliteration and a translation in English or Hindi, depending on your app language. You can also ask the Gita chat, in English or Hindi, about something happening in your life, such as duty, loss, work or relationships, and get an answer grounded in the text."
                 }
             },
             {
@@ -157,7 +154,7 @@
                 "name": "How does the daily Gita verse feature work?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Om.AI's daily Gita verse feature presents a different shloka from the Bhagavad Gita each day, cycling through all 700 verses. Each verse is shown with the original Sanskrit text and an English translation. Reading one verse daily is a time-honored practice that makes the Gita's vast wisdom accessible — each shloka is a seed of insight you can contemplate throughout the day."
+                    "text": "Om.AI's daily Gita verse feature presents a different shloka from the Bhagavad Gita each day, cycling through all 700 verses in order. The app sends it every evening, and it also appears on this page with the original Sanskrit text and an English translation. Reading one verse daily is a time-honored practice that makes the Gita's vast wisdom accessible — each shloka is a seed of insight you can contemplate throughout the day."
                 }
             }
         ]
@@ -263,7 +260,7 @@
             <div class="container text-center">
                 <h1 class="display-4 mb-3">Bhagavad Gita — Verse of the Day</h1>
                 <p class="lead">Daily wisdom from the timeless scripture, in Sanskrit and English</p>
-                <p style="font-family:'DM Serif Display',serif; font-size:1.4rem; color:#D97757;" id="gita-date"></p>
+                <p style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.4rem; color:#D97757;" id="gita-date"></p>
             </div>
         </section>
 
@@ -308,12 +305,12 @@
 
                 <!-- CTA -->
                 <div class="cta-box mt-4">
-                    <h2 style="font-size:1.3rem;">Explore the full Bhagavad Gita in the Om.AI app</h2>
-                    <p class="text-secondary mb-3">Read all 700 verses across 18 chapters with Sanskrit text, English & Hindi translations, audio recitation, and AI-powered explanations that relate each verse to your life.</p>
+                    <h2 style="font-size:1.3rem;">Get the Gita verse every evening in the Om.AI app</h2>
+                    <p class="text-secondary mb-3">Each verse arrives with the Sanskrit, a transliteration and an English or Hindi translation. When something is on your mind, ask the Gita chat and get guidance grounded in the text.</p>
                     <a href="/#download" class="btn btn--primary btn-lg">
-                        <i class="fas fa-download me-2" aria-hidden="true"></i>Read Full Gita in App
+                        <i class="fas fa-download me-2" aria-hidden="true"></i>Get the Daily Verse in App
                     </a>
-                    <p class="mt-2" style="font-size:0.85rem; color: rgba(255,255,255,0.5);">Free to browse. Premium for AI explanations.</p>
+                    <p class="mt-2" style="font-size:0.85rem; color: rgba(255,255,255,0.5);">The daily verse is free. Premium includes up to 500 Gita questions a month.</p>
                 </div>
 
                 <!-- SEO Content -->
@@ -325,7 +322,7 @@
                     <p>The Gita is divided into 18 chapters, each called a "Yoga" — a path to spiritual union. They begin with Arjuna's despair on the battlefield (Arjuna Vishada Yoga), progress through the paths of knowledge (Sankhya Yoga), action (Karma Yoga), and devotion (Bhakti Yoga), and culminate in the revelation of the universal form (Vishwarupa) and the final teaching on surrender and liberation (Moksha Sanyasa Yoga). Om.AI's daily verse cycles through all 700 shlokas, offering a different teaching each day.</p>
 
                     <h2>Why Read a Daily Gita Verse?</h2>
-                    <p>Reading one verse daily is a time-honored practice that makes the Gita's vast wisdom accessible. Each shloka is complete in itself — a seed of insight you can contemplate throughout the day. Many practitioners find that a single verse, read with attention in the morning, provides clarity for decisions, comfort during difficulty, and a reminder of life's deeper purpose. The Om.AI app enhances this practice with AI-powered explanations tailored to modern life situations.</p>
+                    <p>Reading one verse daily is a time-honored practice that makes the Gita's vast wisdom accessible. Each shloka is complete in itself — a seed of insight you can contemplate throughout the day. Many practitioners find that a single verse, read with attention, provides clarity for decisions, comfort during difficulty, and a reminder of life's deeper purpose. In the Om.AI app, you can take a verse further by asking the Gita chat how it applies to what you're facing.</p>
                 </div>
             </div>
         </section>
@@ -337,9 +334,9 @@
             <h3 style="font-size:1.15rem; margin-top:1.5rem;">How many chapters and verses are in the Bhagavad Gita?</h3>
             <p>The Bhagavad Gita contains 18 chapters and 700 verses (shlokas). Each chapter is called a 'Yoga' — a path to spiritual union. They cover topics ranging from the paths of knowledge (Sankhya Yoga), action (Karma Yoga), and devotion (Bhakti Yoga) to the revelation of the universal form (Vishwarupa) and teachings on surrender and liberation (Moksha Sanyasa Yoga).</p>
             <h3 style="font-size:1.15rem; margin-top:1.5rem;">In what languages is the Bhagavad Gita available on Om.AI?</h3>
-            <p>Om.AI provides the Bhagavad Gita with the original Sanskrit text along with English and Hindi translations. The app also offers audio recitation and AI-powered explanations that relate each verse to modern life situations, making the ancient wisdom accessible and personally relevant.</p>
+            <p>Om.AI's daily Gita verse shows the original Sanskrit, a transliteration and a translation in English or Hindi, depending on your app language. You can also ask the Gita chat, in English or Hindi, about something happening in your life, such as duty, loss, work or relationships, and get an answer grounded in the text.</p>
             <h3 style="font-size:1.15rem; margin-top:1.5rem;">How does the daily Gita verse feature work?</h3>
-            <p>Om.AI's daily Gita verse feature presents a different shloka from the Bhagavad Gita each day, cycling through all 700 verses. Each verse is shown with the original Sanskrit text and an English translation. Reading one verse daily is a time-honored practice that makes the Gita's vast wisdom accessible — each shloka is a seed of insight you can contemplate throughout the day.</p>
+            <p>Om.AI's daily Gita verse feature presents a different shloka from the Bhagavad Gita each day, cycling through all 700 verses in order. The app sends it every evening, and it also appears on this page with the original Sanskrit text and an English translation. Reading one verse daily is a time-honored practice that makes the Gita's vast wisdom accessible — each shloka is a seed of insight you can contemplate throughout the day.</p>
         </section>
     </main>
 
@@ -365,7 +362,7 @@
                         <li><a href="/ai-astrology-chat.html" class="text-white-50">AI Astrology Chat</a></li>
                         <li><a href="/birth-chart.html" class="text-white-50">Kundli & Birth Chart</a></li>
                         <li><a href="/kundli-matching.html" class="text-white-50">Relationship Compatibility</a></li>
-                        <li><a href="/gita.html" class="text-white-50">Mantras & Gita</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse & Chat</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
@@ -402,7 +399,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/assets/js/nav.js?v=1" defer></script>
     <script>
     (function() {
         function esc(s) { if (!s) return ''; var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }

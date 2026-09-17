@@ -6,3 +6,16 @@
 #   .well-known/assetlinks.json            -> Android App Links
 include:
   - .well-known
+
+# Repo-only files the Pages build would otherwise publish. Setting exclude
+# replaces Jekyll's defaults, so node_modules/Gemfile/vendor are restated.
+exclude:
+  - CLAUDE.md
+  - STYLING.md
+  - docs/
+  - tools/
+  - package.json
+  - node_modules/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/

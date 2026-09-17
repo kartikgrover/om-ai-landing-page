@@ -80,10 +80,10 @@
   <meta property="og:url" content="https://omai.app/ask.html">
   <meta property="og:title" content="Ask Om.AI — your real Vedic birth chart, answering anything">
   <meta property="og:description" content="Career, marriage, money, health, timing — grounded in classical Vedic texts. First question free.">
-  <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
-  <meta property="og:image:width" content="512">
-  <meta property="og:image:height" content="512">
-  <meta property="og:image:alt" content="Om.AI — Vedic astrology chat from your birth chart">
+  <meta property="og:image" content="https://omai.app/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Om.AI, the AI Vedic astrology app, answering a question from a birth chart">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Ask Om.AI — your real Vedic birth chart, answering anything">
   <meta name="twitter:description" content="Career, marriage, money, health, timing — grounded in classical Vedic texts. First question free.">
@@ -122,12 +122,12 @@
     /* Type scale (px @17.5px root): 2xs≈13 · xs=14 · sm≈15 · md=17.5 · lg≈20 · xl≈23 · 2xl≈27 · 3xl=33 */
     :root { --fs-2xs:.72rem; --fs-xs:.8rem; --fs-sm:.87rem; --fs-md:1rem; --fs-lg:1.13rem; --fs-xl:1.33rem; --fs-2xl:1.53rem; --fs-3xl:1.87rem; }
     body {
-      font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;
+      font-family:'Source Sans 3','Source Sans Fallback','Source Sans Fallback Android',system-ui,-apple-system,sans-serif;
       background:var(--bg); color:var(--text); margin:0;
       -webkit-font-smoothing:antialiased; line-height:1.5;
       display:flex; flex-direction:column; min-height:100dvh;
     }
-    h1,h2,h3,.serif { font-family:'DM Serif Display',Georgia,serif; font-weight:400; }
+    h1,h2,h3,.serif { font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',Georgia,serif; font-weight:400; }
     a { color:var(--accent); }
     button { font-family:inherit; }
     .muted { color:var(--secondary); }
@@ -464,7 +464,7 @@
     /* Flat report (no outer box) — sections sit directly on the sheet, like the app. */
     .report-card { background:transparent; border:none; border-radius:0; padding:0; margin:.2rem 0 1rem; align-self:stretch; }
     .report-score { display:flex; align-items:center; gap:1rem; }
-    .score-num { font-family:'DM Serif Display',serif; font-size:2.4rem; line-height:1; color:var(--accent); }
+    .score-num { font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:2.4rem; line-height:1; color:var(--accent); }
     .score-meta { flex:1; }
     .score-verdict { font-weight:700; font-size:var(--fs-lg); }
     .gun-bar { height:8px; border-radius:6px; background:var(--border); overflow:hidden; }
@@ -691,7 +691,7 @@
       </div>
       <div class="trust">
         <span data-i18n="trustClassical">Real Vedic chart from classical texts</span>
-        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">190,000+ readings</span></span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">300,000+ readings</span></span>
         <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="trustPrivate">Your details stay private</span></span>
       </div>
     </div></div>
@@ -733,7 +733,7 @@
       </div></div>
       <div class="trust">
         <span data-i18n="trustClassical">Real Vedic chart from classical texts (BPHS / Parashari)</span>
-        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">190,000+ readings</span></span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">300,000+ readings</span></span>
         <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="trustPrivate">Your details stay private</span></span>
       </div>
     </div></div>
@@ -841,7 +841,7 @@
       <!-- Contextual billing line for the selected plan (mirrors the app's RefundText, just above the trust footer). -->
       <div id="paywallBilling" class="pw-billing">Auto-renews. Cancel anytime.</div>
       <div class="trust" style="margin-top:.5rem;justify-content:center;">
-        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="securePaymentVia">Secure payment via</span> <b>Razorpay</b></span><span data-i18n="trustedSeekers">Trusted by 190,000+ seekers · 4.8★</span>
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="securePaymentVia">Secure payment via</span> <b>Razorpay</b></span><span data-i18n="trustedSeekers">Trusted by 55,000+ seekers · 4.8★</span>
       </div>
     </div>
   </div>
@@ -1094,7 +1094,7 @@
         continueGoogle:'Continue with Google', continueApple:'Continue with Apple', orLabel:'or', emailPh:'Email', passwordPh:'Password', signIn:'Sign in', createAccountBtn:'Create account', sendReset:'Send reset link',
         forgotPw:'Forgot password?', createAccount:'Create account', haveAccount:'Already have an account? Sign in', backToSignin:'Back to sign in',
         termsPre:'By creating an account you agree to our', termsLink:'Terms', termsAnd:'&', privacyLink:'Privacy Policy',
-        trustClassical:'Real Vedic chart from classical texts (BPHS / Parashari)', trustReadings:'190,000+ readings', trustPrivate:'Your details stay private',
+        trustClassical:'Real Vedic chart from classical texts (BPHS / Parashari)', trustReadings:'300,000+ readings', trustPrivate:'Your details stay private',
         onboardSub:'Your first question is free. We compute your real Vedic chart from your birth details — they stay private to your reading.',
         nameLabel:'Name', optional:'(optional)', namePh:'Your name', dobLabel:'Date of birth', timeLabel:'Time of birth', placeLabel:'Place of birth',
         cityPh:'Start typing your birth city…', pickCity:'Pick your birth city from the list for an accurate chart.', tzPre:'Time zone', tzPost:'— detected from your birth place (handles DST automatically).', generateChart:'Generate my chart',
@@ -1123,7 +1123,7 @@
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroSubFresh:'Your first question is free. Premium unlocks unlimited questions about your chart.', pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
         pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Birth chart & Gun Milan reports', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
-        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 190,000+ seekers · 4.8★', pwBadge:'SAVE 40% · 5 MONTHS FREE',
+        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 55,000+ seekers · 4.8★', pwBadge:'SAVE 40% · 5 MONTHS FREE',
         secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
@@ -1146,7 +1146,7 @@
         continueGoogle:'Google से जारी रखें', continueApple:'Apple से जारी रखें', orLabel:'या', emailPh:'ईमेल', passwordPh:'पासवर्ड', signIn:'साइन इन करें', createAccountBtn:'खाता बनाएं', sendReset:'रीसेट लिंक भेजें',
         forgotPw:'पासवर्ड भूल गए?', createAccount:'खाता बनाएं', haveAccount:'पहले से खाता है? साइन इन करें', backToSignin:'साइन इन पर वापस',
         termsPre:'खाता बनाकर आप हमारी', termsLink:'शर्तों', termsAnd:'व', privacyLink:'गोपनीयता नीति',
-        trustClassical:'शास्त्रीय ग्रंथों से असली वैदिक कुंडली', trustReadings:'190,000+ रीडिंग', trustPrivate:'आपकी जानकारी निजी रहती है',
+        trustClassical:'शास्त्रीय ग्रंथों से असली वैदिक कुंडली', trustReadings:'300,000+ रीडिंग', trustPrivate:'आपकी जानकारी निजी रहती है',
         onboardSub:'आपका पहला प्रश्न निःशुल्क है। हम आपकी जन्म जानकारी से असली वैदिक कुंडली बनाते हैं — यह आपकी रीडिंग तक निजी रहती है।',
         nameLabel:'नाम', optional:'(वैकल्पिक)', namePh:'आपका नाम', dobLabel:'जन्म तिथि', timeLabel:'जन्म समय', placeLabel:'जन्म स्थान',
         cityPh:'अपना जन्म शहर लिखना शुरू करें…', pickCity:'सटीक कुंडली के लिए सूची में से अपना जन्म शहर चुनें।', tzPre:'समय क्षेत्र', tzPost:'— आपके जन्म स्थान से चयनित (DST स्वतः संभालता है)।', generateChart:'मेरी कुंडली बनाएं',
@@ -1175,7 +1175,7 @@
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroSubFresh:'आपका पहला प्रश्न निःशुल्क है। प्रीमियम असीमित प्रश्न अनलॉक करता है।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
         pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'जन्म कुंडली व Gun Milan रिपोर्ट', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
-        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'190,000+ जिज्ञासुओं का भरोसा · 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
+        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'55,000+ जिज्ञासुओं का भरोसा · 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
         secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',

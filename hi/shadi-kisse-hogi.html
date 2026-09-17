@@ -32,16 +32,13 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#D97757">
 
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="/styles/styles.min.css?v=67">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=69">
+    <link rel="stylesheet" href="/styles/icons.min.css?v=1" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/icons.min.css?v=1"></noscript>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
@@ -79,7 +76,7 @@
             margin-bottom: 0.5rem;
         }
         .factor-card h4 {
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             color: #fff;
             font-size: 1.05rem;
             margin-bottom: 0.35rem;
@@ -106,7 +103,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             font-size: 1.2rem;
             color: #D97757;
         }
@@ -180,7 +177,7 @@
             margin-bottom: 1.25rem;
         }
         .mw-head h4 {
-            font-family: 'DM Serif Display', serif;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             font-size: 1.5rem;
             color: #fff;
             margin: 0 0 0.4rem;
@@ -487,7 +484,7 @@
         <!-- Hero Section -->
         <section class="hero-section text-center" style="padding: 3rem 0 2rem;">
             <div class="container">
-                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display',serif;">मेरी शादी किससे होगी?</h1>
+                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif;">मेरी शादी किससे होगी?</h1>
                 <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
                     जन्म तिथि, समय और शहर डालें — नीचे का मुफ़्त कैलकुलेटर आपका सप्तम भाव और सप्तमेश निकालकर जीवनसाथी के स्वभाव, क्षेत्र, दिशा और दूरी के संकेत दिखाता है। कोई साइन-अप नहीं।
                 </p>
@@ -887,7 +884,7 @@
         <section class="content-section">
             <div class="container" style="max-width:860px;">
                 <div class="cta-box">
-                    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; margin-bottom:1rem;">अपनी कुंडली पर पूरा जवाब पाएँ</h2>
+                    <h2 style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:2rem; margin-bottom:1rem;">अपनी कुंडली पर पूरा जवाब पाएँ</h2>
                     <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
                         ऊपर का कैलकुलेटर दो चीज़ें निकालता है — सप्तम भाव की राशि और सप्तमेश। Om.AI पूरी कुंडली पढ़ता है: सप्तमेश किस भाव में है, दाराकारक कौन है, उपपद लग्न क्या कहता है, नवांश में तस्वीर बदलती है या नहीं, और पंचम-सप्तम का जुड़ाव कितना है — और हिंदी, अंग्रेज़ी या Hinglish में आपके follow-up सवालों के जवाब देता है। पहली रीडिंग मुफ़्त।
                     </p>
@@ -1106,7 +1103,7 @@
         <a href="https://apps.apple.com/us/app/om-ai/id6630366988?ct=website_hindi_shadi_kisse&mt=8" class="btn btn--outline" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/assets/js/nav.js?v=1" defer></script>
 
     <!-- Spouse-indicator calculator. Same deterministic endpoint as the timing page; this one
          renders the chart half of the answer (7th sign, 7th lord) instead of the windows. -->
