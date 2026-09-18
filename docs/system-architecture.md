@@ -57,10 +57,11 @@ om-ai-landing-page/
 │                               #   retired English kab twins above)
 ├── r/index.html                # Universal-link landing (omai.app/r)
 │
-├── hi/                         # 15 Hindi pages, incl. the "kab" calculators
+├── hi/                         # 16 Hindi pages, incl. the "kab" calculators
 │   ├── index.html
 │   ├── shadi-kab-hogi.html · naukri-kab-milegi.html · bacha-kab-hoga.html
-│   ├── paisa-kab-aayega.html · ghar-kab-banega.html · shadi-kisse-hogi.html
+│   ├── paisa-kab-aayega.html · ghar-kab-banega.html · college-kab-milega.html
+│   ├── shadi-kisse-hogi.html
 │   └── kundli.html · career-astrology.html · marriage-prediction.html · …
 │
 ├── support.html · feedback.html · privacy-policy.html

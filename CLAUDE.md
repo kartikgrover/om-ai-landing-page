@@ -39,7 +39,7 @@ This repo also serves **the consumer web app** at `omai.app/ask.html` — a sing
 
 - **Scope = chat + charts ONLY** (the astro-hub "Today" dashboard was built then removed 2026-06-23 — the SEO pages already cover the informational layer). Flow: onboarding → personal chat ↔ compatibility chat → Birth Chart (D1/D9 + dasha) → history → paywall.
 - **Shares the app's account.** Same Firebase project (`omai-1ea53`) → same UID per provider; an app user signs in on web (Google/Apple/email-pass) and inherits their chart/history/subscription. Firestore under `users/{uid}/`: `astroData/chart`+`d9_chart`, `metadata/dob` (read `coordinates || birthCoordinates`; write both + `birthTimezone`), `premium/subscription`, `questions/purchased.remaining`, `astro_sessions`+`astro_chats`. Birth time REQUIRED.
-- **Backend = live Heroku server** over WebSocket. Types: `astro`/`astroQuestion`, `compatibility`/`compatibilityQuestion` (need `convId`), `generateChart`. Web entitlement gate + Razorpay billing shipped to backend `main` in **v425**.
+- **Backend = live Heroku server** over WebSocket. Types: `astro`, `compatibility` and `compatibilityQuestion` (each needs `threadId` or `conversationId`), and `generateChart` (needs only `dateOfBirth` + `coordinates` since backend v607). Web entitlement gate + Razorpay billing shipped to backend `main` in **v425**.
 - **Billing = Razorpay:** ₹199/mo (`plan_T57Fhoh2RRjnX9`), ₹1,499/yr (`plan_T57FirTng7tqWC`), LIVE; backend `routes/web-payments.js`; enforces only when backend `ENTITLEMENT_GATE=enforce`.
 - **Chart UI** ported from `../om-ai-pro/index.html` (canonical app-parity renderer) — copy from there when mirroring app UI.
 - **Sanity-check JS:** extract the `<script type="module">` body, strip `import` lines, `node --check`.
@@ -76,12 +76,13 @@ Use these numbers to anchor SEO decisions rather than guessing:
 - Topic landing pages that started at 0 clicks and are now top-5 (marriage-prediction, career-astrology) suggest the pattern works — worth building more (health-astrology, love-astrology, wealth-astrology).
 
 ## Doc Conventions (when creating a new doc)
-- **Living reference** (updated over time): `<ALLCAPS_NAME>.md` at repo root (small project — no `docs/` folder yet), or kebab-case if you want.
+- **Living reference** (updated over time): `docs/<kebab-name>.md`, following `docs/system-architecture.md`. `docs/archive/` and `docs/internal/` are gitignored, so they stay local.
 - **Point-in-time snapshot** (frozen at write): `YYYY-MM-DD_TOPIC.md`. Don't edit after the date — write a new dated doc instead.
 - **Stale docs**: `git mv` to an `archive/` folder (create if needed) with a one-liner explaining why. Don't delete.
 - **Pricing decisions**: canonical in `om-ai-ops/docs/pricing/PRICING_TIMELINE.md` — reference, don't duplicate.
 
 ## Existing Analysis Docs
+- `docs/system-architecture.md` — site and web-app architecture (living).
 - `docs/internal/AUDIT_FINDINGS.md` — prior site audit; moved out of the public repo root and gitignored 2026-05-04 (`95729aa`), so it is local-only.
 
 
