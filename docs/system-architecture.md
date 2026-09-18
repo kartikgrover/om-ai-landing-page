@@ -51,7 +51,7 @@ om-ai-landing-page/
 ├── dasha-calculator.html       # Client-side Meeus approximation, not the backend
 ├── shadi-kab-hogi.html         # English "kab" twin (see the kab-family playbook)
 ├── bacha-kab-hoga.html         # Redirect stub → /hi/ twin
-├── naukri-kab-milegi.html      # Redirect stub → /hi/ twin
+├── naukri-kab-milegi.html      # Redirect stub → /career-astrology.html
 ├── zodiac/*.html               # 12 sign pages
 ├── daily-horoscope/index.html  # Redirect stub (as are privacy.html and the two
 │                               #   retired English kab twins above)
@@ -101,7 +101,7 @@ om-ai-landing-page/
 
 1. **Landing page** (`index.html`) — features, screenshots, testimonials, FAQ, download CTAs. Carries its own inline navbar script and inline SVG icons, so it does not use `nav.js` or the icon CSS.
 2. **Free tools** — `horoscope`, `panchang`, `rahu-kaal-today`, `gita` fetch daily data from the backend's public endpoints.
-3. **"Kab" calculators** — the `/hi/` pages plus `shadi-kab-hogi.html` post birth details to `api/public/{marriage,career,children,wealth,property}-window` and render event windows. The backend ships labels, never scores.
+3. **"Kab" calculators** — the `/hi/` pages plus `shadi-kab-hogi.html` send birth details as a GET to `api/public/{marriage,career,children,wealth,property,education}-window` and render event windows. The backend ships labels, never scores.
 4. **SEO topic pages** — long-form pages aimed at one query cluster each; see the page-intent map for the anti-cannibalization rule.
 5. **Hindi set** (`/hi/`) — the Devanagari surface, linked by `hreflang`.
 6. **Blog** — educational articles, auto-published on a schedule.
