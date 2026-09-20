@@ -571,13 +571,13 @@
     .varg-note { margin-top:.7rem; font-size:var(--fs-sm); color:var(--text); }
     .varg-note b { color:var(--accent); }
   </style>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- Razorpay checkout.js is injected by loadRazorpay() when the paywall opens. -->
   <!-- tz-lookup: lat/lng → IANA timezone (offline, ~100KB), so the birth time zone is
        derived from the place instead of a manual UTC-offset dropdown (wrong for non-India). -->
-  <script src="https://unpkg.com/tz-lookup@6.1.25/tz.js"></script>
+  <script defer src="https://unpkg.com/tz-lookup@6.1.25/tz.js"></script>
   <!-- Markdown rendering for AI answers (parse + sanitize) -->
-  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 </head>
 <body class="chrome-off"><!-- starts chrome-free for a clean boot splash; show() clears it on the chat view -->
   <!-- Preview-gate screen (shown when not bypassed — see <head>). Must be a direct child of <body>. -->
@@ -2810,6 +2810,7 @@
       track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
       fbTrack('ViewContent', { content_name: 'paywall', content_category: 'subscription' });
       openModal('paywallView');
+      loadRazorpay().catch(() => {});
     }
     const dismissPaywall = () => { if ($('paywallView').classList.contains('open')) closeModal('paywallView'); };
     $('paywallClose').addEventListener('click', dismissPaywall);
@@ -3422,6 +3423,26 @@
       } catch (_) { /* pixel failure must never block the post-payment flow */ }
     }
 
+    // Only ~3% of visitors reach checkout, so the ~400 KB Razorpay bundle loads on paywall open.
+    let razorpayLoad = null;
+    function loadRazorpay() {
+      if (window.Razorpay) return Promise.resolve();
+      return razorpayLoad || (razorpayLoad = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        s.onload = resolve;
+        s.onerror = () => { razorpayLoad = null; s.remove(); reject(new Error(t('genericErr'))); };
+        document.head.appendChild(s);
+      }));
+    }
+
+    function trackPaymentFailed(rzp, paywall_type, plan) {
+      rzp.on('payment.failed', (r) => {
+        const e = (r && r.error) || {};
+        track('paywall_interaction', { action: 'payment_failed', source: 'razorpay', paywall_type, plan, reason: e.reason || e.code || 'unknown', step: e.step });
+      });
+    }
+
     // Sign in / link the account and migrate birth details if the uid collided.
     // Shared by both checkout paths + the downsell so the buyer's account is set up
     // exactly once, consistently. Returns { t, attribution }.
@@ -3465,6 +3486,7 @@
       if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start purchase');
       const { orderId, keyId, amount, currency, questions } = await r.json();
 
+      await loadRazorpay();
       const rzp = new Razorpay({
         key: keyId,
         order_id: orderId,
@@ -3498,6 +3520,7 @@
           track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack' });
           setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
       });
+      trackPaymentFailed(rzp, 'question_pack');
       track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
       track('begin_checkout', { value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 standard
       fbTrack('InitiateCheckout', { value: (amount || 0) / 100, currency: currency || 'INR' });
@@ -3547,6 +3570,7 @@
         if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start subscription');
         const { subscriptionId, keyId, firstCyclePrice } = await r.json();
 
+        await loadRazorpay();
         const rzp = new Razorpay({
           key: keyId,
           subscription_id: subscriptionId,
@@ -3582,6 +3606,7 @@
             if (!downsellShownThisSession) setTimeout(openDownsell, 250);
           } },
         });
+        trackPaymentFailed(rzp, 'subscription', chosenPlan);
         track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
         track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 standard
         fbTrack('InitiateCheckout', { value: PLAN_VALUE_INR[chosenPlan], currency: 'INR' });
