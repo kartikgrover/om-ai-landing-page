@@ -990,8 +990,8 @@
     const auth = getAuth(firebaseApp);
     const db = getFirestore(firebaseApp);
 
-    // ?local → talk to a local backend (dev/testing); else Heroku prod.
-    const LOCAL = new URLSearchParams(location.search).has('local');
+    // ?local → talk to a local backend (dev/testing); else Heroku prod. Only honoured off-production hosts.
+    const LOCAL = new URLSearchParams(location.search).has('local') && ['localhost', '127.0.0.1'].includes(location.hostname);
     const WS_BASE = LOCAL ? 'ws://localhost:3000' : 'wss://om-ai-backend-4f29d7469ff6.herokuapp.com';
     const API = LOCAL ? 'http://localhost:3000' : 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
 
@@ -1363,8 +1363,7 @@
       if (s) s.textContent = `${confirmation} ${t('needBirthDetails')}`;
       return false;
     }
-    // Dev convenience: ?local signs in anonymously so the flow is testable without
-    // the Google popup. Production shows the Continue-with-Google gate (no anon).
+    // Dev convenience: ?local on localhost signs in anonymously, skipping the Google popup.
     if (LOCAL) signInAnonymously(auth).catch((e) => { $('authStatus').textContent = 'Auth error: ' + e.message; });
 
     $('signInBtn').addEventListener('click', async () => {
