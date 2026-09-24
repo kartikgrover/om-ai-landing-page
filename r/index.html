@@ -113,6 +113,35 @@
   var appUrl = 'omai://open?utm_source=om_web&utm_medium=landing&utm_campaign=' +
     encodeURIComponent(campaign) + (code ? '&referral_code=' + encodeURIComponent(code) : '');
 
+  // Hindi shares from the app carry lang=hi; the page speaks the language the share was written in.
+  var hi = q.get('lang') === 'hi';
+  var T = hi ? {
+    title: 'Om.AI — ऐप पाएं', h1: 'Om.AI — वैदिक ज्योतिष', lead: 'ऐप पर ले जा रहे हैं…',
+    codeHint: 'ऐप इंस्टॉल करने के बाद यह कोड डालें — आप दोनों को 3 मुफ़्त सवाल मिलेंगे।',
+    getApp: 'Om.AI पाएं', openApp: 'ऐप पहले से है? खोलें',
+    iosLink: 'App Store से डाउनलोड करें', androidLink: 'Google Play से पाएं',
+    toPlay: 'Google Play पर ले जा रहे हैं…', codeReady: 'आपका रेफरल कोड तैयार है।',
+    copyHint: 'बटन टैप करें — आपका कोड अपने आप कॉपी हो जाएगा। ऐप इंस्टॉल करने के बाद उसे पेस्ट करें।',
+    copyBtn: 'कोड कॉपी करें और ऐप पाएं', copied: 'कॉपी हो गया! App Store खुल रहा है…',
+    toAppStore: 'App Store पर ले जा रहे हैं…', getTheApp: 'ऐप पाएं:'
+  } : {
+    toPlay: 'Taking you to Google Play…', codeReady: 'Your invite code is ready.',
+    copyHint: 'Tap the button — your code copies automatically. Paste it in the app after installing.',
+    copyBtn: 'Copy code & get the app', copied: 'Copied! Opening the App Store…',
+    toAppStore: 'Taking you to the App Store…', getTheApp: 'Get the app:'
+  };
+  if (hi) {
+    document.documentElement.lang = 'hi';
+    document.title = T.title;
+    document.querySelector('h1').textContent = T.h1;
+    document.getElementById('lead').textContent = T.lead;
+    document.getElementById('codeHint').textContent = T.codeHint;
+    document.getElementById('storeBtn').textContent = T.getApp;
+    document.getElementById('openApp').textContent = T.openApp;
+    document.getElementById('iosLink').textContent = T.iosLink;
+    document.getElementById('androidLink').textContent = T.androidLink;
+  }
+
   var ua = navigator.userAgent || '';
   var isAndroid = /android/i.test(ua);
   var isIOS = /iphone|ipad|ipod/i.test(ua);
@@ -156,33 +185,32 @@
   }
 
   if (isAndroid) {
-    lead.textContent = 'Taking you to Google Play…';
+    lead.textContent = T.toPlay;
     storeBtn.href = androidUrl; storeBtn.style.display = 'inline-block';
     openApp.style.display = 'inline-block';
     setTimeout(function () { location.replace(androidUrl); }, 600);
   } else if (isIOS && code) {
     // Button-gated: the tap is what carries the code through the App Store
     // (clipboard), so no auto-redirect — see header comment.
-    lead.textContent = 'Your invite code is ready.';
-    document.getElementById('codeHint').textContent =
-      'Tap the button — your code copies automatically. Paste it in the app after installing.';
-    storeBtn.textContent = 'Copy code & get the app';
+    lead.textContent = T.codeReady;
+    document.getElementById('codeHint').textContent = T.copyHint;
+    storeBtn.textContent = T.copyBtn;
     storeBtn.href = iosUrl; storeBtn.style.display = 'inline-block';
     openApp.style.display = 'inline-block';
     storeBtn.addEventListener('click', function (e) {
       e.preventDefault();
       copyThen(code, function () {
-        storeBtn.textContent = 'Copied! Opening the App Store…';
+        storeBtn.textContent = T.copied;
         setTimeout(function () { location.href = iosUrl; }, 600);
       });
     });
   } else if (isIOS) {
-    lead.textContent = 'Taking you to the App Store…';
+    lead.textContent = T.toAppStore;
     storeBtn.href = iosUrl; storeBtn.style.display = 'inline-block';
     openApp.style.display = 'inline-block';
     setTimeout(function () { location.replace(iosUrl); }, 800);
   } else {
-    lead.textContent = 'Get the app:';
+    lead.textContent = T.getTheApp;
     document.getElementById('stores').style.display = 'block';
   }
 })();
