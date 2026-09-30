@@ -2171,12 +2171,12 @@
       renderHistory();
     }
 
-    // Reports scored before backend scoringVersion 5 (v661) disagree with the rescored answers.
+    // Reports scored before backend scoringVersion 6 (v662) disagree with the rescored answers.
     // Regenerate once per page session; a failure keeps the saved report and is not retried.
     let staleCompatTried = false;
     async function refreshStaleCompatReport() {
       const r = state.compatReport;
-      if (staleCompatTried || asking || !r?.ashtakoot || (r.scoringVersion ?? 0) >= 5) return;
+      if (staleCompatTried || asking || !r?.ashtakoot || (r.scoringVersion ?? 0) >= 6) return;
       if (!state.chart || !state.partnerChart || !state.userGender || !state.partnerGender) return;
       staleCompatTried = true;
       asking = true;
