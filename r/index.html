@@ -96,9 +96,10 @@
   var refUid = q.get('utm_content') || 'anonymous';
 
   var IOS_ID = 'id6630366988';
-  var ct = (code ? 'referral_' : 'app_') + campaign;
+  // pt is our App Store Connect provider token; Apple credits a campaign only with it. ct caps at 30 chars.
+  var ct = ((code ? 'referral_' : 'app_') + campaign).slice(0, 30);
   var iosUrl = 'https://apps.apple.com/app/om-ai-vedic-astrology/' + IOS_ID +
-    '?ct=' + encodeURIComponent(ct) + '&mt=8&pt=referrer_' + encodeURIComponent(refUid) +
+    '?pt=127919347&ct=' + encodeURIComponent(ct) + '&mt=8' +
     (code ? '&referral_code=' + encodeURIComponent(code) : '');
 
   // Same referrer payload the app's old direct Play links used — the app's
