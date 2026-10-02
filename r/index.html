@@ -104,7 +104,9 @@
   // Same referrer payload the app's old direct Play links used — the app's
   // Install Referrer parsing depends on these exact keys.
   var referrerParts = [
-    'utm_source=om_app', 'utm_medium=share',
+    // Pass the link's own source through: app shares send om_app/share, Instagram links send instagram.
+    'utm_source=' + encodeURIComponent(q.get('utm_source') || 'om_app'),
+    'utm_medium=' + encodeURIComponent(q.get('utm_medium') || 'share'),
     'utm_campaign=' + campaign, 'utm_content=' + refUid
   ];
   if (code) { referrerParts.push('utm_term=' + code, 'referral_code=' + code); }
