@@ -127,6 +127,8 @@
       -webkit-font-smoothing:antialiased; line-height:1.5;
       display:flex; flex-direction:column; min-height:100dvh;
     }
+    /* Chat pins the page to the visible viewport so the iOS keyboard can't scroll header/composer away. */
+    body.chat-lock { height:var(--vvh,100dvh); min-height:0; overflow:hidden; }
     h1,h2,h3,.serif { font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',Georgia,serif; font-weight:400; }
     a { color:var(--accent); }
     button { font-family:inherit; }
@@ -154,6 +156,7 @@
     /* Full "N question(s) left" pill — web has room (the app shows only the number). */
     .hdr-quota .qcount { padding:.32rem .7rem; border-radius:999px; font-size:var(--fs-sm); font-weight:600; line-height:1; white-space:nowrap; color:var(--text);
       border:1px solid color-mix(in srgb, var(--accent) 45%, transparent); background:color-mix(in srgb, var(--accent) 13%, transparent); }
+    @media (max-width:360px) { .hdr-quota .qleft { display:none; } } /* too narrow for the label beside the centered toggle */
     .hdr-quota .qnum { display:none; }  /* phones show just the number (app parity) to free header space for the centered toggle */
     .hdr-quota.is-premium { cursor:default; }
     .hdr-quota.is-premium svg { width:18px; height:18px; stroke:var(--accent); fill:none; stroke-width:1.7; }
@@ -261,6 +264,7 @@
     .status-line { font-size:var(--fs-sm); color:var(--secondary); min-height:1.2em; margin-top:.5rem; }
     .authlink { color:var(--accent); cursor:pointer; text-decoration:none; }
     .authlink:hover { text-decoration:underline; }
+    #authLinks .authlink { display:inline-block; padding:.7rem .2rem; }
 
     /* ── Chat (mirrors AstroScreen message list + composer) ──────────────── */
     #chatView { position:relative; }
@@ -315,7 +319,7 @@
     .chip { display:block; width:100%; text-align:center; background:transparent; color:var(--text);
       border:none; border-radius:12px; padding:.8rem 1rem; margin:.2rem 0;
       font-size:var(--fs-sm); cursor:pointer; transition:background .15s; }
-    .chip:hover { background:var(--border); }
+    @media (hover:hover) { .chip:hover { background:var(--border); } } /* touch: hover sticks after a tap */
 
     /* Contextual artifact button in the composer dock — mirrors the app's ChartButton:
        subtle surface, 1px border, accent-coloured icon + label, 44px tap target. */
@@ -362,7 +366,8 @@
 
     /* ── Paywall ─────────────────────────────────────────────────────────── */
     .plan { display:flex; align-items:center; gap:.75rem; width:100%; text-align:left; color:var(--text);
-      background:var(--card); border:1.5px solid var(--border-strong); border-radius:14px; padding:1rem; margin:.5rem 0; cursor:pointer; position:relative; }
+      background:var(--card); border:1.5px solid var(--border-strong); border-radius:14px; padding:1rem; margin:.5rem 0; cursor:pointer; position:relative;
+      font:inherit; font-size:var(--fs-md); } /* buttons don't inherit font: WebKit rendered plans at 11px */
     .plan.active { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, var(--card)); }
     .plan .radio { width:20px; height:20px; border-radius:50%; border:2px solid var(--border-strong); flex:none; }
     .plan.active .radio { border-color:var(--accent); background:radial-gradient(circle, var(--accent) 45%, transparent 50%); }
@@ -383,6 +388,16 @@
     .pw-div::before, .pw-div::after { content:''; flex:1; height:1px; background:var(--border); }
     .pw-div span { font-size:var(--fs-xs); font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--secondary); white-space:nowrap; }
     .pw-billing { text-align:center; font-size:var(--fs-xs); color:var(--secondary); margin-top:.4rem; }
+    #subscribeBtn { position:sticky; bottom:0; z-index:2; box-shadow:0 -14px 14px var(--card), 0 6px 0 var(--card); }
+    @media (max-width:560px) and (max-height:780px) {
+      #paywallView { padding:.6rem; }
+      #paywallView .modal-card { max-height:94dvh; padding:1rem; }
+      #pwHeroTitle { font-size:var(--fs-xl) !important; margin-top:0 !important; }
+      #paywallView .feature-table { margin:.5rem 0; font-size:var(--fs-xs); }
+      #paywallView .feature-table td { padding:.3rem .25rem; }
+      #paywallView .plan { padding:.75rem 1rem; }
+      #paywallView .pw-div { margin-top:.8rem; }
+    }
 
     /* ── Settings / Profile rows ─────────────────────────────────────────── */
     .section-label { font-size:var(--fs-xs); font-weight:700; letter-spacing:.04em; color:var(--secondary); text-transform:uppercase; margin:1.4rem .25rem .4rem; }
@@ -677,8 +692,8 @@
             <span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span><span data-i18n="orLabel">or</span><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>
           </div>
         </div>
-        <input id="f-email" class="field" type="email" placeholder="Email" data-i18n-ph="emailPh" autocomplete="email" style="margin-bottom:.5rem;">
-        <input id="f-pass" class="field" type="password" placeholder="Password" data-i18n-ph="passwordPh" autocomplete="current-password" style="margin-bottom:.6rem;">
+        <input id="f-email" class="field" type="email" placeholder="Email" data-i18n-ph="emailPh" autocomplete="email" enterkeyhint="next" style="margin-bottom:.5rem;">
+        <input id="f-pass" class="field" type="password" placeholder="Password" data-i18n-ph="passwordPh" autocomplete="current-password" enterkeyhint="go" style="margin-bottom:.6rem;">
         <button id="emailSignInBtn" class="btn-primary" data-i18n="signIn">Sign in</button>
         <div id="authTerms" class="hint" style="text-align:center;margin-top:.7rem;display:none;"><span data-i18n="termsPre">By creating an account you agree to our</span> <a href="/terms-of-service.html" target="_blank" class="authlink" data-i18n="termsLink">Terms</a> <span data-i18n="termsAnd">&amp;</span> <a href="/privacy-policy.html" target="_blank" class="authlink" data-i18n="privacyLink">Privacy Policy</a>.</div>
         <div id="authLinks" style="text-align:center;margin-top:.8rem;font-size:var(--fs-sm);">
@@ -691,7 +706,7 @@
       </div>
       <div class="trust">
         <span data-i18n="trustClassical">Real Vedic chart from classical texts</span>
-        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">300,000+ readings</span></span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b>&nbsp;<span data-i18n="ratingStores">on Google Play and the App Store</span> · <span data-i18n="trustReadings">300,000+ readings</span></span>
         <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="trustPrivate">Your details stay private</span></span>
       </div>
     </div></div>
@@ -733,7 +748,7 @@
       </div></div>
       <div class="trust">
         <span data-i18n="trustClassical">Real Vedic chart from classical texts (BPHS / Parashari)</span>
-        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b> · <span data-i18n="trustReadings">300,000+ readings</span></span>
+        <span><svg class="ico ico-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.77l-5.2 2.75.99-5.8-4.21-4.1 5.82-.85L12 3.5Z" stroke-linejoin="round"/></svg><b>4.8</b>&nbsp;<span data-i18n="ratingStores">on Google Play and the App Store</span> · <span data-i18n="trustReadings">300,000+ readings</span></span>
         <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="trustPrivate">Your details stay private</span></span>
       </div>
     </div></div>
@@ -841,7 +856,7 @@
       <!-- Contextual billing line for the selected plan (mirrors the app's RefundText, just above the trust footer). -->
       <div id="paywallBilling" class="pw-billing">Auto-renews. Cancel anytime.</div>
       <div class="trust" style="margin-top:.5rem;justify-content:center;">
-        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="securePaymentVia">Secure payment via</span> <b>Razorpay</b></span><span data-i18n="trustedSeekers">Trusted by 50,000+ seekers · 4.8★</span>
+        <span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg><span data-i18n="securePaymentVia">Secure payment via</span> <b>Razorpay</b></span><span data-i18n="trustedSeekers">Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store</span>
       </div>
     </div>
   </div>
@@ -1039,6 +1054,14 @@
     const views = { boot: $('bootView'), auth: $('authView'), onboarding: $('onboardingView'), compatSetup: $('compatSetupView'),
                     chat: $('chatView'), chartScreen: $('chartScreenView'), report: $('reportView') };
     let prevView = 'onboarding';
+    if (window.visualViewport) {
+      const vv = window.visualViewport;
+      const fitViewport = () => {
+        document.documentElement.style.setProperty('--vvh', vv.height + 'px');
+        if (document.body.classList.contains('chat-lock') && window.scrollY) window.scrollTo(0, 0);
+      };
+      vv.addEventListener('resize', fitViewport); vv.addEventListener('scroll', fitViewport); fitViewport();
+    }
     const currentView = () => Object.keys(views).find((k) => views[k].classList.contains('active')) || 'onboarding';
     let _pwSrc = 'direct'; // funnel source; pass it to openPaywall(src) which slides the sheet up
     function show(name) {
@@ -1049,6 +1072,7 @@
       // drawer shut so a leftover open state can't bleed onto the auth view after sign-out.
       const noChrome = name === 'auth' || name === 'boot';
       document.body.classList.toggle('chrome-off', noChrome);
+      document.body.classList.toggle('chat-lock', name === 'chat');
       if (noChrome) { try { closeDrawer(); } catch (_) {} }
       // The Personal/Relationship toggle is header chrome scoped to the chat view.
       { const ms = $('modeSeg'); if (ms) ms.style.display = name === 'chat' ? '' : 'none'; }
@@ -1104,7 +1128,7 @@
         gunMilanNote:'Gun Milan (Ashtakoot) matches an opposite-gender pair — your role is set automatically.', generateCompat:'Generate compatibility',
         editPartner:'Edit partner', saveAndUpdate:'Save & update report', updatingCompat:'Updating compatibility…',
         composerPh:'Type your message…', jumpLatest:'Jump to latest ↓', chartReady:'Your chart is ready', chartReadyName:'{name}, your chart is ready',
-        askAnything:'Ask me anything. Your first question is free.', askAnythingPremium:'Ask me anything — career, marriage, money, health, or timing.', askAnythingUsed:'Ask me anything about your chart.', quotaLeftOne:'{n} question left', quotaLeftMany:'{n} questions left', freeQUsed:'That was your free question. Continue for unlimited answers.',
+        askAnything:'Ask me anything. Your first question is free.', askAnythingPremium:'Ask me anything — career, marriage, money, health, or timing.', askAnythingUsed:'Ask me anything about your chart.', quotaLeftOne:'{n} question left', quotaLeftMany:'{n} questions left', quotaShortLeft:'left', ratingStores:'on Google Play and the App Store', freeQUsed:'That was your free question. Continue for unlimited answers.',
         starter1:"What's my next big career window?", starter2:'Walk me through 2027 — career, money, love', starter3:"Describe my future spouse — looks, profession, when we'll meet", starter4:'Am I in Sade Sati? When does it end?',
         cStarter1:'How compatible are we overall?', cStarter2:'What are our biggest strengths as a couple?', cStarter3:'Are there any doshas we should know about?', cStarter4:'When is a good time for us to marry?',
         yourChart:'Your chart', compatReport:'Compatibility report', generateReportBtn:'Generate report', viewCharts:'View charts', chartYou:'You', chartPartner:'Partner',
@@ -1123,7 +1147,7 @@
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroSubFresh:'Your first question is free. Premium unlocks unlimited questions about your chart.', pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
         pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Birth chart & Gun Milan reports', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
-        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★', pwBadge:'SAVE 40% · 5 MONTHS FREE',
+        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store', pwBadge:'SAVE 40% · 5 MONTHS FREE',
         secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
@@ -1156,7 +1180,7 @@
         gunMilanNote:'Gun Milan (Ashtakoot) विपरीत-लिंग जोड़े का मिलान करता है — आपकी भूमिका स्वतः तय होती है।', generateCompat:'अनुकूलता बनाएं',
         editPartner:'साथी संपादित करें', saveAndUpdate:'सहेजें व रिपोर्ट अपडेट करें', updatingCompat:'अनुकूलता अपडेट हो रही है…',
         composerPh:'अपना संदेश लिखें…', jumpLatest:'नवीनतम पर जाएं ↓', chartReady:'आपकी कुंडली तैयार है', chartReadyName:'{name}, आपकी कुंडली तैयार है',
-        askAnything:'कुछ भी पूछें। आपका पहला प्रश्न निःशुल्क है।', askAnythingPremium:'कुछ भी पूछें — करियर, विवाह, धन, स्वास्थ्य या समय।', askAnythingUsed:'अपनी कुंडली के बारे में कुछ भी पूछें।', quotaLeftOne:'{n} सवाल बाकी', quotaLeftMany:'{n} सवाल बाकी', freeQUsed:'यह आपका निःशुल्क प्रश्न था। असीमित उत्तरों के लिए जारी रखें।',
+        askAnything:'कुछ भी पूछें। आपका पहला प्रश्न निःशुल्क है।', askAnythingPremium:'कुछ भी पूछें — करियर, विवाह, धन, स्वास्थ्य या समय।', askAnythingUsed:'अपनी कुंडली के बारे में कुछ भी पूछें।', quotaLeftOne:'{n} सवाल बाकी', quotaLeftMany:'{n} सवाल बाकी', quotaShortLeft:'शेष', ratingStores:'Google Play और App Store पर', freeQUsed:'यह आपका निःशुल्क प्रश्न था। असीमित उत्तरों के लिए जारी रखें।',
         starter1:'मेरा अगला बड़ा करियर अवसर कब है?', starter2:'2027 बताइए — करियर, धन, प्रेम', starter3:'मेरे भावी जीवनसाथी का वर्णन करें — रूप, पेशा, कब मिलेंगे', starter4:'क्या मैं Sade Sati में हूँ? यह कब समाप्त होगी?',
         cStarter1:'हम कुल मिलाकर कितने अनुकूल हैं?', cStarter2:'एक जोड़े के रूप में हमारी सबसे बड़ी ताकत क्या है?', cStarter3:'क्या कोई दोष है जो हमें जानना चाहिए?', cStarter4:'हमारे विवाह के लिए अच्छा समय कब है?',
         yourChart:'आपकी कुंडली', compatReport:'अनुकूलता रिपोर्ट', generateReportBtn:'रिपोर्ट बनाएं', viewCharts:'कुंडलियाँ देखें', chartYou:'आप', chartPartner:'साथी',
@@ -1175,7 +1199,7 @@
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroSubFresh:'आपका पहला प्रश्न निःशुल्क है। प्रीमियम असीमित प्रश्न अनलॉक करता है।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
         pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'जन्म कुंडली व Gun Milan रिपोर्ट', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
-        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
+        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · Google Play और App Store पर 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
         secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
@@ -1407,6 +1431,8 @@
     $('lnkToSignup').addEventListener('click', () => setAuthMode('signup'));
     $('lnkToSignin').addEventListener('click', () => { invalidCredCount = 0; setAuthMode('signin'); });
 
+    $('f-email').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); const p = $('f-pass'); if (p.offsetParent) p.focus(); else $('emailSignInBtn').click(); } });
+    $('f-pass').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $('emailSignInBtn').click(); } });
     $('emailSignInBtn').addEventListener('click', async () => {
       const email = $('f-email').value.trim();
       const btn = $('emailSignInBtn');
@@ -2946,9 +2972,16 @@
       else if ($('birthModal').classList.contains('open')) $('birthModal').classList.remove('open');
       else if ($('drawer').classList.contains('open')) closeDrawer();
     });
+    // Birth moments are UTC instants: render them in the birth zone, not the viewer's.
+    function fmtBirth(iso, withTime) {
+      const o = { day: 'numeric', month: 'short', year: 'numeric' };
+      if (withTime && !state.timeUnknown) Object.assign(o, { hour: 'numeric', minute: '2-digit' });
+      try { return new Date(iso).toLocaleString(state.lang === 'hi' ? 'hi-IN' : 'en-IN', { ...o, timeZone: state.birthTimezone || 'Asia/Kolkata' }); }
+      catch (_) { return new Date(iso).toLocaleString('en-IN', o); }
+    }
     function openBirthModal() {
       closeSheetsIfOpen();
-      $('bmDob').textContent = state.dateOfBirth ? new Date(state.dateOfBirth).toLocaleString() : 'Not set';
+      $('bmDob').textContent = state.dateOfBirth ? fmtBirth(state.dateOfBirth, true) : t('notSet');
       $('bmPlace').textContent = state.birthPlace || t('notSet');
       $('birthModal').classList.add('open');
     }
@@ -3032,7 +3065,7 @@
         const label = t(n === 1 ? 'quotaLeftOne' : 'quotaLeftMany', { n });
         el.className = 'hdr-quota is-count';
         el.style.display = 'inline-flex';
-        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">' + esc(String(n)) + '</span></span>';
+        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">' + esc(String(n)) + '<span class="qleft"> ' + esc(t('quotaShortLeft')) + '</span></span></span>';
         el.setAttribute('aria-label', label);
         el.title = label;
       } else if (state.freeUsed) {
@@ -3041,7 +3074,7 @@
         const label = t('quotaLeftMany', { n: 0 });
         el.className = 'hdr-quota is-count';
         el.style.display = 'inline-flex';
-        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">0</span></span>';
+        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">0<span class="qleft"> ' + esc(t('quotaShortLeft')) + '</span></span></span>';
         el.setAttribute('aria-label', label);
         el.title = label;
       } else {
@@ -3051,7 +3084,7 @@
         const label = t('quotaLeftOne', { n: 1 });
         el.className = 'hdr-quota is-count';
         el.style.display = 'inline-flex';
-        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">1</span></span>';
+        el.innerHTML = '<span class="qcount"><span class="qfull">' + esc(label) + '</span><span class="qnum">1<span class="qleft"> ' + esc(t('quotaShortLeft')) + '</span></span></span>';
         el.setAttribute('aria-label', label);
         el.title = label;
       }
@@ -3300,7 +3333,7 @@
       $('pfName').textContent = state.userName || (u && !u.isAnonymous ? (u.displayName || t('profUser')) : t('profGuest'));
       $('pfEmail').textContent = (u && !u.isAnonymous && u.email) ? u.email : 'Not signed in';
       $('pfBirth').textContent = state.dateOfBirth
-        ? `${new Date(state.dateOfBirth).toLocaleDateString()}${state.birthPlace ? ' · ' + state.birthPlace : ''}`
+        ? `${fmtBirth(state.dateOfBirth, false)}${state.birthPlace ? ' · ' + state.birthPlace : ''}`
         : 'Not set';
       refreshDrawer();
     }
