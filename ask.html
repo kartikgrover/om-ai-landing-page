@@ -957,10 +957,10 @@
       <div class="kun-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke-linecap="round"/></svg><span data-i18n="tapHouse">Tap any house for its planets &amp; aspects</span></div>
       <div class="kun-legend" aria-label="Planet dignity colours">
         <span class="lg-item"><span class="lg-dot" style="background:var(--accent);"></span><span data-i18n="legLagna">Lagna</span></span>
-        <span class="lg-item"><span class="lg-dot" style="background:var(--success);"></span><span data-i18n="legExalted">Exalted</span></span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--success);"></span><span data-i18n="legExalted">Strong</span></span>
         <span class="lg-item"><span class="lg-dot" style="background:#5BA3D0;"></span><span data-i18n="legFriendlyOwn">Friendly / Own</span></span>
         <span class="lg-item"><span class="lg-dot" style="background:var(--text);opacity:.7;"></span><span data-i18n="legNeutral">Neutral</span></span>
-        <span class="lg-item"><span class="lg-dot" style="background:var(--error);"></span><span data-i18n="legDebilitated">Debilitated</span></span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--error);"></span><span data-i18n="legDebilitated">Weakened</span></span>
         <span class="lg-item"><span class="lg-dot" style="background:#E0975A;"></span><span data-i18n="legEnemy">Enemy</span></span>
       </div>
       <div id="chartExtras"></div>
@@ -1133,7 +1133,7 @@
         cStarter1:'How compatible are we overall?', cStarter2:'What are our biggest strengths as a couple?', cStarter3:'Are there any doshas we should know about?', cStarter4:'When is a good time for us to marry?',
         yourChart:'Your chart', compatReport:'Compatibility report', generateReportBtn:'Generate report', viewCharts:'View charts', chartYou:'You', chartPartner:'Partner',
         birthChart:'Birth Chart', rasiD1:'Rasi (D1)', navamsaD9:'Navamsa (D9)', tapHouse:'Tap any house for its planets & aspects',
-        legLagna:'Lagna', legExalted:'Exalted', legFriendlyOwn:'Friendly / Own', legNeutral:'Neutral', legDebilitated:'Debilitated', legEnemy:'Enemy', planetaryPositions:'Planetary positions',
+        legLagna:'Lagna', legExalted:'Strong', legFriendlyOwn:'Friendly / Own', legNeutral:'Neutral', legDebilitated:'Weakened', combustLabel:'Very close to the Sun', legEnemy:'Enemy', planetaryPositions:'Planetary positions',
         compatibility:'Compatibility', compatHomeHint:'Ask anything about your compatibility', compatWith:'with {name}',
         repOverallCompat:'Overall Compatibility', repTabOverview:'Overview', repTabGunMilan:'Gun Milan', repTabAdvanced:'Advanced',
         repContributes:'What contributes to your score', repContributesSub:'Your overall score combines traditional Ashtakoot matching with deeper chart factors.',
@@ -1185,7 +1185,7 @@
         cStarter1:'हम कुल मिलाकर कितने अनुकूल हैं?', cStarter2:'एक जोड़े के रूप में हमारी सबसे बड़ी ताकत क्या है?', cStarter3:'क्या कोई दोष है जो हमें जानना चाहिए?', cStarter4:'हमारे विवाह के लिए अच्छा समय कब है?',
         yourChart:'आपकी कुंडली', compatReport:'अनुकूलता रिपोर्ट', generateReportBtn:'रिपोर्ट बनाएं', viewCharts:'कुंडलियाँ देखें', chartYou:'आप', chartPartner:'साथी',
         birthChart:'जन्म कुंडली', rasiD1:'राशि (D1)', navamsaD9:'नवांश (D9)', tapHouse:'किसी भी भाव पर टैप करें — उसके ग्रह व दृष्टियाँ देखें',
-        legLagna:'लग्न', legExalted:'उच्च', legFriendlyOwn:'मित्र / स्व', legNeutral:'तटस्थ', legDebilitated:'नीच', legEnemy:'शत्रु', planetaryPositions:'ग्रह स्थिति',
+        legLagna:'लग्न', legExalted:'उच्च', legFriendlyOwn:'मित्र / स्व', legNeutral:'तटस्थ', legDebilitated:'नीच', combustLabel:'सूर्य के अति निकट', legEnemy:'शत्रु', planetaryPositions:'ग्रह स्थिति',
         compatibility:'अनुकूलता', compatHomeHint:'अपनी अनुकूलता के बारे में कुछ भी पूछें', compatWith:'{name} के साथ',
         repOverallCompat:'समग्र अनुकूलता', repTabOverview:'अवलोकन', repTabGunMilan:'Gun Milan', repTabAdvanced:'विस्तृत',
         repContributes:'आपके स्कोर में क्या योगदान देता है', repContributesSub:'आपका समग्र स्कोर पारंपरिक Ashtakoot मिलान को गहरे कुंडली कारकों के साथ जोड़ता है।',
@@ -2662,9 +2662,10 @@
     const KUN_HOUSE_XY = { 1:[50,27],2:[25,9],3:[9,26],4:[26,50],5:[9,74],6:[25,91],7:[50,73],8:[75,91],9:[91,74],10:[74,50],11:[91,26],12:[75,9] };
     const KUN_REL_CLASS = (rel) => ({ ascendant:'kun-rel-ascendant', exalted:'kun-rel-exalted', debilitated:'kun-rel-debilitated', friendly:'kun-rel-friendly', own:'kun-rel-own', 'own sign':'kun-rel-own', 'mool trikona':'kun-rel-own', enemy:'kun-rel-enemy' }[(rel||'').toLowerCase()] || 'kun-rel-neutral');
     const KUN_REL_COLOR = { ascendant:'var(--accent)', exalted:'var(--success)', debilitated:'var(--error)', friendly:'#5BA3D0', own:'#5BA3D0', 'own sign':'#5BA3D0', 'mool trikona':'#5BA3D0', enemy:'#E0975A' };
-    // Dignity as shown: the backend's English term, Hindi when the page is (v650 added Mool Trikona).
+    // Dignity as shown: app wording in English (no exalted/debilitated), Hindi terms on Hindi pages.
     const REL_HI = { exalted:'उच्च', debilitated:'नीच', own:'स्वराशि', 'own sign':'स्वराशि', 'mool trikona':'मूल त्रिकोण', friendly:'मित्र', neutral:'सम', enemy:'शत्रु', 'great friend':'अधि मित्र', 'great enemy':'अधि शत्रु' };
-    const relLabel = (rel) => (state.lang === 'hi' && REL_HI[(rel || '').toLowerCase()]) || rel;
+    const REL_EN = { exalted:'Strong', debilitated:'Weakened' }; // app parity (om1 relationships)
+    const relLabel = (rel) => ((state.lang === 'hi' ? REL_HI : REL_EN)[(rel || '').toLowerCase()]) || rel;
     // The server's `data` is English; these codes get the reader's language (om1 errorMessages parity).
     const wsErrorText = (m) => ({ adults_only: t('errAdultsOnly'), payload_error: t('errPayload'), rate_limited: t('errRateLimited') }[m.code]) || m.data || 'Something went wrong.';
     // Combustion (astangata) — not in the payload, computed from longitudes.
@@ -2736,7 +2737,7 @@
             ts.textContent = (KUN_ABBR[p.planet] || p.planet.slice(0,2)) + (p.retrograde ? '↺' : '') + (combust ? '⊙' : '');
             const title = document.createElementNS(NS,'title');
             const deg = p.longitude != null ? ' · ' + (parseFloat(p.longitude)%30).toFixed(1) + '°' : '';
-            title.textContent = `${p.planet}: ${p.zodiac||''}${deg}${p.nakshatra?' · '+p.nakshatra:''}${p.relationship?' · '+relLabel(p.relationship):''}${combust?' · combust':''}`;
+            title.textContent = `${p.planet}: ${p.zodiac||''}${deg}${p.nakshatra?' · '+p.nakshatra:''}${p.relationship?' · '+relLabel(p.relationship):''}${combust?' · '+t('combustLabel'):''}`;
             ts.appendChild(title); t.appendChild(ts);
           });
           g.appendChild(t); li++;
@@ -2786,7 +2787,7 @@
           const nak = info.nakshatra ? esc(info.nakshatra) + (info.pada ? ' · ' + info.pada : '') : '—';
           const col = KUN_REL_COLOR[(info.relationship || '').toLowerCase()] || 'var(--text)';
           const retro = info.retrograde ? ' <span class="kun-retro">℞</span>' : '';
-          const combust = combustSet.has(p) ? ' <span title="combust">⊙</span>' : '';
+          const combust = combustSet.has(p) ? ' <span title="' + esc(t('combustLabel')) + '">⊙</span>' : '';
           return `<tr><td><b>${p}</b>${retro}${combust}</td><td>${esc(info.zodiac || '—')}</td><td>${info.house || '—'}</td><td>${deg}</td><td>${nak}</td><td class="dig" style="color:${col}">${esc(relLabel(info.relationship) || '—')}</td></tr>`;
         }).join('');
         html += `<div class="cx-head">${t('planetaryPositions')}${variant === 'D9' ? ' · ' + t('cxNavamsa') : ''}</div>
