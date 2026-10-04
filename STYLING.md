@@ -61,10 +61,9 @@ them every session.
   header hamburger. The header hamburger is **hidden on desktop** and exists only
   on mobile to open the overlay. (Desktop breakpoint here: `min-width:900px`;
   Pro uses `min-width:761px`.)
-- **Logo MARK** (the Om symbol) at the drawer's top-left — NOT the "Om.AI"
-  wordmark. The mark stays recognizable in the 56px rail; a wordmark can't
-  collapse. (The app uses the wordmark because it has no rail — that's fine.)
-  Pro adds a "PRO" tag next to the mark.
+- **ॐAI wordmark** (`assets/logo-mark.png`) at the drawer's top-left; Pro adds
+  a "PRO" tag (corrected 2026-10-04: the code always used the wordmark). Logo
+  rules live in om-ai-brand BRAND.md "Logo system".
 - **Primary action top, utilities bottom.** New chat at the top; the
   account/utility rows (Birth Details, Edit Profile, Get Premium, Settings)
   pinned to the bottom (`margin-top:auto`). The **scrollable middle** (chat
@@ -161,7 +160,6 @@ them every session.
 
 ## Don't-revert list (web-specific deviations from the app, on purpose)
 
-- Logo **mark** in the drawer (app uses the wordmark — app has no rail).
 - **Rail-collapse** sidebar with the toggle on the drawer (app uses a plain
   slide drawer).
 - Seamless header/composer (same as the app's intent; keep it).
