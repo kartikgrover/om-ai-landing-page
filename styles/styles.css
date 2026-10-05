@@ -916,25 +916,6 @@ footer {
   overflow: hidden;
 }
 
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transition: width 0.6s, height 0.6s;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-}
-
-.btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
 .btn * {
   position: relative;
   z-index: 1;
