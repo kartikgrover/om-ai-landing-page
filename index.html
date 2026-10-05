@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
 
     <!-- Custom shared styles (nav + footer live here) -->
-    <link rel="stylesheet" href="/styles/styles.min.css?v=72">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=73">
 
     <!-- Fonts (non-blocking) -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap">
@@ -1578,6 +1578,17 @@
     document.addEventListener('click', function (e) {
         if (!e.target.closest('.dropdown')) closeAllDropdowns(null);
     });
+
+    // Open mobile menu: a tap on the dimmed page only closes it (swallowed, so nothing under it fires);
+    // a tap on a menu link closes it and follows the link.
+    document.addEventListener('click', function (e) {
+        if (!nav || !nav.classList.contains('show') || e.target.closest('.navbar-toggler')) return;
+        var inside = e.target.closest('#navbarNav');
+        if (inside && !e.target.closest('#navbarNav a:not(.dropdown-toggle)')) return;
+        if (!inside) { e.preventDefault(); e.stopPropagation(); }
+        nav.classList.remove('show');
+        toggler.setAttribute('aria-expanded', 'false');
+    }, true);
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') closeAllDropdowns(null);

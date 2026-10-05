@@ -42,6 +42,21 @@
     col.setAttribute('aria-expanded', show);
   });
 
+  // Open mobile menu: a tap on the dimmed page only closes it (swallowed, so nothing under it fires);
+  // a tap on a menu link closes it and follows the link.
+  document.addEventListener('click', function (e) {
+    var open = document.querySelector('.navbar-collapse.show');
+    if (!open || e.target.closest('[data-bs-toggle="collapse"]')) return;
+    var inside = e.target.closest('.navbar-collapse');
+    if (inside && !e.target.closest('.navbar-collapse a:not(.dropdown-toggle)')) return;
+    if (!inside) { e.preventDefault(); e.stopPropagation(); }
+    open.classList.remove('show');
+    document.querySelectorAll('[data-bs-target="#' + open.id + '"]').forEach(function (t) {
+      t.classList.add('collapsed');
+      t.setAttribute('aria-expanded', 'false');
+    });
+  }, true);
+
   document.addEventListener('keydown', function (e) {
     var down = e.key === 'ArrowDown';
     if (!down && e.key !== 'ArrowUp' && e.key !== 'Escape') return;
