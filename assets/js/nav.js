@@ -91,3 +91,17 @@
     });
   });
 })();
+
+// iPhone/iPad visitors: the App Store button becomes the primary one and comes first in each store pair.
+(function () {
+  var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (!isIOS) return;
+  document.querySelectorAll('a[href*="apps.apple.com"].btn').forEach(function (ios) {
+    var android = ios.parentNode.querySelector('a[href*="play.google.com"].btn');
+    if (!android) return;
+    ios.className = ios.className.replace('btn--outline', 'btn--primary');
+    android.className = android.className.replace('btn--primary', 'btn--outline');
+    android.parentNode.insertBefore(ios, android);
+  });
+})();
