@@ -271,7 +271,7 @@ p {
   .text-center .btn {
     display: block;
     margin: 0 auto 0.75rem auto !important;
-    max-width: 280px;
+    max-width: 100%;
   }
 
   .text-center .btn + .btn {
@@ -4471,4 +4471,18 @@ small {
 .btn--primary:active,
 .btn--outline:active {
     transform: translateY(0);
+}
+
+/* Touch screens: 44px tap targets, and no hover lift that sticks after a tap */
+@media (max-width: 991.98px) {
+  footer .list-unstyled a { display: inline-block; padding: 10px 0; }
+  .social-links a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+  .navbar-toggler { min-height: 44px; }
+}
+@media (hover: none) {
+  .feature-card:hover { transform: none; }
+}
+@media (max-width: 575.98px) {
+  .d-flex.flex-wrap.justify-content-center > .btn--primary,
+  .d-flex.flex-wrap.justify-content-center > .btn--outline { flex: 1 1 100%; }
 }
