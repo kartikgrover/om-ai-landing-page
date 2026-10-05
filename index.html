@@ -487,7 +487,7 @@
     button.chip:hover:not(:disabled) { background: rgba(217,119,87,0.18); }
     button.chip:active:not(:disabled) { transform: scale(0.96); }
     button.chip:disabled { opacity: 0.4; cursor: not-allowed; }
-    @media (max-width: 600px) { .chip { padding: 9px 12px; font-size: 12.5px; } }
+    @media (max-width: 600px) { .chip { padding: 9px 12px; font-size: 12.5px; } .phone__body { height: 380px; } }
     .msg.msg--typing {
         display: inline-flex; align-items: center; gap: 4px;
     }
@@ -943,7 +943,7 @@
             </a>
             <a class="feature reveal" href="/kundli-matching.html" onclick="trackFeature('Kundli Matching')">
                 <div class="feature__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg></div>
-                <h3>Ashtakoot Matching <span>· 8 koots</span><span class="feature__arrow" aria-hidden="true">→</span></h3>
+                <h3>Gun Milan <span>· 8 koots</span><span class="feature__arrow" aria-hidden="true">→</span></h3>
                 <p>Traditional 36-point marriage compatibility plus synastry and timing for both partners.</p>
             </a>
             <a class="feature reveal" href="/gita.html" onclick="trackFeature('Bhagavad Gita')">
@@ -1613,16 +1613,18 @@
       if (i) i.className = 'btn btn--outline';
       web.parentNode.insertBefore(web, web.parentNode.firstChild);  // move web first
     }
-    // iPhone/iPad visitors: their own store is the primary button and comes first.
+    // Phones: show only the visitor's own store (one clear action); desktop keeps both.
     var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent)
       || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    if (isIOS) {
+    var isAndroid = /Android/i.test(navigator.userAgent);
+    if (isIOS || isAndroid) {
       document.querySelectorAll('a[href*="apps.apple.com"].btn').forEach(function (ios) {
         var android = ios.parentNode.querySelector('a[href*="play.google.com"].btn');
         if (!android) return;
-        ios.className = ios.className.replace('btn--outline', 'btn--primary');
-        android.className = android.className.replace('btn--primary', 'btn--outline');
-        android.parentNode.insertBefore(ios, android);
+        var keep = isIOS ? ios : android, drop = isIOS ? android : ios;
+        keep.className = keep.className.replace('btn--outline', 'btn--primary');
+        drop.hidden = true;
+        keep.parentNode.insertBefore(keep, keep.parentNode.firstChild);
       });
     }
   })();
