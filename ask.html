@@ -245,7 +245,10 @@
     .city-suggest .cs-item:last-child { border-bottom:none; }
     .city-suggest .cs-item:hover, .city-suggest .cs-item.active { background:var(--accent); color:#fff; }
     select.field { appearance:none; }
-    .row2 { display:flex; gap:.75rem; } .row2 > * { flex:1; }
+    .row2 { display:flex; gap:.75rem; } .row2 > * { flex:1; min-width:0; }
+    .row2 input[type="date"], .row2 input[type="time"] { padding-left:.6rem; padding-right:.5rem; }
+    .row2 > :has(> input[type="date"]) { flex:1.3; }
+    @media (max-width:380px) { .row2:has(input[type="time"]) { flex-direction:column; gap:1rem; } }
     .hint { font-size:var(--fs-sm); color:var(--secondary); }
     .check { display:flex; align-items:center; gap:.5rem; font-size:var(--fs-sm); color:var(--secondary); cursor:pointer; font-weight:500; }
     .check input { width:18px; height:18px; accent-color:var(--accent); }
@@ -684,6 +687,10 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z"/></svg>
             <span data-i18n="continueGoogle">Continue with Google</span>
           </button>
+          <button id="phoneSignInBtn" class="btn-ghost" style="margin-top:.6rem;display:flex;align-items:center;justify-content:center;gap:.5rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18h2" stroke-linecap="round"/></svg>
+            <span data-i18n="continuePhone">Continue with phone</span>
+          </button>
           <button id="appleSignInBtn" class="btn-primary" style="margin-top:.6rem;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;gap:.5rem;">
             <svg width="17" height="17" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
             <span data-i18n="continueApple">Continue with Apple</span>
@@ -692,6 +699,26 @@
             <span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span><span data-i18n="orLabel">or</span><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>
           </div>
         </div>
+        <div id="phoneBox" style="display:none;">
+          <div id="phoneStep">
+            <label for="f-phone" data-i18n="phoneTitle">What's your number?</label>
+            <div style="display:flex;gap:.5rem;margin-bottom:.6rem;">
+              <span class="field" style="width:auto;flex:none;color:var(--secondary);">+91</span>
+              <input id="f-phone" class="field" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="98765 43210" enterkeyhint="send">
+            </div>
+            <button id="sendOtpBtn" class="btn-primary" data-i18n="sendOtp">Send code</button>
+            <p class="hint" style="margin:.6rem 0 0;" data-i18n="phoneWhy">We use it only to confirm it's you and keep your chart safe. No spam, ever.</p>
+          </div>
+          <div id="otpStep" style="display:none;">
+            <label for="f-otp" data-i18n="otpTitle">Enter the code</label>
+            <p id="otpSentTo" class="hint" style="margin:0 0 .5rem;"></p>
+            <input id="f-otp" class="field" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••" enterkeyhint="go" style="margin-bottom:.6rem;letter-spacing:.3em;">
+            <button id="verifyOtpBtn" class="btn-primary" data-i18n="verifyOtp">Verify</button>
+            <div style="text-align:center;font-size:var(--fs-sm);"><a id="lnkResendOtp" class="authlink" style="display:inline-block;padding:.7rem .2rem;"></a></div>
+          </div>
+          <div style="text-align:center;font-size:var(--fs-sm);"><a id="lnkPhoneBack" class="authlink" style="display:inline-block;padding:.5rem .2rem;" data-i18n="otherSignIn">Use another way to sign in</a></div>
+        </div>
+        <div id="emailBox">
         <input id="f-email" class="field" type="email" placeholder="Email" data-i18n-ph="emailPh" autocomplete="email" enterkeyhint="next" style="margin-bottom:.5rem;">
         <input id="f-pass" class="field" type="password" placeholder="Password" data-i18n-ph="passwordPh" autocomplete="current-password" enterkeyhint="go" style="margin-bottom:.6rem;">
         <button id="emailSignInBtn" class="btn-primary" data-i18n="signIn">Sign in</button>
@@ -701,6 +728,7 @@
           <span id="lnkSep" style="color:var(--secondary);margin:0 .55rem;">·</span>
           <a id="lnkToSignup" class="authlink" data-i18n="createAccount">Create account</a>
           <a id="lnkToSignin" class="authlink" style="display:none;" data-i18n="haveAccount">Already have an account? Sign in</a>
+        </div>
         </div>
         <div id="authStatus" class="status-line" style="text-align:center;"></div>
       </div>
@@ -990,7 +1018,7 @@
   <script defer src="cities.js"></script>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-    import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, deleteUser, reauthenticateWithPopup, reauthenticateWithCredential, EmailAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, linkWithPopup, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithCustomToken, sendPasswordResetEmail, deleteUser, reauthenticateWithPopup, reauthenticateWithCredential, EmailAuthProvider } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import { getFirestore, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, collection, query, where, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     // Public Firebase web config (same project as the app — client config is not secret).
@@ -1115,7 +1143,7 @@
         loadMsgs:'Studying your Kundli…|Analyzing the Grahas…|Consulting the Nakshatras…|Calculating planetary influences…|Calculating…|Interpreting positions…',
         authTitle:'Ask your birth chart', authSub:'Sign in to get your free reading. We compute your real Vedic chart and answer anything — career, marriage, money, health, timing.',
         authSubSignup:'Create your account to get your free Vedic reading.', authSubReset:'Enter your email and we’ll send you a password reset link.',
-        continueGoogle:'Continue with Google', continueApple:'Continue with Apple', orLabel:'or', emailPh:'Email', passwordPh:'Password', signIn:'Sign in', createAccountBtn:'Create account', sendReset:'Send reset link',
+        continueGoogle:'Continue with Google', continueApple:'Continue with Apple', continuePhone:'Continue with phone', phoneTitle:'What\'s your number?', phoneWhy:'We use it only to confirm it\'s you and keep your chart safe. No spam, ever.', sendOtp:'Send code', otpTitle:'Enter the code', otpSentTo:'Sent to {number}', verifyOtp:'Verify', resendOtp:'Resend code', resendOtpIn:'Resend code in {n}s', otherSignIn:'Use another way to sign in', phoneInvalid:'Enter a 10-digit Indian mobile number.', phoneTooMany:'Too many attempts. Try again in a little while.', phoneSendFailed:'Couldn\'t send the code. Check your connection and try again.', phoneUnavailable:'Phone sign-in isn\'t available right now. Continue with Google instead.', otpWrong:'That code isn\'t right. Check the digits and try again.', otpExpired:'That code has expired. Ask for a new one.', otpFailed:'Couldn\'t verify that code. Try again.', sendingOtp:'Sending code…', orLabel:'or', emailPh:'Email', passwordPh:'Password', signIn:'Sign in', createAccountBtn:'Create account', sendReset:'Send reset link',
         forgotPw:'Forgot password?', createAccount:'Create account', haveAccount:'Already have an account? Sign in', backToSignin:'Back to sign in',
         termsPre:'By creating an account you agree to our', termsLink:'Terms', termsAnd:'&', privacyLink:'Privacy Policy',
         trustClassical:'Real Vedic chart from classical texts (BPHS / Parashari)', trustReadings:'300,000+ readings', trustPrivate:'Your details stay private',
@@ -1167,7 +1195,7 @@
         loadMsgs:'आपकी कुंडली का अध्ययन…|ग्रहों का विश्लेषण…|नक्षत्रों से परामर्श…|ग्रहों के प्रभाव की गणना…|गणना हो रही है…|स्थितियों की व्याख्या…',
         authTitle:'अपनी जन्म कुंडली से पूछें', authSub:'अपनी निःशुल्क रीडिंग पाने के लिए साइन इन करें। हम आपकी असली वैदिक कुंडली बनाते हैं और किसी भी विषय पर उत्तर देते हैं — करियर, विवाह, धन, स्वास्थ्य, समय।',
         authSubSignup:'अपनी निःशुल्क वैदिक रीडिंग पाने के लिए खाता बनाएं।', authSubReset:'अपना ईमेल दर्ज करें, हम पासवर्ड रीसेट लिंक भेजेंगे।',
-        continueGoogle:'Google से जारी रखें', continueApple:'Apple से जारी रखें', orLabel:'या', emailPh:'ईमेल', passwordPh:'पासवर्ड', signIn:'साइन इन करें', createAccountBtn:'खाता बनाएं', sendReset:'रीसेट लिंक भेजें',
+        continueGoogle:'Google से जारी रखें', continueApple:'Apple से जारी रखें', continuePhone:'फ़ोन नंबर से जारी रखें', phoneTitle:'आपका नंबर क्या है?', phoneWhy:'यह सिर्फ़ यह पक्का करने के लिए है कि यह आप ही हैं और आपकी कुंडली सुरक्षित रहे। कोई स्पैम नहीं, कभी नहीं।', sendOtp:'कोड भेजें', otpTitle:'कोड डालें', otpSentTo:'{number} पर भेजा गया', verifyOtp:'सत्यापित करें', resendOtp:'कोड दोबारा भेजें', resendOtpIn:'{n} सेकंड में कोड दोबारा भेजें', otherSignIn:'किसी और तरीके से साइन इन करें', phoneInvalid:'10 अंकों का भारतीय मोबाइल नंबर डालें।', phoneTooMany:'बहुत बार कोशिश हो चुकी है। थोड़ी देर बाद फिर कोशिश करें।', phoneSendFailed:'कोड नहीं भेजा जा सका। अपना कनेक्शन जाँचकर दोबारा कोशिश करें।', phoneUnavailable:'फ़ोन से साइन इन अभी उपलब्ध नहीं है। Google से जारी रखें।', otpWrong:'यह कोड सही नहीं है। अंक जाँचकर दोबारा डालें।', otpExpired:'यह कोड समाप्त हो चुका है। नया कोड मंगाएँ।', otpFailed:'कोड सत्यापित नहीं हो सका। दोबारा कोशिश करें।', sendingOtp:'कोड भेजा जा रहा है…', orLabel:'या', emailPh:'ईमेल', passwordPh:'पासवर्ड', signIn:'साइन इन करें', createAccountBtn:'खाता बनाएं', sendReset:'रीसेट लिंक भेजें',
         forgotPw:'पासवर्ड भूल गए?', createAccount:'खाता बनाएं', haveAccount:'पहले से खाता है? साइन इन करें', backToSignin:'साइन इन पर वापस',
         termsPre:'खाता बनाकर आप हमारी', termsLink:'शर्तों', termsAnd:'व', privacyLink:'गोपनीयता नीति',
         trustClassical:'शास्त्रीय ग्रंथों से असली वैदिक कुंडली', trustReadings:'300,000+ रीडिंग', trustPrivate:'आपकी जानकारी निजी रहती है',
@@ -1266,7 +1294,7 @@
         if (!user.isAnonymous && !window.__loginTracked) {
           window.__loginTracked = true;
           const pid = user.providerData?.[0]?.providerId || '';
-          const method = pid.includes('google') ? 'google' : pid.includes('apple') ? 'apple' : 'email';
+          const method = pid.includes('google') ? 'google' : pid.includes('apple') ? 'apple' : pid.includes('phone') ? 'phone' : 'email';
           track('auth_interaction', { action: 'login', method });
           track('login', { method }); // GA4 standard event
         }
@@ -1405,6 +1433,77 @@
         await signInWithPopup(auth, provider); // onAuthStateChanged advances the view
       } catch (e) { $('authStatus').textContent = friendlyAuthError(e); btn.disabled = false; }
     });
+
+    // Phone sign-in: India only, OTP over the backend's MSG91 door (routes/phone-otp.js). A {fallback}
+    // reply means the door is off; web has no Firebase SMS path, so we point the user to Google.
+    let otpPhone = null, resendTimer = null, verifying = false;
+    function showPhoneBox(on) {
+      $('phoneBox').style.display = on ? '' : 'none';
+      $('authSocial').style.display = on ? 'none' : '';
+      $('emailBox').style.display = on ? 'none' : '';
+      $('authStatus').textContent = '';
+      if (on) { $('phoneStep').style.display = ''; $('otpStep').style.display = 'none'; $('f-phone').focus(); }
+    }
+    async function otpCall(path, body) {
+      try {
+        const r = await fetch(`${API}/api/auth/otp/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        return { status: r.status, body: await r.json().catch(() => ({})) };
+      } catch (_) { return { status: 0, body: {} }; }
+    }
+    function startResendCountdown(secs) {
+      clearInterval(resendTimer);
+      const a = $('lnkResendOtp'); let left = secs;
+      const tick = () => {
+        if (left > 0) { a.textContent = t('resendOtpIn', { n: left }); a.style.pointerEvents = 'none'; a.style.opacity = '.6'; left -= 1; }
+        else { clearInterval(resendTimer); a.textContent = t('resendOtp'); a.style.pointerEvents = ''; a.style.opacity = ''; }
+      };
+      tick(); resendTimer = setInterval(tick, 1000);
+    }
+    async function sendOtp() {
+      const num = $('f-phone').value.replace(/\D/g, '').replace(/^0/, '');
+      if (!/^[6-9]\d{9}$/.test(num)) { $('authStatus').textContent = t('phoneInvalid'); return; }
+      const btn = $('sendOtpBtn'); btn.disabled = true; $('authStatus').textContent = t('sendingOtp');
+      const r = await otpCall('send', { phoneNumber: '+91' + num });
+      btn.disabled = false;
+      if (r.body.sent) {
+        otpPhone = '+91' + num;
+        $('phoneStep').style.display = 'none'; $('otpStep').style.display = '';
+        $('otpSentTo').textContent = t('otpSentTo', { number: '+91 ' + num.slice(0, 5) + ' ' + num.slice(5) });
+        $('authStatus').textContent = ''; $('f-otp').value = ''; $('f-otp').focus();
+        startResendCountdown(30);
+        track('phone_send_otp');
+      } else if (r.body.error === 'cooldown') { $('authStatus').textContent = t('resendOtpIn', { n: r.body.retryAfter || 25 }); }
+      else if (r.body.error === 'too_many') { $('authStatus').textContent = t('phoneTooMany'); }
+      else if (r.body.fallback) { $('authStatus').textContent = t('phoneUnavailable'); }
+      else { $('authStatus').textContent = t('phoneSendFailed'); }
+    }
+    async function verifyOtp() {
+      const code = $('f-otp').value.replace(/\D/g, '');
+      if (verifying) return; // auto-submit at 6 digits plus Enter/tap would burn the single-use code twice
+      if (!otpPhone || code.length !== 6) { $('authStatus').textContent = t('otpWrong'); return; }
+      verifying = true;
+      const btn = $('verifyOtpBtn'); btn.disabled = true; $('authStatus').textContent = t('authSigningIn');
+      const r = await otpCall('verify', { phoneNumber: otpPhone, code });
+      if (!r.body.customToken) {
+        verifying = false; btn.disabled = false;
+        $('authStatus').textContent = t(r.body.error === 'invalid' ? 'otpWrong' : r.body.error === 'expired' ? 'otpExpired' : 'otpFailed');
+        return;
+      }
+      try {
+        await signInWithCustomToken(auth, r.body.customToken); // onAuthStateChanged advances the view
+        if (r.body.isNewUser) { track('auth_interaction', { action: 'sign_up', method: 'phone' }); track('sign_up', { method: 'phone' }); }
+        clearInterval(resendTimer); otpPhone = null; showPhoneBox(false);
+      } catch (e) { $('authStatus').textContent = t('otpFailed'); }
+      finally { verifying = false; btn.disabled = false; }
+    }
+    $('phoneSignInBtn').addEventListener('click', () => showPhoneBox(true));
+    $('lnkPhoneBack').addEventListener('click', () => { clearInterval(resendTimer); otpPhone = null; showPhoneBox(false); });
+    $('sendOtpBtn').addEventListener('click', sendOtp);
+    $('lnkResendOtp').addEventListener('click', sendOtp);
+    $('verifyOtpBtn').addEventListener('click', verifyOtp);
+    $('f-phone').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendOtp(); } });
+    $('f-otp').addEventListener('input', () => { $('f-otp').value = $('f-otp').value.replace(/\D/g, ''); if ($('f-otp').value.length === 6) verifyOtp(); });
+    $('f-otp').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); verifyOtp(); } });
 
     // Email/password auth — three explicit modes mirroring the app (SignIn /
     // SignUp / ForgotPassword). Same Firebase project → same uid as the app's
