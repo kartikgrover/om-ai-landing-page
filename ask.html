@@ -1678,11 +1678,11 @@
 
     // ── geocode (OpenStreetMap Nominatim — MVP) ────────────────────
     async function geocode(place) {
-      const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(place);
+      const url = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1&q=' + encodeURIComponent(place);
       const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
       const arr = await res.json();
       if (!arr.length) throw new Error('Could not find that place — try "City, Country".');
-      return { latitude: parseFloat(arr[0].lat), longitude: parseFloat(arr[0].lon) };
+      return { latitude: parseFloat(arr[0].lat), longitude: parseFloat(arr[0].lon), countryCode: arr[0].address?.country_code || null };
     }
 
     // Local birth wall-clock + chosen UTC offset → UTC ISO instant.
@@ -1706,10 +1706,13 @@
       } catch (_) { return null; }
     }
     // Derive { tz, offset } from coordinates via tz-lookup; null if the lib didn't load.
+    // tz-lookup's coarse borders put 57 Indian towns (Sitamarhi, Kishanganj, Pahalgam) in a neighbour's zone.
+    const SINGLE_ZONE_COUNTRIES = { in: 'Asia/Kolkata', np: 'Asia/Kathmandu', bd: 'Asia/Dhaka', pk: 'Asia/Karachi', lk: 'Asia/Colombo', bt: 'Asia/Thimphu', mm: 'Asia/Yangon' };
     function deriveTz(coords, dateStr, timeStr) {
       try {
-        if (typeof tzlookup !== 'function') return null;
-        const tz = tzlookup(coords.latitude, coords.longitude);
+        const countryTz = SINGLE_ZONE_COUNTRIES[String(coords.countryCode || '').toLowerCase()];
+        if (!countryTz && typeof tzlookup !== 'function') return null;
+        const tz = countryTz || tzlookup(coords.latitude, coords.longitude);
         const offset = offsetHoursForLocal(tz, dateStr, timeStr);
         return (tz && offset != null) ? { tz, offset } : null;
       } catch (_) { return null; }
