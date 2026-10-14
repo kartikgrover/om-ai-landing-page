@@ -234,6 +234,7 @@
 
     /* ── Cards / forms (onboarding, profile, settings) ───────────────────── */
     .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; }
+    @media (max-width:380px) { .scroll-pad { padding:1rem; } .card { padding:1rem; } }
     label { font-weight:600; font-size:var(--fs-sm); margin-bottom:.3rem; display:block; color:var(--text); }
     .field { width:100%; background:var(--input-bg); color:var(--text); border:1px solid var(--border-strong);
       border-radius:10px; padding:.7rem .85rem; font-size:var(--fs-md); font-family:inherit; }
@@ -335,10 +336,18 @@
       cursor:pointer; white-space:nowrap; transition:background .15s,border-color .15s; }
     .artifact-btn:hover { background:var(--card); border-color:var(--accent); }
     .artifact-btn svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:1.7; flex:none; }
+    /* Phones: one swipeable row; auto margins centre it without clipping the first button. */
+    @media (max-width:560px) {
+      .artifact-bar { flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto; scrollbar-width:none; gap:.4rem; padding:.45rem .75rem 0; }
+      .artifact-bar::-webkit-scrollbar { display:none; }
+      .artifact-btn:first-child { margin-left:auto; } .artifact-btn:last-child { margin-right:auto; }
+      .artifact-btn { flex:none; min-height:40px; padding:.4rem .85rem; gap:.4rem; font-size:var(--fs-sm); }
+      .artifact-btn svg { width:17px; height:17px; }
+    }
 
     /* Composer dock */
     /* Seamless bottom (Claude-style): the dock blends with the chat; only the input box differs. */
-    .composer-wrap { border-top:1px solid transparent; background:var(--bg); }
+    .composer-wrap { position:relative; border-top:1px solid transparent; background:var(--bg); }
     .composer { max-width:760px; margin:0 auto; display:flex; align-items:flex-end; gap:.6rem;
       padding:.6rem .75rem; padding-bottom:max(.6rem,env(safe-area-inset-bottom)); }
     .composer textarea { flex:1; resize:none; background:var(--input-bg); color:var(--text);
@@ -352,7 +361,7 @@
     .send:disabled { opacity:.55; transform:scale(.92); cursor:default; }
     .send svg { width:22px; height:22px; fill:#fff; }
     .jump-btn {
-      position:absolute; left:50%; transform:translateX(-50%); bottom:84px; z-index:5;
+      position:absolute; left:50%; transform:translateX(-50%); bottom:calc(100% + .5rem); z-index:5;
       background:var(--card); color:var(--text); border:1px solid var(--border-strong);
       border-radius:20px; padding:.35rem .9rem; font-size:var(--fs-sm); cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.18); display:none;
     }
@@ -391,7 +400,7 @@
     .pw-div::before, .pw-div::after { content:''; flex:1; height:1px; background:var(--border); }
     .pw-div span { font-size:var(--fs-xs); font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--secondary); white-space:nowrap; }
     .pw-billing { text-align:center; font-size:var(--fs-xs); color:var(--secondary); margin-top:.4rem; }
-    #subscribeBtn { position:sticky; bottom:0; z-index:2; box-shadow:0 -14px 14px var(--card), 0 6px 0 var(--card); }
+    #subscribeBtn { position:sticky; bottom:0; z-index:2; box-shadow:0 -14px 14px var(--card), 0 1.25rem 0 var(--card); }
     @media (max-width:560px) and (max-height:780px) {
       #paywallView { padding:.6rem; }
       #paywallView .modal-card { max-height:94dvh; padding:1rem; }
@@ -446,6 +455,7 @@
     .sess .del { opacity:0; background:none; border:none; color:var(--secondary); cursor:pointer; font-size:var(--fs-sm); padding:.1rem .3rem; }
     .sess .del svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.7; display:block; }
     .sess:hover .del { opacity:1; }
+    @media (hover:none) { .sess .del { opacity:.7; } }
     .sess .del:hover { color:var(--error); }
     .drawer-item { display:flex; align-items:center; gap:.7rem; width:100%; text-align:left; background:transparent; border:none;
       color:var(--text); font-size:var(--fs-sm); padding:.7rem .6rem; border-radius:10px; cursor:pointer; }
@@ -466,7 +476,7 @@
     .upi-bar.open { display:block; }
     .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:480px; width:100%; }
     /* GPT/Claude-style settings popup: a wider, scrollable centered card. */
-    .modal-card.modal-lg { max-width:560px; max-height:86vh; overflow-y:auto; text-align:left; }
+    .modal-card.modal-lg { max-width:560px; max-height:86vh; max-height:86dvh; overflow-y:auto; text-align:left; }
     /* Sticky, centered modal header (mirrors the app's centered screen titles). The title
        centers; the close pins top-right and stays reachable while the card scrolls. Negative
        margins bleed the header over the card's 1.25rem padding so its background covers the gap. */
@@ -501,6 +511,12 @@
     .adv-asp { display:flex; align-items:flex-start; gap:.5rem; font-size:var(--fs-sm); padding:.22rem 0; }
     .adv-dot { width:7px; height:7px; border-radius:50%; flex:none; margin-top:.42rem; }
     .report-card .rtabs { margin:.9rem 0; }
+    .report-card .rtabs button { white-space:nowrap; padding-left:.4rem; padding-right:.4rem; }
+    /* Phones: the edit + close icons ate the centred title; edit moves to the left edge. */
+    @media (max-width:560px) {
+      #reportTitle { font-size:var(--fs-xl) !important; padding:0 44px; }
+      #reportEditPartner { right:auto !important; left:0; }
+    }
     .report-card [data-rpane][hidden] { display:none; }
     .rep-list { margin:.3rem 0 .2rem; padding-left:1.1rem; font-size:var(--fs-sm); }
     .rep-list li { margin:.18rem 0; }
@@ -841,9 +857,9 @@
     <div id="chatScroll" class="chat-scroll">
       <div class="chat-inner" id="chatInner"></div>
     </div>
-    <button class="jump-btn" id="jumpBtn" data-i18n="jumpLatest">Jump to latest ↓</button>
     <div class="chat-status"><div id="chatStatus" class="status-line" style="margin:0;"></div></div>
     <div class="composer-wrap">
+      <button class="jump-btn" id="jumpBtn" data-i18n="jumpLatest">Jump to latest ↓</button>
       <!-- Contextual artifact button (mirrors the app's in-chat dock): Personal → View chart,
            Relationship → View report / Generate. Filled by renderArtifactBar(); empty = hidden. -->
       <div id="artifactBar" class="artifact-bar"></div>
@@ -1019,7 +1035,7 @@
          vertical stack of label→value rows + koota bars, which look bad stretched wide. -->
     <div class="chat-scroll"><div class="scroll-pad" style="max-width:720px;">
       <div style="position:relative;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:.6rem;">
-        <h2 style="font-size:var(--fs-2xl);margin:0;" data-i18n="compatibility">Compatibility</h2>
+        <h2 id="reportTitle" style="font-size:var(--fs-2xl);margin:0;" data-i18n="compatibility">Compatibility</h2>
         <!-- Edit partner (mirrors the app's report → edit affordance). Sits left of the close X. -->
         <button class="iconbtn" id="reportEditPartner" aria-label="Edit partner" title="Edit partner" style="position:absolute;right:44px;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M4 20h4L18 10a2 2 0 0 0-2.83-2.83L5 17.17V20Z" stroke-linejoin="round"/><path d="M13.5 6.5l4 4"/></svg></button>
         <button class="iconbtn" id="reportBack" aria-label="Close" title="Close" style="position:absolute;right:0;top:50%;transform:translateY(-50%);"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg></button>
@@ -1878,6 +1894,8 @@
     function maybeScroll(force) { if (force || nearBottom()) $('chatScroll').scrollTop = $('chatScroll').scrollHeight; }
     $('chatScroll').addEventListener('scroll', () => { $('jumpBtn').style.display = nearBottom() ? 'none' : 'block'; });
     $('jumpBtn').addEventListener('click', () => { maybeScroll(true); $('jumpBtn').style.display = 'none'; });
+    // Content swaps (mode switch, history load) fire no scroll event, so the button went stale.
+    new ResizeObserver(() => { if (nearBottom()) $('jumpBtn').style.display = 'none'; }).observe($('chatInner'));
 
     function renderMarkdown(el, text) {
       try { el.innerHTML = DOMPurify.sanitize(marked.parse(text, { breaks: true })); }
