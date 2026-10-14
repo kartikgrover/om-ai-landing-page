@@ -459,6 +459,11 @@
     /* ── Modal ───────────────────────────────────────────────────────────── */
     .modal-overlay { position:fixed; inset:0; background:var(--overlay); z-index:50; display:none; align-items:center; justify-content:center; padding:1rem; }
     .modal-overlay.open { display:flex; }
+    /* Opens while the paywall (same z-index, later in the DOM) is still up, which hid it. */
+    #downsellModal { z-index:55; }
+    /* Above Razorpay's own max-z container: same z-index, appended after it, so it paints on top. */
+    .upi-bar { position:fixed; left:0; right:0; bottom:0; z-index:2147483647; display:none; max-width:480px; margin:0 auto; background:var(--card); color:var(--text); border:1px solid var(--border-strong); border-bottom:none; border-radius:16px 16px 0 0; padding:1rem 1.1rem calc(1rem + env(safe-area-inset-bottom, 0px)); box-shadow:0 -10px 28px rgba(0,0,0,.3); }
+    .upi-bar.open { display:block; }
     .modal-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.25rem; max-width:480px; width:100%; }
     /* GPT/Claude-style settings popup: a wider, scrollable centered card. */
     .modal-card.modal-lg { max-width:560px; max-height:86vh; overflow-y:auto; text-align:left; }
@@ -665,6 +670,17 @@
     </div>
   </div>
 
+  <!-- Shown over Razorpay when a buyer comes back from their UPI app and checkout stalls. -->
+  <div id="upiReturnBar" class="upi-bar" role="dialog" aria-labelledby="upiBackTitle" aria-live="polite">
+    <button class="iconbtn" id="upiBarClose" aria-label="Close" style="position:absolute;top:.4rem;right:.4rem;">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
+    </button>
+    <h3 id="upiBackTitle" style="margin:0 2rem .35rem 0;font-size:var(--fs-lg);" data-i18n="upiBackTitle">Back from your UPI app?</h3>
+    <p class="hint" style="margin:0 0 .9rem;" data-i18n="upiBackBody">If you approved the payment, it will confirm here in a few seconds.</p>
+    <button id="upiRetryBtn" class="btn-primary" data-i18n="retry">Retry</button>
+    <button id="upiPackBtn" class="btn-ghost" style="margin-top:.55rem;" data-i18n="tryPack">Try 5 questions · ₹99</button>
+  </div>
+
   <!-- ── AUTH GATE (sign in before anything) ──────────────────────────── -->
   <!-- Boot splash: the default view until Firebase auth resolves, so a signed-in user never
        flashes the login screen on refresh (onAuthStateChanged routes off this once resolved). -->
@@ -865,7 +881,7 @@
           <span class="pl-price" id="plPriceMonthly">₹199</span>
         </button>
         <button type="button" class="plan" data-plan="yearly" role="radio" aria-checked="false">
-          <span class="badge" data-i18n="pwBadge">SAVE 40% · 5 MONTHS FREE</span>
+          <span class="badge" data-i18n="pwBadge">SAVE 37% · 4 MONTHS FREE</span>
           <span class="radio"></span>
           <span class="pl-main"><span class="pl-title" data-i18n="planYearly">Yearly</span></span>
           <span class="pl-price" id="plPriceYearly"><s>₹2,388</s>₹1,499</span>
@@ -1175,11 +1191,11 @@
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroSubFresh:'Your first question is free. Premium unlocks unlimited questions about your chart.', pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
         pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Birth chart & Gun Milan reports', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
-        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store', pwBadge:'SAVE 40% · 5 MONTHS FREE',
+        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store', pwBadge:'SAVE 37% · 4 MONTHS FREE',
         secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
-        notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · ₹99', maybeLater:'Maybe later',
+        notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · ₹99', maybeLater:'Maybe later', upiBackTitle:'Back from your UPI app?', upiBackBody:'If you approved the payment, it will confirm here in a few seconds.',
         buyQuestionsAdded:'{n} questions added — ask away.', buyQuestionsPending:'Payment received — your questions will be added in a moment. Go ahead and ask.', buyPremiumNow:'You are premium now — ask away.', buyPremiumPending:'Payment received — your premium will activate in a moment. Go ahead and ask.', cancelAlert:'Your subscription will not renew. You keep access until the end of your current period.',
         authOpeningGoogle:'Opening Google sign-in…', authOpeningApple:'Opening Apple sign-in…', authEnterEmail:'Enter your email.', authSendingReset:'Sending reset link…', authResetSent:'Check your email for a password reset link.', authEnterBoth:'Enter your email and password.', authPwShort:'Password must be at least 6 characters.', authCreating:'Creating your account…', authEmailRegistered:'That email is already registered — sign in instead.', authSigningIn:'Signing you in…', authTrouble:'Trouble signing in? Reset your password below.', authWrong:'Email or password is incorrect.',
         obFillBirth:'Please fill date, time and place of birth.', obValidDate:'Please enter a valid birth date in the past.', needBirthDetails:'Add your birth details below and your chart is ready in seconds.', obLookupPlace:'Looking up your birth place…', obSavingDetails:'Saving your birth details…', obComputingChart:'Computing your Vedic chart… (this can take a few seconds)',
@@ -1227,11 +1243,11 @@
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroSubFresh:'आपका पहला प्रश्न निःशुल्क है। प्रीमियम असीमित प्रश्न अनलॉक करता है।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
         pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'जन्म कुंडली व Gun Milan रिपोर्ट', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
-        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · Google Play और App Store पर 4.8★', pwBadge:'40% बचत · 5 माह निःशुल्क',
+        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · Google Play और App Store पर 4.8★', pwBadge:'37% बचत · 4 माह निःशुल्क',
         secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
-        notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>₹99 में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · ₹99', maybeLater:'शायद बाद में',
+        notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>₹99 में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · ₹99', maybeLater:'शायद बाद में', upiBackTitle:'UPI ऐप से लौट आए?', upiBackBody:'अगर आपने भुगतान मंज़ूर कर दिया है, तो कुछ ही सेकंड में यहाँ पुष्टि हो जाएगी।',
         buyQuestionsAdded:'{n} प्रश्न जोड़े गए — पूछिए।', buyQuestionsPending:'भुगतान प्राप्त — आपके प्रश्न कुछ ही क्षण में जुड़ जाएँगे। पूछना शुरू करें।', buyPremiumNow:'अब आप प्रीमियम हैं — पूछिए।', buyPremiumPending:'भुगतान प्राप्त — आपका प्रीमियम कुछ ही क्षण में सक्रिय होगा। पूछना शुरू करें।', cancelAlert:'आपकी सदस्यता नवीनीकृत नहीं होगी। आप अपनी वर्तमान अवधि के अंत तक पहुँच बनाए रखेंगे।',
         authOpeningGoogle:'Google साइन-इन खुल रहा है…', authOpeningApple:'Apple साइन-इन खुल रहा है…', authEnterEmail:'अपना ईमेल दर्ज करें।', authSendingReset:'रीसेट लिंक भेजा जा रहा है…', authResetSent:'पासवर्ड रीसेट लिंक के लिए अपना ईमेल देखें।', authEnterBoth:'अपना ईमेल और पासवर्ड दर्ज करें।', authPwShort:'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।', authCreating:'आपका खाता बन रहा है…', authEmailRegistered:'यह ईमेल पहले से पंजीकृत है — इसके बजाय साइन इन करें।', authSigningIn:'आपको साइन इन किया जा रहा है…', authTrouble:'साइन इन में परेशानी? नीचे अपना पासवर्ड रीसेट करें।', authWrong:'ईमेल या पासवर्ड गलत है।',
         obFillBirth:'कृपया जन्म तिथि, समय और स्थान भरें।', obValidDate:'कृपया अतीत की एक मान्य जन्म तिथि दर्ज करें।', needBirthDetails:'नीचे अपनी जन्म जानकारी भरें, आपकी कुंडली कुछ ही क्षणों में तैयार हो जाएगी।', obLookupPlace:'आपका जन्म स्थान खोजा जा रहा है…', obSavingDetails:'आपकी जन्म जानकारी सहेजी जा रही है…', obComputingChart:'आपकी वैदिक कुंडली बन रही है… (इसमें कुछ क्षण लग सकते हैं)',
@@ -3353,6 +3369,10 @@
       try { await signOut(auth); } catch (_) {}
       Object.assign(state, FRESH_USER_STATE);
       clearBirthForms();
+      // A successful sign-in leaves its typed credentials, disabled button and "Signing you in…" behind.
+      ['f-email', 'f-pass', 'f-phone', 'f-otp'].forEach((id) => { const el = $(id); if (el) el.value = ''; });
+      ['emailSignInBtn', 'sendOtpBtn', 'verifyOtpBtn'].forEach((id) => { const el = $(id); if (el) el.disabled = false; });
+      $('authStatus').textContent = '';
       window.__sessions = null; window.__loginTracked = false; // drop the prior account's drawer list + login-tracking flag
       if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
       show('auth'); // onAuthStateChanged(null) also routes here; for ?local it re-anons
@@ -3533,7 +3553,7 @@
     // (44%), pack 63%. Every abandoned yearly sub had auth_attempts=0 — nobody was
     // declined, they closed the modal before picking a method. Defaulting to yearly sent
     // ~77% of subscribe clicks into the one option nobody completes. Yearly stays on the
-    // paywall with its SAVE 40% badge for anyone who actively wants it.
+    // paywall with its SAVE 37% badge for anyone who actively wants it.
     let chosenPlan = 'monthly';  // 'yearly' | 'monthly' when chosenKind === 'sub'
     let chosenKind = 'sub';      // 'sub' (recurring) | 'pack' (one-time 5-question)
     // Rupee value per plan for ad-platform conversion events. create-subscription returns only
@@ -3617,11 +3637,58 @@
       }));
     }
 
+    // Without a contact Razorpay opens on a mobile-number form before any payment option.
+    // Phone sign-ins already gave us the number (E.164, the format Razorpay wants).
+    function checkoutPrefill() {
+      const u = auth.currentUser;
+      return { name: u.displayName || '', email: u.email || '', ...(u.phoneNumber ? { contact: u.phoneNumber } : {}) };
+    }
+
     function trackPaymentFailed(rzp, paywall_type, plan) {
       rzp.on('payment.failed', (r) => {
         const e = (r && r.error) || {};
         track('paywall_interaction', { action: 'payment_failed', source: 'razorpay', paywall_type, plan, reason: e.reason || e.code || 'unknown', step: e.step });
       });
+    }
+
+    // After a hand-off to a UPI app, a buyer who comes back without paying sits on Razorpay's
+    // "Processing… a few seconds" for minutes, and ondismiss never fires (seen on a Pixel,
+    // 2026-10-14). Android web can't fall back to UPI Collect for mandates since NPCI's Feb 2026
+    // cutoff. Once the buyer has been back UPI_STALL_MS, offer a way out and keep polling for the
+    // payment, which still confirms if the UPI app approved it.
+    const UPI_STALL_MS = 20000;
+    function watchUpiReturn({ rzp, paywall_type, plan, isPaid, onPaid, onRetry, onPack }) {
+      if (!matchMedia('(pointer: coarse)').matches) return { stop() {}, closing: () => false }; // UPI app hand-offs are phone-only
+      let away = false, done = false, closing = false, timer = null, poll = null;
+      const bar = $('upiReturnBar');
+      const ev = (action) => track('paywall_interaction', { action, source: 'razorpay', paywall_type, plan });
+      const onVis = () => {
+        if (done) return;
+        if (document.hidden) { away = true; clearTimeout(timer); return; }
+        if (away) { clearTimeout(timer); timer = setTimeout(show, UPI_STALL_MS); }
+      };
+      const stop = () => {
+        done = true; clearTimeout(timer); clearInterval(poll);
+        bar.classList.remove('open'); document.removeEventListener('visibilitychange', onVis);
+      };
+      const closeThen = (fn) => { closing = true; stop(); try { rzp.close(); } catch (_) {} if (fn) fn(); };
+      function show() {
+        if (done || bar.classList.contains('open')) return;
+        document.body.appendChild(bar); // must come after Razorpay's container to paint above it
+        $('upiPackBtn').hidden = !onPack;
+        $('upiRetryBtn').onclick = () => { ev('upi_return_retry'); closeThen(onRetry); };
+        $('upiPackBtn').onclick = () => { ev('upi_return_pack'); closeThen(onPack); };
+        $('upiBarClose').onclick = () => { ev('upi_return_hidden'); bar.classList.remove('open'); };
+        bar.classList.add('open'); ev('upi_return_stalled');
+        let tries = 0;
+        poll = setInterval(async () => {
+          if (++tries > 45) { clearInterval(poll); return; } // 3 min
+          const paid = await isPaid().catch(() => false);
+          if (paid && !done) { ev('upi_return_paid'); closeThen(onPaid); } // !done: Razorpay's handler may have won meanwhile
+        }, 4000);
+      }
+      document.addEventListener('visibilitychange', onVis);
+      return { stop, closing: () => closing };
     }
 
     // Sign in / link the account and migrate birth details if the uid collided.
@@ -3666,45 +3733,61 @@
       });
       if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start purchase');
       const { orderId, keyId, amount, currency, questions } = await r.json();
+      const remainingBefore = Number(state.remaining) || 0;
+
+      const packPaid = async (paymentId) => {
+        track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
+        track('purchase', { transaction_id: orderId, value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 monetization
+        await fbPurchase(paymentId, (amount || 0) / 100, currency); // Meta, deduped vs CAPI
+        setStatus('Adding your questions…');
+        // Poll the shared question ledger — the webhook credits remaining +N.
+        for (let i = 0; i < 10; i++) {
+          await new Promise((res) => setTimeout(res, 2000));
+          try {
+            const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
+            const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
+            if (Number.isFinite(rem) && rem > 0) {
+              state.remaining = rem; state.freeUsed = false;
+              if (afterPurchaseRoute(t('buyQuestionsAdded', { n: questions }))) addMsg('ai', t('buyQuestionsAdded', { n: questions }));
+              return;
+            }
+          } catch (_) { /* keep polling */ }
+        }
+        state.freeUsed = false;
+        if (afterPurchaseRoute(t('buyQuestionsPending'))) addMsg('ai', t('buyQuestionsPending'));
+      };
 
       await loadRazorpay();
+      let watch = null;
       const rzp = new Razorpay({
         key: keyId,
         order_id: orderId,
         amount, currency,
         name: 'Om.AI',
         description: `${questions} questions`,
-        prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
+        prefill: checkoutPrefill(),
         theme: { color: '#D97757' },
-        handler: async (resp) => {
-          track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
-          track('purchase', { transaction_id: orderId, value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 monetization
-          await fbPurchase(resp && resp.razorpay_payment_id, (amount || 0) / 100, currency); // Meta, deduped vs CAPI
-          setStatus('Adding your questions…');
-          // Poll the shared question ledger — the webhook credits remaining +N.
-          for (let i = 0; i < 10; i++) {
-            await new Promise((res) => setTimeout(res, 2000));
-            try {
-              const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
-              const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
-              if (Number.isFinite(rem) && rem > 0) {
-                state.remaining = rem; state.freeUsed = false;
-                if (afterPurchaseRoute(t('buyQuestionsAdded', { n: questions }))) addMsg('ai', t('buyQuestionsAdded', { n: questions }));
-                return;
-              }
-            } catch (_) { /* keep polling */ }
-          }
-          state.freeUsed = false;
-          if (afterPurchaseRoute(t('buyQuestionsPending'))) addMsg('ai', t('buyQuestionsPending'));
-        },
+        handler: async (resp) => { if (watch) watch.stop(); await packPaid(resp && resp.razorpay_payment_id); },
         modal: { ondismiss: () => { // pairs with the subscription dismissal event — see there for why
-          track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack' });
+          const ours = !!(watch && watch.closing()); if (watch) watch.stop();
+          track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack', ...(ours ? { reason: 'upi_return' } : {}) });
+          if (ours) return; // the UPI-return bar closed it and already chose what happens next
           setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
       });
       trackPaymentFailed(rzp, 'question_pack');
       track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
       track('begin_checkout', { value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 standard
       fbTrack('InitiateCheckout', { value: (amount || 0) / 100, currency: currency || 'INR' });
+      watch = watchUpiReturn({
+        rzp, paywall_type: 'question_pack',
+        isPaid: async () => {
+          const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
+          const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
+          return Number.isFinite(rem) && rem > remainingBefore;
+        },
+        onPaid: () => packPaid(null),
+        onRetry: () => runPackCheckout({ status, onDismiss }).catch((e) => { setStatus(e.message || t('genericErr')); if (onDismiss) onDismiss(); }),
+      });
       rzp.open();
     }
 
@@ -3750,47 +3833,63 @@
         });
         if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start subscription');
         const { subscriptionId, keyId, firstCyclePrice } = await r.json();
+        const plan = chosenPlan;
+
+        const subPaid = async (paymentId) => {
+          track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan });
+          track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan }); // GA4 monetization
+          await fbPurchase(paymentId, firstCyclePrice || PLAN_VALUE_INR[plan], 'INR'); // Meta, deduped vs CAPI
+          status.textContent = t('subActivatingMvp');
+          for (let i = 0; i < 10; i++) {
+            await new Promise((res) => setTimeout(res, 2000));
+            const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json()).catch(() => ({}));
+            if (s.active) {
+              state.premium = true; state.freeUsed = false;
+              if (afterPurchaseRoute(t('buyPremiumNow'))) addMsg('ai', t('buyPremiumNow'));
+              return;
+            }
+          }
+          state.premium = true; state.freeUsed = false;
+          if (afterPurchaseRoute(t('buyPremiumPending'))) addMsg('ai', t('buyPremiumPending'));
+        };
 
         await loadRazorpay();
+        let watch = null;
         const rzp = new Razorpay({
           key: keyId,
           subscription_id: subscriptionId,
           name: 'Om.AI',
-          description: `Om.AI Premium (${chosenPlan})`,
-          prefill: { name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' },
+          description: `Om.AI Premium (${plan})`,
+          prefill: checkoutPrefill(),
           theme: { color: '#D97757' },
-          handler: async (resp) => {
-            track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
-            track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 monetization
-            await fbPurchase(resp && resp.razorpay_payment_id, firstCyclePrice || PLAN_VALUE_INR[chosenPlan], 'INR'); // Meta, deduped vs CAPI
-            status.textContent = t('subActivatingMvp');
-            for (let i = 0; i < 10; i++) {
-              await new Promise((res) => setTimeout(res, 2000));
-              const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json()).catch(() => ({}));
-              if (s.active) {
-                state.premium = true; state.freeUsed = false;
-                if (afterPurchaseRoute(t('buyPremiumNow'))) addMsg('ai', t('buyPremiumNow'));
-                return;
-              }
-            }
-            state.premium = true; state.freeUsed = false;
-            if (afterPurchaseRoute(t('buyPremiumPending'))) addMsg('ai', t('buyPremiumPending'));
-          },
+          handler: async (resp) => { if (watch) watch.stop(); await subPaid(resp && resp.razorpay_payment_id); },
           // Subscription dismissed → exit-intent downsell to the ₹99 pack (once/session).
           modal: { ondismiss: () => {
+            const ours = !!(watch && watch.closing()); if (watch) watch.stop();
             // Closing the modal is the dominant loss on this surface and, until 2026-08-05, was
             // invisible: purchase_attempted fired and nothing followed, so an abandoned checkout
             // and a declined card looked identical in GA4 (the yearly collapse had to be
             // diagnosed off the Razorpay ledger instead). Track it with the plan attached.
-            track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
+            track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'subscription', plan, ...(ours ? { reason: 'upi_return' } : {}) });
+            if (ours) return; // the UPI-return bar closed it and already chose what happens next
             btn.disabled = false; status.textContent = t('subCheckoutClosedMvp');
             if (!downsellShownThisSession) setTimeout(openDownsell, 250);
           } },
         });
-        trackPaymentFailed(rzp, 'subscription', chosenPlan);
-        track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan: chosenPlan });
-        track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan: chosenPlan }); // GA4 standard
-        fbTrack('InitiateCheckout', { value: PLAN_VALUE_INR[chosenPlan], currency: 'INR' });
+        trackPaymentFailed(rzp, 'subscription', plan);
+        track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan });
+        track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan }); // GA4 standard
+        fbTrack('InitiateCheckout', { value: PLAN_VALUE_INR[plan], currency: 'INR' });
+        watch = watchUpiReturn({
+          rzp, paywall_type: 'subscription', plan,
+          isPaid: async () => {
+            const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json());
+            return !!(s && s.active);
+          },
+          onPaid: () => subPaid(null),
+          onRetry: () => { btn.disabled = false; status.textContent = ''; btn.click(); },
+          onPack: () => { btn.disabled = false; status.textContent = ''; downsellShownThisSession = true; $('downsellPackBtn').click(); },
+        });
         rzp.open();
       } catch (e) {
         status.textContent = e.message || t('genericErr');
