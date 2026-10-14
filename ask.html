@@ -3681,6 +3681,7 @@
         $('upiBarClose').onclick = () => { ev('upi_return_hidden'); bar.classList.remove('open'); };
         bar.classList.add('open'); ev('upi_return_stalled');
         let tries = 0;
+        clearInterval(poll); // a second return after ✕ must not stack a second poll
         poll = setInterval(async () => {
           if (++tries > 45) { clearInterval(poll); return; } // 3 min
           const paid = await isPaid().catch(() => false);
@@ -3736,6 +3737,7 @@
       const remainingBefore = Number(state.remaining) || 0;
 
       const packPaid = async (paymentId) => {
+        $('subscribeBtn').disabled = false; // nothing else re-enables it after a pack bought from the paywall
         track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
         track('purchase', { transaction_id: orderId, value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 monetization
         await fbPurchase(paymentId, (amount || 0) / 100, currency); // Meta, deduped vs CAPI
@@ -3746,7 +3748,7 @@
           try {
             const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
             const rem = snap.exists() ? Number(snap.data()?.remaining) : 0;
-            if (Number.isFinite(rem) && rem > 0) {
+            if (Number.isFinite(rem) && rem > remainingBefore) { // > 0 fired at once for buyers with questions left
               state.remaining = rem; state.freeUsed = false;
               if (afterPurchaseRoute(t('buyQuestionsAdded', { n: questions }))) addMsg('ai', t('buyQuestionsAdded', { n: questions }));
               return;
