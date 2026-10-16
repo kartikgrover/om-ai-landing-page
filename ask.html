@@ -304,6 +304,13 @@
     .msg-act svg { width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.8; }
     .msg-act.copied { color:var(--success); }
 
+    /* answer_preview: the held-back rest of a previewed answer (fading lines, ready line, unlock button) */
+    .preview-lock { align-self:stretch; margin:.1rem 0 .6rem .1rem; }
+    .preview-lock .pl-line { height:.8rem; border-radius:6px; margin:.45rem 0; background:var(--secondary); }
+    .preview-lock .pl-ready { margin:.9rem 0 .5rem; font-weight:600; color:var(--text); }
+    .preview-lock .pl-note { margin:-.2rem 0 .5rem; font-size:var(--fs-sm); color:var(--secondary); }
+    .preview-lock .btn-primary { width:auto; }
+
     /* Error row + Retry (mirrors app ChatUIComponents ErrorMessage) */
     .err-row { align-self:stretch; max-width:100%; display:flex; align-items:center; gap:.75rem; margin:.4rem 0;
       background:color-mix(in srgb, var(--error) 12%, transparent); border:1px solid color-mix(in srgb, var(--error) 38%, transparent);
@@ -390,7 +397,7 @@
       padding:.15rem .5rem; border-radius:7px; letter-spacing:.02em; }
     /* The badge overhangs its card by 10px, but the inter-card gap is only 8px — a badged
        card that isn't first would clip the card above it. Yearly sits second since 2026-08-05. */
-    .plan:has(.badge) { margin-top:1.1rem; }
+    .plan:has(.badge:not([hidden])) { margin-top:1.1rem; }
     .feature-table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:var(--fs-sm); }
     .feature-table td { padding:.45rem .25rem; border-bottom:1px solid var(--border); }
     .feature-table td:last-child { text-align:right; }
@@ -402,6 +409,8 @@
     .pw-div span { font-size:var(--fs-xs); font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--secondary); white-space:nowrap; }
     .pw-billing { text-align:center; font-size:var(--fs-xs); color:var(--secondary); margin-top:.4rem; }
     #subscribeBtn { position:sticky; bottom:0; z-index:2; box-shadow:0 -14px 14px var(--card), 0 1.25rem 0 var(--card); }
+    /* Above the CTA's bottom mask, so a status scrolled into view isn't painted over. */
+    #paywallStatus { position:relative; z-index:3; scroll-margin-bottom:.75rem; }
     @media (max-width:560px) and (max-height:780px) {
       #paywallView { padding:.6rem; }
       #paywallView .modal-card { max-height:94dvh; padding:1rem; }
@@ -419,7 +428,7 @@
       #paywallView .feature-table { margin:.35rem 0; font-size:var(--fs-2xs); }
       #paywallView .feature-table td { padding:.22rem .2rem; }
       #paywallView .plan { padding:.55rem .85rem; margin:.35rem 0; }
-      #paywallView .plan:has(.badge) { margin-top:.9rem; }
+      #paywallView .plan:has(.badge:not([hidden])) { margin-top:.9rem; }
       #paywallView .pw-div { margin:.55rem 0 .1rem; }
     }
 
@@ -698,6 +707,16 @@
     </div>
   </div>
 
+  <!-- Out-of-questions soft prompt (paywall_trigger "soft_prompt" arm): See plans opens the paywall, Not now closes like it. -->
+  <div id="softPrompt" class="modal-overlay">
+    <div class="modal-card" style="max-width:340px;text-align:center;">
+      <h3 style="margin:.2rem 0 .4rem;font-size:var(--fs-xl);" data-i18n="softTitle">You've used your free question</h3>
+      <p class="hint" id="softPrice" style="margin:0 0 1.1rem;">Unlimited questions from ₹199/month</p>
+      <button id="softSeePlans" class="btn-primary" data-i18n="softSeePlans">See plans</button>
+      <button id="softNotNow" class="btn-ghost" style="margin-top:.55rem;" data-i18n="softNotNow">Not now</button>
+    </div>
+  </div>
+
   <!-- Shown over Razorpay when a buyer comes back from their UPI app and checkout stalls. -->
   <div id="upiReturnBar" class="upi-bar" role="dialog" aria-labelledby="upiBackTitle" aria-live="polite">
     <button class="iconbtn" id="upiBarClose" aria-label="Close" style="position:absolute;top:.4rem;right:.4rem;">
@@ -901,25 +920,25 @@
         <tr><td data-i18n="pwFeatMemory">Memory across sessions</td><td class="cross">—</td><td class="tick"><svg class="ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
       </table>
 
-      <div class="pw-div"><span style="text-transform:none;font-size:var(--fs-sm);" data-i18n="omaiPremium">Om.AI Premium</span></div>
       <div id="planChoices" role="radiogroup" aria-label="Choose a plan">
+        <div class="pw-div" id="pwDivPremium"><span style="text-transform:none;font-size:var(--fs-sm);" data-i18n="omaiPremium">Om.AI Premium</span></div>
         <button type="button" class="plan active" data-plan="monthly" role="radio" aria-checked="true">
           <span class="radio"></span>
           <span class="pl-main"><span class="pl-title" data-i18n="planMonthly">Monthly</span></span>
           <span class="pl-price" id="plPriceMonthly">₹199</span>
         </button>
         <button type="button" class="plan" data-plan="yearly" role="radio" aria-checked="false">
-          <span class="badge" data-i18n="pwBadge">SAVE 37% · 4 MONTHS FREE</span>
+          <span class="badge" id="pwBadge">SAVE 37% · 4 MONTHS FREE</span>
           <span class="radio"></span>
           <span class="pl-main"><span class="pl-title" data-i18n="planYearly">Yearly</span></span>
           <span class="pl-price" id="plPriceYearly"><s>₹2,388</s>₹1,499</span>
         </button>
 
-        <div class="pw-div"><span data-i18n="orPayPerQ">Or pay per question</span></div>
+        <div class="pw-div" id="pwDivPack"><span data-i18n="orPayPerQ">Or pay per question</span></div>
         <button type="button" class="plan pack" data-plan="pack" role="radio" aria-checked="false">
           <span class="radio"></span>
           <span class="pl-main"><span class="pl-title" data-i18n="pack5q">5 questions</span></span>
-          <span class="pl-price">₹99</span>
+          <span class="pl-price" id="plPricePack">₹99</span>
         </button>
       </div>
 
@@ -1089,7 +1108,7 @@
                     // premiumChecked: did the /status endpoint actually answer this session? false = unverified
                     // (token/5xx/network blip) → the local paywall gate stays open and defers to the server,
                     // so a transient failure never locally locks out a paying user.
-                    freeUsed: false, premium: false, premiumChecked: false, remaining: null, winback: null, userName: null, dateOfBirth: null, coordinates: null,
+                    freeUsed: false, premium: false, premiumChecked: false, remaining: null, winback: null, testPrices: null, boughtPack: null, userName: null, dateOfBirth: null, coordinates: null,
                     // Chat reply language (persisted). 'en' | 'hi' — default English.
                     // ?lang=hi wins over the stored pref so the Hindi pages (/hi/*) can hand a
                     // Hindi reader straight into a Hindi chat; without it they landed in English
@@ -1112,12 +1131,186 @@
     // compatibility report, chart and name into the next account signed in on the same tab.
     const FRESH_USER_STATE = {
       uid: null, chart: null, conversationId: null, sessionId: null,
-      freeUsed: false, premium: false, premiumChecked: false, remaining: null, winback: null, userName: null, dateOfBirth: null, coordinates: null,
+      freeUsed: false, premium: false, premiumChecked: false, remaining: null, winback: null, testPrices: null, boughtPack: null, userName: null, dateOfBirth: null, coordinates: null,
       timeUnknown: false, birthPlace: null, birthOffset: 5.5, birthTimezone: null, birthLocalTime: null,
       mode: 'personal', userGender: null, partnerGender: null,
       partner: null, partnerChart: null, compatReport: null,
       compatSessionId: null, compatConversationId: null,
     };
+
+    // ── experiments switchboard ────────────────────────────────────
+    // app_config/experiments, shared with the app (om1 experimentService) and the backend. Per surface the
+    // first enabled, web-listed, eligible experiment in name order applies; anything malformed = control, untagged.
+    const EXP_PLATFORM = 'web';
+    const EXP_SURFACES = ['paywall', 'paywall_trigger', 'chat_starters'];
+    const EXP_PROP = { paywall: 'exp_paywall', paywall_trigger: 'exp_trigger', chat_starters: 'exp_starters' };
+    const PW_PLANS = ['yearly', 'monthly', 'pack'];
+    const PW_WEB_ORDER = ['monthly', 'yearly', 'pack'];
+    const PURCHASE_EVIDENCE = ['purchaseToken', 'transactionId', 'originalTransactionId', 'razorpaySubscriptionId'];
+    const oneOf = (...vals) => (v) => vals.includes(v);
+    const EXP_PARAMS = {
+      paywall: {
+        order: (v) => Array.isArray(v) && v.every((x) => PW_PLANS.includes(x)),
+        defaultSelection: oneOf(...PW_PLANS),
+        monthlyPrice: oneOf('base', 'test'), yearlyPrice: oneOf('base', 'test'), packPrice: oneOf('base', 'test'),
+        headline: oneOf('default', 'v1', 'v2'), badge: oneOf('default', 'none', 'v1'),
+      },
+      paywall_trigger: { mode: oneOf('at_limit', 'after_first_answer', 'soft_prompt', 'answer_preview') },
+      chat_starters: { set: oneOf('v1', 'v2') },
+    };
+    // FNV-1a 32-bit, mod 100: byte-for-byte the app's and backend's bucketOf.
+    const bucketOf = (name, uid) => {
+      const s = `${name}:${uid}`;
+      let h = 0x811c9dc5;
+      for (let i = 0; i < s.length; i++) {
+        h ^= s.charCodeAt(i);
+        h = Math.imul(h, 0x01000193);
+      }
+      return (h >>> 0) % 100;
+    };
+    function expParams(surface, p) {
+      if (p == null) return {};
+      if (typeof p !== 'object' || Array.isArray(p)) return null;
+      const spec = EXP_PARAMS[surface], out = {};
+      for (const k of Object.keys(spec)) {
+        if (p[k] === undefined) continue;
+        if (!spec[k](p[k])) return null;
+        out[k] = p[k];
+      }
+      if (out.order) {
+        out.order = out.order.filter((x, i) => out.order.indexOf(x) === i);
+        if (!out.order.includes('monthly') && !out.order.includes('yearly')) delete out.order;
+      }
+      if (out.defaultSelection && !(out.order || PW_WEB_ORDER).includes(out.defaultSelection)) delete out.defaultSelection;
+      return out;
+    }
+    const expSoftTest = (e) => e.surface === 'paywall_trigger' && Array.isArray(e.arms) && e.arms.some((x) => x && x.params && x.params.mode === 'soft_prompt');
+    // Any paid pack: purchaseHistory (web and verified store packs) or a priced lastPurchase (older app packs); grants carry neither.
+    const boughtPackFrom = (d) => !!d && ((Array.isArray(d.purchaseHistory) && d.purchaseHistory.length > 0) || (!!d.lastPurchase && typeof d.lastPurchase === 'object' && Number(d.lastPurchase.amount) > 0));
+    function expArm(name, e, uid) {
+      const arms = e.arms;
+      if (!Array.isArray(arms) || arms.length < 2) return null;
+      let total = 0;
+      for (const a of arms) {
+        if (!a || typeof a.key !== 'string' || !a.key || !Number.isFinite(a.weight) || a.weight < 0) return null;
+        total += a.weight;
+      }
+      if (Math.abs(total - 100) > 1e-9) return null;
+      const b = bucketOf(name, uid);
+      const soft = expSoftTest(e);
+      let acc = 0;
+      for (const a of arms) {
+        acc += a.weight;
+        if (b < acc) { const params = expParams(e.surface, a.params); return params ? { name, arm: a.key, params, ...(soft && { soft }) } : null; }
+      }
+      return null;
+    }
+    // Paywall arms always need a never-subscribed user: winback/lapsed paywalls keep today's prices.
+    const expNeedsNever = (e) => e.surface === 'paywall' || !!(e.eligibility && e.eligibility.neverSubscribed === true);
+    const expCandidate = (e, surface, platform) => !!e && e.enabled === true && e.surface === surface && Array.isArray(e.platforms) && e.platforms.includes(platform);
+    function expAssign(data, uid, platform, neverSubscribed) {
+      const all = (data && data.experiments && typeof data.experiments === 'object') ? data.experiments : {};
+      const names = Object.keys(all).sort();
+      const out = {};
+      for (const surface of EXP_SURFACES) {
+        out[surface] = null;
+        for (const name of names) {
+          const e = all[name];
+          if (!expCandidate(e, surface, platform)) continue;
+          if (expNeedsNever(e) && neverSubscribed !== true) continue;
+          out[surface] = expArm(name, e, uid);
+          break;
+        }
+      }
+      return out;
+    }
+
+    // GA4 user_id = Firebase uid while signed in (joins web experiments to revenue); null, never "", on sign-out.
+    function setGaUserId(uid) { try { gtag('set', { user_id: uid || null }); } catch (_) {} }
+
+    // answer_preview: the locked answer on screen, { previewId, aiEl, lockEl, question, firstMsg, sessionId, state }.
+    let lockedPreview = null;
+    const EXP = { uid: null, ready: false, promise: null, a: {}, never: null, exposed: new Set(), fallbacks: new Set() };
+    const expTag = (a) => (a ? { exp_name: a.name, exp_arm: a.arm } : {});
+    const expGet = (surface) => (EXP.ready && EXP.a[surface]) || null;
+    function expSetUserProps() {
+      const props = {};
+      for (const s of EXP_SURFACES) { const a = EXP.a[s]; props[EXP_PROP[s]] = a ? `${a.name}:${a.arm}`.slice(0, 36) : null; }
+      try { gtag('set', 'user_properties', props); } catch (_) {}
+    }
+    function expReset() {
+      EXP.uid = null; EXP.ready = false; EXP.promise = null; EXP.a = {}; EXP.never = null;
+      EXP.exposed.clear(); EXP.fallbacks.clear();
+      expSetUserProps();
+    }
+    async function expNeverSubscribed(uid) {
+      try {
+        const snap = await getDoc(doc(db, `users/${uid}/premium/subscription`));
+        if (!snap.exists()) return true;
+        const d = snap.data() || {};
+        return !PURCHASE_EVIDENCE.some((f) => d[f]);
+      } catch (_) { return null; }
+    }
+    function expLoad(uid) {
+      if (!uid) { if (EXP.uid) expReset(); return Promise.resolve(); }
+      if (EXP.uid === uid && EXP.promise) return EXP.promise;
+      expReset(); EXP.uid = uid;
+      EXP.promise = (async () => {
+        let a = {}, never = null;
+        try {
+          const snap = await getDoc(doc(db, 'app_config', 'experiments'));
+          const data = snap.exists() ? snap.data() : null;
+          const all = Object.values((data && data.experiments) || {});
+          const needsNever = all.some((e) => e && e.enabled === true && Array.isArray(e.platforms) && e.platforms.includes(EXP_PLATFORM) && (expNeedsNever(e) || expSoftTest(e)));
+          never = needsNever ? await expNeverSubscribed(uid) : null;
+          a = expAssign(data, uid, EXP_PLATFORM, never);
+        } catch (_) { a = {}; }
+        if (EXP.uid !== uid) return;
+        EXP.a = a; EXP.never = never; EXP.ready = true;
+        expSetUserProps();
+        // The empty chat may have painted control starters while this read was in flight.
+        try { if (expGet('chat_starters') && state.mode === 'personal' && currentView() === 'chat' && $('chatInner').querySelector('.starter #chips')) renderEmptyChat(); } catch (_) {}
+      })();
+      return EXP.promise;
+    }
+    const expWhenReady = (ms) => (EXP.ready || !EXP.promise ? Promise.resolve() : Promise.race([EXP.promise, new Promise((r) => setTimeout(r, ms))]));
+    function expMarkExposed(surface, a) {
+      if (!a || EXP.exposed.has(surface)) return;
+      EXP.exposed.add(surface);
+      track('experiment_exposure', { exp_name: a.name, exp_arm: a.arm, exp_surface: surface });
+    }
+    function expFallback(a, plan, reason) {
+      const key = `${plan}:${reason}`;
+      if (!a || EXP.fallbacks.has(key)) return;
+      EXP.fallbacks.add(key);
+      track('exp_fallback', { ...expTag(a), exp_surface: 'paywall', plan, reason });
+    }
+
+    // Paywall arm and price slots are pinned when the paywall opens, so one visit never mixes arms or prices.
+    let pwPin;                  // undefined = never opened; null = control, untagged
+    let pwTag = null;           // pwPin for analytics; null once a test price fell back (app parity: out of the read)
+    let pwSlots = { monthly: 'base', yearly: 'base', pack: 'base' };
+    const pwSlotDead = new Set(); // plans whose test slot the backend refused this session
+    const BASE_INR = { monthly: 199, yearly: 1499, pack: 99 };
+    const inr = (n) => '₹' + Number(n).toLocaleString('en-IN');
+    const planPrice = (plan) => (pwSlots[plan] === 'test' && state.testPrices && state.testPrices[plan]) || BASE_INR[plan];
+    function pwComputeSlots(a) {
+      const out = { monthly: 'base', yearly: 'base', pack: 'base' };
+      if (!a) return out;
+      for (const plan of PW_PLANS) {
+        if (a.params[plan + 'Price'] !== 'test') continue;
+        if (pwSlotDead.has(plan)) { expFallback(a, plan, 'slot_unavailable'); continue; }
+        if (state.testPrices && state.testPrices[plan] > 0) out[plan] = 'test';
+        else expFallback(a, plan, 'no_price');
+      }
+      return out;
+    }
+    function parseTestPrices(p) {
+      if (!p || typeof p !== 'object') return null;
+      const out = {};
+      for (const plan of PW_PLANS) { const n = Number(p[plan]); if (Number.isFinite(n) && n > 0) out[plan] = n; }
+      return Object.keys(out).length ? out : null;
+    }
 
     // ── DOM helpers ────────────────────────────────────────────────
     const $ = (id) => document.getElementById(id);
@@ -1202,6 +1395,7 @@
         composerPh:'Type your message…', jumpLatest:'Jump to latest ↓', chartReady:'Your chart is ready', chartReadyName:'{name}, your chart is ready',
         askAnything:'Ask me anything. Your first question is free.', askAnythingPremium:'Ask me anything — career, marriage, money, health, or timing.', askAnythingUsed:'Ask me anything about your chart.', quotaLeftOne:'{n} question left', quotaLeftMany:'{n} questions left', quotaShortLeft:'left', ratingStores:'on Google Play and the App Store', freeQUsed:'That was your free question. Continue for unlimited answers.',
         starter1:"What's my next big career window?", starter2:'Walk me through 2027 — career, money, love', starter3:"Describe my future spouse — looks, profession, when we'll meet", starter4:'Am I in Sade Sati? When does it end?',
+        starterV2Phase:'Why does this phase of my life feel the way it does?', starterV2Dasha:'What will my {maha} mahadasha bring next?', starterV2DashaPlain:"What's my current mahadasha doing for me?", starterV2Career:'What does my chart say about my career?', starterV2Married:'When will I get married?',
         cStarter1:'How compatible are we overall?', cStarter2:'What are our biggest strengths as a couple?', cStarter3:'Are there any doshas we should know about?', cStarter4:'When is a good time for us to marry?',
         yourChart:'Your chart', compatReport:'Compatibility report', generateReportBtn:'Generate report', viewCharts:'View charts', chartYou:'You', chartPartner:'Partner',
         birthChart:'Birth Chart', rasiD1:'Rasi (D1)', navamsaD9:'Navamsa (D9)', tapHouse:'Tap any house for its planets & aspects',
@@ -1219,11 +1413,14 @@
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroSubFresh:'Your first question is free. Premium unlocks unlimited questions about your chart.', pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
         pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Birth chart & Gun Milan reports', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
-        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store', pwBadge:'SAVE 37% · 4 MONTHS FREE',
+        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store', pwBadge:'SAVE {pct}% · {m} MONTHS FREE', pwBadgeSave:'SAVE {pct}%', pwBadgeV1:'JUST {pm} A MONTH', pwPriceChanged:'This price just changed. Check the plan and tap again.',
+        pwHeadV1:'Get the dates your chart points to', pwHeadV1Sub:'Unlimited questions on marriage, career, money and more, read from your own birth chart.', pwHeadV2:'Ask as many questions as you like', pwHeadV2Sub:'Marriage, job, money, health: your own chart answers each one.',
+        softTitle:"You've used your free question", softPrice:'Unlimited questions from {p}/month', softSeePlans:'See plans', softNotNow:'Not now',
+        previewReady:'Your full answer is ready', previewUnlock:'See your full answer', previewUnlocking:'Opening your answer…', previewFailed:'We couldn’t open your answer. Please try again.', previewExpired:'This answer has expired. Ask again for a fresh one.',
         secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
-        notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · ₹99', maybeLater:'Maybe later', upiBackTitle:'Back from your UPI app?', upiBackBody:'If you approved the payment, it will confirm here in a few seconds.',
+        notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for {pk}</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · {pk}', maybeLater:'Maybe later', upiBackTitle:'Back from your UPI app?', upiBackBody:'If you approved the payment, it will confirm here in a few seconds.',
         buyQuestionsAdded:'{n} questions added — ask away.', buyQuestionsPending:'Payment received — your questions will be added in a moment. Go ahead and ask.', buyPremiumNow:'You are premium now — ask away.', buyPremiumPending:'Payment received — your premium will activate in a moment. Go ahead and ask.', cancelAlert:'Your subscription will not renew. You keep access until the end of your current period.',
         authOpeningGoogle:'Opening Google sign-in…', authOpeningApple:'Opening Apple sign-in…', authEnterEmail:'Enter your email.', authSendingReset:'Sending reset link…', authResetSent:'Check your email for a password reset link.', authEnterBoth:'Enter your email and password.', authPwShort:'Password must be at least 6 characters.', authCreating:'Creating your account…', authEmailRegistered:'That email is already registered — sign in instead.', authSigningIn:'Signing you in…', authTrouble:'Trouble signing in? Reset your password below.', authWrong:'Email or password is incorrect.',
         obFillBirth:'Please fill date, time and place of birth.', obValidDate:'Please enter a valid birth date in the past.', obYoungDob:'Born in {year}? That makes you {age} old. Is that right?', obCheckYear:'Check your birth year. The calendar opens on this year, so pick the year you were born.', ageOne:'1 year', ageYears:'{n} years', dobYesRight:"Yes, it's right", dobChange:'Change date', needBirthDetails:'Add your birth details below and your chart is ready in seconds.', obLookupPlace:'Looking up your birth place…', obSavingDetails:'Saving your birth details…', obComputingChart:'Computing your Vedic chart… (this can take a few seconds)',
@@ -1254,6 +1451,7 @@
         composerPh:'अपना संदेश लिखें…', jumpLatest:'नवीनतम पर जाएं ↓', chartReady:'आपकी कुंडली तैयार है', chartReadyName:'{name}, आपकी कुंडली तैयार है',
         askAnything:'कुछ भी पूछें। आपका पहला प्रश्न निःशुल्क है।', askAnythingPremium:'कुछ भी पूछें — करियर, विवाह, धन, स्वास्थ्य या समय।', askAnythingUsed:'अपनी कुंडली के बारे में कुछ भी पूछें।', quotaLeftOne:'{n} सवाल बाकी', quotaLeftMany:'{n} सवाल बाकी', quotaShortLeft:'शेष', ratingStores:'Google Play और App Store पर', freeQUsed:'यह आपका निःशुल्क प्रश्न था। असीमित उत्तरों के लिए जारी रखें।',
         starter1:'मेरा अगला बड़ा करियर अवसर कब है?', starter2:'2027 बताइए — करियर, धन, प्रेम', starter3:'मेरे भावी जीवनसाथी का वर्णन करें — रूप, पेशा, कब मिलेंगे', starter4:'क्या मैं Sade Sati में हूँ? यह कब समाप्त होगी?',
+        starterV2Phase:'मेरी ज़िंदगी का यह दौर ऐसा क्यों लग रहा है?', starterV2Dasha:'मेरी {maha} महादशा आगे क्या लाएगी?', starterV2DashaPlain:'मेरी मौजूदा महादशा मेरे लिए क्या कर रही है?', starterV2Career:'मेरी कुंडली मेरे करियर के बारे में क्या कहती है?', starterV2Married:'मेरी शादी कब होगी?',
         cStarter1:'हम कुल मिलाकर कितने अनुकूल हैं?', cStarter2:'एक जोड़े के रूप में हमारी सबसे बड़ी ताकत क्या है?', cStarter3:'क्या कोई दोष है जो हमें जानना चाहिए?', cStarter4:'हमारे विवाह के लिए अच्छा समय कब है?',
         yourChart:'आपकी कुंडली', compatReport:'अनुकूलता रिपोर्ट', generateReportBtn:'रिपोर्ट बनाएं', viewCharts:'कुंडलियाँ देखें', chartYou:'आप', chartPartner:'साथी',
         birthChart:'जन्म कुंडली', rasiD1:'राशि (D1)', navamsaD9:'नवांश (D9)', tapHouse:'किसी भी भाव पर टैप करें — उसके ग्रह व दृष्टियाँ देखें',
@@ -1271,11 +1469,14 @@
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroSubFresh:'आपका पहला प्रश्न निःशुल्क है। प्रीमियम असीमित प्रश्न अनलॉक करता है।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
         pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'जन्म कुंडली व Gun Milan रिपोर्ट', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
-        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · Google Play और App Store पर 4.8★', pwBadge:'37% बचत · 4 माह निःशुल्क',
+        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · Google Play और App Store पर 4.8★', pwBadge:'{pct}% बचत · {m} माह निःशुल्क', pwBadgeSave:'{pct}% बचत', pwBadgeV1:'सिर्फ़ {pm} प्रति माह', pwPriceChanged:'यह कीमत अभी बदली है। प्लान देखकर फिर से टैप करें।',
+        pwHeadV1:'जानिए आपकी कुंडली किन तारीख़ों की ओर इशारा करती है', pwHeadV1Sub:'शादी, करियर, पैसा और बहुत कुछ पर असीमित प्रश्न, आपकी अपनी जन्म कुंडली से।', pwHeadV2:'जितने चाहें उतने सवाल पूछिए', pwHeadV2Sub:'शादी, नौकरी, पैसा, सेहत: हर जवाब आपकी अपनी कुंडली से।',
+        softTitle:'आपका निःशुल्क प्रश्न इस्तेमाल हो चुका है', softPrice:'असीमित प्रश्न, {p}/माह से शुरू', softSeePlans:'प्लान देखें', softNotNow:'अभी नहीं',
+        previewReady:'आपका पूरा जवाब तैयार है', previewUnlock:'अपना पूरा जवाब देखें', previewUnlocking:'आपका जवाब खुल रहा है…', previewFailed:'आपका जवाब नहीं खुल सका। कृपया फिर से कोशिश करें।', previewExpired:'यह जवाब अब उपलब्ध नहीं है। नया जवाब पाने के लिए फिर से पूछें।',
         secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
-        notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>₹99 में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · ₹99', maybeLater:'शायद बाद में', upiBackTitle:'UPI ऐप से लौट आए?', upiBackBody:'अगर आपने भुगतान मंज़ूर कर दिया है, तो कुछ ही सेकंड में यहाँ पुष्टि हो जाएगी।',
+        notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>{pk} में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · {pk}', maybeLater:'शायद बाद में', upiBackTitle:'UPI ऐप से लौट आए?', upiBackBody:'अगर आपने भुगतान मंज़ूर कर दिया है, तो कुछ ही सेकंड में यहाँ पुष्टि हो जाएगी।',
         buyQuestionsAdded:'{n} प्रश्न जोड़े गए — पूछिए।', buyQuestionsPending:'भुगतान प्राप्त — आपके प्रश्न कुछ ही क्षण में जुड़ जाएँगे। पूछना शुरू करें।', buyPremiumNow:'अब आप प्रीमियम हैं — पूछिए।', buyPremiumPending:'भुगतान प्राप्त — आपका प्रीमियम कुछ ही क्षण में सक्रिय होगा। पूछना शुरू करें।', cancelAlert:'आपकी सदस्यता नवीनीकृत नहीं होगी। आप अपनी वर्तमान अवधि के अंत तक पहुँच बनाए रखेंगे।',
         authOpeningGoogle:'Google साइन-इन खुल रहा है…', authOpeningApple:'Apple साइन-इन खुल रहा है…', authEnterEmail:'अपना ईमेल दर्ज करें।', authSendingReset:'रीसेट लिंक भेजा जा रहा है…', authResetSent:'पासवर्ड रीसेट लिंक के लिए अपना ईमेल देखें।', authEnterBoth:'अपना ईमेल और पासवर्ड दर्ज करें।', authPwShort:'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।', authCreating:'आपका खाता बन रहा है…', authEmailRegistered:'यह ईमेल पहले से पंजीकृत है — इसके बजाय साइन इन करें।', authSigningIn:'आपको साइन इन किया जा रहा है…', authTrouble:'साइन इन में परेशानी? नीचे अपना पासवर्ड रीसेट करें।', authWrong:'ईमेल या पासवर्ड गलत है।',
         obFillBirth:'कृपया जन्म तिथि, समय और स्थान भरें।', obValidDate:'कृपया अतीत की एक मान्य जन्म तिथि दर्ज करें।', obYoungDob:'जन्म वर्ष {year}? इससे आपकी उम्र {age} होती है। क्या यह सही है?', obCheckYear:'अपना जन्म वर्ष जाँचें। कैलेंडर इसी साल पर खुलता है, इसलिए अपने जन्म का साल चुनें।', ageOne:'1 साल', ageYears:'{n} साल', dobYesRight:'हाँ, सही है', dobChange:'तारीख बदलें', needBirthDetails:'नीचे अपनी जन्म जानकारी भरें, आपकी कुंडली कुछ ही क्षणों में तैयार हो जाएगी।', obLookupPlace:'आपका जन्म स्थान खोजा जा रहा है…', obSavingDetails:'आपकी जन्म जानकारी सहेजी जा रही है…', obComputingChart:'आपकी वैदिक कुंडली बन रही है… (इसमें कुछ क्षण लग सकते हैं)',
@@ -1289,9 +1490,10 @@
     const t = (key, vars) => { let s = (I18N[state.lang] && I18N[state.lang][key] != null) ? I18N[state.lang][key] : (I18N.en[key] != null ? I18N.en[key] : key); if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]); return s; };
     function applyI18n() {
       document.documentElement.lang = state.lang;
-      document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+      const vars = { pk: inr(planPrice('pack')) };
+      document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n, vars); });
       document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
-      const db = document.getElementById('downsellBody'); if (db) db.innerHTML = t('downsellBody'); // has <b>, needs innerHTML
+      const db = document.getElementById('downsellBody'); if (db) db.innerHTML = t('downsellBody', vars); // has <b>, needs innerHTML
     }
     function applyLangUI() {
       document.querySelectorAll('[data-lang-set]').forEach((b) => b.classList.toggle('active', b.dataset.langSet === state.lang));
@@ -1302,7 +1504,7 @@
       // time, so re-render them in place if they're currently open (class 'up').
       try { if ($('reportView').classList.contains('up') && state.compatReport) { const host = $('reportHost'); host.innerHTML = ''; host.appendChild(buildReportCard(state.compatReport)); } } catch (_) {}
       try { if ($('chartScreenView').classList.contains('up') && state.chart) renderChartScreen(); } catch (_) {}
-      try { renderPaywallHero(); updateCtaLabel(); } catch (_) {}
+      try { renderPaywallHero(); renderPlanPrices(); updateCtaLabel(); } catch (_) {}
       try { refreshSubUI(); refreshHeaderQuota(); } catch (_) {}
     }
     document.querySelectorAll('[data-lang-set]').forEach((b) => b.addEventListener('click', () => {
@@ -1327,11 +1529,14 @@
         if (changed) {
           if (state.ws) { try { state.ws.close(); } catch (_) {} state.ws = null; state.wsUid = null; }
           Object.assign(state, FRESH_USER_STATE);
+          lockedPreview = null;
           clearBirthForms();             // the prior account's birth details must not sit in the new user's form
           window.__sessions = null;      // drop the prior account's drawer chat list (refetched for the new uid)
           window.__loginTracked = false; // re-track the new account's login below
         }
         state.uid = user.uid;
+        expLoad(signedIn ? user.uid : null);
+        setGaUserId(signedIn ? user.uid : null);
         refreshProfileUI();
         // Login funnel (mirrors the app's auth_interaction family). Once per session,
         // real accounts only (anon ?local sessions don't count).
@@ -1352,6 +1557,7 @@
       // the router and would otherwise sit on the sign-in screen, and the birth form would keep
       // the previous account's details. No-ops on the first boot with nothing filled in.
       else if (!user || currentView() === 'boot') { closeAllModals(); clearBirthForms(); show('auth'); }
+      if (!user) { expLoad(null); setGaUserId(null); }
     });
 
     // Returning signed-in user: restore birth details + regenerate the chart, so old
@@ -1391,6 +1597,7 @@
           await refreshPremium();
           renderEmptyChat(); refreshProfileUI();
           show('chat'); // chart ready → reveal the chat in one go
+          restorePendingPreview();
         } else {
           show('onboarding');
         }
@@ -1800,6 +2007,7 @@
         case 'delta':          pending?.onDelta?.(m.data); break;
         case 'conversationId': if (state.mode === 'compat') state.compatConversationId = m.data; else state.conversationId = m.data; break;
         case 'completion':     pending?.onDone?.(); break;
+        case 'preview_locked': pending?.onPreviewLocked?.(m); break;
         case 'paywall':        pending?.onPaywall?.(m.reason); break;
         case 'error':          pending?.onError?.(wsErrorText(m)); break;
       }
@@ -1900,7 +2108,20 @@
     });
 
     // ── chat ───────────────────────────────────────────────────────
-    const getStarters = () => ['starter1', 'starter2', 'starter3', 'starter4'].map((k) => t(k));
+    const starterSet = () => (expGet('chat_starters')?.params.set === 'v2' ? 'v2' : 'v1');
+    // Matches the app's planets.* in hi.json, so the Hindi dasha chip reads राहु, not Rahu.
+    const PLANET_HI = { Sun: 'सूर्य', Moon: 'चंद्र', Mars: 'मंगल', Mercury: 'बुध', Jupiter: 'गुरु', Venus: 'शुक्र', Saturn: 'शनि', Rahu: 'राहु', Ketu: 'केतु' };
+    function getStarters() {
+      if (starterSet() !== 'v2') return ['starter1', 'starter2', 'starter3', 'starter4'].map((k) => t(k));
+      const add = (state.chart && state.chart.additional) || {};
+      const maha = currentDashaEntry(add.vimshottariDashaTimeline) || add.currentMahadasha;
+      const lord = maha && maha.lord && (state.lang === 'hi' ? PLANET_HI[maha.lord] || maha.lord : maha.lord);
+      return [t('starterV2Phase'), lord ? t('starterV2Dasha', { maha: lord }) : t('starterV2DashaPlain'),
+        t('starterV2Career'), t('starterV2Married')];
+    }
+    let startersLogged = null, tappedStarter = null;
+    const starterTag = (q) => (tappedStarter && tappedStarter.text === q
+      ? { question_source: 'starter', chip_key: tappedStarter.key, starter_set: tappedStarter.set } : {});
     function renderEmptyChat() {
       const greet = state.userName ? t('chartReadyName', { name: state.userName }) : t('chartReady');
       // "Your first question is free" only while it actually IS free; otherwise a neutral prompt.
@@ -1912,12 +2133,19 @@
         <div id="chips"></div>
       </div>`;
       const chips = inner.querySelector('#chips');
-      getStarters().forEach((s) => {
+      const set = starterSet() === 'v2' ? 'astro_v2' : 'astro', starters = getStarters();
+      starters.forEach((s, i) => {
         const b = document.createElement('button');
         b.className = 'chip'; b.textContent = s;
-        b.addEventListener('click', () => { $('composerInput').value = s; $('composerInput').focus(); });
+        b.addEventListener('click', () => { tappedStarter = { text: s, key: i, set }; $('composerInput').value = s; $('composerInput').focus(); });
         chips.appendChild(b);
       });
+      const sa = expGet('chat_starters');
+      if (startersLogged !== set) {
+        startersLogged = set;
+        track('ui_interaction', { action: 'shown', element_type: 'chat_starters', source: 'astro_chat', starter_set: set, chip_keys: starters.map((_, i) => i).join(','), ...expTag(sa) });
+      }
+      expMarkExposed('chat_starters', sa);
       renderArtifactBar();
     }
 
@@ -2060,6 +2288,7 @@
       try {
         const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
         const remaining = snap.exists() ? Number(snap.data()?.remaining) : null;
+        state.boughtPack = boughtPackFrom(snap.exists() ? snap.data() : null);
         if (Number.isFinite(remaining)) {
           // A charged answer always leaves a ledger doc (a new user's first real question is
           // granted+spent at remaining 0), so a finite value is authoritative.
@@ -2082,6 +2311,7 @@
     let asking = false; // single shared WS `pending` slot → serialize requests
     async function ask() {
       if (asking) return; // a stream is already in flight — ignore Enter/click spam
+      if (afaCheck('send')) return;
       const input = $('composerInput'); const q = input.value.trim();
       if (!q) return;
       // Mirror of the server's cap (server.js MAX_MESSAGE_CHARS). Without this the server
@@ -2111,12 +2341,17 @@
       // verified this session (premiumChecked false), defer to the server gate rather than risk
       // locally locking out a paying user whose check blipped — the server is authoritative and
       // returns a paywall frame if they really are out of quota.
-      if (!state.premium && state.freeUsed && state.premiumChecked) { openPaywall('question_limit'); return; }
+      if (!state.premium && state.freeUsed && state.premiumChecked) {
+        if (state.mode !== 'compat' && !lockedPreview && expGet('paywall_trigger')?.params.mode === 'answer_preview') return askPreview(q);
+        outOfQuestions('question_limit'); return;
+      }
       if (state.mode === 'compat') return askCompat(q);
 
       asking = true;
       input.value = ''; autosize(); $('sendBtn').disabled = true;
-      track('question', { status: 'asked', question_type: 'astrology' });
+      track('question', { status: 'asked', question_type: 'astrology', ...starterTag(q) });
+      tappedStarter = null; startersLogged = null;
+      const wasFresh = isFreshFreeUser();
 
       // Open a persisted session on the first message of a new chat (same model
       // as the app → these chats also show in the app's drawer for this uid).
@@ -2132,13 +2367,14 @@
       // Re-send the same question (composer already holds it via the restore below).
       const retry = () => { $('composerInput').value = q; ask(); };
 
+      let mine = null;
       try {
         await ensureWS();
         await new Promise((resolve) => {
-          pending = {
+          pending = mine = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
             onDone: () => { track('question', { status: 'answered', question_type: 'astrology' }); resolve(); },
-            onPaywall: () => { aiEl.remove(); paywalled = true; openPaywall('server_gate'); resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; outOfQuestions('server_gate'); resolve(); },
             onError: (e) => { errMsg = e || 'Something went wrong.'; track('question', { status: 'failed', question_type: 'astrology' }); resolve(); },
           };
           sendWS({
@@ -2155,6 +2391,7 @@
       } catch (e) {
         errMsg = 'Connection error — please retry.';
       } finally {
+        if (pending === mine) pending = null; // a later socket close must not report this answered ask as failed
         asking = false;
         $('sendBtn').disabled = false;
         if (errMsg && !paywalled) {
@@ -2175,7 +2412,157 @@
         // gate) and only charges a real question — never a greeting or a short follow-up that
         // continues the chat. Re-read the authoritative balance (app parity) rather than guessing.
         if (!state.premium && acc) await refreshRemaining();
+        if (wasFresh && acc && !errMsg && !paywalled && state.freeUsed) paywallAfterFirstAnswer(aiEl);
       }
+    }
+
+    // ── paywall_trigger "answer_preview": an out-of-questions ask is answered, but only its opening is shown until a
+    // purchase. The server decides (arm, caps, helpline turns) and may answer in full or send today's paywall instead.
+    async function askPreview(q) {
+      const input = $('composerInput');
+      asking = true;
+      input.value = ''; autosize(); $('sendBtn').disabled = true;
+      track('question', { status: 'asked', question_type: 'astrology', preview: true, ...starterTag(q) });
+      tappedStarter = null; startersLogged = null;
+      expMarkExposed('paywall_trigger', expGet('paywall_trigger'));
+      let firstMsg = false;
+      if (!state.sessionId) {
+        try { state.sessionId = await createSession(); firstMsg = true; } catch (_) {}
+      }
+      // The question is not saved here: the server files it with the answer at unlock.
+      const userEl = addMsg('user', q);
+      const aiEl = addMsg('ai', ''); startInlineLoader(aiEl);
+      let acc = '', outcome = null, lock = null, errMsg = null;
+      try {
+        await ensureWS();
+        await new Promise((resolve) => {
+          pending = {
+            onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
+            onPreviewLocked: (m) => { lock = m; outcome = 'locked'; resolve(); },
+            onDone: () => { outcome = 'full'; resolve(); },
+            onPaywall: () => { outcome = 'paywall'; resolve(); },
+            onError: (e) => { errMsg = e || 'Something went wrong.'; resolve(); },
+          };
+          sendWS({
+            type: 'astro', userId: state.uid,
+            conversationId: state.conversationId, threadId: state.sessionId || state.conversationId || `web-${Date.now()}`,
+            message: q, astrologyData: state.chart,
+            dateOfBirth: state.dateOfBirth, coordinates: state.coordinates,
+            language: state.lang, userName: state.userName, timeUnknown: state.timeUnknown,
+            preview: true,
+          });
+        });
+      } catch (e) {
+        errMsg = 'Connection error — please retry.';
+      } finally {
+        pending = null;
+        asking = false;
+        $('sendBtn').disabled = false;
+      }
+      if (outcome === 'locked' && lock && lock.previewId) {
+        renderMarkdown(aiEl, typeof lock.opening === 'string' ? lock.opening : acc);
+        lockedPreview = { previewId: lock.previewId, aiEl, question: q, firstMsg, sessionId: state.sessionId, state: 'locked' };
+        renderPreviewLock();
+        trackPw({ action: 'preview_shown', source: 'answer_preview', paywall_type: 'web' });
+        setTimeout(() => openPaywall('answer_preview'), 700);
+      } else if (outcome === 'full') {
+        // The server answered in full (entitled after all, or a helpline turn): today's answer path.
+        track('question', { status: 'answered', question_type: 'astrology' });
+        renderMarkdown(aiEl, acc);
+        attachMsgActions(aiEl, () => acc);
+        await saveMessage('user', q);
+        saveMessage('bot', acc);
+        touchSession(firstMsg ? q : null);
+        if (firstMsg) fetchSessions();
+        if (!state.premium) await refreshRemaining();
+      } else if (outcome === 'paywall') {
+        userEl.remove(); aiEl.remove();
+        input.value = q; autosize();
+        outOfQuestions('server_gate');
+      } else {
+        track('question', { status: 'failed', question_type: 'astrology', preview: true });
+        renderErrorRow(aiEl, errMsg, () => { $('composerInput').value = q; ask(); });
+        input.value = q; autosize();
+      }
+    }
+    function renderPreviewLock() {
+      const lp = lockedPreview;
+      if (!lp) return;
+      if (!lp.lockEl) {
+        lp.lockEl = document.createElement('div');
+        lp.lockEl.className = 'preview-lock';
+        lp.aiEl.insertAdjacentElement('afterend', lp.lockEl);
+      }
+      const busy = lp.state === 'unlocking';
+      const note = lp.state === 'expired' ? t('previewExpired') : lp.state === 'error' ? t('previewFailed') : '';
+      lp.lockEl.innerHTML = ['96%', '88%', '92%', '64%'].map((w, i) => `<div class="pl-line" style="width:${w};opacity:${(0.45 - i * 0.1).toFixed(2)}"></div>`).join('')
+        + `<div class="pl-ready">${esc(t('previewReady'))}</div>`
+        + (note ? `<div class="pl-note">${esc(note)}</div>` : '')
+        + (lp.state === 'expired' ? '' : `<button type="button" class="btn-primary pl-unlock"${busy ? ' disabled' : ''}>${esc(t(busy ? 'previewUnlocking' : 'previewUnlock'))}</button>`);
+      const btn = lp.lockEl.querySelector('.pl-unlock');
+      if (btn) btn.addEventListener('click', () => unlockPreview(false));
+      maybeScroll();
+    }
+    // A reload drops the in-page lock: the newest pending preview comes back in its thread, once per page load.
+    let previewRestoreUid = null;
+    async function restorePendingPreview() {
+      const uid = state.uid;
+      if (!uid || previewRestoreUid === uid) return;
+      await expWhenReady(3000);
+      if (state.uid !== uid || state.premium || !state.premiumChecked || expGet('paywall_trigger')?.params.mode !== 'answer_preview') return;
+      previewRestoreUid = uid;
+      let p = null;
+      try {
+        const r = await fetch(`${API}/api/answer-preview/pending`, { headers: { 'Authorization': `Bearer ${await token()}` } });
+        if (r.ok) p = ((await r.json()).previews || [])[0] || null;
+      } catch (_) {}
+      const idle = () => state.uid === uid && !lockedPreview && !asking && state.mode === 'personal' && currentView() === 'chat' && !!$('chatInner').querySelector('.starter');
+      if (!p || !p.previewId || !idle()) return;
+      if (p.threadId) {
+        await loadSession(p.threadId);
+        if (state.uid !== uid || state.sessionId !== p.threadId || lockedPreview || asking) return;
+      }
+      const firstMsg = !$('chatInner').querySelector('.msg');
+      addMsg('user', p.question || '');
+      const aiEl = addMsg('ai', p.opening || '');
+      lockedPreview = { previewId: p.previewId, aiEl, question: p.question || '', firstMsg, sessionId: state.sessionId, state: 'locked' };
+      renderPreviewLock();
+      trackPw({ action: 'preview_restored', source: 'answer_preview', paywall_type: 'web' });
+    }
+    // After a purchase the entitlement can land seconds behind Razorpay's success, so those calls retry.
+    async function unlockPreview(afterPurchase) {
+      const lp = lockedPreview;
+      if (!lp || lp.state === 'unlocking' || lp.state === 'expired') return;
+      lp.state = 'unlocking'; renderPreviewLock();
+      let res = null;
+      for (let i = 0; i < (afterPurchase ? 5 : 1); i++) {
+        if (i) await new Promise((r) => setTimeout(r, 2000));
+        try {
+          const r = await fetch(`${API}/api/answer-preview/unlock`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await token()}` },
+            body: JSON.stringify({ previewId: lp.previewId }),
+          });
+          res = { status: r.status, body: await r.json().catch(() => ({})) };
+        } catch (_) { res = { status: 0, body: {} }; }
+        if (res.status === 200 || ![0, 402, 409, 503].includes(res.status)) break;
+      }
+      if (lockedPreview !== lp) return;
+      if (res.status === 200 && typeof res.body.text === 'string') {
+        const text = res.body.text;
+        renderMarkdown(lp.aiEl, text);
+        if (lp.lockEl) lp.lockEl.remove();
+        attachMsgActions(lp.aiEl, () => text);
+        lockedPreview = null;
+        trackPw({ action: 'preview_unlocked', source: 'answer_preview', paywall_type: 'web', charged: res.body.charged || 'none', after_purchase: !!afterPurchase });
+        if (state.sessionId === lp.sessionId) touchSession(lp.firstMsg ? lp.question : null);
+        if (lp.firstMsg) fetchSessions();
+        if (!state.premium) await refreshRemaining();
+        return;
+      }
+      if (res.status === 410 || res.status === 404) { lp.state = 'expired'; renderPreviewLock(); return; }
+      if (res.status === 402 && !afterPurchase) { lp.state = 'locked'; renderPreviewLock(); openPaywall('answer_preview'); return; }
+      lp.state = 'error'; renderPreviewLock();
     }
 
     function autosize() { const t = $('composerInput'); t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 120) + 'px'; }
@@ -2780,16 +3167,18 @@
       if (!state.compatSessionId) { try { state.compatSessionId = await createCompatSession(); firstMsg = true; } catch (_) {} }
       addMsg('user', q); saveCompatMessage('user', q);
       track('question', { status: 'asked', question_type: 'compatibility' });
+      const wasFresh = isFreshFreeUser();
       const aiEl = addMsg('ai', ''); startInlineLoader(aiEl);
       let acc = '', errMsg = null, paywalled = false;
       const retry = () => { $('composerInput').value = q; askCompat(q); };
+      let mine = null;
       try {
         await ensureWS();
         await new Promise((resolve) => {
-          pending = {
+          pending = mine = {
             onDelta: (d) => { acc += d; renderMarkdown(aiEl, acc); maybeScroll(); },
             onDone: () => { track('question', { status: 'answered', question_type: 'compatibility' }); resolve(); },
-            onPaywall: () => { aiEl.remove(); paywalled = true; openPaywall('server_gate'); resolve(); },
+            onPaywall: () => { aiEl.remove(); paywalled = true; outOfQuestions('server_gate'); resolve(); },
             onError: (e) => { errMsg = e || 'Something went wrong.'; track('question', { status: 'failed', question_type: 'compatibility' }); resolve(); },
           };
           sendWS({
@@ -2805,6 +3194,7 @@
       } catch (e) {
         errMsg = 'Connection error — please retry.';
       } finally {
+        if (pending === mine) pending = null;
         asking = false; $('sendBtn').disabled = false;
         if (errMsg && !paywalled) {
           renderErrorRow(aiEl, errMsg, retry);
@@ -2818,6 +3208,7 @@
         // free-question ledger as an astro question. Re-read the authoritative balance the server
         // already updated (it skips greetings / short follow-ups) rather than guessing locally.
         if (!state.premium && acc) await refreshRemaining();
+        if (wasFresh && acc && !errMsg && !paywalled && state.freeUsed) paywallAfterFirstAnswer(aiEl);
       }
     }
 
@@ -3040,21 +3431,100 @@
     // matches the app's close-X paywall). Returns to wherever it was opened from.
     // Paywall is a centered modal popup (same component as Settings/Profile). It replaces
     // (not stacks on) the settings/profile popups, so there's never a true modal-in-modal.
+    let pwOpening = null;
     function openPaywall(src) {
       _pwSrc = src || 'direct';
+      if (EXP.ready || !EXP.promise) { showPaywall(); return; }
+      // Bounded wait for the experiments read; past it the paywall renders control and stays untagged.
+      if (!pwOpening) pwOpening = expWhenReady(800).then(() => { pwOpening = null; showPaywall(); });
+    }
+    function showPaywall() {
+      pwPin = expGet('paywall');
+      pwSlots = pwComputeSlots(pwPin);
+      pwTag = pwPin && !PW_PLANS.some((p) => pwPin.params[p + 'Price'] === 'test' && pwSlots[p] !== 'test' && (pwPin.params.order || PW_WEB_ORDER).includes(p)) ? pwPin : null;
       try { closeModal('settingsView'); closeModal('profileView'); } catch (_) {}
-      try { renderPaywallHero(); renderPlanPrices(); updateCtaLabel(); } catch (_) {}
+      try { renderPlanOrder(); renderPaywallHero(); renderPlanPrices(); } catch (_) {}
       try { updateCtaLabel(); } catch (_) {} // sync CTA + billing line to the active plan
       { const ps = $('paywallStatus'); if (ps) ps.textContent = ''; } // clear stale status from a prior visit
-      track('paywall_interaction', { action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
+      trackPw({ action: 'opened', source: _pwSrc, paywall_type: 'web' }); // mirrors app
+      expMarkExposed('paywall', pwTag);
       fbTrack('ViewContent', { content_name: 'paywall', content_category: 'subscription' });
       openModal('paywallView');
       loadRazorpay().catch(() => {});
     }
+    // Every paywall_interaction carries the pinned paywall arm and the price slot of the plan it concerns.
+    function trackPw(p) {
+      const plan = p.paywall_type === 'question_pack' ? 'pack' : (p.plan || (chosenKind === 'pack' ? 'pack' : chosenPlan));
+      track('paywall_interaction', { ...p, ...expTag(pwTag), price_slot: pwSlots[plan] || 'base' });
+    }
     const dismissPaywall = () => { if ($('paywallView').classList.contains('open')) closeModal('paywallView'); };
     $('paywallClose').addEventListener('click', dismissPaywall);
     $('paywallView').addEventListener('click', (e) => { if (e.target === $('paywallView')) dismissPaywall(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') dismissPaywall(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { dismissPaywall(); closeSoftPrompt('escape'); } });
+
+    // ── paywall_trigger arms: when an out-of-questions user meets the paywall ──
+    const isFreshFreeUser = () => !state.premium && !state.freeUsed && state.remaining == null;
+    function outOfQuestions(src) {
+      const a = expGet('paywall_trigger');
+      // A soft-prompt test reads first-time buyers only: anyone who ever paid gets today's paywall, untagged, in every arm.
+      if (a && a.soft && !(EXP.never === true && state.boughtPack === false)) { openPaywall(src); return; }
+      expMarkExposed('paywall_trigger', a);
+      if (a && a.params.mode === 'soft_prompt') { openSoftPrompt(src, a); return; }
+      openPaywall(src);
+    }
+    let softSrc = null;
+    function openSoftPrompt(src, a) {
+      softSrc = src;
+      // Same arm and slot the paywall will pin when See plans opens it.
+      const monthly = pwComputeSlots(expGet('paywall')).monthly === 'test' ? state.testPrices.monthly : BASE_INR.monthly;
+      $('softPrice').textContent = t('softPrice', { p: inr(monthly) });
+      track('ui_interaction', { action: 'shown', element_type: 'soft_paywall_prompt', source: src, ...expTag(a) });
+      openModal('softPrompt');
+    }
+    function closeSoftPrompt(action) {
+      if (!$('softPrompt').classList.contains('open')) return;
+      closeModal('softPrompt');
+      track('ui_interaction', { action, element_type: 'soft_paywall_prompt', source: softSrc, ...expTag(expGet('paywall_trigger')) });
+    }
+    $('softSeePlans').addEventListener('click', () => { closeSoftPrompt('see_plans'); openPaywall(softSrc); });
+    $('softNotNow').addEventListener('click', () => closeSoftPrompt('not_now'));
+    $('softPrompt').addEventListener('click', (e) => { if (e.target === $('softPrompt')) closeSoftPrompt('not_now'); });
+    // Once per user ever (per browser), after the answer that spent the free question: when the reader has
+    // reached its end and 15 s have passed since it finished, or on their next composer focus or Send.
+    const AFA_READ_MS = 15000;
+    let afa = null;
+    function paywallAfterFirstAnswer(aiEl) {
+      const a = expGet('paywall_trigger');
+      if (!a || a.params.mode !== 'after_first_answer') return;
+      const key = 'omai_afa_paywall_' + state.uid;
+      try { if (localStorage.getItem(key) === '1') return; } catch (_) { return; }
+      if (afa) clearTimeout(afa.timer);
+      afa = { a, key, uid: state.uid, aiEl, doneAt: Date.now(), seenEnd: false };
+      afa.timer = setTimeout(() => afaCheck('read'), AFA_READ_MS);
+      afaCheck('read');
+    }
+    function afaEndVisible() {
+      const el = afa.aiEl, sc = $('chatScroll');
+      return !!el && document.body.contains(el) && el.getBoundingClientRect().bottom <= sc.getBoundingClientRect().bottom + 8;
+    }
+    // Returns true when it opened the paywall, so a Send can stop there.
+    function afaCheck(why) {
+      if (!afa) return false;
+      if (state.uid !== afa.uid || state.premium) { clearTimeout(afa.timer); afa = null; return false; }
+      if (why === 'read') {
+        afa.seenEnd = afa.seenEnd || afaEndVisible();
+        if (!afa.seenEnd || Date.now() - afa.doneAt < AFA_READ_MS) return false;
+      }
+      if (asking || currentView() !== 'chat' || document.querySelector('.modal-overlay.open')) return false;
+      const { a, key } = afa;
+      clearTimeout(afa.timer); afa = null;
+      try { localStorage.setItem(key, '1'); } catch (_) { return false; }
+      expMarkExposed('paywall_trigger', a);
+      openPaywall('after_first_answer');
+      return true;
+    }
+    $('chatScroll').addEventListener('scroll', () => afaCheck('read'), { passive: true });
+    $('composerInput').addEventListener('focus', () => afaCheck('focus'));
     // Stroke/outline icons — match the web's icon language AND the app's MaterialCommunityIcons
     // choices (eye = view chart, text-box-outline = report, file-chart-outline = generate report).
     const ICON_EYE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3.2"/></svg>';
@@ -3203,7 +3673,7 @@
     // no form in it at all.
     function closeAllModals() {
       try { closeEditBirth(); } catch (_) {}
-      ['settingsView', 'profileView', 'paywallView', 'downsellModal', 'birthModal'].forEach((id) => {
+      ['settingsView', 'profileView', 'paywallView', 'downsellModal', 'birthModal', 'softPrompt'].forEach((id) => {
         const el = $(id); if (el) el.classList.remove('open');
       });
     }
@@ -3539,6 +4009,7 @@
         // Returning-subscriber pricing. Server decides eligibility; null until the
         // Razorpay offer exists, in which case the paywall keeps showing list price.
         state.winback = (s && s.winback) || null;
+        state.testPrices = parseTestPrices(s && s.testPrices);
         try { renderPlanPrices(); updateCtaLabel(); } catch (_) {}
         if (s && s.active) {
           state.premium = true; state.freeUsed = false;
@@ -3554,6 +4025,7 @@
         try {
           const snap = await getDoc(doc(db, `users/${state.uid}/questions/purchased`));
           const remaining = snap.exists() ? Number(snap.data()?.remaining) : null;
+          state.boughtPack = boughtPackFrom(snap.exists() ? snap.data() : null);
           // Track the ledger balance so the local guard distinguishes "free question
           // spent" from "still has paid pack questions" — a pack buyer (not premium)
           // must not be blocked after one of five. null = brand-new user, no doc yet.
@@ -3579,6 +4051,12 @@
     function renderPaywallHero() {
       const titleEl = $('pwHeroTitle'), subEl = $('pwHeroSub');
       if (!titleEl || !subEl) return;
+      const hv = pwPin && pwPin.params.headline;
+      if (hv === 'v1' || hv === 'v2') {
+        titleEl.textContent = t(hv === 'v1' ? 'pwHeadV1' : 'pwHeadV2');
+        subEl.textContent = t(hv === 'v1' ? 'pwHeadV1Sub' : 'pwHeadV2Sub');
+        return;
+      }
       const name = (state.userName || '').trim().split(/\s+/)[0] || '';
       const add = (state.chart && state.chart.additional) || {};
       const maha = currentDashaEntry(add.vimshottariDashaTimeline) || add.currentMahadasha;
@@ -3605,18 +4083,56 @@
     // paywall with its SAVE 37% badge for anyone who actively wants it.
     let chosenPlan = 'monthly';  // 'yearly' | 'monthly' when chosenKind === 'sub'
     let chosenKind = 'sub';      // 'sub' (recurring) | 'pack' (one-time 5-question)
-    // Rupee value per plan for ad-platform conversion events. create-subscription returns only
-    // { subscriptionId, keyId, plan } — no amount — so the browser has no server-side source for
-    // this. Mirrors the .pl-price copy below and the Razorpay plan config; change all three together.
-    // (The pack path doesn't need this — create-order returns its amount in paise.)
-    const PLAN_VALUE_INR = { yearly: 1499, monthly: 199 };
+    let pwPlanTouched = false;   // the buyer picked a plan this session, so later opens keep it
+    // Base prices (BASE_INR) mirror the Razorpay plan config; test-slot prices only ever come from /status.
     // List price unless the server says this user gets the returning-subscriber price.
     function renderPlanPrices() {
       const wb = state.winback || {};
-      const m = $('plPriceMonthly'), y = $('plPriceYearly');
-      if (m) m.innerHTML = wb.monthly ? '<s>₹199</s>₹' + wb.monthly : '₹199';
-      if (y) y.innerHTML = wb.yearly ? '<s>₹1,499</s>₹' + Number(wb.yearly).toLocaleString('en-IN') : '<s>₹2,388</s>₹1,499';
+      const M = planPrice('monthly'), Y = planPrice('yearly');
+      const m = $('plPriceMonthly'), y = $('plPriceYearly'), pk = $('plPricePack');
+      if (m) m.innerHTML = wb.monthly ? '<s>' + inr(M) + '</s>' + inr(wb.monthly) : inr(M);
+      if (y) y.innerHTML = wb.yearly ? '<s>' + inr(Y) + '</s>' + inr(wb.yearly) : (12 * M > Y ? '<s>' + inr(12 * M) + '</s>' : '') + inr(Y);
+      if (pk) pk.textContent = inr(planPrice('pack'));
+      const badge = $('pwBadge');
+      if (badge) {
+        const v = (pwPin && pwPin.params.badge) || 'default';
+        const pct = Math.round((1 - Y / (12 * M)) * 100), mo = Math.floor((12 * M - Y) / M);
+        const txt = v === 'v1' ? t('pwBadgeV1', { pm: inr(Math.ceil(Y / 12)) })
+          : v === 'default' && pct > 0 ? t(mo >= 1 ? 'pwBadge' : 'pwBadgeSave', { pct, m: mo }) : '';
+        badge.textContent = txt; badge.hidden = !txt;
+      }
+      const vars = { pk: inr(planPrice('pack')) };
+      document.querySelectorAll('[data-i18n="tryPack"]').forEach((el) => { el.textContent = t('tryPack', vars); });
+      { const d = $('downsellBody'); if (d) d.innerHTML = t('downsellBody', vars); }
     }
+    // Subscription plans keep their order among themselves; the pack sits first or last.
+    function renderPlanOrder() {
+      const order = (pwPin && pwPin.params.order) || PW_WEB_ORDER, box = $('planChoices');
+      const btn = (p) => box.querySelector(`.plan[data-plan="${p}"]`);
+      const packFirst = order[0] === 'pack';
+      const subs = order.filter((p) => p !== 'pack').map(btn);
+      (packFirst ? [btn('pack'), $('pwDivPremium'), ...subs] : [$('pwDivPremium'), ...subs, $('pwDivPack'), btn('pack')]).forEach((el) => box.appendChild(el));
+      PW_PLANS.forEach((p) => { btn(p).style.display = order.includes(p) ? '' : 'none'; });
+      $('pwDivPack').style.display = packFirst || !order.includes('pack') ? 'none' : '';
+      const cur = chosenKind === 'pack' ? 'pack' : chosenPlan;
+      const want = pwPlanTouched ? cur : ((pwPin && pwPin.params.defaultSelection) || 'monthly');
+      selectPlan(order.includes(want) ? want : order.includes(cur) ? cur : order[0]);
+    }
+    function selectPlan(plan) {
+      document.querySelectorAll('.plan').forEach((x) => { const on = x.dataset.plan === plan; x.classList.toggle('active', on); x.setAttribute('aria-checked', on ? 'true' : 'false'); });
+      if (plan === 'pack') chosenKind = 'pack';
+      else { chosenKind = 'sub'; chosenPlan = plan; }
+      updateCtaLabel();
+    }
+    // Backend said this test slot isn't configured: show base from now on and ask for a fresh tap.
+    function pwSlotRefused(plan) {
+      pwSlotDead.add(plan); pwSlots[plan] = 'base';
+      expFallback(pwPin, plan, 'slot_unavailable');
+      pwTag = null;
+      try { renderPlanPrices(); updateCtaLabel(); } catch (_) {}
+      return Object.assign(new Error(t('pwPriceChanged')), { priceChanged: true });
+    }
+    const isSlotRefusal = (r, j, plan) => r.status === 400 && pwSlots[plan] === 'test' && (j.code === 'slot_unavailable' || j.error === 'slot_unavailable');
     function updateCtaLabel() {
       // CTA + contextual billing line match the app paywall exactly.
       $('subscribeBtn').textContent = t(chosenKind === 'pack' ? 'getQuestions' : 'getUnlimited');
@@ -3629,11 +4145,8 @@
         : t(chosenKind === 'pack' ? 'oneTimePurchase' : 'autoRenewCancel');
     }
     document.querySelectorAll('.plan').forEach((b) => b.addEventListener('click', () => {
-      document.querySelectorAll('.plan').forEach((x) => { x.classList.remove('active'); x.setAttribute('aria-checked', 'false'); });
-      b.classList.add('active'); b.setAttribute('aria-checked', 'true');
-      if (b.dataset.plan === 'pack') { chosenKind = 'pack'; }
-      else { chosenKind = 'sub'; chosenPlan = b.dataset.plan; }
-      updateCtaLabel();
+      pwPlanTouched = true;
+      selectPlan(b.dataset.plan);
     }));
 
     async function linkAccount() {
@@ -3696,7 +4209,7 @@
     function trackPaymentFailed(rzp, paywall_type, plan) {
       rzp.on('payment.failed', (r) => {
         const e = (r && r.error) || {};
-        track('paywall_interaction', { action: 'payment_failed', source: 'razorpay', paywall_type, plan, reason: e.reason || e.code || 'unknown', step: e.step });
+        trackPw({ action: 'payment_failed', source: 'razorpay', paywall_type, plan, reason: e.reason || e.code || 'unknown', step: e.step });
       });
     }
 
@@ -3710,7 +4223,7 @@
       if (!matchMedia('(pointer: coarse)').matches) return { stop() {}, closing: () => false }; // UPI app hand-offs are phone-only
       let away = false, done = false, closing = false, timer = null, poll = null;
       const bar = $('upiReturnBar');
-      const ev = (action) => track('paywall_interaction', { action, source: 'razorpay', paywall_type, plan });
+      const ev = (action) => trackPw({ action, source: 'razorpay', paywall_type, plan });
       const onVis = () => {
         if (done) return;
         if (document.hidden) { away = true; clearTimeout(timer); return; }
@@ -3779,15 +4292,19 @@
       const r = await fetch(`${API}/api/web/razorpay/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
-        body: JSON.stringify({ pack: 'basic', ...attribution }),
+        body: JSON.stringify({ pack: 'basic', priceSlot: pwSlots.pack || 'base', ...attribution }),
       });
-      if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start purchase');
+      if (!r.ok) {
+        const j = await r.json().catch(() => ({}));
+        if (isSlotRefusal(r, j, 'pack')) throw pwSlotRefused('pack');
+        throw new Error(j.error || 'Could not start purchase');
+      }
       const { orderId, keyId, amount, currency, questions } = await r.json();
       const remainingBefore = Number(state.remaining) || 0;
 
       const packPaid = async (paymentId) => {
         $('subscribeBtn').disabled = false; // nothing else re-enables it after a pack bought from the paywall
-        track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
+        trackPw({ action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
         track('purchase', { transaction_id: orderId, value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 monetization
         await fbPurchase(paymentId, (amount || 0) / 100, currency); // Meta, deduped vs CAPI
         setStatus('Adding your questions…');
@@ -3800,12 +4317,14 @@
             if (Number.isFinite(rem) && rem > remainingBefore) { // > 0 fired at once for buyers with questions left
               state.remaining = rem; state.freeUsed = false;
               if (afterPurchaseRoute(t('buyQuestionsAdded', { n: questions }))) addMsg('ai', t('buyQuestionsAdded', { n: questions }));
+              if (lockedPreview) unlockPreview(true);
               return;
             }
           } catch (_) { /* keep polling */ }
         }
         state.freeUsed = false;
         if (afterPurchaseRoute(t('buyQuestionsPending'))) addMsg('ai', t('buyQuestionsPending'));
+        if (lockedPreview) unlockPreview(true);
       };
 
       await loadRazorpay();
@@ -3821,12 +4340,12 @@
         handler: async (resp) => { if (watch) watch.stop(); await packPaid(resp && resp.razorpay_payment_id); },
         modal: { ondismiss: () => { // pairs with the subscription dismissal event — see there for why
           const ours = !!(watch && watch.closing()); if (watch) watch.stop();
-          track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack', ...(ours ? { reason: 'upi_return' } : {}) });
+          trackPw({ action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack', ...(ours ? { reason: 'upi_return' } : {}) });
           if (ours) return; // the UPI-return bar closed it and already chose what happens next
           setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
       });
       trackPaymentFailed(rzp, 'question_pack');
-      track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
+      trackPw({ action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
       track('begin_checkout', { value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 standard
       fbTrack('InitiateCheckout', { value: (amount || 0) / 100, currency: currency || 'INR' });
       watch = watchUpiReturn({
@@ -3859,7 +4378,7 @@
       const packPlan = document.querySelector('.plan[data-plan="pack"]');
       if (packPlan) packPlan.click();
       try { await runPackCheckout({ status: $('paywallStatus') }); }
-      catch (e) { $('paywallStatus').textContent = e.message || t('genericErr'); }
+      catch (e) { $('paywallStatus').textContent = e.message || t('genericErr'); if (e.priceChanged) $('paywallStatus').scrollIntoView({ block: 'nearest' }); }
       finally { dbtn.disabled = false; $('subscribeBtn').disabled = false; }
     });
 
@@ -3880,16 +4399,21 @@
         const r = await fetch(`${API}/api/web/razorpay/create-subscription`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
-          body: JSON.stringify({ plan: chosenPlan, ...attribution }),
+          body: JSON.stringify({ plan: chosenPlan, priceSlot: pwSlots[chosenPlan] || 'base', ...attribution }),
         });
-        if (!r.ok) throw new Error(((await r.json().catch(() => ({}))).error) || 'Could not start subscription');
-        const { subscriptionId, keyId, firstCyclePrice } = await r.json();
+        if (!r.ok) {
+          const j = await r.json().catch(() => ({}));
+          if (isSlotRefusal(r, j, chosenPlan)) throw pwSlotRefused(chosenPlan);
+          throw new Error(j.error || 'Could not start subscription');
+        }
+        const { subscriptionId, keyId, firstCyclePrice, price } = await r.json();
         const plan = chosenPlan;
+        const value = Number(price) > 0 ? Number(price) : planPrice(plan);
 
         const subPaid = async (paymentId) => {
-          track('paywall_interaction', { action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan });
+          trackPw({ action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan });
           track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan }); // GA4 monetization
-          await fbPurchase(paymentId, firstCyclePrice || PLAN_VALUE_INR[plan], 'INR'); // Meta, deduped vs CAPI
+          await fbPurchase(paymentId, firstCyclePrice || value, 'INR'); // Meta, deduped vs CAPI
           status.textContent = t('subActivatingMvp');
           for (let i = 0; i < 10; i++) {
             await new Promise((res) => setTimeout(res, 2000));
@@ -3897,11 +4421,13 @@
             if (s.active) {
               state.premium = true; state.freeUsed = false;
               if (afterPurchaseRoute(t('buyPremiumNow'))) addMsg('ai', t('buyPremiumNow'));
+              if (lockedPreview) unlockPreview(true);
               return;
             }
           }
           state.premium = true; state.freeUsed = false;
           if (afterPurchaseRoute(t('buyPremiumPending'))) addMsg('ai', t('buyPremiumPending'));
+          if (lockedPreview) unlockPreview(true);
         };
 
         await loadRazorpay();
@@ -3921,16 +4447,16 @@
             // invisible: purchase_attempted fired and nothing followed, so an abandoned checkout
             // and a declined card looked identical in GA4 (the yearly collapse had to be
             // diagnosed off the Razorpay ledger instead). Track it with the plan attached.
-            track('paywall_interaction', { action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'subscription', plan, ...(ours ? { reason: 'upi_return' } : {}) });
+            trackPw({ action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'subscription', plan, ...(ours ? { reason: 'upi_return' } : {}) });
             if (ours) return; // the UPI-return bar closed it and already chose what happens next
             btn.disabled = false; status.textContent = t('subCheckoutClosedMvp');
             if (!downsellShownThisSession) setTimeout(openDownsell, 250);
           } },
         });
         trackPaymentFailed(rzp, 'subscription', plan);
-        track('paywall_interaction', { action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan });
+        trackPw({ action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan });
         track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan }); // GA4 standard
-        fbTrack('InitiateCheckout', { value: PLAN_VALUE_INR[plan], currency: 'INR' });
+        fbTrack('InitiateCheckout', { value, currency: 'INR' });
         watch = watchUpiReturn({
           rzp, paywall_type: 'subscription', plan,
           isPaid: async () => {
@@ -3945,6 +4471,8 @@
       } catch (e) {
         status.textContent = e.message || t('genericErr');
         btn.disabled = false;
+        // The status line sits under the sticky CTA, below the fold on most screens.
+        if (e.priceChanged) status.scrollIntoView({ block: 'nearest' });
       }
     });
   </script>
