@@ -73,7 +73,8 @@ Use these numbers to anchor SEO decisions rather than guessing:
 - Query clusters: `ai astrology` (5.2K), `ai kundali` (937), `free astrology chat` (915, **+445%** — fastest grower, "24/7" / "unlimited" phrasings), branded `om ai` (638), `ai astrology app` (150).
 - Geo: 90% India, 2% US. 92% non-branded.
 - Hindi queries appearing (`ऐ ज्योतिष`, `एआई कुंडली निःशुल्क`) — `/hi/` pages exist with `hreflang`.
-- Topic landing pages that started at 0 clicks and are now top-5 (marriage-prediction, career-astrology) suggest the pattern works — worth building more (health-astrology, love-astrology, wealth-astrology).
+- Topic landing pages that started at 0 clicks and are now top-5 (marriage-prediction, career-astrology) suggest the pattern works — worth building more (health-astrology, love-astrology, wealth-astrology). **Retracted 2026-10-26.**
+- **2026-10-26 prune:** Google cut sitewide search ~85% from 10-19 (Bing flat, no manual action); generic content lost 95-99%, the kab tools about 60%. All of `blog/` and `zodiac/` plus 6 generic topic pages (business/career/health/love/wealth astrology, Lal Kitab) are now `noindex, follow`. Add tools, not generic articles. The scheduled publisher still ships indexable posts (2 drafts due 2027); decide before then.
 
 ## Doc Conventions (when creating a new doc)
 - **Living reference** (updated over time): `docs/<kebab-name>.md`, following `docs/system-architecture.md`. `docs/archive/` and `docs/internal/` are gitignored, so they stay local.
