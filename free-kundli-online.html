@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Kundli Online — Generate Birth Chart by Date of Birth</title>
-    <meta name="description" content="Generate your free Kundli online — enter your date, time & place of birth and get your complete birth chart in seconds: planetary positions, yogas, doshas…">
-    <meta name="keywords" content="free kundli online, generate kundli online, free kundli by date of birth, online kundli maker, make kundli online, kundli chart, janam kundli online, birth chart generator, vedic kundli, kundli software">
+    <title>Free Kundli Online — Birth Chart, Dasha &amp; Sade Sati, No Sign-up</title>
+    <meta name="description" content="Free kundli online: enter your date, time and place of birth to see your birth chart, planet positions, nakshatra, current dasha and Sade Sati. No sign-up.">
+    <meta name="keywords" content="free kundli online, generate kundli online, free kundli by date of birth, online kundli maker, make kundli online, kundli chart, janam kundli online, birth chart generator, vedic kundli, kundli with dasha, sade sati check">
 
-    <meta property="og:title" content="Free Kundli Online — Generate Birth Chart by Date of Birth">
-    <meta property="og:description" content="Generate your free Kundli online — enter your date, time & place of birth and get your complete birth chart in seconds: planetary positions, yogas, doshas…">
+    <meta property="og:title" content="Free Kundli Online — Birth Chart, Dasha &amp; Sade Sati, No Sign-up">
+    <meta property="og:description" content="Free kundli online: enter your date, time and place of birth to see your birth chart, planet positions, nakshatra, current dasha and Sade Sati. No sign-up.">
     <meta property="og:url" content="https://omai.app/free-kundli-online.html">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://omai.app/assets/og-image.jpg">
@@ -17,6 +17,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Om.AI, the AI Vedic astrology app, answering a question from a birth chart">
     <meta property="og:site_name" content="Om.AI">
+    <meta property="og:locale" content="en_IN">
 
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://omai.app/free-kundli-online.html">
@@ -33,6 +34,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://om-ai-backend-4f29d7469ff6.herokuapp.com" crossorigin>
 
     <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
     <link rel="stylesheet" href="/styles/styles.min.css?v=73">
@@ -42,57 +44,116 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
     <style>
-.feature-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(217,119,87,0.2);
-            border-radius: 12px;
-            padding: 1.75rem;
-            margin-bottom: 1.5rem;
-            height: 100%;
-        }
-        .feature-card .feature-icon {
-            font-size: 2rem;
-            color: #D97757;
-            margin-bottom: 1rem;
-        }
-        .feature-card h3 {
-            font-size: 1.25rem;
-        }
-        .kundli-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 0.75rem;
-        }
-        .kundli-card {
+        .mw-card {
             background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            padding: 1.25rem;
-            text-align: center;
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 14px;
+            padding: 1.75rem;
         }
-        .kundli-card .kundli-icon {
-            font-size: 1.5rem;
-            color: #D97757;
-            margin-bottom: 0.5rem;
+        .mw-label {
+            display: block;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0.4rem;
         }
-        .kundli-card h4 {
-            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+        .mw-input {
+            width: 100%;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
             color: #fff;
-            font-size: 1.05rem;
-            margin-bottom: 0.35rem;
+            padding: 0.7rem 0.85rem;
+            font-size: 1rem;
         }
-        .kundli-card p {
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.55);
-            margin-bottom: 0;
-            line-height: 1.4;
+        .mw-input:focus { outline: none; border-color: #D97757; }
+        /* Native pickers render black-on-black in dark themes without this. */
+        .mw-input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
+        .mw-input option { background: #1a1a1a; color: #fff; }
+        .mw-note {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin: 1rem 0 0;
+            line-height: 1.6;
         }
+        .mw-error {
+            color: #ff9b8a;
+            background: rgba(255,90,60,0.10);
+            border: 1px solid rgba(255,90,60,0.25);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            margin-top: 1rem;
+            font-size: 0.92rem;
+        }
+        /* Free kundli tool: form under the H1, result card below it. */
+        .kt-hero { padding: 2rem 0 1.5rem; }
+        .kt-lead { max-width: 640px; margin: 0 auto 1.25rem; color: rgba(255,255,255,0.8); font-size: 1.15rem; }
+        .kt-form { text-align: left; }
+        .kt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; }
+        .kt-alt { color: rgba(255,255,255,0.55) !important; margin: 1rem 0 0; font-size: 0.95rem; }
+        .kt-alt a { color: #D97757; }
+        .kt-retry { background: none; border: 0; padding: 0; color: #ff9b8a; font-weight: 600; text-decoration: underline; cursor: pointer; }
+        .kt-result { padding: 0 0 3rem; scroll-margin-top: 84px; }
+        .kt-res { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; padding: 1.75rem; }
+        .kt-res-title { font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; color: #D97757 !important; font-size: 2rem; margin: 0 0 0.25rem; }
+        .kt-res-title:focus { outline: none; }
+        .kt-born { color: rgba(255,255,255,0.6) !important; margin: 0 0 1.25rem; }
+        .kt-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin: 0 0 1.5rem; }
+        .kt-fact { background: rgba(255,255,255,0.04); border-left: 3px solid #D97757; border-radius: 10px; padding: 0.75rem 1rem; }
+        .kt-fact dt { font-weight: 400; font-size: 0.85rem; color: rgba(255,255,255,0.6) !important; margin-bottom: 0.2rem; }
+        .kt-fact dd { margin: 0; font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; font-size: 1.35rem; line-height: 1.25; color: #fff !important; }
+        .kt-fact dd > span { display: block; font-family: 'Source Sans 3', 'Source Sans Fallback', 'Source Sans Fallback Android', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.6) !important; margin-top: 0.15rem; }
+        .kt-body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 1.75rem; align-items: start; }
+        .kt-chart { margin: 0; }
+        .kt-svg { display: block; width: 100%; max-width: 440px; height: auto; margin: 0 auto; }
+        .kt-frame { fill: rgba(217,119,87,0.05); stroke: rgba(255,255,255,0.35); stroke-width: 0.5; }
+        .kt-line { fill: none; stroke: rgba(255,255,255,0.22); stroke-width: 0.4; }
+        .kt-signno { fill: rgba(255,255,255,0.45); font-size: 3px; text-anchor: middle; }
+        .kt-ptext { fill: #fff; font-size: 3.8px; font-weight: 600; text-anchor: middle; }
+        .kt-lagna { fill: #D97757; }
+        .kt-rmark { fill: #D97757; font-size: 2.4px; }
+        .kt-hno { fill: rgba(255,255,255,0.8); font-size: 6px; text-anchor: middle; dominant-baseline: middle; }
+        .kt-chart figcaption { font-size: 0.85rem; color: rgba(255,255,255,0.55) !important; margin-top: 0.6rem; text-align: center; }
+        .kt-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .kt-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .kt-table th, .kt-table td { padding: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; white-space: nowrap; }
+        .kt-table thead th { color: rgba(255,255,255,0.55) !important; font-weight: 600; font-size: 0.8rem; border-bottom-color: rgba(255,255,255,0.18); }
+        .kt-table tbody th { color: #fff !important; font-weight: 600; }
+        .kt-table td { color: rgba(255,255,255,0.8) !important; }
+        .kt-table tbody tr:last-child th, .kt-table tbody tr:last-child td { border-bottom: 0; }
+        .kt-sec { color: inherit !important; }
+        .kt-nak-m { display: none; }
+        .kt-retro { color: #D97757 !important; text-decoration: none; font-weight: 700; cursor: help; }
+        .kt-legend { font-size: 0.85rem !important; color: rgba(255,255,255,0.55) !important; margin: 0.6rem 0 0; }
+        .kt-twin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.75rem; }
+        .kt-block { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-left: 3px solid #D97757; border-radius: 10px; padding: 1.1rem 1.25rem; }
+        .kt-block h3 { font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; color: #fff !important; font-size: 1.3rem; margin: 0 0 0.5rem; }
+        .kt-dasha-row { margin: 0 0 0.6rem; color: rgba(255,255,255,0.8) !important; }
+        .kt-dasha-row:last-child { margin-bottom: 0; }
+        .kt-dasha-row .kt-k { color: rgba(255,255,255,0.6) !important; }
+        .kt-dasha-row strong { color: #fff !important; }
+        .kt-dates { display: block; font-size: 0.92rem; color: rgba(255,255,255,0.6) !important; }
+        .kt-sade { margin: 0; color: rgba(255,255,255,0.8) !important; line-height: 1.6; }
+        .kt-next { text-align: center; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+        .kt-next h3 { font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; color: #fff !important; font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .kt-next p { color: rgba(255,255,255,0.75) !important; max-width: 560px; margin: 0 auto 1rem; }
+        .kt-next .kt-applabel { font-size: 0.9rem; margin: 1rem auto 0.6rem; color: rgba(255,255,255,0.55) !important; }
+        .kt-ask { min-width: 280px; }
+        /* Guide */
+        .kt-houses { columns: 2; column-gap: 2rem; margin: 0.75rem 0 1rem; padding-left: 1.4rem; }
+        .kt-houses li { break-inside: avoid; margin-bottom: 0.2rem; }
+        .kt-diagram { max-width: 220px; margin: 1rem auto 0.5rem; }
+        .kt-diagram figcaption { font-size: 0.85rem; color: rgba(255,255,255,0.55) !important; text-align: center; margin-top: 0.4rem; }
+        .kt-mini { border-collapse: collapse; margin: 0.75rem 0 0.5rem; font-size: 0.98rem; }
+        .kt-mini th, .kt-mini td { padding: 0.4rem 1.25rem 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; }
+        .kt-mini thead th { color: rgba(255,255,255,0.55) !important; font-weight: 600; font-size: 0.85rem; }
+        .kt-mini tbody th { color: #fff !important; font-weight: 600; }
         .how-step {
             display: flex;
             gap: 1.25rem;
             align-items: flex-start;
             margin-bottom: 2rem;
         }
+        .how-step > div:last-child { min-width: 0; }
         .step-num {
             width: 44px;
             height: 44px;
@@ -106,45 +167,6 @@
             font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
             font-size: 1.2rem;
             color: #D97757;
-        }
-        .calc-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .calc-list li {
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-        .calc-list li:last-child {
-            border-bottom: none;
-        }
-        .calc-list li i {
-            color: #D97757;
-            margin-top: 0.25rem;
-            min-width: 18px;
-        }
-        .pricing-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 1.5rem;
-            height: 100%;
-        }
-        .pricing-card.highlight {
-            background: rgba(217,119,87,0.08);
-            border-color: rgba(217,119,87,0.25);
-        }
-        .pricing-card h3 {
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
-        }
-        .pricing-card p {
-            font-size: 0.95rem;
-            margin-bottom: 0;
         }
         .cta-box {
             background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
@@ -165,24 +187,52 @@
         }
         .faq-item h3 {
             font-size: 1.15rem;
-            cursor: pointer;
             margin-bottom: 0.75rem;
         }
         .faq-item p {
             margin-bottom: 0;
             font-size: 1rem;
         }
-</style>
-
+        @media (max-width: 767px) {
+            .kt-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .kt-body, .kt-twin { grid-template-columns: minmax(0, 1fr); }
+        }
+        @media (max-width: 575px) {
+            .kt-hero { padding: 1.25rem 0 1rem; }
+            .kt-lead { font-size: 1.02rem; margin-bottom: 1rem; }
+            .mw-card.kt-form { padding: 1.1rem; }
+            .kt-grid { gap: 0.75rem; }
+            .kt-wide { grid-column: 1 / -1; }
+            .kt-res { padding: 1.1rem; }
+            .kt-res-title { font-size: 1.7rem; }
+            .kt-fact { padding: 0.6rem 0.75rem; }
+            .kt-fact dd { font-size: 1.2rem; }
+            .kt-table { font-size: 0.85rem; }
+            .kt-table th, .kt-table td { padding: 0.45rem 0.25rem; }
+            .kt-table .kt-nak { display: none; }
+            .kt-table td.kt-sign { white-space: normal; }
+            .kt-table td .kt-nak-m { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.55) !important; }
+            .kt-table thead .kt-nak-m { display: inline; }
+            .kt-ask { width: 100%; min-width: 0; }
+            .kt-houses { columns: 1; }
+            .how-step { gap: 0.9rem; }
+            .cta-box { padding: 2rem 1.25rem; }
+        }
+        @media (max-width: 400px) {
+            .kt-table .kt-sec { display: none; }
+        }
+    </style>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": "WebPage",
-                "name": "Free Kundli Online — Generate Your Birth Chart by Date of Birth | Om.AI",
-                "description": "Generate your free Kundli online. Enter your date of birth, time & place to build your birth chart in seconds — planetary positions, yogas, doshas, Dasha periods & Navamsa chart.",
+                "@id": "https://omai.app/free-kundli-online.html",
+                "name": "Free Kundli Online — Birth Chart, Dasha & Sade Sati, No Sign-up",
+                "description": "Free kundli online: enter your date, time and place of birth to see your birth chart, planet positions, nakshatra, current dasha and Sade Sati. No sign-up.",
                 "url": "https://omai.app/free-kundli-online.html",
+                "inLanguage": "en-IN",
                 "publisher": {
                     "@type": "Organization",
                     "name": "Om.AI",
@@ -190,70 +240,71 @@
                 }
             },
             {
+                "@type": "WebApplication",
+                "name": "Free Kundli Online",
+                "url": "https://omai.app/free-kundli-online.html#kundli-tool",
+                "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": "Any",
+                "inLanguage": "en-IN",
+                "description": "Makes a Vedic birth chart (kundli) from date, time and place of birth: a North Indian lagna chart, each planet's sign, house, degree and nakshatra, the current Vimshottari mahadasha and antardasha, and Sade Sati status. No sign-up.",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "INR"
+                },
+                "isPartOf": {
+                    "@id": "https://omai.app/free-kundli-online.html"
+                }
+            },
+            {
                 "@type": "FAQPage",
                 "mainEntity": [
                     {
                         "@type": "Question",
-                        "name": "What is a Kundli?",
+                        "name": "What is a kundli?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "A Kundli (also called Janam Kundli, birth chart, or natal chart) is a map of the sky at the exact moment you were born, viewed from your birth location. It shows the positions of all 9 Vedic planets (Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu) across the 12 houses of the zodiac. In Vedic astrology, your Kundli is the foundation for all predictions — it reveals personality traits, career potential, relationship patterns, health tendencies, and life timing through Dasha periods."
+                            "text": "A kundli (janam kundli, birth chart) is a map of the sky at the moment and place you were born. It shows your lagna (rising sign) and where the nine Vedic planets, Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu and Ketu, sat across the 12 signs and 12 houses. Vedic astrology reads temperament, life areas and timing from it."
                         }
                     },
                     {
                         "@type": "Question",
-                        "name": "What information do I need to generate my Kundli?",
+                        "name": "What do I need to make my kundli?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "You need three pieces of information: your date of birth, your time of birth (as precise as possible), and your place of birth. The birth time is especially important because it determines your Ascendant (Lagna), which shifts roughly every two hours. Even a 15-minute difference can change house placements. If you do not know your exact birth time, you can check your birth certificate or hospital records."
+                            "text": "Your date of birth, time of birth and place of birth. The time matters most: the lagna changes about every two hours, and every house moves with it. If you're unsure of your birth time, check a birth certificate or hospital record before relying on the houses."
                         }
                     },
                     {
                         "@type": "Question",
-                        "name": "Is the Kundli chart free on Om.AI?",
+                        "name": "Is this kundli free? Do I need to sign up?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yes. Viewing your D1 Rashi chart (birth chart) with all planetary positions is completely free on Om.AI. You can see all 9 planets, their house placements, sign positions, and degree information at no cost. Today's planetary positions and daily horoscope scores are also free. AI-powered chart analysis questions start with 1 included question, and you can earn additional questions just by opening the app each day — milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days pay out 19 free questions across the ladder, plus 3 days of Premium at day 30 and 7 days at day 90."
+                            "text": "Yes, it's free and there is no sign-up. The chart, planet table, current dasha and Sade Sati status on this page cost nothing. To ask questions about the chart, your first question on Om.AI is free."
                         }
                     },
                     {
                         "@type": "Question",
-                        "name": "How accurate is Om.AI's Kundli calculation?",
+                        "name": "Why does my kundli look different on another website?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Om.AI calculates planetary positions with arc-second precision using the Lahiri Ayanamsa, which is the standard used by the Indian government's official Panchang committee. The app computes positions for all 9 Vedic planets, calculates divisional charts, and determines Nakshatra positions, Dasha periods, and planetary strengths using established classical algorithms. The same astronomical precision is used for transit calculations and Muhurta timing."
+                            "text": "Usually the birth time or time zone differs, which moves the lagna and the houses. The zodiac can differ too: this chart uses the sidereal zodiac with Lahiri ayanamsa, the convention Indian panchangs follow, while a Western (tropical) chart places each planet about 24° further on, often in the next sign."
                         }
                     },
                     {
                         "@type": "Question",
-                        "name": "What is the difference between Rashi chart (D1) and Navamsa chart (D9)?",
+                        "name": "What is the difference between the rashi chart (D1) and navamsa (D9)?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "The Rashi chart (D1) is your primary birth chart showing where each planet was positioned at the time of your birth. It covers all major life areas. The Navamsa chart (D9) is a divisional chart derived from the Rashi chart that provides deeper insight into marriage, partnerships, spiritual inclinations, and the true strength of planets. A planet that is strong in D1 but weak in D9 may not deliver its full results. Vedic astrologers read both charts together for a complete picture."
+                            "text": "The rashi chart (D1), shown on this page, is the main birth chart. The navamsa (D9) divides each sign into nine parts and is read for marriage and for how much strength each planet really has. You can see your D9 in the Om.AI app and web chat."
                         }
                     },
                     {
                         "@type": "Question",
-                        "name": "What are yogas and doshas in a Kundli?",
+                        "name": "Can I ask questions about my kundli?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Yogas are specific planetary combinations in your birth chart that indicate particular life outcomes — for example, Gaja Kesari Yoga (Jupiter-Moon conjunction) indicates wisdom and prosperity, while Raj Yoga indicates success and authority. Doshas are planetary afflictions that may create challenges — Manglik Dosha (Mars in certain houses) can affect marriage compatibility, and Kaal Sarp Dosha (all planets between Rahu-Ketu) may cause recurring obstacles. Om.AI automatically detects and explains all major yogas and doshas in your chart."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Can I ask questions about my Kundli?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes. Om.AI includes an AI astrologer that can answer questions about your specific birth chart. You can ask about career timing, marriage prospects, financial periods, health, education, or any other life area. The AI analyzes your planetary positions, active Dasha periods, and current transits to give you a personalized answer. Your first question is included when you download the app, and you can earn more questions with a daily streak — just open the app each day — or purchase question packs."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "What is Vimshottari Dasha and why does it matter?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Vimshottari Dasha is the most widely used timing system in Vedic astrology. It divides your life into planetary periods (Mahadasha) governed by each of the 9 planets, based on your Moon's Nakshatra at birth. Each Mahadasha lasts a fixed number of years (e.g., Saturn = 19 years, Venus = 20 years) and is subdivided into sub-periods (Antardasha). The Dasha system is how Vedic astrologers predict when specific events are likely to occur. Om.AI calculates your complete Dasha timeline and uses it to answer timing-related questions."
+                            "text": "Yes. Om.AI reads your own chart, your running dasha and the current transits, and answers questions about career, marriage, money, family or timing in English or Hindi. Your first question is free, in the app or in your browser."
                         }
                     }
                 ]
@@ -261,8 +312,18 @@
             {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
-                    {"@type": "ListItem", "position": 2, "name": "Free Kundli Online", "item": "https://omai.app/free-kundli-online.html"}
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://omai.app/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Free Kundli Online",
+                        "item": "https://omai.app/free-kundli-online.html"
+                    }
                 ]
             }
         ]
@@ -316,6 +377,15 @@
     <noscript><img height="1" width="1" style="display:none" alt=""
     src="https://www.facebook.com/tr?id=1678262729978200&ev=PageView&noscript=1"
     /></noscript>
+    <!-- Mobile sticky install CTA bar -->
+    <style>
+.mobile-cta-bar{display:none}
+@media (max-width:768px){
+  .mobile-cta-bar{display:flex;gap:.6rem;position:fixed;left:0;right:0;bottom:0;z-index:1040;padding:.55rem .7rem;padding-bottom:calc(.55rem + env(safe-area-inset-bottom));background:rgba(31,30,29,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(217,119,87,.3)}
+  .mobile-cta-bar .btn{flex:1 1 0;min-width:0;padding:.6rem .4rem;font-size:.9rem;line-height:1.2;white-space:nowrap}
+  body{padding-bottom:4.75rem}
+}
+</style>
 </head>
 
 <body>
@@ -340,6 +410,7 @@
                             <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI Astrology Chat</a></li>
                             <li><a class="dropdown-item" href="/free-kundli-online.html">Kundli & Birth Chart</a></li>
                             <li><a class="dropdown-item" href="/kundli-matching.html">Kundli Matching</a></li>
+                            <li><a class="dropdown-item" href="/sade-sati.html">Sade Sati Check</a></li>
                             <li><a class="dropdown-item" href="/hi/naukri-kab-milegi.html">Naukri Kab Milegi</a></li>
                             <li><a class="dropdown-item" href="/marriage-prediction.html">Marriage Prediction</a></li>
                             <li><a class="dropdown-item" href="/dasha-calculator.html">Dasha Calculator</a></li>
@@ -369,166 +440,110 @@
     </nav>
 
     <main id="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section text-center" style="padding: 5rem 0 3rem;">
-            <div class="container">
-                <h1 class="display-4 mb-3" style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif;">Free Kundli Online — Generate Your Birth Chart</h1>
-                <p class="lead" style="max-width:720px; margin:0 auto; color:rgba(255,255,255,0.8); font-size:1.25rem;">
-                    Enter your date, time, and place of birth and generate your complete Kundli online in seconds — precise planetary positions, yogas, doshas, and Dasha periods, free. Then <a href="/kundli.html" style="color:#D97757;">read your chart with AI</a> to understand what it all means for your life.
-                </p>
-                <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
-                    <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dkundli" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
-                        <i class="fab fa-google-play me-2" aria-hidden="true"></i>Get Your Free Kundli — Android
-                    </a>
-                    <a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_kundli&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
-                        <i class="fab fa-apple me-2" aria-hidden="true"></i>Get Your Free Kundli — iOS
-                    </a>
-                </div>
-                <p style="color:rgba(255,255,255,0.55); margin-top:1.5rem; font-size:0.95rem;">
-                    Free to generate. English & हिंदी supported. <a href="/hi/free-kundli-online.html" style="color:#D97757;">हिंदी में पढ़ें →</a>
-                </p>
+        <section class="hero-section text-center kt-hero" id="kundli-tool">
+            <div class="container" style="max-width:760px;">
+                <h1 class="display-4 mb-2" style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif;">Free Kundli Online</h1>
+                <p class="lead kt-lead">Your birth chart, planet positions, current dasha and Sade Sati from your date, time and place of birth. No sign-up.</p>
+
+                <form id="kt-form" class="mw-card kt-form" novalidate>
+                    <div class="kt-grid">
+                        <div>
+                            <label class="mw-label" for="kt-date">Date of birth</label>
+                            <input type="date" id="kt-date" class="mw-input" min="1900-01-01" max="2099-12-31" required>
+                        </div>
+                        <div>
+                            <label class="mw-label" for="kt-time">Time of birth</label>
+                            <input type="time" id="kt-time" class="mw-input" required>
+                        </div>
+                        <div class="kt-wide">
+                            <label class="mw-label" for="kt-city">Place of birth</label>
+                            <input list="kt-cities" id="kt-city" class="mw-input" placeholder="Pick or type a city" autocomplete="off" required>
+                            <datalist id="kt-cities"></datalist>
+                        </div>
+                        <div class="kt-wide">
+                            <label class="mw-label" for="kt-tz">Time zone</label>
+                            <select id="kt-tz" class="mw-input">
+                                <option value="5.5" selected>India (IST, +5:30)</option>
+                                <option value="5.75">Nepal (+5:45)</option>
+                                <option value="6">Bangladesh (+6:00)</option>
+                                <option value="4">Gulf / UAE (+4:00)</option>
+                                <option value="0">UK / UTC (+0:00)</option>
+                                <option value="-5">US Eastern (-5:00)</option>
+                                <option value="8">Singapore (+8:00)</option>
+                                <option value="10">Sydney (+10:00)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p class="mw-note">The lagna changes about every two hours, so the birth time matters. Town not on the list? Pick the nearest city.</p>
+
+                    <button type="submit" id="kt-go" class="btn btn--primary btn-lg w-100 mt-3">Make my kundli</button>
+                    <div id="kt-error" class="mw-error" role="alert" hidden></div>
+                    <noscript><p class="mw-note">Turn on JavaScript to make your kundli on this page.</p></noscript>
+                </form>
+
+                <p class="kt-alt">Free, with no sign-up. <a href="/hi/free-kundli-online.html">हिंदी में देखें &rarr;</a></p>
             </div>
         </section>
 
-        <hr class="divider">
-
-        <!-- What's in a Kundli -->
-        <section class="content-section">
-            <div class="container" style="max-width:960px;">
-                <h2 class="text-center mb-2">What's in a Kundli</h2>
-                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:680px; margin:0 auto;">
-                    A Kundli (Janam Kundli) is the complete map of the sky at the moment you were born. It is the foundation of all Vedic astrology predictions.
-                </p>
-
-                <div class="kundli-grid">
-                    <div class="kundli-card">
-                        <div class="kundli-icon"><i class="fas fa-chart-pie" aria-hidden="true"></i></div>
-                        <h4>D1 Rashi Chart</h4>
-                        <p>Your primary birth chart showing planets across the 12 zodiac signs and houses</p>
-                    </div>
-                    <div class="kundli-card">
-                        <div class="kundli-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
-                        <h4>9 Vedic Planets</h4>
-                        <p>Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu & Ketu (Navagraha)</p>
-                    </div>
-                    <div class="kundli-card">
-                        <div class="kundli-icon"><i class="fas fa-th" aria-hidden="true"></i></div>
-                        <h4>12 Houses (Bhavas)</h4>
-                        <p>Each house governs a life area — career, marriage, wealth, health, education & more</p>
-                    </div>
-                    <div class="kundli-card">
-                        <div class="kundli-icon"><i class="fas fa-star" aria-hidden="true"></i></div>
-                        <h4>27 Nakshatras</h4>
-                        <p>Lunar mansions that refine each planet's influence and determine Dasha periods</p>
-                    </div>
-                    <div class="kundli-card">
-                        <div class="kundli-icon"><i class="fas fa-compass" aria-hidden="true"></i></div>
-                        <h4>Ascendant (Lagna)</h4>
-                        <p>The rising sign at your birth — the lens through which your entire chart is read</p>
-                    </div>
-                    <div class="kundli-card">
-                        <div class="kundli-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
-                        <h4>Vimshottari Dasha</h4>
-                        <p>Planetary period timeline that reveals when key events will unfold in your life</p>
-                    </div>
-                </div>
-
-                <p class="mt-4" style="color:rgba(255,255,255,0.7); font-size:1rem;">
-                    In Vedic astrology, no two Kundlis are alike. Even twins born minutes apart can have different Ascendants and house cusps, leading to meaningfully different life paths. That is why your exact birth time and location matter — they determine the precise arrangement of planets that makes your chart uniquely yours.
-                </p>
-            </div>
-        </section>
+        <section class="kt-result" id="kt-result" hidden></section>
 
         <hr class="divider">
 
-        <!-- What Om.AI Calculates -->
-        <section class="content-section">
+        <section class="content-section" id="how-to-read">
             <div class="container" style="max-width:860px;">
-                <h2>What Om.AI Calculates in Your Kundli</h2>
-                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
-                    Om.AI goes beyond a basic chart diagram. Here is everything computed from your birth details, using arc-second precision and the Lahiri Ayanamsa.
-                </p>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <ul class="calc-list">
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">Planetary Positions</strong> — Exact degree, sign, house, and Nakshatra for all 9 planets plus Ascendant</div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">House Lords</strong> — Which planet rules each house and where it sits, forming the basis for predictions</div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">Yogas</strong> — Raj Yoga, Gaja Kesari Yoga, Dhana Yoga, Pancha Mahapurusha Yogas, and dozens more auspicious combinations</div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">Doshas</strong> — Manglik Dosha, Kaal Sarp Dosha, Nadi Dosha, Pitru Dosha detection with severity assessment</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6">
-                        <ul class="calc-list">
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">Shadbala</strong> — Six-fold planetary strength analysis showing which planets are powerful and which need support</div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">Ashtakavarga</strong> — Point-based transit strength system for each planet and house, used for timing predictions</div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">Vimshottari Dasha</strong> — Complete Mahadasha and Antardasha timeline from birth, showing which planet governs which period of your life</div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check" aria-hidden="true"></i>
-                                <div><strong style="color:#fff;">Navamsa (D9) Chart</strong> — Divisional chart for marriage, partnerships, and deeper planetary strength analysis</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <p class="mt-3" style="color:rgba(255,255,255,0.6); font-size:0.95rem;">
-                    All calculations follow the methodology outlined in Brihat Parashara Hora Shastra (BPHS), the foundational text of Vedic astrology. Transit overlays use real-time planetary positions to show how current cosmic movements interact with your birth chart.
-                </p>
-            </div>
-        </section>
-
-        <hr class="divider">
-
-        <!-- How to Get Your Kundli -->
-        <section class="content-section">
-            <div class="container" style="max-width:860px;">
-                <h2>How to Get Your Kundli on Om.AI</h2>
-                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
-                    Three steps. Under a minute. No registration wall.
-                </p>
+                <h2>How to read your kundli</h2>
+                <p class="mb-4">Read a kundli in this order: the lagna first, then the houses, the planets, the Moon, the running dasha and Saturn's transit. Each step names the classical text it comes from.</p>
 
                 <div class="how-step">
                     <div class="step-num">1</div>
                     <div>
-                        <h3 style="margin-bottom:0.35rem;">Download Om.AI</h3>
-                        <p>Available on Google Play and the App Store. The app is lightweight and works on Android 8+ and iOS 16+. Open it and tap "Get Started."</p>
+                        <h3 style="margin-bottom:0.35rem;">Start with the lagna</h3>
+                        <p>The lagna is the sign rising in the east when you were born. In the North Indian chart it sits in the top centre diamond, which is always house 1; the other houses follow counter-clockwise. The small number in each house is its sign, 1 for Aries through 12 for Pisces. Brihat Parashara Hora Shastra (BPHS, Ch.11) reads body, looks, temperament and general happiness from the lagna.</p>
+                        <figure class="kt-diagram"><svg class="kt-svg" viewBox="0 0 100 100" role="img" aria-label="House positions in a North Indian chart"><rect x="1" y="1" width="98" height="98" class="kt-frame"/><line x1="1" y1="1" x2="99" y2="99" class="kt-line"/><line x1="99" y1="1" x2="1" y2="99" class="kt-line"/><polygon points="50,1 99,50 50,99 1,50" class="kt-line"/><text x="50" y="27" class="kt-hno">1</text><text x="25" y="10" class="kt-hno">2</text><text x="9" y="26" class="kt-hno">3</text><text x="26" y="50" class="kt-hno">4</text><text x="9" y="74" class="kt-hno">5</text><text x="25" y="90" class="kt-hno">6</text><text x="50" y="73" class="kt-hno">7</text><text x="75" y="90" class="kt-hno">8</text><text x="91" y="74" class="kt-hno">9</text><text x="74" y="50" class="kt-hno">10</text><text x="91" y="26" class="kt-hno">11</text><text x="75" y="10" class="kt-hno">12</text></svg><figcaption>House numbers in a North Indian chart. Your chart above shows sign numbers in the same boxes.</figcaption></figure>
                     </div>
                 </div>
 
                 <div class="how-step">
                     <div class="step-num">2</div>
                     <div>
-                        <h3 style="margin-bottom:0.35rem;">Enter Your Birth Details</h3>
-                        <p>Provide your date of birth, time of birth, and place of birth. The app uses this to compute your precise Ascendant, planetary longitudes, and Nakshatra positions. If you are unsure about your birth time, check your birth certificate or hospital records — accuracy matters.</p>
+                        <h3 style="margin-bottom:0.35rem;">Know what each house covers</h3>
+                        <p>BPHS (Ch.11) gives each house its own part of life:</p>
+                        <ol class="kt-houses"><li>Self, body and nature</li><li>Wealth, family and food</li><li>Courage, siblings and short journeys</li><li>Mother, home, vehicles and land</li><li>Children, learning and intelligence</li><li>Rivals, illness and maternal uncle</li><li>Spouse, travel and trade</li><li>Longevity and inheritance</li><li>Fortune, dharma and pilgrimage</li><li>Work, status and honour</li><li>Income and gains</li><li>Expenses</li></ol>
+                        <p>A planet sitting in a house colours that part of life. The house lord, the planet that rules the sign in that house, links the house's matters to wherever it sits; BPHS Ch.24 gives the result of each house lord in each house.</p>
                     </div>
                 </div>
 
                 <div class="how-step">
                     <div class="step-num">3</div>
                     <div>
-                        <h3 style="margin-bottom:0.35rem;">View Your Birth Chart</h3>
-                        <p>Your D1 Rashi chart appears instantly with all 9 planets placed in their houses. You can see planetary degrees, signs, Nakshatra positions, and house details. Swipe to view today's transit overlay, your Dasha timeline, and daily horoscope scores — all calculated from your personal chart.</p>
+                        <h3 style="margin-bottom:0.35rem;">Check how strong each planet is</h3>
+                        <p>BPHS (Ch.3, v.49-50) gives each planet a sign of exaltation, where it is strongest, and a sign of debilitation, the opposite sign, where it is weakest. A planet in its exaltation sign gives its good results in full, in its own sign about half, and in its debilitation sign very little (Ch.3, v.59-60).</p>
+                        <table class="kt-mini"><thead><tr><th scope="col">Planet</th><th scope="col">Strongest in</th><th scope="col">Weakest in</th></tr></thead><tbody><tr><th scope="row">Sun</th><td>Aries</td><td>Libra</td></tr><tr><th scope="row">Moon</th><td>Taurus</td><td>Scorpio</td></tr><tr><th scope="row">Mars</th><td>Capricorn</td><td>Cancer</td></tr><tr><th scope="row">Mercury</th><td>Virgo</td><td>Pisces</td></tr><tr><th scope="row">Jupiter</th><td>Cancer</td><td>Capricorn</td></tr><tr><th scope="row">Venus</th><td>Pisces</td><td>Virgo</td></tr><tr><th scope="row">Saturn</th><td>Libra</td><td>Aries</td></tr></tbody></table>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">4</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Read the Moon as a second lagna</h3>
+                        <p>Your Moon sign (rashi) is the sign daily rashifal is read from, and BPHS (Ch.12, v.11) says to judge the chart from the Moon as well as from the lagna. The Moon's nakshatra decides which planet your dasha cycle starts with (BPHS Ch.46, v.12-14), and transits are counted from the Moon sign (Phaladeepika Ch.26).</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">5</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Find the dasha you are in</h3>
+                        <p>Vimshottari dasha splits a 120-year cycle among nine planets: Sun 6 years, Moon 10, Mars 7, Rahu 18, Jupiter 16, Saturn 19, Mercury 17, Ketu 7 and Venus 20 (BPHS Ch.46, v.15). The mahadasha lord sets the main theme of those years and the antardasha lord the theme within it. A dasha gives results in line with its lord's strength (BPHS Ch.47, v.3), so find your mahadasha lord in the planet table above and check its sign against step 3 and its house against step 2.</p>
+                    </div>
+                </div>
+
+                <div class="how-step">
+                    <div class="step-num">6</div>
+                    <div>
+                        <h3 style="margin-bottom:0.35rem;">Read Sade Sati with the dasha</h3>
+                        <p>Sade Sati is the traditional name for Saturn's roughly seven-and-a-half-year passage through the sign before your Moon sign, the Moon sign itself and the sign after it. Varahamihira's Brihat Samhita (Ch.104, v.39-40 and 45) counts each of these as a demanding transit, and the same chapter (v.46) adds that a transit gives only what the running dasha allows. So read Sade Sati together with your dasha, never on its own.</p>
                     </div>
                 </div>
             </div>
@@ -536,115 +551,12 @@
 
         <hr class="divider">
 
-        <!-- AI Analysis Section -->
-        <section class="content-section">
-            <div class="container" style="max-width:860px;">
-                <h2>Ask AI About Your Kundli</h2>
-                <p class="mb-4" style="color:rgba(255,255,255,0.65);">
-                    Seeing your chart is one thing. Understanding what it means for your career, relationships, health, and finances is another. That is where the AI comes in — <a href="/ask.html?utm_source=website&amp;utm_medium=referral&amp;utm_campaign=seo_page&amp;utm_content=free_kundli_chat" style="color:#D97757;" onclick="try{gtag('event','web_ask_click',{event_category:'Web MVP',event_label:'free_kundli_chat'})}catch(e){}">start a free astrology chat</a> and ask about your Kundli right in your browser, no download needed.
-                </p>
-
-                <div class="row g-4">
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
-                            <h3>Conversational Analysis</h3>
-                            <p>
-                                Ask questions in plain language — "Will I get promoted this year?", "When should I get married?", "Is this a good time to invest?" The AI reads your Kundli data (planets, houses, Dashas, transits) and answers based on classical Jyotish principles from texts like BPHS and Lal Kitab.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-memory" aria-hidden="true"></i></div>
-                            <h3>Context-Aware Follow-Ups</h3>
-                            <p>
-                                The AI remembers your previous questions and readings. Ask a follow-up like "What about finances during that same period?" and it builds on the earlier analysis instead of starting from scratch. This mirrors how a real Jyotishi would conduct a reading.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
-                            <h3>Timing Predictions</h3>
-                            <p>
-                                The AI cross-references your Vimshottari Dasha periods with upcoming transits to identify specific time windows for career moves, marriage, travel, or financial decisions. You get actual date ranges, not vague "sometime this year" answers.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="fas fa-language" aria-hidden="true"></i></div>
-                            <h3>Ask in Any Language</h3>
-                            <p>
-                                The AI responds in whatever language you write in — Hindi, Tamil, Telugu, Bengali, Marathi, Kannada, Gujarati, or English. Ask in your preferred language and receive chart analysis in that same language.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="divider">
-
-        <!-- Pricing Transparency -->
-        <section class="content-section">
-            <div class="container" style="max-width:860px;">
-                <h2 class="text-center mb-2">What's Free & What's Premium</h2>
-                <p class="text-center mb-4" style="color:rgba(255,255,255,0.65); max-width:640px; margin:0 auto;">
-                    No hidden paywalls. Here is exactly what you get at each level.
-                </p>
-
-                <div class="row mb-4">
-                    <div class="col-md-6 mb-3">
-                        <div class="pricing-card">
-                            <h3><i class="fas fa-gift me-2" style="color:#81C784;" aria-hidden="true"></i>Free in the App</h3>
-                            <ul style="list-style:none; padding:0; margin:0.75rem 0 0;">
-                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>D1 Rashi chart with all planetary positions</li>
-                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>Today's planetary transit positions</li>
-                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>Daily horoscope scores (4 life areas)</li>
-                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>D9 Navamsa chart viewing</li>
-                                <li style="padding:0.35rem 0; font-size:0.95rem;"><i class="fas fa-check me-2" style="color:#81C784;" aria-hidden="true"></i>1 AI analysis question included</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="pricing-card">
-                            <h3><i class="fas fa-fire me-2" style="color:#D97757;" aria-hidden="true"></i>Earn With Streaks</h3>
-                            <p style="margin-top:0.75rem;">
-                                Open the app each day to build a streak — that's the whole requirement. Nine milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days pay out 19 free AI questions, plus <strong style="color:#fff;">3 days of Premium at day 30 and 7 days at day 90</strong>. Two banked freezes cover the days you miss.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="pricing-card">
-                            <h3><i class="fas fa-shopping-bag me-2" style="color:#D97757;" aria-hidden="true"></i>Question Packs</h3>
-                            <p style="margin-top:0.75rem;">
-                                Need a few extra questions without committing to a subscription? One-time question packs let you buy additional AI analysis questions. No recurring charges — pay once, use anytime.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="pricing-card highlight">
-                            <h3><i class="fas fa-crown me-2" style="color:#D97757;" aria-hidden="true"></i>Premium</h3>
-                            <p style="margin-top:0.75rem;">
-                                Unlimited AI questions, personalized daily remedies, tomorrow's horoscope, monthly forecast, Lagna timing, and Dasha transition alerts. Monthly and yearly plans available.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="divider">
-
-        <!-- CTA -->
         <section class="content-section">
             <div class="container" style="max-width:860px;">
                 <div class="cta-box">
-                    <h2 style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:2rem; margin-bottom:1rem;">Get Your Kundli Now</h2>
+                    <h2 style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:2rem; margin-bottom:1rem;">Ask what your kundli says</h2>
                     <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
-                        Download Om.AI, enter your birth details, and see your complete birth chart in under a minute. Then ask AI what it means for your life.
+                        The chart shows where the planets sit. Om.AI reads your own chart for your question, in English or Hindi, and answers with a time window and the reason behind it. Your first question is free.
                     </p>
 
                     <div class="d-flex justify-content-center gap-3 flex-wrap">
@@ -655,60 +567,45 @@
                             <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
                         </a>
                     </div>
+                    <p style="margin:1.25rem 0 0;font-size:1rem;">Don't want to download? <a href="/ask.html?utm_source=website&amp;utm_medium=referral&amp;utm_campaign=seo_page&amp;utm_content=free_kundli_chat" style="color:#D97757;font-weight:600;text-decoration:underline;" onclick="try{gtag('event','web_ask_click',{event_category:'Web MVP',event_label:'free_kundli_chat'})}catch(e){}">Ask in your browser &rarr;</a></p>
                 </div>
             </div>
         </section>
 
         <hr class="divider">
 
-        <!-- Related Content -->
         <section class="content-section">
             <div class="container" style="max-width:860px;">
-                <h2 class="text-center mb-4">Learn More About Your Kundli</h2>
+                <h2 class="text-center mb-4">More free tools</h2>
                 <div class="row">
                     <div class="col-md-4">
-                        <a href="/blog/12-houses-vedic-astrology.html" class="insight-link">
-                            <i class="fas fa-th" aria-hidden="true"></i> 12 Houses in Vedic Astrology
+                        <a href="/shadi-kab-hogi.html" class="insight-link">
+                            <i class="fas fa-ring" aria-hidden="true"></i> When will I get married?
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="/blog/9-planets-vedic-astrology.html" class="insight-link">
-                            <i class="fas fa-globe" aria-hidden="true"></i> 9 Planets Explained
+                        <a href="/kundli-matching.html" class="insight-link">
+                            <i class="fas fa-heart" aria-hidden="true"></i> Kundli matching
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="/blog/navamsha-d9-chart-guide.html" class="insight-link">
-                            <i class="fas fa-chart-pie" aria-hidden="true"></i> Navamsa (D9) Chart Guide
+                        <a href="/dasha-calculator.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> Dasha calculator
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="/blog/raj-yoga-vedic-astrology.html" class="insight-link">
-                            <i class="fas fa-crown" aria-hidden="true"></i> Raj Yoga Explained
+                        <a href="/hi/naukri-kab-milegi.html" class="insight-link">
+                            <i class="fas fa-briefcase" aria-hidden="true"></i> Naukri kab milegi
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="/blog/manglik-dosha-truth-myths-remedies.html" class="insight-link">
-                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Manglik Dosha Guide
+                        <a href="/panchang.html" class="insight-link">
+                            <i class="fas fa-calendar-day" aria-hidden="true"></i> Today's panchang
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="/blog/mahadasha-planetary-periods.html" class="insight-link">
-                            <i class="fas fa-clock" aria-hidden="true"></i> Mahadasha Explained
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="/blog/shadbala-planetary-strength.html" class="insight-link">
-                            <i class="fas fa-fist-raised" aria-hidden="true"></i> Shadbala Strength Guide
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="/blog/kaal-sarp-dosha-explained.html" class="insight-link">
-                            <i class="fas fa-moon" aria-hidden="true"></i> Kaal Sarp Dosha
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="/blog/gaja-kesari-yoga-meaning-effects.html" class="insight-link">
-                            <i class="fas fa-star" aria-hidden="true"></i> Gaja Kesari Yoga
+                        <a href="/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI astrology chat
                         </a>
                     </div>
                 </div>
@@ -717,65 +614,38 @@
 
         <hr class="divider">
 
-        <!-- FAQ Section -->
         <section class="content-section" id="faq">
             <div class="container" style="max-width:860px;">
-                <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+                <h2 class="text-center mb-4">Frequently asked questions</h2>
 
                 <div class="faq-item">
-                    <h3>What is a Kundli?</h3>
-                    <p>
-                        A Kundli (also called Janam Kundli, birth chart, or natal chart) is a map of the sky at the exact moment you were born, as viewed from your birth location. It shows the positions of all 9 Vedic planets — Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu, and Ketu — across the 12 houses of the zodiac. In Vedic astrology, your Kundli is the foundation for all predictions. It reveals personality traits, career potential, relationship patterns, health tendencies, and life timing through Dasha periods.
-                    </p>
+                    <h3>What is a kundli?</h3>
+                    <p>A kundli (janam kundli, birth chart) is a map of the sky at the moment and place you were born. It shows your lagna (rising sign) and where the nine Vedic planets, Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu and Ketu, sat across the 12 signs and 12 houses. Vedic astrology reads temperament, life areas and timing from it.</p>
                 </div>
 
                 <div class="faq-item">
-                    <h3>What information do I need to generate my Kundli?</h3>
-                    <p>
-                        You need three things: your date of birth, time of birth (as precise as possible), and place of birth. The birth time is especially critical because it determines your Ascendant (Lagna), which shifts roughly every two hours. Even a 15-minute difference can change house placements and alter predictions. If you do not know your exact birth time, check your birth certificate or hospital records.
-                    </p>
+                    <h3>What do I need to make my kundli?</h3>
+                    <p>Your date of birth, time of birth and place of birth. The time matters most: the lagna changes about every two hours, and every house moves with it. If you&#x27;re unsure of your birth time, check a birth certificate or hospital record before relying on the houses.</p>
                 </div>
 
                 <div class="faq-item">
-                    <h3>Is the Kundli chart free on Om.AI?</h3>
-                    <p>
-                        Yes. Viewing your D1 Rashi chart with all planetary positions is completely free. You can see all 9 planets, their house placements, sign positions, and degree information at no cost. Today's planetary positions and daily horoscope scores are also free. AI-powered chart analysis starts with 1 included question, and you can earn additional questions just by opening the app each day — milestones at 3, 7, 14, 21, 30, 45, 60, 75, and 90 days pay out 19 free questions across the ladder, plus 3 days of Premium at day 30 and 7 days at day 90. For unlimited analysis, question packs and Premium subscriptions are available.
-                    </p>
+                    <h3>Is this kundli free? Do I need to sign up?</h3>
+                    <p>Yes, it&#x27;s free and there is no sign-up. The chart, planet table, current dasha and Sade Sati status on this page cost nothing. To ask questions about the chart, your first question on Om.AI is free.</p>
                 </div>
 
                 <div class="faq-item">
-                    <h3>How accurate is Om.AI's Kundli calculation?</h3>
-                    <p>
-                        Om.AI calculates planetary positions with arc-second precision using the Lahiri Ayanamsa — the standard used by the Indian government's official Panchang committee. The app computes positions for all 9 Vedic planets, determines Nakshatra placements, calculates divisional charts, and generates complete Dasha timelines using established classical algorithms. The same astronomical precision applies to transit calculations and Muhurta timing.
-                    </p>
+                    <h3>Why does my kundli look different on another website?</h3>
+                    <p>Usually the birth time or time zone differs, which moves the lagna and the houses. The zodiac can differ too: this chart uses the sidereal zodiac with Lahiri ayanamsa, the convention Indian panchangs follow, while a Western (tropical) chart places each planet about 24° further on, often in the next sign.</p>
                 </div>
 
                 <div class="faq-item">
-                    <h3>What is the difference between Rashi chart (D1) and Navamsa chart (D9)?</h3>
-                    <p>
-                        The Rashi chart (D1) is your primary birth chart showing where each planet was at the time of your birth. It covers all major life areas. The Navamsa chart (D9) is a divisional chart that provides deeper insight into marriage, partnerships, spiritual growth, and the true strength of planets. A planet strong in D1 but weak in D9 may not fully deliver its promised results. Experienced Vedic astrologers always read both charts together for a complete picture.
-                    </p>
+                    <h3>What is the difference between the rashi chart (D1) and navamsa (D9)?</h3>
+                    <p>The rashi chart (D1), shown on this page, is the main birth chart. The navamsa (D9) divides each sign into nine parts and is read for marriage and for how much strength each planet really has. You can see your D9 in the Om.AI app and web chat.</p>
                 </div>
 
                 <div class="faq-item">
-                    <h3>What are yogas and doshas in a Kundli?</h3>
-                    <p>
-                        Yogas are specific planetary combinations that indicate particular life outcomes. For example, Gaja Kesari Yoga (Jupiter-Moon conjunction or aspect) indicates wisdom and prosperity, while Raj Yoga indicates success, authority, and recognition. Doshas are planetary afflictions that may create challenges — Manglik Dosha (Mars in certain houses) can affect marriage compatibility, and Kaal Sarp Dosha (all planets hemmed between Rahu and Ketu) may cause recurring obstacles. Om.AI automatically detects and explains all major yogas and doshas in your chart.
-                    </p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I ask questions about my Kundli?</h3>
-                    <p>
-                        Yes. Om.AI includes an AI astrologer that answers questions about your specific birth chart. Ask about career timing, marriage prospects, financial periods, health, education, or any life area. The AI analyzes your planetary positions, active Dasha periods, and current transits to generate a personalized answer rooted in classical Jyotish texts. Your first question is included, and you can earn more with a daily streak — just open the app each day — or purchase question packs.
-                    </p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What is Vimshottari Dasha and why does it matter?</h3>
-                    <p>
-                        Vimshottari Dasha is the most widely used timing system in Vedic astrology. It divides your life into planetary periods (Mahadasha) governed by each of the 9 planets, determined by your Moon's Nakshatra at birth. Each Mahadasha lasts a fixed number of years — for example, Saturn governs for 19 years and Venus for 20 years. These are further subdivided into sub-periods (Antardasha). The Dasha system is how Vedic astrologers predict when events are likely to occur. Om.AI calculates your complete Dasha timeline and uses it to answer timing questions.
-                    </p>
+                    <h3>Can I ask questions about my kundli?</h3>
+                    <p>Yes. Om.AI reads your own chart, your running dasha and the current transits, and answers questions about career, marriage, money, family or timing in English or Hindi. Your first question is free, in the app or in your browser.</p>
                 </div>
             </div>
         </section>
@@ -842,7 +712,14 @@
         </div>
     </footer>
 
+    <!-- Mobile sticky install CTA bar (mobile only) -->
+    <div class="mobile-cta-bar" role="region" aria-label="Download the Om.AI app">
+        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dkundli" class="btn btn--primary" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play</a>
+        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_kundli&mt=8" class="btn btn--outline" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>
+    </div>
+
     <script src="/assets/js/nav.js?v=4" defer></script>
+    <script src="/assets/js/kundli-tool.js?v=1" defer></script>
     <script src="/assets/js/ads-referrer.js"></script>
 </body>
 

@@ -75,6 +75,8 @@ Use these numbers to anchor SEO decisions rather than guessing:
 - Hindi queries appearing (`ऐ ज्योतिष`, `एआई कुंडली निःशुल्क`) — `/hi/` pages exist with `hreflang`.
 - Topic landing pages that started at 0 clicks and are now top-5 (marriage-prediction, career-astrology) suggest the pattern works — worth building more (health-astrology, love-astrology, wealth-astrology). **Retracted 2026-10-26.**
 - **2026-10-26 prune:** Google cut sitewide search ~85% from 10-19 (Bing flat, no manual action); generic content lost 95-99%, the kab tools about 60%. All of `blog/` and `zodiac/` plus 6 generic topic pages (business/career/health/love/wealth astrology, Lal Kitab) are now `noindex, follow`. Add tools, not generic articles. The scheduled publisher still ships indexable posts (2 drafts due 2027); decide before then.
+- **2026-10-26 Batch 1 (890608a):** noindex on birth-chart, navamsa-chart, ai-vedic-astrology, rashifal-2026, hi/marriage-prediction, hi/career-astrology and ask.html. Store-rating JSON-LD removed (Google forbids aggregating store ratings); the visible 4.8 copy stays. Nav and footer point at the kab tools.
+- **Tool pages (backend v772 routes):** free-kundli-online (en/hi) on `/api/public/kundli`; kundli-matching and hi/kundli-milan on `/api/public/kundli-milan`; sade-sati (en/hi), with a static 12-rashi table plus the kundli route. Varna rows show points only, never caste labels. A page whose tool needs a new backend route ships only after that route is live.
 
 ## Doc Conventions (when creating a new doc)
 - **Living reference** (updated over time): `docs/<kebab-name>.md`, following `docs/system-architecture.md`. `docs/archive/` and `docs/internal/` are gitignored, so they stay local.

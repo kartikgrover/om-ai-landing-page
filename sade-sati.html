@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sade Sati Calculator: Check Yours by Date of Birth | Om.AI</title>
+    <meta name="description" content="Enter your date of birth to see if Sade Sati or Dhaiya is running for your Moon sign, which phase you are in and when it ends. Dates for all 12 rashis, 2020 to 2045.">
+    <meta name="keywords" content="sade sati calculator, sade sati check by date of birth, sade sati kab khatam hogi, shani sade sati dates, sade sati phases, dhaiya, kantaka shani, ashtama shani, shani ki sade sati">
+
+    <meta property="og:title" content="Sade Sati Calculator: Check Yours by Date of Birth | Om.AI">
+    <meta property="og:description" content="Enter your date of birth to see if Sade Sati or Dhaiya is running for your Moon sign, which phase you are in and when it ends. Dates for all 12 rashis, 2020 to 2045.">
+    <meta property="og:url" content="https://omai.app/sade-sati.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/blog/saturn-planet.jpg">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="Saturn, the planet of Sade Sati">
+    <meta property="og:site_name" content="Om.AI">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/sade-sati.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/sade-sati.html">
+    <link rel="alternate" hreflang="hi" href="https://omai.app/hi/sade-sati.html">
+    <link rel="alternate" hreflang="x-default" href="https://omai.app/sade-sati.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=73">
+    <link rel="stylesheet" href="/styles/icons.min.css?v=1" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/icons.min.css?v=1"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        .ss-hero { padding: 1.75rem 0 2.5rem; }
+        .ss-hero .ss-h1 {
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: clamp(1.75rem, 3vw + 1rem, 3.1rem);
+            line-height: 1.12;
+            max-width: 19ch;
+            text-wrap: balance;
+            margin: 0 auto 0.65rem;
+        }
+        .ss-lede {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.55;
+            color: rgba(255,255,255,0.8) !important;
+        }
+        .ss-form { max-width: 720px; margin: 1.4rem auto 0; text-align: left; }
+        .ss-form .mw-card { margin-top: 0; }
+        .ss-form-head {
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin: 0 0 0.2rem;
+        }
+        .ss-form-sub { font-size: 0.95rem; margin: 0 0 1.1rem; line-height: 1.5; }
+        .ss-form-sub a, .ss-cta-web a, .ss-rowlink, .ss-lang a { color: #D97757; }
+        .ss-lang { text-align: center; font-size: 0.92rem; margin: 1rem 0 0; }
+        .mw-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 14px;
+            padding: 1.5rem;
+        }
+        .mw-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; }
+        .mw-label { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 0.4rem; }
+        .mw-input {
+            width: 100%;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #fff;
+            padding: 0.7rem 0.85rem;
+            font-size: 1rem;
+            min-height: 48px;
+        }
+        .mw-input:focus { outline: none; border-color: #D97757; box-shadow: 0 0 0 2px rgba(217,119,87,0.35); }
+        .mw-input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
+        .mw-input option { background: #1a1a1a; color: #fff; }
+        .mw-note { color: rgba(255,255,255,0.5) !important; font-size: 0.85rem; margin: 0.9rem 0 0; line-height: 1.55; }
+        .btn--primary:hover, .btn--primary:disabled { background-color: var(--brand-primary); border-color: var(--brand-primary); color: #fff; }
+        .mw-error {
+            color: #ff9b8a !important;
+            background: rgba(255,90,60,0.10);
+            border: 1px solid rgba(255,90,60,0.25);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 575px) {
+            .ss-hero { padding-top: 1.1rem; }
+            .ss-lede { font-size: 1rem; }
+            .mw-card { padding: 1.1rem; }
+            .mw-grid { gap: 0.8rem 0.75rem; }
+            .ss-span { grid-column: 1 / -1; }
+            .mw-input { padding: 0.6rem 0.65rem; }
+        }
+
+        .ss-result {
+            margin-top: 1.25rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-left: 3px solid rgba(255,255,255,0.35);
+            border-radius: 12px;
+            padding: 1.3rem 1.4rem;
+        }
+        .ss-result.is-sade { border-left-color: #D4704F; }
+        .ss-result.is-dhaiya { border-left-color: #5B8ED8; }
+        .ss-moonline { font-size: 0.98rem; margin: 0 0 0.35rem; }
+        .ss-moonline strong { color: #fff; }
+        .ss-verdict {
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: 1.6rem;
+            line-height: 1.2;
+            color: #fff !important;
+            margin: 0 0 1rem;
+        }
+        .ss-steps { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+        .ss-steps li { border-top: 4px solid rgba(212,112,79,0.25); padding-top: 0.5rem; }
+        .ss-steps li.is-done { border-top-color: rgba(212,112,79,0.55); }
+        .ss-steps li.is-now { border-top-color: #D4704F; }
+        .ss-step-name { display: block; font-weight: 600; font-size: 0.95rem; color: #fff !important; }
+        .ss-step-now { font-weight: 400; font-size: 0.78rem; color: #D97757 !important; }
+        .ss-step-date { display: block; font-size: 0.84rem; line-height: 1.4; }
+        .ss-facts { margin: 0 0 0.75rem; padding-left: 1.1rem; }
+        .ss-facts li { font-size: 1rem !important; line-height: 1.6 !important; margin-bottom: 0.3rem; }
+        .ss-facts strong { color: #fff; }
+        .ss-caveat {
+            font-size: 0.9rem !important;
+            line-height: 1.55 !important;
+            color: rgba(255,255,255,0.65) !important;
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            padding: 0.65rem 0.8rem;
+            margin: 0 0 1rem;
+        }
+        .ss-result-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; }
+        .ss-asknote { font-size: 0.85rem !important; color: rgba(255,255,255,0.5) !important; margin: 0.5rem 0 0; }
+
+        .ss-asof { font-size: 1.05rem; }
+        .ss-now { list-style: none; padding: 0; margin: 0.75rem 0 0.5rem; }
+        .ss-now li {
+            display: flex;
+            gap: 0.65rem;
+            align-items: baseline;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 1rem !important;
+            line-height: 1.55 !important;
+        }
+        .ss-now a { color: #fff; font-weight: 600; text-decoration-color: rgba(255,255,255,0.35); text-underline-offset: 3px; }
+        .ss-key { flex: 0 0 auto; display: inline-block; width: 10px; height: 10px; border-radius: 50%; transform: translateY(-1px); }
+        .ss-key--sade { background: #D4704F; }
+        .ss-key--dhaiya { background: #5B8ED8; }
+        .ss-next-up { font-size: 1rem !important; color: rgba(255,255,255,0.7) !important; }
+
+        .ss-figure { position: relative; margin: 1.75rem 0 0; }
+        .ss-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; font-size: 0.85rem; margin-bottom: 0.75rem; }
+        .ss-legend > span { display: inline-flex; align-items: center; gap: 0.45rem; }
+        .ss-sw { display: inline-block; width: 18px; border-radius: 2px; }
+        .ss-sw--edge { height: 8px; background: #D4704F; }
+        .ss-sw--peak { height: 14px; background: #D4704F; }
+        .ss-sw--pause { height: 2px; background: #6b6a65; }
+        .ss-sw--dhaiya { height: 8px; background: #5B8ED8; }
+        .ss-chart { min-height: 310px; touch-action: pan-y; }
+        .ss-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+        .ss-rowlabel { fill: #A8A599; font-size: 12px; font-family: 'Source Sans 3', 'Source Sans Fallback', sans-serif; }
+        .ss-rowlabel.is-active { fill: #fff; font-weight: 600; }
+        .ss-axis { fill: #A8A599; font-size: 11px; font-family: 'Source Sans 3', 'Source Sans Fallback', sans-serif; }
+        .ss-grid { stroke: rgba(255,255,255,0.08); stroke-width: 1; }
+        .ss-track { stroke: #6b6a65; stroke-width: 2; }
+        .ss-bar--edge, .ss-bar--peak { fill: #D4704F; }
+        .ss-bar--dhaiya { fill: #5B8ED8; }
+        .ss-bar:hover { opacity: 0.8; }
+        .ss-today { stroke: #FAF9F5; stroke-width: 1.5; opacity: 0.85; }
+        .ss-today-label { fill: #FAF9F5; font-size: 11px; font-weight: 600; font-family: 'Source Sans 3', 'Source Sans Fallback', sans-serif; }
+        .ss-tip {
+            position: absolute;
+            z-index: 3;
+            pointer-events: none;
+            transform: translate(-50%, calc(-100% - 10px));
+            background: #141413;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 0.35rem 0.6rem;
+            font-size: 0.82rem;
+            line-height: 1.35;
+            color: #fff !important;
+            white-space: nowrap;
+        }
+        .ss-figcap { font-size: 0.85rem; color: rgba(255,255,255,0.55) !important; margin-top: 0.5rem; }
+
+        .ss-wide-wrap { max-width: 1140px; }
+        .ss-wide-wrap > h2, .ss-intro, .ss-narrow { max-width: 860px; }
+        .ss-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        .ss-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.9rem; font-variant-numeric: tabular-nums; margin: 1rem 0 2rem; }
+        .ss-table thead th {
+            font-weight: 600;
+            font-size: 0.8rem;
+            line-height: 1.35;
+            color: rgba(255,255,255,0.6) !important;
+            text-align: left;
+            vertical-align: bottom;
+            padding: 0.6rem 0.55rem;
+            border-bottom: 1px solid rgba(255,255,255,0.18);
+        }
+        .ss-table tbody th, .ss-table tbody td {
+            text-align: left;
+            vertical-align: top;
+            padding: 0.75rem 0.55rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            line-height: 1.55;
+        }
+        .ss-sign { display: block; color: #fff !important; font-weight: 600; font-size: 1rem; }
+        .ss-sign-alt { display: block; font-weight: 400; font-size: 0.82rem; color: rgba(255,255,255,0.55) !important; }
+        .ss-range { display: block; color: #fff !important; white-space: nowrap; }
+        .ss-line { display: block; white-space: nowrap; }
+        .ss-again { font-size: 0.78rem; color: rgba(255,255,255,0.5) !important; }
+        .ss-line--pause { white-space: normal; font-size: 0.82rem; color: rgba(255,255,255,0.5) !important; }
+        .ss-prev { display: block; font-size: 0.8rem; margin-top: 0.3rem; color: rgba(255,255,255,0.5) !important; }
+        .ss-pill {
+            display: inline-block;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .ss-pill--sade { border-color: rgba(212,112,79,0.6); background: rgba(212,112,79,0.14); color: #fff !important; }
+        .ss-pill--dhaiya { border-color: rgba(91,142,216,0.6); background: rgba(91,142,216,0.14); color: #fff !important; }
+        .ss-pill--done { color: rgba(255,255,255,0.55) !important; }
+        .ss-row.is-sade > th { box-shadow: inset 3px 0 0 #D4704F; }
+        .ss-row.is-dhaiya > th { box-shadow: inset 3px 0 0 #5B8ED8; }
+        .ss-row.is-you > * { background: rgba(217,119,87,0.08); }
+        .ss-row:target > * { background: rgba(217,119,87,0.08); }
+        .ss-row > th { padding-left: 0.85rem; }
+        @media (max-width: 991px) {
+            .ss-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+            .ss-table, .ss-table tbody { display: block; }
+            .ss-table tr {
+                display: flex;
+                flex-direction: column;
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 12px;
+                padding: 0.9rem 1rem;
+                margin-bottom: 0.9rem;
+                background: rgba(255,255,255,0.03);
+                scroll-margin-top: 84px;
+            }
+            .ss-row.is-sade { border-left: 3px solid #D4704F; }
+            .ss-row.is-dhaiya { border-left: 3px solid #5B8ED8; }
+            .ss-row.is-you, .ss-row:target { background: rgba(217,119,87,0.08); }
+            .ss-row > *, .ss-row.is-you > *, .ss-row:target > * { background: none; }
+            .ss-table tbody th, .ss-table tbody td { display: block; border: 0; padding: 0.3rem 0 0.3rem 7.5rem; position: relative; }
+            .ss-table tbody th { order: 0; padding: 0 0 0.35rem; box-shadow: none !important; }
+            .ss-table tbody td:last-child { order: 1; padding: 0 0 0.5rem; }
+            .ss-table tbody td { order: 2; }
+            .ss-table tbody td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                top: 0.3rem;
+                width: 6.9rem;
+                font-size: 0.76rem;
+                line-height: 1.35;
+                color: rgba(255,255,255,0.5);
+            }
+            .ss-table tbody td:last-child::before { content: none; }
+            .ss-sign, .ss-sign-alt { display: inline; }
+            .ss-sign-alt { margin-left: 0.35rem; }
+            .ss-line, .ss-range { white-space: normal; }
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(217,119,87,0.2);
+            border-radius: 12px;
+            padding: 1.6rem;
+            height: 100%;
+        }
+        .feature-card h3 { font-size: 1.25rem; }
+        .feature-card p { margin-bottom: 0; font-size: 1rem !important; line-height: 1.7 !important; }
+        .answer-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(217,119,87,0.04));
+            border: 1px solid rgba(217,119,87,0.25);
+            border-radius: 14px;
+            padding: 1.5rem 1.75rem;
+        }
+        .answer-box h3 { color: #D97757; font-size: 1.2rem; margin-bottom: 0.6rem; }
+        .answer-box p { margin-bottom: 0; font-size: 1rem !important; line-height: 1.7 !important; }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .cta-box .ss-cta-title { color: #fff !important; font-size: 2rem; margin-bottom: 1rem; }
+        .ss-cta-text { color: rgba(255,255,255,0.8) !important; max-width: 580px; margin: 0 auto 2rem; font-size: 1.08rem; }
+        .ss-cta-web { margin: 1.25rem 0 0; font-size: 1rem; }
+        .ss-cta-web a { font-weight: 600; text-decoration: underline; }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+        .faq-item p { margin-bottom: 0; font-size: 1rem; }
+        .faq-item a { color: #D97757; }
+        @media (max-width: 575px) {
+            .cta-box { padding: 2.25rem 1.25rem; }
+            .faq-item { padding: 1.2rem 1.25rem; }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://omai.app/sade-sati.html",
+                "name": "Sade Sati Calculator: Check Yours by Date of Birth",
+                "description": "Check whether Sade Sati or Dhaiya is running for your Moon sign, which phase, and when it ends, with Sade Sati dates for all 12 Moon signs from 2020 to 2045.",
+                "url": "https://omai.app/sade-sati.html",
+                "inLanguage": "en-IN",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "WebApplication",
+                "name": "Sade Sati Calculator",
+                "url": "https://omai.app/sade-sati.html#calculator",
+                "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": "Any",
+                "inLanguage": "en-IN",
+                "description": "Finds your Moon sign from your birth details and shows whether Sade Sati or Dhaiya is running, the phase, and its start and end dates. No sign-up.",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+                "isPartOf": { "@id": "https://omai.app/sade-sati.html" }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How do I check my Sade Sati by date of birth?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Enter your date of birth and city in the calculator at the top of this page, and your birth time if you know it. It works out the sign the Moon was in when you were born, then tells you whether Sade Sati or Dhaiya is running for that sign today, which phase it is in, and when it ends. If you already know your Moon sign (rashi), the table lists the dates directly."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is Sade Sati counted from the Moon sign or the lagna?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "From the Moon sign. Vedic astrology reads transits from the natal Moon (Phaladeepika Ch.26 Sl.1), so everyone with the same Moon sign shares the same Sade Sati dates, whatever their lagna. The lagna still matters for how the years play out, because it decides which houses of your chart Saturn passes through."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "When will Sade Sati end for Aquarius, Pisces and Aries?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Aquarius (Kumbh): 23 Feb 2028. Pisces (Meen): 17 Apr 2030. Aries (Mesh): 31 May 2032. The next Sade Sati to begin is for Taurus (Vrishabh), on 3 Jun 2027, and it runs to 13 Jul 2034."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is the difference between Sade Sati and Dhaiya?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Sade Sati is Saturn's run through three signs, the 12th from your Moon, the Moon's own sign and the 2nd, about seven and a half years in all. Dhaiya is one sign, about two and a half years: Saturn 4th from the Moon (Kantaka Shani) or 8th from it (Ashtama Shani). Leo (Singh) and Sagittarius (Dhanu) have Dhaiya from 29 Mar 2025 to 23 Feb 2028, with a break from 3 Jun to 20 Oct 2027."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Why does my Sade Sati show a phase twice, or a pause?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Saturn turns retrograde for about four and a half months every year, and near a sign boundary it steps back into the sign it just left. Saturn enters Aries on 3 Jun 2027, steps back into Pisces on 20 Oct 2027 and returns to Aries on 23 Feb 2028, so some phases run twice. If the step back takes Saturn outside the three Sade Sati signs, the Sade Sati pauses. Either way it is the same Sade Sati, not a new one."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is Sade Sati always a bad time?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Not for everyone. Classical transit verses describe Saturn in these signs as a hard stretch, with strain, expense and worry, and many people do feel it that way. How much of it shows in one life depends on the whole chart: the dasha running, the houses Saturn crosses from your lagna, and what Saturn rules for you. BPHS Ch.34 counts Saturn as an auspicious planet for Taurus, Libra and Aquarius lagnas. The period also has a fixed end date, which the calculator gives you."
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/"},
+                    {"@type": "ListItem", "position": 2, "name": "Sade Sati Calculator", "item": "https://omai.app/sade-sati.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+    </script>
+    <!-- App store CTA tracking (download_click) -->
+    <script>
+    document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a[href*="play.google.com"], a[href*="apps.apple.com"]');
+        if(!a || typeof gtag !== 'function') return;
+        var platform = a.href.indexOf('apps.apple.com') > -1 ? 'ios' : 'android';
+        gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 });
+    }, true);
+    </script>
+    <!-- Mobile sticky install CTA bar -->
+    <style>
+.mobile-cta-bar{display:none}
+@media (max-width:768px){
+  .mobile-cta-bar{display:flex;gap:.6rem;position:fixed;left:0;right:0;bottom:0;z-index:1040;padding:.55rem .7rem;padding-bottom:calc(.55rem + env(safe-area-inset-bottom));background:rgba(31,30,29,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(217,119,87,.3)}
+  .mobile-cta-bar .btn{flex:1 1 0;min-width:0;padding:.6rem .4rem;font-size:.9rem;line-height:1.2;white-space:nowrap}
+  body{padding-bottom:4.75rem}
+}
+</style>
+    <!-- Meta Pixel — dataset 1678262729978200, shared with the live INR ad account.
+         Mints the _fbp/_fbc cookies that /ask.html forwards to the server-side CAPI, so a
+         visitor who arrives on this page from an ad stays attributable through checkout. -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];
+    /* fbevents.js (~140KB of JS) was tipping mobile INP just past Google's 200ms
+       line, so it no longer loads up front: the fbq stub above queues init/PageView,
+       and the script itself loads after window load (idle) or on first interaction,
+       whichever comes first. _fbp/_fbc still get minted for CAPI. */
+    t=function(){if(s)return;s=1;var o=b.createElement(e);o.async=!0;o.src=v;
+    var g=b.getElementsByTagName(e)[0];g.parentNode.insertBefore(o,g)};
+    /* Ad clicks land with ?fbclid=, and that param only ever sits on THIS page's URL: the
+       pixel has to write _fbc before the visitor can click through to /ask.html, which reads
+       the cookie for CAPI. So ad traffic keeps the eager load and eats the INP cost; organic
+       traffic (the overwhelming majority, and all of what CrUX measures here) has no fbclid
+       to lose and takes the deferred path. */
+    /[?&]fbclid=/.test(f.location.search)?t():
+    (f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)}),
+    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})}))}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1678262729978200');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=1678262729978200&ev=PageView&noscript=1"
+    /></noscript>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <picture>
+                    <source srcset="/assets/logo-mark.webp" type="image/webp">
+                    <img src="/assets/logo-mark.png" alt="Om.AI Logo" width="613" height="362" decoding="async" style="height:40px;width:auto;display:block;">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Features</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/ai-astrology-chat.html">AI Astrology Chat</a></li>
+                            <li><a class="dropdown-item" href="/free-kundli-online.html">Kundli & Birth Chart</a></li>
+                            <li><a class="dropdown-item" href="/kundli-matching.html">Kundli Matching</a></li>
+                            <li><a class="dropdown-item" href="/hi/naukri-kab-milegi.html">Naukri Kab Milegi</a></li>
+                            <li><a class="dropdown-item" href="/marriage-prediction.html">Marriage Prediction</a></li>
+                            <li><a class="dropdown-item" href="/dasha-calculator.html">Dasha Calculator</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">Daily Insights</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/horoscope.html">Daily Horoscope</a></li>
+                            <li><a class="dropdown-item" href="/panchang.html">Today's Panchang</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">Gita Verse of the Day</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">Rahu Kaal Today</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#download">Download</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero-section text-center ss-hero">
+            <div class="container">
+                <h1 class="ss-h1">Sade Sati Calculator: Check by Date of Birth</h1>
+                <p class="ss-lede">See if Saturn's Sade Sati or Dhaiya is running for your Moon sign, which phase you're in and the day it ends. Free, no sign-up.</p>
+
+                <div class="ss-form" id="calculator">
+                    <div class="mw-card">
+                        <h2 class="ss-form-head">Don't know your Moon sign?</h2>
+                        <p class="ss-form-sub">Enter your birth details and the calculator finds it. Know it already? <a href="#dates">Go to the dates</a>.</p>
+                        <div class="mw-grid">
+                            <div>
+                                <label class="mw-label" for="mw-date">Date of birth</label>
+                                <input type="date" id="mw-date" class="mw-input" min="1900-01-01" max="2099-12-31">
+                            </div>
+                            <div>
+                                <label class="mw-label" for="mw-time">Time of birth (optional)</label>
+                                <input type="time" id="mw-time" class="mw-input">
+                            </div>
+                            <div class="ss-span">
+                                <label class="mw-label" for="mw-city">Place of birth</label>
+                                <input list="mw-cities" id="mw-city" class="mw-input" placeholder="Pick or type a city" autocomplete="off">
+                                <datalist id="mw-cities"></datalist>
+                            </div>
+                            <div class="ss-span">
+                                <label class="mw-label" for="mw-tz">Time zone</label>
+                                <select id="mw-tz" class="mw-input">
+                                    <option value="5.5" selected>India (IST, +5:30)</option>
+                                    <option value="5.75">Nepal (+5:45)</option>
+                                    <option value="6">Bangladesh (+6:00)</option>
+                                    <option value="4">Gulf / UAE (+4:00)</option>
+                                    <option value="0">UK / UTC (+0:00)</option>
+                                    <option value="-5">US Eastern (-5:00)</option>
+                                    <option value="8">Singapore (+8:00)</option>
+                                    <option value="10">Sydney (+10:00)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button id="mw-go" class="btn btn--primary btn-lg w-100 mt-3">Check my Sade Sati</button>
+                        <div id="mw-error" class="mw-error" role="alert" hidden></div>
+                        <p class="mw-note">Sade Sati is counted from your Moon sign. The Moon changes sign every two to three days, and on those days your birth time decides it. Leave the time blank and the calculator uses 12 noon.</p>
+                    </div>
+
+                    <div id="mw-result" aria-live="polite" hidden></div>
+                    <p class="ss-lang"><a href="/hi/sade-sati.html" lang="hi" hreflang="hi">हिंदी में पढ़ें: साढ़े साती कब से कब तक</a></p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="content-section" id="now">
+            <div class="container" style="max-width:860px;">
+                <h2>Sade Sati and Dhaiya today</h2>
+                <div id="ss-now-body"><p class="ss-asof">On <time datetime="2026-10-26">26 Oct 2026</time>, Saturn is in Pisces (Meen). It moves into Aries (Mesh) on <time datetime="2027-06-03">3 Jun 2027</time>.</p><ul class="ss-now"><li><span class="ss-key ss-key--sade" aria-hidden="true"></span><span><a href="#ss-row-Aquarius">Aquarius (Kumbh)</a>: Sade Sati, setting phase. Ends <time datetime="2028-02-23">23 Feb 2028</time>.</span></li><li><span class="ss-key ss-key--sade" aria-hidden="true"></span><span><a href="#ss-row-Pisces">Pisces (Meen)</a>: Sade Sati, peak phase. Ends <time datetime="2030-04-17">17 Apr 2030</time>.</span></li><li><span class="ss-key ss-key--sade" aria-hidden="true"></span><span><a href="#ss-row-Aries">Aries (Mesh)</a>: Sade Sati, rising phase. Ends <time datetime="2032-05-31">31 May 2032</time>.</span></li><li><span class="ss-key ss-key--dhaiya" aria-hidden="true"></span><span><a href="#ss-row-Leo">Leo (Singh)</a>: Dhaiya (Ashtama Shani, Saturn 8th from the Moon) until <time datetime="2028-02-23">23 Feb 2028</time>, with a break from <time datetime="2027-06-03">3 Jun 2027</time> to <time datetime="2027-10-20">20 Oct 2027</time>.</span></li><li><span class="ss-key ss-key--dhaiya" aria-hidden="true"></span><span><a href="#ss-row-Sagittarius">Sagittarius (Dhanu)</a>: Dhaiya (Kantaka Shani, Saturn 4th from the Moon) until <time datetime="2028-02-23">23 Feb 2028</time>, with a break from <time datetime="2027-06-03">3 Jun 2027</time> to <time datetime="2027-10-20">20 Oct 2027</time>.</span></li></ul><p class="ss-next-up">Next to begin: Taurus (Vrishabh), on <time datetime="2027-06-03">3 Jun 2027</time>.</p></div>
+
+                <figure class="ss-figure">
+                    <div class="ss-legend">
+                        <span><span class="ss-sw ss-sw--edge"></span>Sade Sati, rising or setting</span>
+                        <span><span class="ss-sw ss-sw--peak"></span>Sade Sati, peak</span>
+                        <span><span class="ss-sw ss-sw--pause"></span>Sade Sati paused</span>
+                        <span><span class="ss-sw ss-sw--dhaiya"></span>Dhaiya</span>
+                    </div>
+                    <div class="ss-chart" id="ss-chart" role="img" aria-label="Chart of every Sade Sati and Dhaiya from 2020 to 2045, one row per Moon sign, with a line at today's date. The table below lists every date."></div>
+                    <div class="ss-tip" id="ss-tip" hidden></div>
+                    <figcaption class="ss-figcap">One row per Moon sign, 2020 to 2045. Tap or hover a bar for its dates.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="content-section" id="dates">
+            <div class="container ss-wide-wrap">
+                <h2>Sade Sati dates for all 12 Moon signs</h2>
+                <p class="ss-intro">Each row shows the Sade Sati running now for that Moon sign, or the next one. Dates are the day Saturn changes sign, in Indian time, in the sidereal zodiac Vedic astrology uses.</p>
+                <table class="ss-table">
+                    <caption class="ss-sr">Sade Sati start, phase and end dates for each Moon sign</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Moon sign</th>
+                            <th scope="col">Sade Sati</th>
+                            <th scope="col">Rising (Saturn 12th from Moon)</th>
+                            <th scope="col">Peak (Saturn over the Moon)</th>
+                            <th scope="col">Setting (Saturn 2nd from Moon)</th>
+                            <th scope="col">Today</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ss-rows">
+<tr id="ss-row-Aries" class="ss-row is-sade"><th scope="row"><span class="ss-sign">Aries</span> <span class="ss-sign-alt">Mesh</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2025-03-29">29 Mar 2025</time> – <time datetime="2032-05-31">31 May 2032</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2025-03-29">29 Mar 2025</time> – <time datetime="2027-06-03">3 Jun 2027</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2027-10-20">20 Oct 2027</time> – <time datetime="2028-02-23">23 Feb 2028</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2027-06-03">3 Jun 2027</time> – <time datetime="2027-10-20">20 Oct 2027</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2028-02-23">23 Feb 2028</time> – <time datetime="2029-08-08">8 Aug 2029</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2029-10-05">5 Oct 2029</time> – <time datetime="2030-04-17">17 Apr 2030</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2029-08-08">8 Aug 2029</time> – <time datetime="2029-10-05">5 Oct 2029</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2030-04-17">17 Apr 2030</time> – <time datetime="2032-05-31">31 May 2032</time></span></td><td data-label="Today"><span class="ss-pill ss-pill--sade">Now: rising phase</span></td></tr>
+<tr id="ss-row-Taurus" class="ss-row"><th scope="row"><span class="ss-sign">Taurus</span> <span class="ss-sign-alt">Vrishabh</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2027-06-03">3 Jun 2027</time> – <time datetime="2034-07-13">13 Jul 2034</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2027-06-03">3 Jun 2027</time> – <time datetime="2027-10-20">20 Oct 2027</time></span><span class="ss-line ss-line--pause">Paused, Saturn back in Pisces (Meen): <time datetime="2027-10-20">20 Oct 2027</time> – <time datetime="2028-02-23">23 Feb 2028</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2028-02-23">23 Feb 2028</time> – <time datetime="2029-08-08">8 Aug 2029</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2029-10-05">5 Oct 2029</time> – <time datetime="2030-04-17">17 Apr 2030</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2029-08-08">8 Aug 2029</time> – <time datetime="2029-10-05">5 Oct 2029</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2030-04-17">17 Apr 2030</time> – <time datetime="2032-05-31">31 May 2032</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2032-05-31">31 May 2032</time> – <time datetime="2034-07-13">13 Jul 2034</time></span></td><td data-label="Today"><span class="ss-pill">Starts <time datetime="2027-06-03">3 Jun 2027</time></span></td></tr>
+<tr id="ss-row-Gemini" class="ss-row"><th scope="row"><span class="ss-sign">Gemini</span> <span class="ss-sign-alt">Mithun</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2029-08-08">8 Aug 2029</time> – <time datetime="2036-08-27">27 Aug 2036</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2029-08-08">8 Aug 2029</time> – <time datetime="2029-10-05">5 Oct 2029</time></span><span class="ss-line ss-line--pause">Paused, Saturn back in Aries (Mesh): <time datetime="2029-10-05">5 Oct 2029</time> – <time datetime="2030-04-17">17 Apr 2030</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2030-04-17">17 Apr 2030</time> – <time datetime="2032-05-31">31 May 2032</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2032-05-31">31 May 2032</time> – <time datetime="2034-07-13">13 Jul 2034</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2034-07-13">13 Jul 2034</time> – <time datetime="2036-08-27">27 Aug 2036</time></span></td><td data-label="Today"><span class="ss-pill">Starts <time datetime="2029-08-08">8 Aug 2029</time></span></td></tr>
+<tr id="ss-row-Cancer" class="ss-row"><th scope="row"><span class="ss-sign">Cancer</span> <span class="ss-sign-alt">Kark</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2032-05-31">31 May 2032</time> – <time datetime="2039-07-13">13 Jul 2039</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2032-05-31">31 May 2032</time> – <time datetime="2034-07-13">13 Jul 2034</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2034-07-13">13 Jul 2034</time> – <time datetime="2036-08-27">27 Aug 2036</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2036-08-27">27 Aug 2036</time> – <time datetime="2038-10-22">22 Oct 2038</time></span><span class="ss-line ss-line--pause">Paused, Saturn ahead in Virgo (Kanya): <time datetime="2038-10-22">22 Oct 2038</time> – <time datetime="2039-04-05">5 Apr 2039</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2039-04-05">5 Apr 2039</time> – <time datetime="2039-07-13">13 Jul 2039</time></span></td><td data-label="Today"><span class="ss-pill">Starts <time datetime="2032-05-31">31 May 2032</time></span></td></tr>
+<tr id="ss-row-Leo" class="ss-row is-dhaiya"><th scope="row"><span class="ss-sign">Leo</span> <span class="ss-sign-alt">Singh</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2034-07-13">13 Jul 2034</time> – <time datetime="2041-09-26">26 Sep 2041</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2034-07-13">13 Jul 2034</time> – <time datetime="2036-08-27">27 Aug 2036</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2036-08-27">27 Aug 2036</time> – <time datetime="2038-10-22">22 Oct 2038</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2039-04-05">5 Apr 2039</time> – <time datetime="2039-07-13">13 Jul 2039</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2038-10-22">22 Oct 2038</time> – <time datetime="2039-04-05">5 Apr 2039</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2039-07-13">13 Jul 2039</time> – <time datetime="2041-01-28">28 Jan 2041</time></span><span class="ss-line ss-line--pause">Paused, Saturn ahead in Libra (Tula): <time datetime="2041-01-28">28 Jan 2041</time> – <time datetime="2041-02-06">6 Feb 2041</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2041-02-06">6 Feb 2041</time> – <time datetime="2041-09-26">26 Sep 2041</time></span></td><td data-label="Today"><span class="ss-pill ss-pill--dhaiya">Dhaiya now (Ashtama Shani) until <time datetime="2028-02-23">23 Feb 2028</time></span></td></tr>
+<tr id="ss-row-Virgo" class="ss-row"><th scope="row"><span class="ss-sign">Virgo</span> <span class="ss-sign-alt">Kanya</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2036-08-27">27 Aug 2036</time> – <time datetime="2044-08-30">30 Aug 2044</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2036-08-27">27 Aug 2036</time> – <time datetime="2038-10-22">22 Oct 2038</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2039-04-05">5 Apr 2039</time> – <time datetime="2039-07-13">13 Jul 2039</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2038-10-22">22 Oct 2038</time> – <time datetime="2039-04-05">5 Apr 2039</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2039-07-13">13 Jul 2039</time> – <time datetime="2041-01-28">28 Jan 2041</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2041-02-06">6 Feb 2041</time> – <time datetime="2041-09-26">26 Sep 2041</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2041-01-28">28 Jan 2041</time> – <time datetime="2041-02-06">6 Feb 2041</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2041-09-26">26 Sep 2041</time> – <time datetime="2043-12-11">11 Dec 2043</time></span><span class="ss-line ss-line--pause">Paused, Saturn ahead in Scorpio (Vrishchik): <time datetime="2043-12-11">11 Dec 2043</time> – <time datetime="2044-06-23">23 Jun 2044</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2044-06-23">23 Jun 2044</time> – <time datetime="2044-08-30">30 Aug 2044</time></span></td><td data-label="Today"><span class="ss-pill">Starts <time datetime="2036-08-27">27 Aug 2036</time></span></td></tr>
+<tr id="ss-row-Libra" class="ss-row"><th scope="row"><span class="ss-sign">Libra</span> <span class="ss-sign-alt">Tula</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2038-10-22">22 Oct 2038</time> – <time datetime="2046-12-08">8 Dec 2046</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2038-10-22">22 Oct 2038</time> – <time datetime="2039-04-05">5 Apr 2039</time></span><span class="ss-line ss-line--pause">Paused, Saturn back in Leo (Singh): <time datetime="2039-04-05">5 Apr 2039</time> – <time datetime="2039-07-13">13 Jul 2039</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2039-07-13">13 Jul 2039</time> – <time datetime="2041-01-28">28 Jan 2041</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2041-02-06">6 Feb 2041</time> – <time datetime="2041-09-26">26 Sep 2041</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2041-01-28">28 Jan 2041</time> – <time datetime="2041-02-06">6 Feb 2041</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2041-09-26">26 Sep 2041</time> – <time datetime="2043-12-11">11 Dec 2043</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2044-06-23">23 Jun 2044</time> – <time datetime="2044-08-30">30 Aug 2044</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2043-12-11">11 Dec 2043</time> – <time datetime="2044-06-23">23 Jun 2044</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2044-08-30">30 Aug 2044</time> – <time datetime="2046-12-08">8 Dec 2046</time></span></td><td data-label="Today"><span class="ss-pill">Starts <time datetime="2038-10-22">22 Oct 2038</time></span></td></tr>
+<tr id="ss-row-Scorpio" class="ss-row"><th scope="row"><span class="ss-sign">Scorpio</span> <span class="ss-sign-alt">Vrishchik</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2041-01-28">28 Jan 2041</time> – <time datetime="2049-12-04">4 Dec 2049</time></span><span class="ss-prev">Previous: <time datetime="2011-11-15">15 Nov 2011</time> – <time datetime="2020-01-24">24 Jan 2020</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2041-01-28">28 Jan 2041</time> – <time datetime="2041-02-06">6 Feb 2041</time></span><span class="ss-line ss-line--pause">Paused, Saturn back in Virgo (Kanya): <time datetime="2041-02-06">6 Feb 2041</time> – <time datetime="2041-09-26">26 Sep 2041</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2041-09-26">26 Sep 2041</time> – <time datetime="2043-12-11">11 Dec 2043</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2044-06-23">23 Jun 2044</time> – <time datetime="2044-08-30">30 Aug 2044</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2043-12-11">11 Dec 2043</time> – <time datetime="2044-06-23">23 Jun 2044</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2044-08-30">30 Aug 2044</time> – <time datetime="2046-12-08">8 Dec 2046</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2046-12-08">8 Dec 2046</time> – <time datetime="2049-03-06">6 Mar 2049</time></span><span class="ss-line ss-line--pause">Paused, Saturn ahead in Capricorn (Makar): <time datetime="2049-03-06">6 Mar 2049</time> – <time datetime="2049-07-10">10 Jul 2049</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2049-07-10">10 Jul 2049</time> – <time datetime="2049-12-04">4 Dec 2049</time></span></td><td data-label="Today"><span class="ss-pill">Starts <time datetime="2041-01-28">28 Jan 2041</time></span></td></tr>
+<tr id="ss-row-Sagittarius" class="ss-row is-dhaiya"><th scope="row"><span class="ss-sign">Sagittarius</span> <span class="ss-sign-alt">Dhanu</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2043-12-11">11 Dec 2043</time> – <time datetime="2052-02-25">25 Feb 2052</time></span><span class="ss-prev">Previous: <time datetime="2014-11-02">2 Nov 2014</time> – <time datetime="2023-01-17">17 Jan 2023</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2043-12-11">11 Dec 2043</time> – <time datetime="2044-06-23">23 Jun 2044</time></span><span class="ss-line ss-line--pause">Paused, Saturn back in Libra (Tula): <time datetime="2044-06-23">23 Jun 2044</time> – <time datetime="2044-08-30">30 Aug 2044</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2044-08-30">30 Aug 2044</time> – <time datetime="2046-12-08">8 Dec 2046</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2046-12-08">8 Dec 2046</time> – <time datetime="2049-03-06">6 Mar 2049</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2049-07-10">10 Jul 2049</time> – <time datetime="2049-12-04">4 Dec 2049</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2049-03-06">6 Mar 2049</time> – <time datetime="2049-07-10">10 Jul 2049</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2049-12-04">4 Dec 2049</time> – <time datetime="2052-02-25">25 Feb 2052</time></span></td><td data-label="Today"><span class="ss-pill ss-pill--dhaiya">Dhaiya now (Kantaka Shani) until <time datetime="2028-02-23">23 Feb 2028</time></span></td></tr>
+<tr id="ss-row-Capricorn" class="ss-row"><th scope="row"><span class="ss-sign">Capricorn</span> <span class="ss-sign-alt">Makar</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2017-01-26">26 Jan 2017</time> – <time datetime="2025-03-29">29 Mar 2025</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2017-01-26">26 Jan 2017</time> – <time datetime="2017-06-21">21 Jun 2017</time></span><span class="ss-line ss-line--pause">Paused, Saturn back in Scorpio (Vrishchik): <time datetime="2017-06-21">21 Jun 2017</time> – <time datetime="2017-10-26">26 Oct 2017</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2017-10-26">26 Oct 2017</time> – <time datetime="2020-01-24">24 Jan 2020</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2020-01-24">24 Jan 2020</time> – <time datetime="2022-04-29">29 Apr 2022</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2022-07-12">12 Jul 2022</time> – <time datetime="2023-01-17">17 Jan 2023</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2022-04-29">29 Apr 2022</time> – <time datetime="2022-07-12">12 Jul 2022</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2023-01-17">17 Jan 2023</time> – <time datetime="2025-03-29">29 Mar 2025</time></span></td><td data-label="Today"><span class="ss-pill ss-pill--done">Ended <time datetime="2025-03-29">29 Mar 2025</time>. Next from <time datetime="2046-12-08">8 Dec 2046</time></span></td></tr>
+<tr id="ss-row-Aquarius" class="ss-row is-sade"><th scope="row"><span class="ss-sign">Aquarius</span> <span class="ss-sign-alt">Kumbh</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2020-01-24">24 Jan 2020</time> – <time datetime="2028-02-23">23 Feb 2028</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2020-01-24">24 Jan 2020</time> – <time datetime="2022-04-29">29 Apr 2022</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2022-07-12">12 Jul 2022</time> – <time datetime="2023-01-17">17 Jan 2023</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2022-04-29">29 Apr 2022</time> – <time datetime="2022-07-12">12 Jul 2022</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2023-01-17">17 Jan 2023</time> – <time datetime="2025-03-29">29 Mar 2025</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2025-03-29">29 Mar 2025</time> – <time datetime="2027-06-03">3 Jun 2027</time></span><span class="ss-line ss-line--pause">Paused, Saturn ahead in Aries (Mesh): <time datetime="2027-06-03">3 Jun 2027</time> – <time datetime="2027-10-20">20 Oct 2027</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2027-10-20">20 Oct 2027</time> – <time datetime="2028-02-23">23 Feb 2028</time></span></td><td data-label="Today"><span class="ss-pill ss-pill--sade">Now: setting phase</span></td></tr>
+<tr id="ss-row-Pisces" class="ss-row is-sade"><th scope="row"><span class="ss-sign">Pisces</span> <span class="ss-sign-alt">Meen</span></th><td data-label="Sade Sati"><span class="ss-range"><time datetime="2022-04-29">29 Apr 2022</time> – <time datetime="2030-04-17">17 Apr 2030</time></span></td><td data-label="Rising (12th from Moon)"><span class="ss-line"><time datetime="2022-04-29">29 Apr 2022</time> – <time datetime="2022-07-12">12 Jul 2022</time></span><span class="ss-line ss-line--pause">Paused, Saturn back in Capricorn (Makar): <time datetime="2022-07-12">12 Jul 2022</time> – <time datetime="2023-01-17">17 Jan 2023</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2023-01-17">17 Jan 2023</time> – <time datetime="2025-03-29">29 Mar 2025</time></span></td><td data-label="Peak (over the Moon)"><span class="ss-line"><time datetime="2025-03-29">29 Mar 2025</time> – <time datetime="2027-06-03">3 Jun 2027</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2027-10-20">20 Oct 2027</time> – <time datetime="2028-02-23">23 Feb 2028</time></span></td><td data-label="Setting (2nd from Moon)"><span class="ss-line"><time datetime="2027-06-03">3 Jun 2027</time> – <time datetime="2027-10-20">20 Oct 2027</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2028-02-23">23 Feb 2028</time> – <time datetime="2029-08-08">8 Aug 2029</time></span><span class="ss-line ss-line--pause">Paused, Saturn ahead in Taurus (Vrishabh): <time datetime="2029-08-08">8 Aug 2029</time> – <time datetime="2029-10-05">5 Oct 2029</time></span><span class="ss-line"><span class="ss-again">Again</span> <time datetime="2029-10-05">5 Oct 2029</time> – <time datetime="2030-04-17">17 Apr 2030</time></span></td><td data-label="Today"><span class="ss-pill ss-pill--sade">Now: peak phase</span></td></tr>
+                    </tbody>
+                </table>
+
+                <div class="answer-box ss-narrow">
+                    <h3>How the dates are counted</h3>
+                    <p>A Sade Sati begins the day Saturn first enters the 12th sign from your Moon and ends the day it settles in the 3rd. Saturn turns retrograde for about four and a half months every year, and near a sign boundary it steps back into the sign it just left. When the step back stays within the three signs, an earlier phase runs again (marked "Again"). When it takes Saturn out of them, the Sade Sati pauses. Either way it is the same Sade Sati, not a new one.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="content-section" id="what-is-sade-sati">
+            <div class="container" style="max-width:860px;">
+                <h2>What Sade Sati and Dhaiya are</h2>
+                <p>Vedic astrology reads Saturn's transits from the sign the Moon was in when you were born, not from the Sun sign (Phaladeepika Ch.26 Sl.1; Brihat Samhita Ch.104 v.4). Sade Sati, "seven and a half", is the stretch when Saturn passes through three signs in a row: the 12th from your Moon, the Moon's own sign, and the 2nd. Saturn spends about two and a half years in each, so the three come to roughly seven and a half years.</p>
+
+                <div class="row g-4 mt-2">
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <h3>What the classical texts say</h3>
+                            <p>Brihat Samhita's chapter on transits (Ch.104) describes Saturn in the 12th from the Moon as a time of grief (v.45), over the Moon as a time of hardship, distance from family, travel far from home and loss (v.39), and in the 2nd as a time of less comfort and energy, with money that doesn't stay (v.40). The same chapter counts Saturn as helpful in the 3rd, 6th and 11th from the Moon (v.4), which is why a Sade Sati ends once Saturn settles in the 3rd.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <h3>Where the name comes from</h3>
+                            <p>None of the classical texts we work from (BPHS, Brihat Jataka, Phaladeepika, Brihat Samhita) uses the name Sade Sati or treats the three signs as one seven-and-a-half-year period. That grouping is a later tradition built on the transit verses. We follow it because it's how people ask the question, and we date it from Saturn's actual sign changes rather than a flat 7.5 years.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <h3>Dhaiya: Kantaka and Ashtama Shani</h3>
+                            <p>Dhaiya, "two and a half", is Saturn's spell in the 4th or the 8th sign from the Moon. In the 4th it is called Kantaka Shani, after Kantaka, the classical name for the 1st, 4th, 7th and 10th houses (Brihat Jataka Ch.1 Sl.17); Brihat Samhita links it to distance from friends, money and spouse, and an unsettled mind (Ch.104 v.42). In the 8th it is Ashtama Shani, which the same chapter links to time apart from spouse and children, and hard journeys (v.44).</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <h3>How much of it you feel</h3>
+                            <p>These verses describe the transit for everyone with your Moon sign. How it lands in one life depends on the rest of the chart: the dasha running, the houses Saturn crosses from your lagna, and what Saturn rules for you. BPHS Ch.34 counts Saturn as an auspicious planet for Taurus, Libra and Aquarius lagnas. Hard years are real for many people, and they also end, which is why the dates matter.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 class="ss-cta-title">Ask about your own Sade Sati</h2>
+                    <p class="ss-cta-text">The dates above are shared by everyone with your Moon sign. Om.AI reads your own birth chart: the houses Saturn crosses from your lagna, the dasha you're in, and what that means for work, money and family through these years. Your first question is free.</p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dsade_sati" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_sade_sati&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                    <p class="ss-cta-web">Rather not download? <a href="/ask.html?utm_source=website&amp;utm_medium=referral&amp;utm_campaign=seo_page&amp;utm_content=sade_sati_ask" onclick="try{gtag('event','web_ask_click',{event_category:'Web MVP',event_label:'sade_sati_ask'})}catch(e){}">Ask Om.AI in your browser</a></p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Explore more</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/dasha-calculator.html" class="insight-link"><i class="fas fa-clock" aria-hidden="true"></i> Dasha Calculator</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/free-kundli-online.html" class="insight-link"><i class="fas fa-chart-pie" aria-hidden="true"></i> Free Kundli</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/kundli-matching.html" class="insight-link"><i class="fas fa-ring" aria-hidden="true"></i> Kundli Matching</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/shadi-kab-hogi.html" class="insight-link"><i class="fas fa-heart" aria-hidden="true"></i> Shaadi Kab Hogi</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/hi/naukri-kab-milegi.html" class="insight-link"><i class="fas fa-briefcase" aria-hidden="true"></i> Naukri Kab Milegi</a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/ai-astrology-chat.html" class="insight-link"><i class="fas fa-comments" aria-hidden="true"></i> AI Astrology Chat</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">Frequently asked questions</h2>
+                <div class="faq-item">
+                    <h3>How do I check my Sade Sati by date of birth?</h3>
+                    <p>Enter your date of birth and city in the calculator at the top of this page, and your birth time if you know it. It works out the sign the Moon was in when you were born, then tells you whether Sade Sati or Dhaiya is running for that sign today, which phase it is in, and when it ends. If you already know your Moon sign (rashi), the <a href="#dates">table</a> lists the dates directly.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is Sade Sati counted from the Moon sign or the lagna?</h3>
+                    <p>From the Moon sign. Vedic astrology reads transits from the natal Moon (Phaladeepika Ch.26 Sl.1), so everyone with the same Moon sign shares the same Sade Sati dates, whatever their lagna. The lagna still matters for how the years play out, because it decides which houses of your chart Saturn passes through.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>When will Sade Sati end for Aquarius, Pisces and Aries?</h3>
+                    <p>Aquarius (Kumbh): 23 Feb 2028. Pisces (Meen): 17 Apr 2030. Aries (Mesh): 31 May 2032. The next Sade Sati to begin is for Taurus (Vrishabh), on 3 Jun 2027, and it runs to 13 Jul 2034.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is the difference between Sade Sati and Dhaiya?</h3>
+                    <p>Sade Sati is Saturn's run through three signs, the 12th from your Moon, the Moon's own sign and the 2nd, about seven and a half years in all. Dhaiya is one sign, about two and a half years: Saturn 4th from the Moon (Kantaka Shani) or 8th from it (Ashtama Shani). Leo (Singh) and Sagittarius (Dhanu) have Dhaiya from 29 Mar 2025 to 23 Feb 2028, with a break from 3 Jun to 20 Oct 2027.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Why does my Sade Sati show a phase twice, or a pause?</h3>
+                    <p>Saturn turns retrograde for about four and a half months every year, and near a sign boundary it steps back into the sign it just left. Saturn enters Aries on 3 Jun 2027, steps back into Pisces on 20 Oct 2027 and returns to Aries on 23 Feb 2028, so some phases run twice. If the step back takes Saturn outside the three Sade Sati signs, the Sade Sati pauses. Either way it is the same Sade Sati, not a new one.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is Sade Sati always a bad time?</h3>
+                    <p>Not for everyone. Classical transit verses describe Saturn in these signs as a hard stretch, with strain, expense and worry, and many people do feel it that way. How much of it shows in one life depends on the whole chart: the dasha running, the houses Saturn crosses from your lagna, and what Saturn rules for you. BPHS Ch.34 counts Saturn as an auspicious planet for Taurus, Libra and Aquarius lagnas. The period also has a fixed end date, which the calculator gives you.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>Your AI-powered companion for Vedic astrology, Kundli analysis, and spiritual wisdom.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Follow us on Facebook" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/omai.app/" class="text-white me-3" aria-label="Follow us on Instagram" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Features</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/ai-astrology-chat.html" class="text-white-50">Free Astrology Chat</a></li>
+                        <li><a href="/kundli.html" class="text-white-50">Kundli & Birth Chart</a></li>
+                        <li><a href="/marriage-prediction.html" class="text-white-50">Marriage Prediction</a></li>
+                        <li><a href="/navamsa-chart.html" class="text-white-50">Navamsa Chart (D9)</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Daily Insights</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/panchang.html" class="text-white-50">Daily Panchang</a></li>
+                        <li><a href="/horoscope.html" class="text-white-50">Daily Horoscope</a></li>
+                        <li><a href="/gita.html" class="text-white-50">Gita Verse</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">Rahu Kaal Today</a></li>
+                        <li><a href="/blog/" class="text-white-50">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">Download</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dsade_sati" class="text-white-50" rel="noopener noreferrer" target="_blank">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_sade_sati&mt=8" class="text-white-50" rel="noopener noreferrer" target="_blank">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>Vedic astrology is a traditional belief system presented here for informational and cultural purposes. It is not a substitute for professional medical, legal, or financial advice.</small>
+                <br><small>&copy; 2026 Om.AI. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile sticky install CTA bar (mobile only) -->
+    <div class="mobile-cta-bar" role="region" aria-label="Download the Om.AI app">
+        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dsade_sati" class="btn btn--primary" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play</a>
+        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_sade_sati&mt=8" class="btn btn--outline" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>
+    </div>
+
+    <script src="/assets/js/nav.js?v=4" defer></script>
+
+    <!-- Table, today's list and chart re-render from the embedded data, so dates stay current. -->
+    <script type="application/json" id="ss-data">{"generatedAt":"2026-10-26T19:04:47.962Z","convention":"A Sade Sati runs from Saturn's first entry into the 12th sign from the Moon to its settled entry into the 3rd. A stay back in the 11th or ahead in the 3rd before then is a pause inside the same Sade Sati.","rashis":{"Aries":{"hi":"मेष","cycles":[{"start":"2025-03-29","end":"2032-05-31","phaseSigns":{"rising":"Pisces","peak":"Aries","setting":"Taurus"},"stays":[{"phase":"rising","saturnSign":"Pisces","from":"2025-03-29","to":"2027-06-03","retrogradeReturn":false},{"phase":"peak","saturnSign":"Aries","from":"2027-06-03","to":"2027-10-20","retrogradeReturn":false},{"phase":"rising","saturnSign":"Pisces","from":"2027-10-20","to":"2028-02-23","retrogradeReturn":true},{"phase":"peak","saturnSign":"Aries","from":"2028-02-23","to":"2029-08-08","retrogradeReturn":false},{"phase":"setting","saturnSign":"Taurus","from":"2029-08-08","to":"2029-10-05","retrogradeReturn":false},{"phase":"peak","saturnSign":"Aries","from":"2029-10-05","to":"2030-04-17","retrogradeReturn":true},{"phase":"setting","saturnSign":"Taurus","from":"2030-04-17","to":"2032-05-31","retrogradeReturn":false}]}]},"Taurus":{"hi":"वृषभ","cycles":[{"start":"2027-06-03","end":"2034-07-13","phaseSigns":{"rising":"Aries","peak":"Taurus","setting":"Gemini"},"stays":[{"phase":"rising","saturnSign":"Aries","from":"2027-06-03","to":"2027-10-20","retrogradeReturn":false},{"phase":"paused","saturnSign":"Pisces","from":"2027-10-20","to":"2028-02-23","retrogradeReturn":true},{"phase":"rising","saturnSign":"Aries","from":"2028-02-23","to":"2029-08-08","retrogradeReturn":false},{"phase":"peak","saturnSign":"Taurus","from":"2029-08-08","to":"2029-10-05","retrogradeReturn":false},{"phase":"rising","saturnSign":"Aries","from":"2029-10-05","to":"2030-04-17","retrogradeReturn":true},{"phase":"peak","saturnSign":"Taurus","from":"2030-04-17","to":"2032-05-31","retrogradeReturn":false},{"phase":"setting","saturnSign":"Gemini","from":"2032-05-31","to":"2034-07-13","retrogradeReturn":false}]}]},"Gemini":{"hi":"मिथुन","cycles":[{"start":"2029-08-08","end":"2036-08-27","phaseSigns":{"rising":"Taurus","peak":"Gemini","setting":"Cancer"},"stays":[{"phase":"rising","saturnSign":"Taurus","from":"2029-08-08","to":"2029-10-05","retrogradeReturn":false},{"phase":"paused","saturnSign":"Aries","from":"2029-10-05","to":"2030-04-17","retrogradeReturn":true},{"phase":"rising","saturnSign":"Taurus","from":"2030-04-17","to":"2032-05-31","retrogradeReturn":false},{"phase":"peak","saturnSign":"Gemini","from":"2032-05-31","to":"2034-07-13","retrogradeReturn":false},{"phase":"setting","saturnSign":"Cancer","from":"2034-07-13","to":"2036-08-27","retrogradeReturn":false}]}]},"Cancer":{"hi":"कर्क","cycles":[{"start":"2032-05-31","end":"2039-07-13","phaseSigns":{"rising":"Gemini","peak":"Cancer","setting":"Leo"},"stays":[{"phase":"rising","saturnSign":"Gemini","from":"2032-05-31","to":"2034-07-13","retrogradeReturn":false},{"phase":"peak","saturnSign":"Cancer","from":"2034-07-13","to":"2036-08-27","retrogradeReturn":false},{"phase":"setting","saturnSign":"Leo","from":"2036-08-27","to":"2038-10-22","retrogradeReturn":false},{"phase":"paused","saturnSign":"Virgo","from":"2038-10-22","to":"2039-04-05","retrogradeReturn":false},{"phase":"setting","saturnSign":"Leo","from":"2039-04-05","to":"2039-07-13","retrogradeReturn":true}]}]},"Leo":{"hi":"सिंह","cycles":[{"start":"2034-07-13","end":"2041-09-26","phaseSigns":{"rising":"Cancer","peak":"Leo","setting":"Virgo"},"stays":[{"phase":"rising","saturnSign":"Cancer","from":"2034-07-13","to":"2036-08-27","retrogradeReturn":false},{"phase":"peak","saturnSign":"Leo","from":"2036-08-27","to":"2038-10-22","retrogradeReturn":false},{"phase":"setting","saturnSign":"Virgo","from":"2038-10-22","to":"2039-04-05","retrogradeReturn":false},{"phase":"peak","saturnSign":"Leo","from":"2039-04-05","to":"2039-07-13","retrogradeReturn":true},{"phase":"setting","saturnSign":"Virgo","from":"2039-07-13","to":"2041-01-28","retrogradeReturn":false},{"phase":"paused","saturnSign":"Libra","from":"2041-01-28","to":"2041-02-06","retrogradeReturn":false},{"phase":"setting","saturnSign":"Virgo","from":"2041-02-06","to":"2041-09-26","retrogradeReturn":true}]}]},"Virgo":{"hi":"कन्या","cycles":[{"start":"2036-08-27","end":"2044-08-30","phaseSigns":{"rising":"Leo","peak":"Virgo","setting":"Libra"},"stays":[{"phase":"rising","saturnSign":"Leo","from":"2036-08-27","to":"2038-10-22","retrogradeReturn":false},{"phase":"peak","saturnSign":"Virgo","from":"2038-10-22","to":"2039-04-05","retrogradeReturn":false},{"phase":"rising","saturnSign":"Leo","from":"2039-04-05","to":"2039-07-13","retrogradeReturn":true},{"phase":"peak","saturnSign":"Virgo","from":"2039-07-13","to":"2041-01-28","retrogradeReturn":false},{"phase":"setting","saturnSign":"Libra","from":"2041-01-28","to":"2041-02-06","retrogradeReturn":false},{"phase":"peak","saturnSign":"Virgo","from":"2041-02-06","to":"2041-09-26","retrogradeReturn":true},{"phase":"setting","saturnSign":"Libra","from":"2041-09-26","to":"2043-12-11","retrogradeReturn":false},{"phase":"paused","saturnSign":"Scorpio","from":"2043-12-11","to":"2044-06-23","retrogradeReturn":false},{"phase":"setting","saturnSign":"Libra","from":"2044-06-23","to":"2044-08-30","retrogradeReturn":true}]}]},"Libra":{"hi":"तुला","cycles":[{"start":"2038-10-22","end":"2046-12-08","phaseSigns":{"rising":"Virgo","peak":"Libra","setting":"Scorpio"},"stays":[{"phase":"rising","saturnSign":"Virgo","from":"2038-10-22","to":"2039-04-05","retrogradeReturn":false},{"phase":"paused","saturnSign":"Leo","from":"2039-04-05","to":"2039-07-13","retrogradeReturn":true},{"phase":"rising","saturnSign":"Virgo","from":"2039-07-13","to":"2041-01-28","retrogradeReturn":false},{"phase":"peak","saturnSign":"Libra","from":"2041-01-28","to":"2041-02-06","retrogradeReturn":false},{"phase":"rising","saturnSign":"Virgo","from":"2041-02-06","to":"2041-09-26","retrogradeReturn":true},{"phase":"peak","saturnSign":"Libra","from":"2041-09-26","to":"2043-12-11","retrogradeReturn":false},{"phase":"setting","saturnSign":"Scorpio","from":"2043-12-11","to":"2044-06-23","retrogradeReturn":false},{"phase":"peak","saturnSign":"Libra","from":"2044-06-23","to":"2044-08-30","retrogradeReturn":true},{"phase":"setting","saturnSign":"Scorpio","from":"2044-08-30","to":"2046-12-08","retrogradeReturn":false}]}]},"Scorpio":{"hi":"वृश्चिक","cycles":[{"start":"2011-11-15","end":"2020-01-24","phaseSigns":{"rising":"Libra","peak":"Scorpio","setting":"Sagittarius"},"stays":[{"phase":"rising","saturnSign":"Libra","from":"2011-11-15","to":"2012-05-16","retrogradeReturn":false},{"phase":"paused","saturnSign":"Virgo","from":"2012-05-16","to":"2012-08-04","retrogradeReturn":true},{"phase":"rising","saturnSign":"Libra","from":"2012-08-04","to":"2014-11-02","retrogradeReturn":false},{"phase":"peak","saturnSign":"Scorpio","from":"2014-11-02","to":"2017-01-26","retrogradeReturn":false},{"phase":"setting","saturnSign":"Sagittarius","from":"2017-01-26","to":"2017-06-21","retrogradeReturn":false},{"phase":"peak","saturnSign":"Scorpio","from":"2017-06-21","to":"2017-10-26","retrogradeReturn":true},{"phase":"setting","saturnSign":"Sagittarius","from":"2017-10-26","to":"2020-01-24","retrogradeReturn":false}]},{"start":"2041-01-28","end":"2049-12-04","phaseSigns":{"rising":"Libra","peak":"Scorpio","setting":"Sagittarius"},"stays":[{"phase":"rising","saturnSign":"Libra","from":"2041-01-28","to":"2041-02-06","retrogradeReturn":false},{"phase":"paused","saturnSign":"Virgo","from":"2041-02-06","to":"2041-09-26","retrogradeReturn":true},{"phase":"rising","saturnSign":"Libra","from":"2041-09-26","to":"2043-12-11","retrogradeReturn":false},{"phase":"peak","saturnSign":"Scorpio","from":"2043-12-11","to":"2044-06-23","retrogradeReturn":false},{"phase":"rising","saturnSign":"Libra","from":"2044-06-23","to":"2044-08-30","retrogradeReturn":true},{"phase":"peak","saturnSign":"Scorpio","from":"2044-08-30","to":"2046-12-08","retrogradeReturn":false},{"phase":"setting","saturnSign":"Sagittarius","from":"2046-12-08","to":"2049-03-06","retrogradeReturn":false},{"phase":"paused","saturnSign":"Capricorn","from":"2049-03-06","to":"2049-07-10","retrogradeReturn":false},{"phase":"setting","saturnSign":"Sagittarius","from":"2049-07-10","to":"2049-12-04","retrogradeReturn":true}]}]},"Sagittarius":{"hi":"धनु","cycles":[{"start":"2014-11-02","end":"2023-01-17","phaseSigns":{"rising":"Scorpio","peak":"Sagittarius","setting":"Capricorn"},"stays":[{"phase":"rising","saturnSign":"Scorpio","from":"2014-11-02","to":"2017-01-26","retrogradeReturn":false},{"phase":"peak","saturnSign":"Sagittarius","from":"2017-01-26","to":"2017-06-21","retrogradeReturn":false},{"phase":"rising","saturnSign":"Scorpio","from":"2017-06-21","to":"2017-10-26","retrogradeReturn":true},{"phase":"peak","saturnSign":"Sagittarius","from":"2017-10-26","to":"2020-01-24","retrogradeReturn":false},{"phase":"setting","saturnSign":"Capricorn","from":"2020-01-24","to":"2022-04-29","retrogradeReturn":false},{"phase":"paused","saturnSign":"Aquarius","from":"2022-04-29","to":"2022-07-12","retrogradeReturn":false},{"phase":"setting","saturnSign":"Capricorn","from":"2022-07-12","to":"2023-01-17","retrogradeReturn":true}]},{"start":"2043-12-11","end":"2052-02-25","phaseSigns":{"rising":"Scorpio","peak":"Sagittarius","setting":"Capricorn"},"stays":[{"phase":"rising","saturnSign":"Scorpio","from":"2043-12-11","to":"2044-06-23","retrogradeReturn":false},{"phase":"paused","saturnSign":"Libra","from":"2044-06-23","to":"2044-08-30","retrogradeReturn":true},{"phase":"rising","saturnSign":"Scorpio","from":"2044-08-30","to":"2046-12-08","retrogradeReturn":false},{"phase":"peak","saturnSign":"Sagittarius","from":"2046-12-08","to":"2049-03-06","retrogradeReturn":false},{"phase":"setting","saturnSign":"Capricorn","from":"2049-03-06","to":"2049-07-10","retrogradeReturn":false},{"phase":"peak","saturnSign":"Sagittarius","from":"2049-07-10","to":"2049-12-04","retrogradeReturn":true},{"phase":"setting","saturnSign":"Capricorn","from":"2049-12-04","to":"2052-02-25","retrogradeReturn":false}]}]},"Capricorn":{"hi":"मकर","cycles":[{"start":"2017-01-26","end":"2025-03-29","phaseSigns":{"rising":"Sagittarius","peak":"Capricorn","setting":"Aquarius"},"stays":[{"phase":"rising","saturnSign":"Sagittarius","from":"2017-01-26","to":"2017-06-21","retrogradeReturn":false},{"phase":"paused","saturnSign":"Scorpio","from":"2017-06-21","to":"2017-10-26","retrogradeReturn":true},{"phase":"rising","saturnSign":"Sagittarius","from":"2017-10-26","to":"2020-01-24","retrogradeReturn":false},{"phase":"peak","saturnSign":"Capricorn","from":"2020-01-24","to":"2022-04-29","retrogradeReturn":false},{"phase":"setting","saturnSign":"Aquarius","from":"2022-04-29","to":"2022-07-12","retrogradeReturn":false},{"phase":"peak","saturnSign":"Capricorn","from":"2022-07-12","to":"2023-01-17","retrogradeReturn":true},{"phase":"setting","saturnSign":"Aquarius","from":"2023-01-17","to":"2025-03-29","retrogradeReturn":false}]}]},"Aquarius":{"hi":"कुंभ","cycles":[{"start":"2020-01-24","end":"2028-02-23","phaseSigns":{"rising":"Capricorn","peak":"Aquarius","setting":"Pisces"},"stays":[{"phase":"rising","saturnSign":"Capricorn","from":"2020-01-24","to":"2022-04-29","retrogradeReturn":false},{"phase":"peak","saturnSign":"Aquarius","from":"2022-04-29","to":"2022-07-12","retrogradeReturn":false},{"phase":"rising","saturnSign":"Capricorn","from":"2022-07-12","to":"2023-01-17","retrogradeReturn":true},{"phase":"peak","saturnSign":"Aquarius","from":"2023-01-17","to":"2025-03-29","retrogradeReturn":false},{"phase":"setting","saturnSign":"Pisces","from":"2025-03-29","to":"2027-06-03","retrogradeReturn":false},{"phase":"paused","saturnSign":"Aries","from":"2027-06-03","to":"2027-10-20","retrogradeReturn":false},{"phase":"setting","saturnSign":"Pisces","from":"2027-10-20","to":"2028-02-23","retrogradeReturn":true}]}]},"Pisces":{"hi":"मीन","cycles":[{"start":"2022-04-29","end":"2030-04-17","phaseSigns":{"rising":"Aquarius","peak":"Pisces","setting":"Aries"},"stays":[{"phase":"rising","saturnSign":"Aquarius","from":"2022-04-29","to":"2022-07-12","retrogradeReturn":false},{"phase":"paused","saturnSign":"Capricorn","from":"2022-07-12","to":"2023-01-17","retrogradeReturn":true},{"phase":"rising","saturnSign":"Aquarius","from":"2023-01-17","to":"2025-03-29","retrogradeReturn":false},{"phase":"peak","saturnSign":"Pisces","from":"2025-03-29","to":"2027-06-03","retrogradeReturn":false},{"phase":"setting","saturnSign":"Aries","from":"2027-06-03","to":"2027-10-20","retrogradeReturn":false},{"phase":"peak","saturnSign":"Pisces","from":"2027-10-20","to":"2028-02-23","retrogradeReturn":true},{"phase":"setting","saturnSign":"Aries","from":"2028-02-23","to":"2029-08-08","retrogradeReturn":false},{"phase":"paused","saturnSign":"Taurus","from":"2029-08-08","to":"2029-10-05","retrogradeReturn":false},{"phase":"setting","saturnSign":"Aries","from":"2029-10-05","to":"2030-04-17","retrogradeReturn":true}]}]}}}</script>
+    <script>
+var SS = (function () {
+    var SIGNS = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+    var house = function (moon, sat) { return (SIGNS.indexOf(sat) - SIGNS.indexOf(moon) + 12) % 12 + 1; };
+    var nth = function (sign, n) { return SIGNS[(SIGNS.indexOf(sign) + n - 1) % 12]; };
+    var indexAt = function (list, t) {
+        for (var i = 0; i < list.length; i++) if (list[i].from <= t && t < list[i].to) return i;
+        return -1;
+    };
+    var esc = function (s) {
+        return String(s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    };
+
+    // Saturn's sign chain, rebuilt from every rashi's stays; each stay is one spell of Saturn in one sign.
+    var chain = function (R) {
+        var seen = {}, out = [];
+        SIGNS.forEach(function (k) {
+            R[k].cycles.forEach(function (c) {
+                c.stays.forEach(function (s) {
+                    if (!seen[s.from]) { seen[s.from] = 1; out.push({ sign: s.saturnSign, from: s.from, to: s.to }); }
+                });
+            });
+        });
+        return out.sort(function (a, b) { return a.from < b.from ? -1 : 1; });
+    };
+
+    var status = function (R, C, sign, t) {
+        var cs = R[sign].cycles;
+        for (var i = 0; i < cs.length; i++) {
+            if (cs[i].start <= t && t < cs[i].end) return { kind: 'sade', cycle: cs[i], stay: cs[i].stays[indexAt(cs[i].stays, t)] };
+        }
+        var next = cs.filter(function (c) { return c.start > t; })[0] || null;
+        var k = indexAt(C, t), h = k < 0 ? 0 : house(sign, C[k].sign);
+        if (h === 4 || h === 8) {
+            var e = k;
+            while (C[e + 2] && C[e + 2].sign === C[k].sign) e += 2;
+            var breaks = [];
+            for (var j = k; j < e; j += 2) breaks.push([C[j].to, C[j + 1].to]);
+            return { kind: 'dhaiya', type: h === 4 ? 'kantaka' : 'ashtama', until: C[e].to, breaks: breaks, next: next };
+        }
+        if (next) return { kind: 'next', next: next };
+        var later = C.filter(function (s) { return s.from > t && s.sign === nth(sign, 12); })[0];
+        return { kind: 'ended', last: cs[cs.length - 1], nextStart: later ? later.from : null };
+    };
+
+    // The cycle a table row shows: the one running, else the next, else the last.
+    var rowCycles = function (R, sign, t) {
+        var cs = R[sign].cycles, show = null, i;
+        for (i = 0; i < cs.length && !show; i++) if (t < cs[i].end) show = cs[i];
+        if (!show) show = cs[cs.length - 1];
+        i = cs.indexOf(show);
+        return { show: show, prev: i > 0 ? cs[i - 1] : null };
+    };
+
+    var fmt = function (L, iso) {
+        var p = iso.split('-');
+        return +p[2] + ' ' + L.months[+p[1] - 1] + ' ' + p[0];
+    };
+    var tm = function (L, iso) { return '<time datetime="' + iso + '">' + fmt(L, iso) + '</time>'; };
+    var range = function (L, a, b) { return tm(L, a) + ' – ' + tm(L, b); };
+
+    var phaseCells = function (L, sign, c) {
+        var cells = { rising: [], peak: [], setting: [] }, seen = {};
+        c.stays.forEach(function (s) {
+            var col = s.phase, line;
+            if (s.phase === 'paused') {
+                col = house(sign, s.saturnSign) === 11 ? 'rising' : 'setting';
+                line = '<span class="ss-line ss-line--pause">' + L.paused(col === 'rising', L.sign[s.saturnSign]) + ' ' + range(L, s.from, s.to) + '</span>';
+            } else {
+                line = '<span class="ss-line">' + (seen[col] ? '<span class="ss-again">' + L.again + '</span> ' : '') + range(L, s.from, s.to) + '</span>';
+                seen[col] = 1;
+            }
+            cells[col].push(line);
+        });
+        return cells;
+    };
+
+    var pill = function (L, st) {
+        if (st.kind === 'sade') {
+            var paused = st.stay.phase === 'paused';
+            return '<span class="ss-pill ss-pill--sade">' + (paused ? L.pillPaused : L.pillSade(L.phase[st.stay.phase])) + '</span>';
+        }
+        if (st.kind === 'dhaiya') return '<span class="ss-pill ss-pill--dhaiya">' + L.pillDhaiya(L.dhaiyaShort[st.type], tm(L, st.until)) + '</span>';
+        if (st.kind === 'next') return '<span class="ss-pill">' + L.pillNext(tm(L, st.next.start)) + '</span>';
+        return '<span class="ss-pill ss-pill--done">' + L.pillEnded(tm(L, st.last.end), st.nextStart ? tm(L, st.nextStart) : null) + '</span>';
+    };
+
+    var rows = function (R, L, t) {
+        var C = chain(R);
+        return SIGNS.map(function (sign) {
+            var st = status(R, C, sign, t), rc = rowCycles(R, sign, t), cells = phaseCells(L, sign, rc.show);
+            var cls = st.kind === 'sade' ? ' is-sade' : st.kind === 'dhaiya' ? ' is-dhaiya' : '';
+            var prev = rc.prev && rc.prev.end <= t ? '<span class="ss-prev">' + L.lastOne + ' ' + range(L, rc.prev.start, rc.prev.end) + '</span>' : '';
+            return '<tr id="ss-row-' + sign + '" class="ss-row' + cls + '">'
+                + '<th scope="row"><span class="ss-sign">' + L.signMain[sign] + '</span> <span class="ss-sign-alt">' + L.signAlt[sign] + '</span></th>'
+                + '<td data-label="' + L.col.span + '"><span class="ss-range">' + range(L, rc.show.start, rc.show.end) + '</span>' + prev + '</td>'
+                + '<td data-label="' + L.col.rising + '">' + cells.rising.join('') + '</td>'
+                + '<td data-label="' + L.col.peak + '">' + cells.peak.join('') + '</td>'
+                + '<td data-label="' + L.col.setting + '">' + cells.setting.join('') + '</td>'
+                + '<td data-label="' + L.col.today + '">' + pill(L, st) + '</td>'
+                + '</tr>';
+        }).join('\n');
+    };
+
+    var now = function (R, L, t) {
+        var C = chain(R), k = indexAt(C, t), sade = [], dhaiya = [], soonest = null;
+        SIGNS.forEach(function (sign) {
+            var st = status(R, C, sign, t);
+            if (st.kind === 'sade') sade.push({ sign: sign, st: st });
+            if (st.kind === 'dhaiya') dhaiya.push({ sign: sign, st: st });
+            var nx = st.kind === 'next' ? st.next : st.kind === 'dhaiya' ? st.next : null;
+            if (nx && (!soonest || nx.start < soonest.start)) soonest = { sign: sign, start: nx.start };
+        });
+        sade.sort(function (a, b) { return a.st.cycle.end < b.st.cycle.end ? -1 : 1; });
+        var html = '<p class="ss-asof">' + L.saturnNow(tm(L, t), L.sign[C[k].sign], L.sign[C[k + 1].sign], tm(L, C[k].to), C[k + 1].sign === nth(C[k].sign, 12)) + '</p><ul class="ss-now">';
+        sade.forEach(function (x) {
+            var s = x.st.stay;
+            html += '<li><span class="ss-key ss-key--sade" aria-hidden="true"></span><span><a href="#ss-row-' + x.sign + '">' + L.sign[x.sign] + '</a>: '
+                + (s.phase === 'paused' ? L.nowPaused(tm(L, s.to), tm(L, x.st.cycle.end)) : L.nowSade(L.phase[s.phase], tm(L, x.st.cycle.end))) + '</span></li>';
+        });
+        dhaiya.forEach(function (x) {
+            var st = x.st;
+            html += '<li><span class="ss-key ss-key--dhaiya" aria-hidden="true"></span><span><a href="#ss-row-' + x.sign + '">' + L.sign[x.sign] + '</a>: '
+                + L.nowDhaiya(L.dhaiyaLong[st.type], tm(L, st.until), st.breaks.map(function (b) { return [tm(L, b[0]), tm(L, b[1])]; })) + '</span></li>';
+        });
+        html += '</ul>';
+        if (soonest) html += '<p class="ss-next-up">' + L.nextUp(L.sign[soonest.sign], tm(L, soonest.start)) + '</p>';
+        return html;
+    };
+
+    // Rows Aries to Pisces against 2020–2045: Sade Sati bars swell at the peak, Dhaiya in blue, pauses as the bare track.
+    var chart = function (R, L, t, width) {
+        var C = chain(R), x0 = L.chartLabelW, x1 = width - 10, top = 24, rowH = 22, bottom = 22;
+        var t0 = Date.UTC(2020, 0, 1), t1 = Date.UTC(2046, 0, 1);
+        var ms = function (iso) { var p = iso.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]); };
+        var x = function (iso) { return x0 + (Math.min(Math.max(ms(iso), t0), t1) - t0) / (t1 - t0) * (x1 - x0); };
+        var h = top + rowH * 12 + bottom, out = [];
+        var active = {};
+        SIGNS.forEach(function (sign) { var k = status(R, C, sign, t).kind; if (k === 'sade' || k === 'dhaiya') active[sign] = 1; });
+        for (var y = 2020; y <= 2045; y += 5) {
+            var gx = x(y + '-01-01');
+            out.push('<line x1="' + gx + '" x2="' + gx + '" y1="' + (top - 4) + '" y2="' + (h - bottom + 2) + '" class="ss-grid"/>');
+            out.push('<text x="' + gx + '" y="' + (h - 6) + '" class="ss-axis" text-anchor="middle">' + y + '</text>');
+        }
+        var bar = function (from, to, cy, hh, cls, tip) {
+            if (ms(to) <= t0 || ms(from) >= t1) return '';
+            var a = x(from) + 1, b = x(to) - 1;
+            if (b - a < 1) { a -= 0.5; b = a + 1; }
+            return '<rect x="' + a.toFixed(1) + '" y="' + (cy - hh / 2) + '" width="' + (b - a).toFixed(1) + '" height="' + hh + '" rx="2" class="' + cls + '" data-tip="' + esc(tip) + '"/>';
+        };
+        SIGNS.forEach(function (sign, r) {
+            var cy = top + r * rowH + rowH / 2;
+            out.push('<text x="' + (x0 - 8) + '" y="' + (cy + 4) + '" text-anchor="end" class="ss-rowlabel' + (active[sign] ? ' is-active' : '') + '">' + esc(L.signChart[sign]) + '</text>');
+            R[sign].cycles.forEach(function (c) {
+                if (ms(c.end) > t0 && ms(c.start) < t1) out.push('<line x1="' + x(c.start) + '" x2="' + x(c.end) + '" y1="' + cy + '" y2="' + cy + '" class="ss-track"/>');
+                c.stays.forEach(function (s) {
+                    if (s.phase === 'paused') return;
+                    var tip = L.signChart[sign] + ': ' + L.tipSade(L.phase[s.phase]) + ', ' + fmt(L, s.from) + ' – ' + fmt(L, s.to);
+                    out.push(bar(s.from, s.to, cy, s.phase === 'peak' ? 14 : 8, 'ss-bar ss-bar--' + (s.phase === 'peak' ? 'peak' : 'edge'), tip));
+                });
+            });
+            C.forEach(function (s) {
+                var hs = house(sign, s.sign);
+                if (hs !== 4 && hs !== 8) return;
+                var tip = L.signChart[sign] + ': ' + L.dhaiyaShort[hs === 4 ? 'kantaka' : 'ashtama'] + ', ' + fmt(L, s.from) + ' – ' + fmt(L, s.to);
+                out.push(bar(s.from, s.to, cy, 8, 'ss-bar ss-bar--dhaiya', tip));
+            });
+        });
+        var tx = x(t);
+        out.push('<line x1="' + tx + '" x2="' + tx + '" y1="' + (top - 6) + '" y2="' + (h - bottom + 2) + '" class="ss-today"/>');
+        out.push('<text x="' + Math.min(Math.max(tx, x0 + 14), x1 - 14) + '" y="' + (top - 10) + '" text-anchor="middle" class="ss-today-label">' + esc(L.today) + '</text>');
+        return '<svg viewBox="0 0 ' + width + ' ' + h + '" width="' + width + '" height="' + h + '" aria-hidden="true" focusable="false">' + out.join('') + '</svg>';
+    };
+
+    return { SIGNS: SIGNS, house: house, nth: nth, chain: chain, status: status, rows: rows, now: now, chart: chart, fmt: fmt, tm: tm, esc: esc };
+})();
+var L = {
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    signMain: { Aries: 'Aries', Taurus: 'Taurus', Gemini: 'Gemini', Cancer: 'Cancer', Leo: 'Leo', Virgo: 'Virgo', Libra: 'Libra', Scorpio: 'Scorpio', Sagittarius: 'Sagittarius', Capricorn: 'Capricorn', Aquarius: 'Aquarius', Pisces: 'Pisces' },
+    signAlt: { Aries: 'Mesh', Taurus: 'Vrishabh', Gemini: 'Mithun', Cancer: 'Kark', Leo: 'Singh', Virgo: 'Kanya', Libra: 'Tula', Scorpio: 'Vrishchik', Sagittarius: 'Dhanu', Capricorn: 'Makar', Aquarius: 'Kumbh', Pisces: 'Meen' },
+    sign: {},
+    signChart: {},
+    phase: { rising: 'rising', peak: 'peak', setting: 'setting' },
+    col: { span: 'Sade Sati', rising: 'Rising (12th from Moon)', peak: 'Peak (over the Moon)', setting: 'Setting (2nd from Moon)', today: 'Today' },
+    again: 'Again',
+    paused: function (back, s) { return 'Paused, Saturn ' + (back ? 'back' : 'ahead') + ' in ' + s + ':'; },
+    lastOne: 'Previous:',
+    pillSade: function (p) { return 'Now: ' + p + ' phase'; },
+    pillPaused: 'Now: paused',
+    pillDhaiya: function (type, until) { return 'Dhaiya now (' + type + ') until ' + until; },
+    pillNext: function (d) { return 'Starts ' + d; },
+    pillEnded: function (end, next) { return 'Ended ' + end + (next ? '. Next from ' + next : ''); },
+    dhaiyaShort: { kantaka: 'Kantaka Shani', ashtama: 'Ashtama Shani' },
+    dhaiyaLong: { kantaka: 'Kantaka Shani, Saturn 4th from the Moon', ashtama: 'Ashtama Shani, Saturn 8th from the Moon' },
+    saturnNow: function (d, s, n, on, back) { return 'On ' + d + ', Saturn is in ' + s + '. It ' + (back ? 'steps back' : 'moves') + ' into ' + n + ' on ' + on + '.'; },
+    nowSade: function (p, end) { return 'Sade Sati, ' + p + ' phase. Ends ' + end + '.'; },
+    nowPaused: function (resumes, end) { return 'Sade Sati paused until ' + resumes + '. Ends ' + end + '.'; },
+    nowDhaiya: function (type, until, breaks) { return 'Dhaiya (' + type + ') until ' + until + (breaks.length ? ', with ' + (breaks.length > 1 ? 'breaks ' : 'a break ') + breaks.map(function (b) { return 'from ' + b[0] + ' to ' + b[1]; }).join(' and ') : '') + '.'; },
+    nextUp: function (s, d) { return 'Next to begin: ' + s + ', on ' + d + '.'; },
+    tipSade: function (p) { return 'Sade Sati, ' + p; },
+    today: 'Today',
+    chartLabelW: 84
+};
+Object.keys(L.signMain).forEach(function (k) { L.sign[k] = L.signMain[k] + ' (' + L.signAlt[k] + ')'; L.signChart[k] = L.signMain[k]; });
+    </script>
+
+    <!-- Personal check: /api/public/kundli gives the Moon sign and the Sade Sati status for today. -->
+    <script>
+    (function () {
+        var API = 'https://om-ai-backend-4f29d7469ff6.herokuapp.com';
+        var LANG = 'en';
+        var ASK = '/ask.html?utm_source=website&utm_medium=referral&utm_campaign=seo_page&utm_content=sade_sati_result_ask';
+
+        var CITIES = {
+            'Delhi': [28.6139, 77.2090, 5.5],
+            'Mumbai': [19.0760, 72.8777, 5.5],
+            'Kolkata': [22.5726, 88.3639, 5.5],
+            'Chennai': [13.0827, 80.2707, 5.5],
+            'Bengaluru': [12.9716, 77.5946, 5.5],
+            'Hyderabad': [17.3850, 78.4867, 5.5],
+            'Pune': [18.5204, 73.8567, 5.5],
+            'Ahmedabad': [23.0225, 72.5714, 5.5],
+            'Jaipur': [26.9124, 75.7873, 5.5],
+            'Lucknow': [26.8467, 80.9462, 5.5],
+            'Kanpur': [26.4499, 80.3319, 5.5],
+            'Nagpur': [21.1458, 79.0882, 5.5],
+            'Indore': [22.7196, 75.8577, 5.5],
+            'Bhopal': [23.2599, 77.4126, 5.5],
+            'Patna': [25.5941, 85.1376, 5.5],
+            'Ludhiana': [30.9010, 75.8573, 5.5],
+            'Agra': [27.1767, 78.0081, 5.5],
+            'Varanasi': [25.3176, 82.9739, 5.5],
+            'Surat': [21.1702, 72.8311, 5.5],
+            'Vadodara': [22.3072, 73.1812, 5.5],
+            'Chandigarh': [30.7333, 76.7794, 5.5],
+            'Amritsar': [31.6340, 74.8723, 5.5],
+            'Jodhpur': [26.2389, 73.0243, 5.5],
+            'Raipur': [21.2514, 81.6296, 5.5],
+            'Ranchi': [23.3441, 85.3096, 5.5],
+            'Guwahati': [26.1445, 91.7362, 5.5],
+            'Bhubaneswar': [20.2961, 85.8245, 5.5],
+            'Coimbatore': [11.0168, 76.9558, 5.5],
+            'Kochi': [9.9312, 76.2673, 5.5],
+            'Thiruvananthapuram': [8.5241, 76.9366, 5.5],
+            'Visakhapatnam': [17.6868, 83.2185, 5.5],
+            'Vijayawada': [16.5062, 80.6480, 5.5],
+            'Madurai': [9.9252, 78.1198, 5.5],
+            'Mysuru': [12.2958, 76.6394, 5.5],
+            'Nashik': [19.9975, 73.7898, 5.5],
+            'Rajkot': [22.3039, 70.8022, 5.5],
+            'Jabalpur': [23.1815, 79.9864, 5.5],
+            'Gwalior': [26.2183, 78.1828, 5.5],
+            'Meerut': [28.9845, 77.7064, 5.5],
+            'Prayagraj': [25.4358, 81.8463, 5.5],
+            'Dehradun': [30.3165, 78.0322, 5.5],
+            'Shimla': [31.1048, 77.1734, 5.5],
+            'Srinagar': [34.0837, 74.7973, 5.5],
+            'Jammu': [32.7266, 74.8570, 5.5],
+            'Noida': [28.5355, 77.3910, 5.5],
+            'Gurugram': [28.4595, 77.0266, 5.5],
+            'Ghaziabad': [28.6692, 77.4538, 5.5],
+            'Thane': [19.2183, 72.9781, 5.5],
+            'Jamshedpur': [22.8046, 86.2029, 5.5],
+            'Dhanbad': [23.7957, 86.4304, 5.5],
+            'Udaipur': [24.5854, 73.7125, 5.5],
+            'Ajmer': [26.4499, 74.6399, 5.5],
+            'Bikaner': [28.0229, 73.3119, 5.5],
+            'Kota': [25.2138, 75.8648, 5.5],
+            'Bareilly': [28.3670, 79.4304, 5.5],
+            'Aligarh': [27.8974, 78.0880, 5.5],
+            'Gorakhpur': [26.7606, 83.3732, 5.5],
+            'Jalandhar': [31.3260, 75.5762, 5.5],
+            'Panaji': [15.4909, 73.8278, 5.5],
+            'Cuttack': [20.4625, 85.8828, 5.5],
+            'Salem': [11.6643, 78.1460, 5.5],
+            'Tiruchirappalli': [10.7905, 78.7047, 5.5],
+            'Warangal': [17.9689, 79.5941, 5.5],
+            'Guntur': [16.3067, 80.4365, 5.5],
+            'Solapur': [17.6599, 75.9064, 5.5],
+            'Kolhapur': [16.7050, 74.2433, 5.5],
+            'Siliguri': [26.7271, 88.3953, 5.5],
+            'Kathmandu': [27.7172, 85.3240, 5.75, 'Asia/Kathmandu'],
+            'Dubai': [25.2048, 55.2708, 4, 'Asia/Dubai'],
+            'Singapore': [1.3521, 103.8198, 8, 'Asia/Singapore'],
+            'London': [51.5074, -0.1278, 0, 'Europe/London'],
+            'New York': [40.7128, -74.0060, -5, 'America/New_York'],
+            'Toronto': [43.6532, -79.3832, -5, 'America/Toronto'],
+            'Sydney': [-33.8688, 151.2093, 10, 'Australia/Sydney']
+        };
+
+        var T = {
+            moonLine: function (sign, nak) { return 'Your Moon sign is <strong>' + sign + '</strong>' + (nak ? ', in ' + nak + ' nakshatra' : '') + '.'; },
+            inSade: function (p) { return 'You are in Sade Sati, in the ' + p + ' phase'; },
+            inPaused: 'Your Sade Sati is paused for now',
+            inDhaiya: function (type) { return 'You are in Dhaiya: ' + type; },
+            clear: 'No Sade Sati or Dhaiya is running for you now',
+            step: { rising: 'Rising', peak: 'Peak', setting: 'Setting' },
+            stepFrom: function (d) { return 'from ' + d; },
+            stepNow: 'Now',
+            stepEnd: function (d) { return 'Ends ' + d; },
+            began: function (d, p, since) { return 'It began on ' + d + (since === d ? '.' : ', and the ' + p + ' phase has run since ' + since + '.'); },
+            nextPhase: function (p, d) { return 'The ' + p + ' phase begins on ' + d + '.'; },
+            lastPhase: 'This is the last phase.',
+            endsOn: function (d) { return 'Your Sade Sati ends on <strong>' + d + '</strong>.'; },
+            detour: function (s, a, b, p, back) { return 'Saturn ' + (back ? 'steps back' : 'moves ahead') + ' into ' + s + ' from ' + a + ' to ' + b + (p ? ', so the ' + p + ' phase runs again for those months.' : ', a pause inside the same Sade Sati.'); },
+            pausedBody: function (start, resumes, end) { return 'It began on ' + start + '. Saturn has stepped outside the three Sade Sati signs for a while and comes back on ' + resumes + (end ? '. Your Sade Sati ends on <strong>' + end + '</strong>.' : '.'); },
+            dhaiyaUntil: function (d) { return 'It runs until <strong>' + d + '</strong>.'; },
+            dhaiyaBreak: function (a, b) { return 'Saturn leaves that sign on ' + a + ' and comes back on ' + b + ', so there is a break in between.'; },
+            nextSade: function (a, b, s) { return 'Your next Sade Sati: <strong>' + a + (b ? ' to ' + b : '') + '</strong>, starting when Saturn enters ' + s + '.'; },
+            nextStart: function (a) { return 'Your next Sade Sati begins on <strong>' + a + '</strong>.'; },
+            noon: 'No birth time given, so this uses 12 noon.',
+            noonSafe: function (s) { return ' The Moon was in ' + s + ' for the whole of that day, so the time does not change this answer.'; },
+            noonEdge: function (s, early, other) { return ' On that date the Moon was near the ' + (early ? 'start' : 'end') + ' of ' + s + ', so if you were born ' + (early ? 'in the early hours' : 'late in the evening') + ' your Moon sign may be ' + other + '. Add your birth time to be sure.'; },
+            seeRow: function (s) { return 'See ' + s + ' in the table'; },
+            ask: 'Ask Om.AI about your Sade Sati',
+            askNote: 'Your first question is free.',
+            needDate: 'Enter your date of birth.',
+            futureDate: 'That date is in the future. Check the date of birth.',
+            needCity: 'Pick your place of birth from the list.',
+            bad: 'Those birth details did not compute. Check the date and city, then try again.',
+            busy: 'The calculator is busy right now. Try again in a minute, or ask Om.AI directly.',
+            failed: 'We could not check your Sade Sati just now. Please try again in a moment.',
+            slow: 'The calculator took too long to answer. Check your connection and try again.',
+            offline: 'Could not reach the calculator. Check your internet connection and try again.',
+            checking: 'Checking…',
+            go: 'Check my Sade Sati'
+        };
+        var NAK = null;
+
+        var $ = function (id) { return document.getElementById(id); };
+        var R = JSON.parse($('ss-data').textContent).rashis, C = SS.chain(R);
+        // Saturn's sign dates are Indian-time days, so "today" is the IST date wherever the visitor is.
+        var TODAY = new Date(Date.now() + 5.5 * 3600000).toISOString().slice(0, 10);
+        var tm = function (iso) { return SS.tm(L, iso); };
+
+        $('ss-rows').innerHTML = SS.rows(R, L, TODAY);
+        $('ss-now-body').innerHTML = SS.now(R, L, TODAY);
+
+        var chartEl = $('ss-chart'), tipEl = $('ss-tip'), drawnW = 0, raf = 0;
+        var draw = function () {
+            var w = Math.round(chartEl.clientWidth);
+            if (!w || w === drawnW) return;
+            drawnW = w;
+            chartEl.innerHTML = SS.chart(R, L, TODAY, w);
+        };
+        draw();
+        window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); });
+        var showTip = function (e) {
+            var bar = e.target.closest ? e.target.closest('[data-tip]') : null;
+            if (!bar) { tipEl.hidden = true; return; }
+            var box = chartEl.parentNode.getBoundingClientRect();
+            tipEl.textContent = bar.getAttribute('data-tip');
+            tipEl.hidden = false;
+            var half = tipEl.offsetWidth / 2;
+            tipEl.style.left = Math.min(Math.max(e.clientX - box.left, half), box.width - half) + 'px';
+            tipEl.style.top = (e.clientY - box.top) + 'px';
+        };
+        chartEl.addEventListener('pointermove', showTip);
+        chartEl.addEventListener('pointerdown', showTip);
+        chartEl.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') tipEl.hidden = true; });
+
+        var dateEl = $('mw-date'), timeEl = $('mw-time'), cityEl = $('mw-city');
+        var tzEl = $('mw-tz'), goEl = $('mw-go'), errEl = $('mw-error'), outEl = $('mw-result');
+        dateEl.max = TODAY;
+
+        var list = $('mw-cities');
+        Object.keys(CITIES).forEach(function (name) {
+            var o = document.createElement('option');
+            o.value = name;
+            list.appendChild(o);
+        });
+        cityEl.addEventListener('change', function () {
+            var c = CITIES[cityEl.value];
+            if (c) tzEl.value = String(c[2]);
+        });
+        [dateEl, timeEl, cityEl].forEach(function (el) {
+            el.addEventListener('keydown', function (e) { if (e.key === 'Enter') goEl.click(); });
+        });
+
+        // Foreign cities keep DST or changed offset over the years, so their offset comes from the birth date.
+        function zoneOffsetAt(zone, ms) {
+            var g = {};
+            new Intl.DateTimeFormat('en-US', { timeZone: zone, hourCycle: 'h23', year: 'numeric', month: 'numeric',
+                day: 'numeric', hour: 'numeric', minute: 'numeric' }).formatToParts(new Date(ms))
+                .forEach(function (x) { g[x.type] = +x.value; });
+            return (Date.UTC(g.year, g.month - 1, g.day, g.hour, g.minute) - Math.floor(ms / 60000) * 60000) / 3600000;
+        }
+        function birthOffset(city, picked, y, mo, d, h, mi) {
+            var manual = parseFloat(picked);
+            if (!city[3] || picked !== String(city[2])) return manual;
+            try {
+                var wall = Date.UTC(y, mo - 1, d, h, mi);
+                return zoneOffsetAt(city[3], wall - zoneOffsetAt(city[3], wall) * 3600000);
+            } catch (e) { return manual; }
+        }
+
+        var cache = {};
+        var showError = function (msg) {
+            errEl.textContent = msg;
+            errEl.hidden = false;
+            outEl.hidden = true;
+        };
+        var errorFor = function (status) {
+            if (status === 429) return T.busy;
+            if (status === 400) return T.bad;
+            return T.failed;
+        };
+        var phaseOfSign = function (ps, s) {
+            return ps.rising === s ? 'rising' : ps.peak === s ? 'peak' : ps.setting === s ? 'setting' : null;
+        };
+
+        // The API's own status for today; the embedded table fills in only if it came back without dates.
+        var verdictOf = function (moon, r) {
+            var c = r.current, nx = r.next, dh = r.dhaiya, local = SS.status(R, C, moon, r.asOf || TODAY);
+            var v = { cls: 'is-clear', phase: 'none', title: T.clear, steps: '', body: [] };
+            var next = function () {
+                if (nx && nx.nextWindowStart) v.body.push(T.nextSade(tm(nx.nextWindowStart), nx.nextWindowEnd ? tm(nx.nextWindowEnd) : '', L.sign[nx.saturnEntersSign]));
+            };
+            if (c && c.sadeSatiStartedAt) {
+                var ps = c.phaseSigns, ch = c.saturnSignChanges || [], order = ['rising', 'peak', 'setting'], at = order.indexOf(c.currentPhase);
+                var first = function (s) { for (var i = 0; i < ch.length; i++) if (ch[i].to === s) return ch[i].date; return null; };
+                v.cls = 'is-sade';
+                v.phase = c.currentPhase;
+                v.title = T.inSade(L.phase[c.currentPhase]);
+                v.steps = '<ol class="ss-steps">' + order.map(function (k, i) {
+                    var from = k === 'rising' ? c.sadeSatiStartedAt : first(ps[k]);
+                    return '<li class="' + (i < at ? 'is-done' : i === at ? 'is-now' : '') + '"><span class="ss-step-name">' + T.step[k]
+                        + (i === at ? ' <span class="ss-step-now">' + T.stepNow + '</span>' : '') + '</span>'
+                        + '<span class="ss-step-date">' + (from ? T.stepFrom(tm(from)) : '') + '</span></li>';
+                }).join('') + '</ol>';
+                v.body.push(T.began(tm(c.sadeSatiStartedAt), L.phase[c.currentPhase], tm(c.phaseStartedAt || c.sadeSatiStartedAt)));
+                if (c.nextPhase && c.nextPhase !== 'complete' && c.estimatedNextPhase) v.body.push(T.nextPhase(L.phase[c.nextPhase], tm(c.estimatedNextPhase)));
+                else if (c.nextPhase === 'complete') v.body.push(T.lastPhase);
+                if (c.estimatedEnd) v.body.push(T.endsOn(tm(c.estimatedEnd)));
+                ch.forEach(function (x, i) {
+                    if (x.date <= (r.asOf || TODAY) || i === ch.length - 1) return;
+                    var p = phaseOfSign(ps, x.to);
+                    if (x.retrograde || !p) v.body.push(T.detour(L.sign[x.to], tm(x.date), tm(ch[i + 1].date), p ? L.phase[p] : null, x.retrograde));
+                });
+            } else if (nx && nx.paused) {
+                v.cls = 'is-sade';
+                v.phase = 'paused';
+                v.title = T.inPaused;
+                v.body.push(T.pausedBody(tm(nx.sadeSatiStartedAt), tm(nx.resumesOn), nx.estimatedEnd ? tm(nx.estimatedEnd) : null));
+            } else if (dh) {
+                var type = /kantaka/i.test(dh.type) ? 'kantaka' : 'ashtama';
+                var breaks = local.kind === 'dhaiya' && local.until === dh.phaseEndsOn ? local.breaks
+                    : dh.saturnFirstLeavesSignOn && dh.saturnReturnsToSignOn ? [[dh.saturnFirstLeavesSignOn, dh.saturnReturnsToSignOn]] : [];
+                v.cls = 'is-dhaiya';
+                v.phase = type;
+                v.title = T.inDhaiya(L.dhaiyaLong[type]);
+                if (dh.phaseEndsOn) v.body.push(T.dhaiyaUntil(tm(dh.phaseEndsOn)));
+                breaks.forEach(function (b) { v.body.push(T.dhaiyaBreak(tm(b[0]), tm(b[1]))); });
+                next();
+            } else if (nx) {
+                next();
+            } else if (local.kind === 'sade') {
+                var paused = local.stay.phase === 'paused';
+                v.cls = 'is-sade';
+                v.phase = local.stay.phase;
+                v.title = paused ? T.inPaused : T.inSade(L.phase[local.stay.phase]);
+                v.body.push(paused ? T.pausedBody(tm(local.cycle.start), tm(local.stay.to), tm(local.cycle.end)) : T.endsOn(tm(local.cycle.end)));
+            } else if (local.kind === 'dhaiya') {
+                v.cls = 'is-dhaiya';
+                v.phase = local.type;
+                v.title = T.inDhaiya(L.dhaiyaLong[local.type]);
+                v.body.push(T.dhaiyaUntil(tm(local.until)));
+                if (local.next) v.body.push(T.nextSade(tm(local.next.start), tm(local.next.end), L.sign[local.next.phaseSigns.rising]));
+            } else if (local.kind === 'next') {
+                v.body.push(T.nextSade(tm(local.next.start), tm(local.next.end), L.sign[local.next.phaseSigns.rising]));
+            } else if (local.nextStart) {
+                v.body.push(T.nextStart(tm(local.nextStart)));
+            }
+            return v;
+        };
+
+        var render = function (data, noTime) {
+            var moon = data.moon.rashi, v = verdictOf(moon, data.sadeSati || {});
+            var nak = data.moon.nakshatra ? SS.esc(NAK ? (NAK[data.moon.nakshatra] || data.moon.nakshatra) : data.moon.nakshatra) : '';
+            var html = '<div class="ss-result ' + v.cls + '">'
+                + '<p class="ss-moonline">' + T.moonLine(L.sign[moon], nak) + '</p>'
+                + '<h3 class="ss-verdict">' + v.title + '</h3>' + v.steps
+                + (v.body.length ? '<ul class="ss-facts"><li>' + v.body.join('</li><li>') + '</li></ul>' : '');
+            if (noTime) {
+                var mp = (data.planets || []).filter(function (p) { return p.planet === 'Moon'; })[0];
+                var deg = mp ? Number(mp.degree) : NaN, note = T.noon;
+                // The Moon moves at most ~7.7° in 12 hours, so only a Moon that close to a sign edge at noon could have been in the next sign at birth.
+                if (deg < 7.7) note += T.noonEdge(L.sign[moon], true, L.sign[SS.nth(moon, 12)]);
+                else if (deg > 22.3) note += T.noonEdge(L.sign[moon], false, L.sign[SS.nth(moon, 2)]);
+                else if (!isNaN(deg)) note += T.noonSafe(L.sign[moon]);
+                html += '<p class="ss-caveat">' + note + '</p>';
+            }
+            html += '<div class="ss-result-actions"><a class="btn btn--primary" data-ask href="' + ASK + '">' + T.ask + '</a>'
+                + '<a class="ss-rowlink" href="#ss-row-' + moon + '">' + T.seeRow(L.sign[moon]) + '</a></div>'
+                + '<p class="ss-asknote">' + T.askNote + '</p></div>';
+            outEl.innerHTML = html;
+            outEl.hidden = false;
+            errEl.hidden = true;
+
+            var mine = document.querySelector('.ss-row.is-you');
+            if (mine) mine.classList.remove('is-you');
+            if ($('ss-row-' + moon)) $('ss-row-' + moon).classList.add('is-you');
+
+            if (window.gtag) window.gtag('event', 'sade_sati_checked', { phase: v.phase });
+
+            var top = outEl.getBoundingClientRect().top;
+            if (top > window.innerHeight - 120) {
+                var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                window.scrollTo({ top: top + window.pageYOffset - 84, behavior: still ? 'auto' : 'smooth' });
+            }
+        };
+
+        outEl.addEventListener('click', function (e) {
+            if (e.target.closest && e.target.closest('[data-ask]') && window.gtag) {
+                window.gtag('event', 'web_ask_click', { event_category: 'Web MVP', event_label: ASK.split('utm_content=')[1] });
+            }
+        });
+
+        goEl.addEventListener('click', function () {
+            var d = dateEl.value, t = timeEl.value, city = CITIES[cityEl.value];
+            if (!d) return showError(T.needDate);
+            if (d > TODAY) return showError(T.futureDate);
+            if (!city) return showError(T.needCity);
+
+            var noTime = !t, p = d.split('-'), q = (t || '12:00').split(':');
+            var tz = birthOffset(city, tzEl.value, +p[0], +p[1], +p[2], +q[0], +q[1]);
+            var dob = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2], +q[0], +q[1]) - tz * 3600000).toISOString();
+            var url = API + '/api/public/kundli?dob=' + encodeURIComponent(dob) + '&lat=' + city[0] + '&lon=' + city[1];
+
+            var done = function (data) {
+                cache[url] = data;
+                render(data, noTime);
+            };
+            if (cache[url]) return done(cache[url]);
+
+            goEl.disabled = true;
+            goEl.textContent = T.checking;
+            errEl.hidden = true;
+
+            var ctl = window.AbortController ? new AbortController() : null, timer;
+            var slow = new Promise(function (resolve, reject) {
+                timer = setTimeout(function () {
+                    if (ctl) ctl.abort();
+                    var err = new Error(T.slow);
+                    err.shown = true;
+                    reject(err);
+                }, 20000);
+            });
+            Promise.race([fetch(url, ctl ? { signal: ctl.signal } : undefined), slow])
+                .then(function (r) {
+                    return r.json().catch(function () { return {}; }).then(function (b) {
+                        var err;
+                        if (!r.ok) err = new Error(errorFor(r.status));
+                        else if (!b || !b.moon || SS.SIGNS.indexOf(b.moon.rashi) < 0) err = new Error(T.failed);
+                        if (err) { err.shown = true; throw err; }
+                        return b;
+                    });
+                })
+                .then(done)
+                .catch(function (e) {
+                    showError(e && e.shown ? e.message : e && e.name === 'AbortError' ? T.slow : T.offline);
+                })
+                .finally(function () {
+                    clearTimeout(timer);
+                    goEl.disabled = false;
+                    goEl.textContent = T.go;
+                });
+        });
+    })();
+    </script>
+</body>
+
+</html>

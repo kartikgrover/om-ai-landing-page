@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कुंडली मिलान: जन्म तिथि से मुफ़्त गुण मिलान | Kundli Milan</title>
+    <meta name="description" content="मुफ़्त कुंडली मिलान: वर और कन्या की जन्म तिथि, समय और स्थान भरें। 36 में से गुण, आठों कूट और दोनों की मांगलिक स्थिति तुरंत देखें। कोई साइन-अप नहीं।">
+    <meta name="keywords" content="कुंडली मिलान, kundli milan, गुण मिलान, जन्म तिथि से कुंडली मिलान, kundli milan by date of birth, 36 गुण, अष्टकूट मिलान, मांगलिक दोष, नाड़ी दोष, भकूट दोष, शादी के लिए कुंडली मिलान">
+
+    <meta property="og:title" content="कुंडली मिलान: जन्म तिथि से मुफ़्त गुण मिलान | Kundli Milan">
+    <meta property="og:description" content="वर और कन्या की जन्म तिथि, समय और स्थान से 36 में से गुण, आठों कूट और दोनों की मांगलिक स्थिति। मुफ़्त, बिना साइन-अप।">
+    <meta property="og:url" content="https://omai.app/hi/kundli-milan.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://omai.app/assets/blog/wedding-rings.jpg">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="600">
+    <meta property="og:image:alt" content="कुंडली मिलान, 36 गुण">
+    <meta property="og:site_name" content="Om.AI">
+    <meta property="og:locale" content="hi_IN">
+
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://omai.app/hi/kundli-milan.html">
+    <link rel="alternate" hreflang="en" href="https://omai.app/kundli-matching.html">
+    <link rel="alternate" hreflang="hi" href="https://omai.app/hi/kundli-milan.html">
+    <link rel="alternate" hreflang="x-default" href="https://omai.app/kundli-matching.html">
+
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#D97757">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://om-ai-backend-4f29d7469ff6.herokuapp.com" crossorigin>
+
+    <link rel="stylesheet" href="/styles/bootstrap-subset.min.css?v=1">
+    <link rel="stylesheet" href="/styles/styles.min.css?v=73">
+    <link rel="stylesheet" href="/styles/icons.min.css?v=1" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/icons.min.css?v=1"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+
+    <style>
+        /* Kundli milan tool; same block in /kundli-matching.html */
+        .km-hero { padding: 2rem 0 2.5rem; }
+        .km-hero h1 {
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        .km-lead {
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+            color: rgba(255,255,255,0.8) !important;
+            font-size: 1.1rem;
+            line-height: 1.55;
+        }
+        .km-lang { text-align: center; margin: 0.6rem 0 0; font-size: 0.95rem; }
+        .km-lang a { color: #D97757; }
+        .km-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .km-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 2rem; }
+        .km-person { border: 0; margin: 0; padding: 0; min-width: 0; }
+        .km-person legend {
+            float: none;
+            width: auto;
+            padding: 0;
+            margin-bottom: 0.7rem;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+        .km-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+        .km-label { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.6) !important; margin-bottom: 0.3rem; }
+        .km-input {
+            width: 100%;
+            min-width: 0;
+            min-height: 46px;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #fff;
+            padding: 0.6rem 0.75rem;
+            font-size: 1rem;
+        }
+        .km-input:focus { outline: none; border-color: #D97757; box-shadow: 0 0 0 2px rgba(217,119,87,0.3); }
+        .km-input[aria-invalid="true"] { border-color: #ff9b8a; }
+        /* Native pickers render black-on-black in dark themes without this. */
+        .km-input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
+        .km-input option { background: #1a1a1a; color: #fff; }
+        .km-note { color: rgba(255,255,255,0.5) !important; font-size: 0.85rem; margin: 1rem 0 0; line-height: 1.55; }
+        #km-go:disabled { background: #D97757; border-color: #D97757; color: #fff; opacity: 0.7; }
+        .km-error {
+            color: #ff9b8a !important;
+            background: rgba(255,90,60,0.10);
+            border: 1px solid rgba(255,90,60,0.25);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+        #km-result { margin-top: 1.5rem; scroll-margin-top: 88px; outline: none; }
+        .km-score {
+            background: linear-gradient(135deg, rgba(217,119,87,0.12), rgba(217,119,87,0.04));
+            border: 1px solid rgba(217,119,87,0.25);
+            border-radius: 14px;
+            padding: 1.5rem 1.6rem 1.25rem;
+        }
+        .km-total { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.25rem 0.5rem; margin: 0 0 1rem; }
+        .km-big {
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: 3.6rem;
+            line-height: 1;
+            color: #fff !important;
+        }
+        .km-of { font-size: 1.3rem; color: rgba(255,255,255,0.55) !important; margin-right: 0.5rem; }
+        .km-band {
+            align-self: center;
+            font-size: 0.9rem;
+            color: #D97757 !important;
+            border: 1px solid rgba(217,119,87,0.45);
+            border-radius: 999px;
+            padding: 0.15rem 0.7rem;
+        }
+        .km-meter { position: relative; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.10); margin: 0 0 1.75rem; }
+        .km-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: #D97757; }
+        .km-mark { position: absolute; top: -5px; width: 2px; height: 18px; background: rgba(255,255,255,0.75); transform: translateX(-1px); }
+        .km-mark span { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-size: 0.75rem; color: rgba(255,255,255,0.6) !important; }
+        .km-frame { margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.55) !important; line-height: 1.55; }
+        .km-h {
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: 1.35rem;
+            margin: 1.75rem 0 0.75rem;
+        }
+        .km-table-wrap { overflow-x: auto; }
+        .km-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .km-table thead th {
+            font-family: 'Source Sans 3', 'Source Sans Fallback', 'Source Sans Fallback Android', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.55) !important;
+            text-align: left;
+            padding: 0 0.5rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.14);
+        }
+        .km-table tbody th, .km-table td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            vertical-align: top;
+            text-align: left;
+            line-height: 1.35;
+        }
+        .km-table tbody th { font-family: 'Source Sans 3', 'Source Sans Fallback', 'Source Sans Fallback Android', sans-serif; font-weight: 600; }
+        .km-table td { color: rgba(255,255,255,0.8) !important; }
+        .km-table .km-n { text-align: right; white-space: nowrap; }
+        .km-table tfoot th, .km-table tfoot td {
+            font-family: 'Source Sans 3', 'Source Sans Fallback', 'Source Sans Fallback Android', sans-serif;
+            padding: 0.7rem 0.5rem 0;
+            font-weight: 700;
+            color: #fff !important;
+            border: 0;
+            text-align: left;
+        }
+        .km-table tfoot .km-n { text-align: right; }
+        .km-pts { font-weight: 700; color: #fff !important; }
+        .km-pts.is-zero { color: #ff9b8a !important; }
+        .km-pts.is-full { color: #D97757 !important; }
+        .km-tag { display: block; font-size: 0.78rem; font-weight: 400; color: #ff9b8a !important; margin-top: 0.15rem; }
+        .km-tag.is-eased { color: rgba(255,255,255,0.55) !important; }
+        .km-eased { font-size: 0.9rem; color: rgba(255,255,255,0.65) !important; margin: 0.9rem 0 0; line-height: 1.55; }
+        .km-mangal { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+        .km-mcard { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 10px; padding: 1rem 1.15rem; }
+        .km-mwho { margin: 0; font-size: 0.85rem; color: rgba(255,255,255,0.55) !important; }
+        .km-mstatus {
+            margin: 0.1rem 0 0.4rem;
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: 1.3rem;
+            line-height: 1.25;
+            color: #fff !important;
+        }
+        .km-mnote { margin: 0.35rem 0 0; font-size: 0.9rem; color: rgba(255,255,255,0.65) !important; line-height: 1.5; }
+        .km-mlist { margin: 0.3rem 0 0; padding-left: 1.1rem; }
+        .km-mlist li { font-size: 0.92rem; color: rgba(255,255,255,0.8) !important; margin-bottom: 0.2rem; }
+        .km-pair { margin: 1rem 0 0; font-size: 0.98rem; color: rgba(255,255,255,0.85) !important; line-height: 1.55; }
+        .km-next { margin-top: 2rem; background: rgba(217,119,87,0.08); border: 1px solid rgba(217,119,87,0.3); border-radius: 14px; padding: 1.5rem 1.6rem; }
+        .km-next h3 {
+            font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif;
+            font-size: 1.35rem;
+            margin: 0 0 0.5rem;
+        }
+        .km-next p { color: rgba(255,255,255,0.8) !important; font-size: 1rem; line-height: 1.6; margin-bottom: 1.1rem; }
+        .km-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        @media (max-width: 767px) {
+            .km-people { grid-template-columns: 1fr; gap: 1.25rem; }
+        }
+        @media (max-width: 575px) {
+            .km-hero { padding: 1.5rem 0 2rem; }
+            .km-card { padding: 1.1rem; }
+            .km-score, .km-next { padding: 1.2rem; }
+            .km-big { font-size: 3rem; }
+            .km-mangal { grid-template-columns: 1fr; }
+            .km-table { font-size: 0.88rem; }
+            .km-table thead th, .km-table tbody th, .km-table td, .km-table tfoot th, .km-table tfoot td { padding-left: 0.3rem; padding-right: 0.3rem; }
+            .km-actions .km-ask { flex: 1 1 100%; }
+            .km-actions .km-app { flex: 1 1 0; min-width: 0; padding-left: 0.5rem; padding-right: 0.5rem; }
+        }
+        /* Guide below the tool */
+        .koot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+        .koot-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 1.25rem; }
+        .koot-card h3 { font-size: 1.15rem; margin-bottom: 0.15rem; }
+        .koot-card .koot-points { font-size: 0.85rem; color: #D97757 !important; font-weight: 600; margin-bottom: 0.5rem; }
+        .koot-card p { font-size: 0.95rem; line-height: 1.55; margin-bottom: 0.5rem; }
+        .koot-card p:last-child { margin-bottom: 0; color: rgba(255,255,255,0.6) !important; }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
+            border: 1px solid rgba(217,119,87,0.3);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .faq-item h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+        .faq-item p { margin-bottom: 0; font-size: 1rem; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://omai.app/hi/kundli-milan.html",
+                "name": "कुंडली मिलान: जन्म तिथि से मुफ़्त गुण मिलान",
+                "description": "वर और कन्या की जन्म तिथि, समय और स्थान से 36 में से गुण, आठों कूट और दोनों की मांगलिक स्थिति। मुफ़्त, बिना साइन-अप।",
+                "url": "https://omai.app/hi/kundli-milan.html",
+                "inLanguage": "hi-IN",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Om.AI",
+                    "url": "https://omai.app"
+                }
+            },
+            {
+                "@type": "WebApplication",
+                "name": "कुंडली मिलान कैलकुलेटर",
+                "url": "https://omai.app/hi/kundli-milan.html#km-tool",
+                "applicationCategory": "UtilitiesApplication",
+                "operatingSystem": "Any",
+                "inLanguage": "hi-IN",
+                "description": "वर और कन्या की जन्म तिथि, समय और स्थान से अष्टकूट गुण मिलान (36 में से), आठों कूट और दोनों की मांगलिक स्थिति। कोई साइन-अप नहीं।",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+                "isPartOf": { "@id": "https://omai.app/hi/kundli-milan.html" }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "कुंडली मिलान में कितने गुण मिलने चाहिए?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "परंपरा से 36 में से कम से कम 18 गुण। कोई शास्त्रीय ग्रंथ यह सीमा तय नहीं करता, यह ज्योतिषियों और पंचांगों का प्रचलित नियम है। 18 से 23.5 अच्छा, 24 से 27.5 बहुत अच्छा और 28 या ज़्यादा उत्तम माना जाता है। कुल अंक के साथ नाड़ी, भकूट और दोनों की मांगलिक स्थिति भी देखी जाती है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या सिर्फ़ नाम से कुंडली मिलान हो सकता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "नाम से मिलान में नाम के पहले अक्षर से नक्षत्र मान लिया जाता है। जन्म विवरण न हों, तब यह एक पुराना विकल्प है। यह कैलकुलेटर नाम नहीं लेता: यह दोनों की जन्म तिथि, समय और स्थान से जन्म के चंद्र का असली नक्षत्र और राशि निकालता है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या जन्म समय ज़रूरी है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "गुण मिलान जन्म के चंद्र से होता है, और चंद्र लगभग हर दिन नक्षत्र बदलता है। इसलिए कुछ घंटों का फ़र्क अक्सर गुण नहीं बदलता, पर जिस दिन चंद्र नक्षत्र या राशि बदल रहा हो, उस दिन बदल सकता है। मांगलिक दोष लग्न से देखा जाता है, जो हर दो घंटे में बदलता है, इसलिए उसके लिए सही समय ज़रूरी है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "नाड़ी दोष क्या है और कब नहीं गिना जाता?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "जब वर और कन्या की नाड़ी (आदि, मध्य या अंत्य) एक हो, तो नाड़ी कूट के 8 में से 0 गुण मिलते हैं। परंपरा में इसके अपवाद हैं: दोनों के चंद्र एक राशि में हों पर अलग नक्षत्र में, या एक नक्षत्र में हों पर अलग राशि या चरण में। तब ज़्यादातर ज्योतिषी इसे दोष नहीं गिनते, हालाँकि गुण 0 ही रहते हैं।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "मांगलिक दोष कब रद्द होता है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "बृहत् पाराशर होरा शास्त्र (अध्याय 80) के अनुसार दो स्थितियों में: जब कोई शुभ ग्रह (गुरु, शुक्र, बुध या बढ़ता चंद्र) मंगल के साथ बैठा हो या उस पर दृष्टि डाले (श्लोक 47), और जब वर और कन्या दोनों में यह योग हो (श्लोक 48-49)। ऊपर के नतीजे में हर व्यक्ति के लिए रद्द होने का कारण सादे शब्दों में लिखा आता है।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या कम गुण का मतलब है कि रिश्ता नहीं चलेगा?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "नहीं। गुण मिलान दो कुंडलियों के चंद्र की पारंपरिक तुलना है, किसी रिश्ते पर फ़ैसला नहीं। ज्योतिषी इसे दोनों की पूरी कुंडली के साथ पढ़ते हैं: सप्तम भाव और उसका स्वामी, शुक्र, नवांश और दोनों की चालू दशा।"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "क्या यह कुंडली मिलान मुफ़्त है?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "हाँ, यह कैलकुलेटर मुफ़्त है और साइन-अप नहीं माँगता। Om.AI ऐप में आपका पहला गुण मिलान मुफ़्त है, और Premium में 10 तक पार्टनर मिलाए जा सकते हैं।"
+                        }
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://omai.app/hi/"},
+                    {"@type": "ListItem", "position": 2, "name": "कुंडली मिलान", "item": "https://omai.app/hi/kundli-milan.html"}
+                ]
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPT0NFE087"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPT0NFE087');
+    </script>
+    <!-- App store CTA tracking (download_click) -->
+    <script>
+    document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a[href*="play.google.com"], a[href*="apps.apple.com"]');
+        if(!a || typeof gtag !== 'function') return;
+        var platform = a.href.indexOf('apps.apple.com') > -1 ? 'ios' : 'android';
+        gtag('event', 'download_click', { 'event_category': 'App Downloads', 'event_label': platform, 'value': 1 });
+    }, true);
+    </script>
+    <!-- Mobile sticky install CTA bar -->
+    <style>
+.mobile-cta-bar{display:none}
+@media (max-width:768px){
+  .mobile-cta-bar{display:flex;gap:.6rem;position:fixed;left:0;right:0;bottom:0;z-index:1040;padding:.55rem .7rem;padding-bottom:calc(.55rem + env(safe-area-inset-bottom));background:rgba(31,30,29,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid rgba(217,119,87,.3)}
+  .mobile-cta-bar .btn{flex:1 1 0;min-width:0;padding:.6rem .4rem;font-size:.9rem;line-height:1.2;white-space:nowrap}
+  body{padding-bottom:4.75rem}
+}
+</style>
+    <!-- Meta Pixel — dataset 1678262729978200, shared with the live INR ad account.
+         Mints the _fbp/_fbc cookies that /ask.html forwards to the server-side CAPI, so a
+         visitor who arrives on this page from an ad stays attributable through checkout. -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];
+    /* fbevents.js (~140KB of JS) was tipping mobile INP just past Google's 200ms
+       line, so it no longer loads up front: the fbq stub above queues init/PageView,
+       and the script itself loads after window load (idle) or on first interaction,
+       whichever comes first. _fbp/_fbc still get minted for CAPI. */
+    t=function(){if(s)return;s=1;var o=b.createElement(e);o.async=!0;o.src=v;
+    var g=b.getElementsByTagName(e)[0];g.parentNode.insertBefore(o,g)};
+    /* Ad clicks land with ?fbclid=, and that param only ever sits on THIS page's URL: the
+       pixel has to write _fbc before the visitor can click through to /ask.html, which reads
+       the cookie for CAPI. So ad traffic keeps the eager load and eats the INP cost; organic
+       traffic (the overwhelming majority, and all of what CrUX measures here) has no fbclid
+       to lose and takes the deferred path. */
+    /[?&]fbclid=/.test(f.location.search)?t():
+    (f.addEventListener('load',function(){f.requestIdleCallback?f.requestIdleCallback(t,{timeout:4000}):f.setTimeout(t,1500)}),
+    ['pointerdown','keydown'].forEach(function(x){f.addEventListener(x,t,{once:!0,passive:!0})}))}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1678262729978200');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=1678262729978200&ev=PageView&noscript=1"
+    /></noscript>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-to-content">मुख्य सामग्री पर जाएँ</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/hi/">
+                <picture>
+                    <source srcset="/assets/logo-mark.webp" type="image/webp">
+                    <img src="/assets/logo-mark.png" alt="Om.AI Logo" width="613" height="362" decoding="async" style="height:40px;width:auto;display:block;">
+                </picture>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="नेविगेशन टॉगल करें">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">फीचर्स</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/hi/ai-astrology-chat.html">AI ज्योतिष चैट</a></li>
+                            <li><a class="dropdown-item" href="/hi/free-kundli-online.html">कुंडली</a></li>
+                            <li><a class="dropdown-item" href="/hi/paisa-kab-aayega.html">पैसा कब आएगा</a></li>
+                            <li><a class="dropdown-item" href="/hi/ghar-kab-banega.html">घर कब बनेगा</a></li>
+                            <li><a class="dropdown-item" href="/hi/college-kab-milega.html">कॉलेज कब मिलेगा</a></li>
+                            <li><a class="dropdown-item" href="/hi/shadi-kab-hogi.html">शादी कब होगी</a></li>
+                            <li><a class="dropdown-item" href="/hi/shadi-kisse-hogi.html">शादी किससे होगी</a></li>
+                            <li><a class="dropdown-item" href="/hi/kundli-milan.html">कुंडली मिलान</a></li>
+                            <li><a class="dropdown-item" href="/hi/sade-sati.html">साढ़े साती</a></li>
+                            <li><a class="dropdown-item" href="/hi/dasha-calculator.html">दशा कैलकुलेटर</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">दैनिक जानकारी</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/hi/horoscope.html">दैनिक राशिफल</a></li>
+                            <li><a class="dropdown-item" href="/hi/panchang.html">आज का पंचांग</a></li>
+                            <li><a class="dropdown-item" href="/gita.html">गीता श्लोक</a></li>
+                            <li><a class="dropdown-item" href="/rahu-kaal-today.html">राहु काल</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog/">ब्लॉग</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/support.html">सहायता</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-3 ms-2" href="/#download">डाउनलोड</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Kundli milan tool, talks to /api/public/kundli-milan via /assets/js/kundli-milan.js -->
+        <section class="hero-section km-hero" id="km-tool">
+            <div class="container" style="max-width:860px;">
+                <h1 class="display-4">कुंडली मिलान: जन्म तिथि से गुण मिलान</h1>
+                <p class="km-lead">
+                    वर और कन्या की जन्म तिथि, समय और स्थान भरें। 36 में से कितने गुण मिलते हैं, आठों कूट और दोनों की मांगलिक स्थिति नीचे दिखेगी। मुफ़्त, बिना साइन-अप।
+                </p>
+                <p class="km-lang"><a href="/kundli-matching.html" lang="en">Read in English →</a></p>
+
+                <div class="km-card">
+                    <div class="km-people">
+                        <fieldset class="km-person">
+                            <legend>वर (लड़के) का विवरण</legend>
+                            <div class="km-fields">
+                                <div>
+                                    <label class="km-label" for="km-g-date">जन्म तिथि</label>
+                                    <input type="date" id="km-g-date" class="km-input" min="1900-01-01" max="2099-12-31">
+                                </div>
+                                <div>
+                                    <label class="km-label" for="km-g-time">जन्म समय</label>
+                                    <input type="time" id="km-g-time" class="km-input">
+                                </div>
+                                <div>
+                                    <label class="km-label" for="km-g-city">जन्म स्थान</label>
+                                    <input list="km-cities" id="km-g-city" class="km-input" placeholder="शहर चुनें" autocomplete="off">
+                                </div>
+                                <div>
+                                    <label class="km-label" for="km-g-tz">समय क्षेत्र</label>
+                                    <select id="km-g-tz" class="km-input">
+                                        <option value="5.5" selected>भारत (IST, +5:30)</option>
+                                        <option value="5.75">नेपाल (+5:45)</option>
+                                        <option value="6">बांग्लादेश (+6:00)</option>
+                                        <option value="4">खाड़ी / UAE (+4:00)</option>
+                                        <option value="0">UK / UTC (+0:00)</option>
+                                        <option value="-5">US Eastern (-5:00)</option>
+                                        <option value="8">सिंगापुर (+8:00)</option>
+                                        <option value="10">सिडनी (+10:00)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="km-person">
+                            <legend>कन्या (लड़की) का विवरण</legend>
+                            <div class="km-fields">
+                                <div>
+                                    <label class="km-label" for="km-b-date">जन्म तिथि</label>
+                                    <input type="date" id="km-b-date" class="km-input" min="1900-01-01" max="2099-12-31">
+                                </div>
+                                <div>
+                                    <label class="km-label" for="km-b-time">जन्म समय</label>
+                                    <input type="time" id="km-b-time" class="km-input">
+                                </div>
+                                <div>
+                                    <label class="km-label" for="km-b-city">जन्म स्थान</label>
+                                    <input list="km-cities" id="km-b-city" class="km-input" placeholder="शहर चुनें" autocomplete="off">
+                                </div>
+                                <div>
+                                    <label class="km-label" for="km-b-tz">समय क्षेत्र</label>
+                                    <select id="km-b-tz" class="km-input">
+                                        <option value="5.5" selected>भारत (IST, +5:30)</option>
+                                        <option value="5.75">नेपाल (+5:45)</option>
+                                        <option value="6">बांग्लादेश (+6:00)</option>
+                                        <option value="4">खाड़ी / UAE (+4:00)</option>
+                                        <option value="0">UK / UTC (+0:00)</option>
+                                        <option value="-5">US Eastern (-5:00)</option>
+                                        <option value="8">सिंगापुर (+8:00)</option>
+                                        <option value="10">सिडनी (+10:00)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <datalist id="km-cities"></datalist>
+
+                    <p class="km-note">
+                        गुण मिलान जन्म के चंद्र से होता है, और मांगलिक दोष लग्न से, जो हर दो घंटे में बदलता है। इसलिए दोनों का जन्म समय भरें। यह कैलकुलेटर 18 साल से ऊपर के लोगों के लिए है।
+                    </p>
+
+                    <button type="button" id="km-go" class="btn btn--primary btn-lg w-100 mt-3">कुंडली मिलाएँ</button>
+                    <div id="km-error" class="km-error" role="alert" hidden></div>
+                    <noscript><p class="km-error">कैलकुलेटर चलाने के लिए ब्राउज़र में JavaScript चालू करें।</p></noscript>
+                </div>
+
+                <div id="km-result" tabindex="-1" aria-live="polite" hidden>
+                    <div id="km-out"></div>
+                    <div class="km-next">
+                        <h3>इस मिलान को पूरा पढ़ें</h3>
+                        <p>
+                            गुण मिलान दोनों के चंद्र की तुलना करता है। Om.AI में कम्पैटिबिलिटी रीडिंग दोनों की पूरी कुंडली पढ़ती है, जैसे सप्तम भाव और उसका स्वामी, शुक्र, नवांश (D9) और दोनों की चालू दशा, और आपके आगे के सवालों के जवाब देती है। पहला सवाल मुफ़्त।
+                        </p>
+                        <div class="km-actions">
+                            <a href="/ask.html?lang=hi&amp;utm_source=website&amp;utm_medium=referral&amp;utm_campaign=seo_page&amp;utm_content=hi_kundli_milan_result_ask" class="btn btn--primary btn-lg km-ask" onclick="try{gtag('event','web_ask_click',{event_category:'Web MVP',event_label:'hi_kundli_milan_result_ask'})}catch(e){}">इस मिलान के बारे में पूछें</a>
+                            <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_kundli_milan" class="btn btn--outline btn-lg km-app" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play</a>
+                            <a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_hindi_kundli_milan&mt=8" class="btn btn--outline btn-lg km-app" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- The eight koots -->
+        <section class="content-section" id="koot">
+            <div class="container" style="max-width:960px;">
+                <h2>आठ कूट क्या देखते हैं</h2>
+                <p>
+                    मुहूर्त चिंतामणि के विवाह प्रकरण (अध्याय 6) में आठ कूट और उनके गुण दिए गए हैं: वर्ण 1, वश्य 2, तारा 3, योनि 4, ग्रह मैत्री 5, गण 6, भकूट 7 और नाड़ी 8, कुल 36। हर कूट दोनों के जन्म के चंद्र की तुलना करता है, कभी राशि से, कभी नक्षत्र से। नियम ग्रंथ का है; हर कार्ड की आख़िरी पंक्ति बताती है कि आज के ज्योतिषी उसे कैसे पढ़ते हैं।
+                </p>
+
+                <div class="koot-grid mt-4">
+                    <div class="koot-card">
+                        <h3>वर्ण</h3>
+                        <div class="koot-points">1 गुण</div>
+                        <p>हर चंद्र राशि चार वर्ण समूहों में से एक में आती है। यह राशि का वर्गीकरण है, किसी परिवार की जाति नहीं। वर का समूह कन्या के समूह के बराबर या उस क्रम में आगे हो, तो 1 गुण मिलता है।</p>
+                        <p>पढ़ा जाता है: सोच और स्वभाव का मेल।</p>
+                    </div>
+                    <div class="koot-card">
+                        <h3>वश्य</h3>
+                        <div class="koot-points">2 गुण</div>
+                        <p>चंद्र राशियाँ पाँच समूहों में बँटी हैं: मानव, चतुष्पद, जलचर, वनचर और कीट। गुण इस पर निर्भर हैं कि एक समूह दूसरे पर कितना सहज असर रखता है।</p>
+                        <p>पढ़ा जाता है: आपसी आकर्षण और असर।</p>
+                    </div>
+                    <div class="koot-card">
+                        <h3>तारा</h3>
+                        <div class="koot-points">3 गुण</div>
+                        <p>एक के जन्म नक्षत्र से दूसरे तक गिनकर 9 से भाग दिया जाता है। शेष 3, 5 या 7 कठिन माने जाते हैं, और गिनती दोनों ओर से होती है।</p>
+                        <p>पढ़ा जाता है: साथ में सेहत और भाग्य।</p>
+                    </div>
+                    <div class="koot-card">
+                        <h3>योनि</h3>
+                        <div class="koot-points">4 गुण</div>
+                        <p>हर नक्षत्र का एक पशु है। एक ही योनि को पूरे गुण मिलते हैं, और स्वाभाविक शत्रु जोड़ों (जैसे बिल्ली और चूहा, नेवला और सर्प) को शून्य।</p>
+                        <p>पढ़ा जाता है: शारीरिक और सहज स्वभाव का मेल।</p>
+                    </div>
+                    <div class="koot-card">
+                        <h3>ग्रह मैत्री</h3>
+                        <div class="koot-points">5 गुण</div>
+                        <p>दोनों चंद्र राशियों के स्वामी ग्रहों में मित्रता, समता या शत्रुता देखी जाती है।</p>
+                        <p>पढ़ा जाता है: मानसिक तालमेल।</p>
+                    </div>
+                    <div class="koot-card">
+                        <h3>गण</h3>
+                        <div class="koot-points">6 गुण</div>
+                        <p>हर नक्षत्र देव, मनुष्य या राक्षस गण का है। एक ही गण सबसे अच्छा, देव और मनुष्य मध्यम, और राक्षस का बाकी दोनों से जोड़ सबसे कठिन माना गया है।</p>
+                        <p>पढ़ा जाता है: स्वभाव।</p>
+                    </div>
+                    <div class="koot-card">
+                        <h3>भकूट</h3>
+                        <div class="koot-points">7 गुण</div>
+                        <p>दोनों चंद्र राशियाँ एक-दूसरे से कितनी दूर हैं। ग्रंथ तीन जोड़ों को कठिन बताता है: 2-12, 5-9 और 6-8। बाकी हर जोड़ को पूरे 7 गुण।</p>
+                        <p>पढ़ा जाता है: परिवार, संतान और धन।</p>
+                    </div>
+                    <div class="koot-card">
+                        <h3>नाड़ी</h3>
+                        <div class="koot-points">8 गुण</div>
+                        <p>हर नक्षत्र आदि, मध्य या अंत्य नाड़ी का है। अलग नाड़ी को 8 गुण, एक ही नाड़ी को 0। यह तालिका का सबसे भारी दोष है।</p>
+                        <p>पढ़ा जाता है: सेहत और संतान।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- What 18 means -->
+        <section class="content-section" id="18-gun">
+            <div class="container" style="max-width:860px;">
+                <h2>36 में से 18 गुण का मतलब</h2>
+                <p>
+                    कोई शास्त्रीय ग्रंथ पास होने की सीमा तय नहीं करता। 36 का आधा, यानी 18, वह परंपरा है जिसे ज़्यादातर ज्योतिषी और पंचांग मानते हैं। ऊपर का नतीजा ये श्रेणियाँ दिखाता है: 18 से कम यानी सामान्य सीमा से नीचे, 18 से 23.5 अच्छा, 24 से 27.5 बहुत अच्छा, और 28 या ज़्यादा उत्तम।
+                </p>
+                <p>
+                    कुल अंक अकेले नहीं पढ़े जाते। मुहूर्त चिंतामणि (अध्याय 6) कूटों के बाद कठिन भकूट और नाड़ी के अपवाद (परिहार) भी देता है, और ज्योतिषी दोनों की मांगलिक स्थिति भी देखते हैं। इसीलिए नतीजे में हर कूट और दोनों की मांगलिक स्थिति दिखती है, सिर्फ़ कुल अंक नहीं।
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Manglik in a match -->
+        <section class="content-section" id="manglik">
+            <div class="container" style="max-width:860px;">
+                <h2>मिलान में मांगलिक दोष</h2>
+                <p>
+                    बृहत् पाराशर होरा शास्त्र (अध्याय 80, श्लोक 47) के अनुसार मांगलिक दोष तब बनता है जब मंगल लग्न से 1, 4, 7, 8 या 12वें भाव में हो (श्लोक में ही लग्न गिना है: लग्ने व्यये सुखे वापि सप्तमे चाष्टमे कुजे; कुछ अंग्रेज़ी अनुवादों में लग्न छूट जाता है) और कोई शुभ ग्रह (गुरु, शुक्र, बुध या बढ़ता चंद्र) न उसके साथ बैठा हो, न उस पर दृष्टि डाले। श्लोक 48-49 कहते हैं कि जब वर और कन्या दोनों में यह योग हो, तो इसका प्रभाव नहीं रहता।
+                </p>
+                <p>
+                    चंद्र से भी गिनने की परंपरा बाद की है, और ज़्यादातर ज्योतिषी आज दोनों से गिनते हैं। ऊपर का नतीजा बताता है कि किस गिनती से देखा गया, और दोष रद्द हुआ हो तो क्यों।
+                </p>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- CTA -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <div class="cta-box">
+                    <h2 style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:2rem; margin-bottom:1rem;">अपने मिलान के बारे में Om.AI से पूछें</h2>
+                    <p style="color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto 2rem; font-size:1.1rem;">
+                        Om.AI दोनों की कुंडली पढ़कर हिंदी, English या Hinglish में जवाब देता है: कौन-सा कूट कम क्यों रहा, मांगलिक स्थिति का असर क्या है, और सप्तम भाव दोनों के बारे में क्या कहता है। पहला सवाल मुफ़्त।
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_kundli_milan" class="btn btn--primary btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play
+                        </a>
+                        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_hindi_kundli_milan&mt=8" class="btn btn--outline btn-lg px-4" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-apple me-2" aria-hidden="true"></i>App Store
+                        </a>
+                    </div>
+                    <p style="margin:1.25rem 0 0;font-size:1rem;">अभी डाउनलोड नहीं करना चाहते? <a href="/ask.html?lang=hi&amp;utm_source=website&amp;utm_medium=referral&amp;utm_campaign=seo_page&amp;utm_content=hi_kundli_milan_ask" style="color:#D97757;font-weight:600;text-decoration:underline;" onclick="try{gtag('event','web_ask_click',{event_category:'Web MVP',event_label:'hi_kundli_milan_ask'})}catch(e){}">ब्राउज़र में मुफ़्त ज्योतिष चैट शुरू करें &rarr;</a></p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- Related Content -->
+        <section class="content-section">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">और भी देखें</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="/hi/shadi-kab-hogi.html" class="insight-link">
+                            <i class="fas fa-ring" aria-hidden="true"></i> शादी कब होगी
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/hi/shadi-kisse-hogi.html" class="insight-link">
+                            <i class="fas fa-user-group" aria-hidden="true"></i> शादी किससे होगी
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/hi/free-kundli-online.html" class="insight-link">
+                            <i class="fas fa-book" aria-hidden="true"></i> मुफ़्त कुंडली
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/hi/dasha-calculator.html" class="insight-link">
+                            <i class="fas fa-clock" aria-hidden="true"></i> दशा कैलकुलेटर
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/hi/ai-astrology-chat.html" class="insight-link">
+                            <i class="fas fa-comments" aria-hidden="true"></i> AI ज्योतिष चैट
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/hi/kundli.html" class="insight-link">
+                            <i class="fas fa-chart-pie" aria-hidden="true"></i> AI कुंडली
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <!-- FAQ Section: keep in sync with the FAQPage JSON-LD above -->
+        <section class="content-section" id="faq">
+            <div class="container" style="max-width:860px;">
+                <h2 class="text-center mb-4">सामान्य सवाल</h2>
+
+                <div class="faq-item">
+                    <h3>कुंडली मिलान में कितने गुण मिलने चाहिए?</h3>
+                    <p>परंपरा से 36 में से कम से कम 18 गुण। कोई शास्त्रीय ग्रंथ यह सीमा तय नहीं करता, यह ज्योतिषियों और पंचांगों का प्रचलित नियम है। 18 से 23.5 अच्छा, 24 से 27.5 बहुत अच्छा और 28 या ज़्यादा उत्तम माना जाता है। कुल अंक के साथ नाड़ी, भकूट और दोनों की मांगलिक स्थिति भी देखी जाती है।</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या सिर्फ़ नाम से कुंडली मिलान हो सकता है?</h3>
+                    <p>नाम से मिलान में नाम के पहले अक्षर से नक्षत्र मान लिया जाता है। जन्म विवरण न हों, तब यह एक पुराना विकल्प है। यह कैलकुलेटर नाम नहीं लेता: यह दोनों की जन्म तिथि, समय और स्थान से जन्म के चंद्र का असली नक्षत्र और राशि निकालता है।</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या जन्म समय ज़रूरी है?</h3>
+                    <p>गुण मिलान जन्म के चंद्र से होता है, और चंद्र लगभग हर दिन नक्षत्र बदलता है। इसलिए कुछ घंटों का फ़र्क अक्सर गुण नहीं बदलता, पर जिस दिन चंद्र नक्षत्र या राशि बदल रहा हो, उस दिन बदल सकता है। मांगलिक दोष लग्न से देखा जाता है, जो हर दो घंटे में बदलता है, इसलिए उसके लिए सही समय ज़रूरी है।</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>नाड़ी दोष क्या है और कब नहीं गिना जाता?</h3>
+                    <p>जब वर और कन्या की नाड़ी (आदि, मध्य या अंत्य) एक हो, तो नाड़ी कूट के 8 में से 0 गुण मिलते हैं। परंपरा में इसके अपवाद हैं: दोनों के चंद्र एक राशि में हों पर अलग नक्षत्र में, या एक नक्षत्र में हों पर अलग राशि या चरण में। तब ज़्यादातर ज्योतिषी इसे दोष नहीं गिनते, हालाँकि गुण 0 ही रहते हैं।</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>मांगलिक दोष कब रद्द होता है?</h3>
+                    <p>बृहत् पाराशर होरा शास्त्र (अध्याय 80) के अनुसार दो स्थितियों में: जब कोई शुभ ग्रह (गुरु, शुक्र, बुध या बढ़ता चंद्र) मंगल के साथ बैठा हो या उस पर दृष्टि डाले (श्लोक 47), और जब वर और कन्या दोनों में यह योग हो (श्लोक 48-49)। ऊपर के नतीजे में हर व्यक्ति के लिए रद्द होने का कारण सादे शब्दों में लिखा आता है।</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या कम गुण का मतलब है कि रिश्ता नहीं चलेगा?</h3>
+                    <p>नहीं। गुण मिलान दो कुंडलियों के चंद्र की पारंपरिक तुलना है, किसी रिश्ते पर फ़ैसला नहीं। ज्योतिषी इसे दोनों की पूरी कुंडली के साथ पढ़ते हैं: सप्तम भाव और उसका स्वामी, शुक्र, नवांश और दोनों की चालू दशा।</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>क्या यह कुंडली मिलान मुफ़्त है?</h3>
+                    <p>हाँ, यह कैलकुलेटर मुफ़्त है और साइन-अप नहीं माँगता। Om.AI ऐप में आपका पहला गुण मिलान मुफ़्त है, और Premium में 10 तक पार्टनर मिलाए जा सकते हैं।</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <picture>
+                            <source srcset="/assets/logo.webp" type="image/webp">
+                            <img src="/assets/logo.png" alt="Om.AI Logo" width="70" height="70" loading="lazy">
+                        </picture>
+                    </div>
+                    <p>वैदिक ज्योतिष, कुंडली विश्लेषण और आध्यात्मिक ज्ञान के लिए आपका AI साथी।</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61565071784622" class="text-white me-3" aria-label="Facebook पर हमें फॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-facebook" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.instagram.com/omai.app/" class="text-white me-3" aria-label="Instagram पर हमें फॉलो करें" rel="noopener noreferrer" target="_blank">
+                            <i class="fab fa-instagram" style="font-size: 1.5rem;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">फीचर्स</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/hi/ai-astrology-chat.html" class="text-white-50">AI ज्योतिष चैट</a></li>
+                        <li><a href="/hi/kundli.html" class="text-white-50">कुंडली</a></li>
+                        <li><a href="/hi/paisa-kab-aayega.html" class="text-white-50">पैसा कब आएगा</a></li>
+                        <li><a href="/hi/ghar-kab-banega.html" class="text-white-50">घर कब बनेगा</a></li>
+                        <li><a href="/hi/college-kab-milega.html" class="text-white-50">कॉलेज कब मिलेगा</a></li>
+                        <li><a href="/hi/shadi-kab-hogi.html" class="text-white-50">शादी कब होगी</a></li>
+                        <li><a href="/hi/shadi-kisse-hogi.html" class="text-white-50">शादी किससे होगी</a></li>
+                        <li><a href="/hi/kundli-milan.html" class="text-white-50">कुंडली मिलान</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">दैनिक जानकारी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/hi/panchang.html" class="text-white-50">दैनिक पंचांग</a></li>
+                        <li><a href="/hi/horoscope.html" class="text-white-50">दैनिक राशिफल</a></li>
+                        <li><a href="/gita.html" class="text-white-50">गीता श्लोक</a></li>
+                        <li><a href="/rahu-kaal-today.html" class="text-white-50">राहु काल</a></li>
+                        <li><a href="/blog/" class="text-white-50">ब्लॉग</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">कानूनी</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="/privacy-policy.html" class="text-white-50">गोपनीयता नीति</a></li>
+                        <li><a href="/terms-of-service.html" class="text-white-50">सेवा की शर्तें</a></li>
+                        <li><a href="/refund-policy.html" class="text-white-50">रिफंड नीति</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h4 class="footer-heading">डाउनलोड</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_kundli_milan" class="text-white-50" rel="noopener noreferrer" target="_blank">Android App</a></li>
+                        <li><a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_hindi_kundli_milan&mt=8" class="text-white-50" rel="noopener noreferrer" target="_blank">iOS App</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 border-secondary">
+            <div class="text-center text-white-50">
+                <small>वैदिक ज्योतिष एक पारंपरिक विश्वास प्रणाली है, यहाँ सूचना और सांस्कृतिक उद्देश्यों के लिए प्रस्तुत है। यह पेशेवर चिकित्सीय, क़ानूनी या वित्तीय सलाह का विकल्प नहीं है।</small>
+                <br><small>&copy; 2026 Om.AI. सर्वाधिकार सुरक्षित।</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile sticky install CTA bar (mobile only) -->
+    <div class="mobile-cta-bar" role="region" aria-label="Download the Om.AI app">
+        <a href="https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_kundli_milan" class="btn btn--primary" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play</a>
+        <a href="https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_hindi_kundli_milan&mt=8" class="btn btn--outline" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>
+    </div>
+
+    <script src="/assets/js/nav.js?v=4" defer></script>
+    <script src="/assets/js/hi-terms.js" defer></script>
+    <script src="/assets/js/kundli-milan.js?v=1" defer></script>
+    <script src="/assets/js/android-web-first.js" defer></script>
+</body>
+
+</html>
