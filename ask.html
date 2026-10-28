@@ -1977,7 +1977,8 @@
       return new Promise(async (resolve, reject) => {
         const t = await token();
         if (!state.uid || !t) return reject(new Error('Not signed in yet — try again.'));
-        const ws = new WebSocket(`${WS_BASE}?userId=${state.uid}&token=${t}`);
+        // Heroku logs the URL, so the token rides a subprotocol; backend v795 echoes omai.v1.
+        const ws = new WebSocket(`${WS_BASE}?userId=${state.uid}`, ['omai.v1', `omai.bearer.${t}`]);
         ws.onopen = () => { state.ws = ws; state.wsUid = state.uid; resolve(ws); };
         ws.onerror = () => reject(new Error('Connection failed. Please retry.'));
         ws.onclose = () => {
