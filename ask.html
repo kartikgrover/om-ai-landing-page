@@ -1142,7 +1142,17 @@
     // ── experiments switchboard ────────────────────────────────────
     // app_config/experiments, shared with the app (om1 experimentService) and the backend. Per surface the
     // first enabled, web-listed, eligible experiment in name order applies; anything malformed = control, untagged.
-    const EXP_PLATFORM = 'web';
+    // Android Chrome, not a webview or in-app browser. The backend's create-pass-order checks the same UA rule.
+    const NOT_CHROME_RE = /; wv\)|Version\/\d|FBAN|FBAV|FB_IAB|Instagram|SamsungBrowser|EdgA|OPR\/|OPT\/|Opera|YaBrowser|UCBrowser|MiuiBrowser|HeyTapBrowser|DuckDuckGo|GSA\/|Line\//;
+    const isAndroidChrome = (ua) => /Android/.test(ua || '') && /Chrome\/\d/.test(ua) && !NOT_CHROME_RE.test(ua);
+    const EXP_PLATFORMS = (() => {
+      try {
+        const brands = navigator.userAgentData && navigator.userAgentData.brands;
+        const chrome = isAndroidChrome(navigator.userAgent) && (!Array.isArray(brands) || brands.some((b) => b && b.brand === 'Google Chrome'));
+        const iosTest = new URLSearchParams(location.search).get('utm_campaign') === 'web_ios_test';
+        return chrome && !iosTest ? ['web', 'web_android_chrome'] : ['web'];
+      } catch (_) { return ['web']; }
+    })();
     const EXP_SURFACES = ['paywall', 'paywall_trigger', 'chat_starters'];
     const EXP_PROP = { paywall: 'exp_paywall', paywall_trigger: 'exp_trigger', chat_starters: 'exp_starters' };
     const PW_PLANS = ['yearly', 'monthly', 'pack'];
@@ -1155,6 +1165,7 @@
         defaultSelection: oneOf(...PW_PLANS),
         monthlyPrice: oneOf('base', 'test'), yearlyPrice: oneOf('base', 'test'), packPrice: oneOf('base', 'test'),
         headline: oneOf('default', 'v1', 'v2'), badge: oneOf('default', 'none', 'v1'),
+        monthlyKind: oneOf('subscription', 'pass'),
       },
       paywall_trigger: { mode: oneOf('at_limit', 'after_first_answer', 'soft_prompt', 'answer_preview') },
       chat_starters: { set: oneOf('v1', 'v2') },
@@ -1208,8 +1219,9 @@
     }
     // Paywall arms always need a never-subscribed user: winback/lapsed paywalls keep today's prices.
     const expNeedsNever = (e) => e.surface === 'paywall' || !!(e.eligibility && e.eligibility.neverSubscribed === true);
-    const expCandidate = (e, surface, platform) => !!e && e.enabled === true && e.surface === surface && Array.isArray(e.platforms) && e.platforms.includes(platform);
-    function expAssign(data, uid, platform, neverSubscribed) {
+    const expListed = (e, platforms) => Array.isArray(e.platforms) && e.platforms.some((p) => platforms.includes(p));
+    const expCandidate = (e, surface, platforms) => !!e && e.enabled === true && e.surface === surface && expListed(e, platforms);
+    function expAssign(data, uid, platforms, neverSubscribed) {
       const all = (data && data.experiments && typeof data.experiments === 'object') ? data.experiments : {};
       const names = Object.keys(all).sort();
       const out = {};
@@ -1217,7 +1229,7 @@
         out[surface] = null;
         for (const name of names) {
           const e = all[name];
-          if (!expCandidate(e, surface, platform)) continue;
+          if (!expCandidate(e, surface, platforms)) continue;
           if (expNeedsNever(e) && neverSubscribed !== true) continue;
           out[surface] = expArm(name, e, uid);
           break;
@@ -1262,9 +1274,9 @@
           const snap = await getDoc(doc(db, 'app_config', 'experiments'));
           const data = snap.exists() ? snap.data() : null;
           const all = Object.values((data && data.experiments) || {});
-          const needsNever = all.some((e) => e && e.enabled === true && Array.isArray(e.platforms) && e.platforms.includes(EXP_PLATFORM) && (expNeedsNever(e) || expSoftTest(e)));
+          const needsNever = all.some((e) => e && e.enabled === true && expListed(e, EXP_PLATFORMS) && (expNeedsNever(e) || expSoftTest(e)));
           never = needsNever ? await expNeverSubscribed(uid) : null;
-          a = expAssign(data, uid, EXP_PLATFORM, never);
+          a = expAssign(data, uid, EXP_PLATFORMS, never);
         } catch (_) { a = {}; }
         if (EXP.uid !== uid) return;
         EXP.a = a; EXP.never = never; EXP.ready = true;
@@ -1292,6 +1304,10 @@
     let pwTag = null;           // pwPin for analytics; null once a test price fell back (app parity: out of the read)
     let pwSlots = { monthly: 'base', yearly: 'base', pack: 'base' };
     const pwSlotDead = new Set(); // plans whose test slot the backend refused this session
+    // monthlyKind 'pass': the monthly card sells a one-time 30-day pass instead of the AutoPay subscription.
+    let pwPassDead = false;       // the backend refused the pass this session
+    const pwPassArm = (a) => !!(a && a.params.monthlyKind === 'pass');
+    const pwPass = () => pwPassArm(pwPin) && !pwPassDead;
     const BASE_INR = { monthly: 199, yearly: 1499, pack: 99 };
     const inr = (n) => '₹' + Number(n).toLocaleString('en-IN');
     const planPrice = (plan) => (pwSlots[plan] === 'test' && state.testPrices && state.testPrices[plan]) || BASE_INR[plan];
@@ -1415,11 +1431,11 @@
         pwHero:'Continue your reading', pwHeroSub:"You've used your free question. Unlock unlimited questions about your chart.", pwHeroSubFresh:'Your first question is free. Premium unlocks unlimited questions about your chart.', pwHeroPeriod:'Your {maha}–{antar} period runs through {date}', pwHeroPeriodName:'{name}, your {maha}–{antar} period runs through {date}', pwHeroMeans:'Find out what it means for you', pwHeroUnlockName:'{name}, unlock unlimited questions',
         pwFree:'Free', pwPremium:'Premium', pwFeatQ:'Questions to your chart', pwFeatCompat:'Birth chart & Gun Milan reports', pwFeatAreas:'All life areas & timing dates', pwFeatMemory:'Memory across sessions', pwUnlimited:'Unlimited',
         omaiPremium:'Om.AI Premium', planYearly:'Yearly', planMonthly:'Monthly', orPayPerQ:'Or pay per question', pack5q:'5 questions',
-        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store', pwBadge:'SAVE {pct}% · {m} MONTHS FREE', pwBadgeSave:'SAVE {pct}%', pwBadgeV1:'JUST {pm} A MONTH', pwPriceChanged:'This price just changed. Check the plan and tap again.',
+        getUnlimited:'Get Unlimited', getQuestions:'Get Questions', autoRenewCancel:'Auto-renews. Cancel anytime.', winbackBillMonthly:'₹{p} for your first month with UPI, then ₹199 a month. Cancel anytime.', winbackBillYearly:'₹{p} for your first year with UPI, then ₹1,499 a year. Cancel anytime.', oneTimePurchase:'One-time purchase • No auto-renewal', securePaymentVia:'Secure payment via', trustedSeekers:'Trusted by 50,000+ seekers · 4.8★ on Google Play and the App Store', pwBadge:'SAVE {pct}% · {m} MONTHS FREE', pwBadgeSave:'SAVE {pct}%', pwBadgeV1:'JUST {pm} A MONTH', pwPriceChanged:'This price just changed. Check the plan and tap again.', plan30Days:'30 days', get30Days:'Get 30 days', passBilling:'One payment of ₹199 for 30 days. No auto-renewal, nothing to cancel.', pwPassGone:'This plan just changed to a monthly subscription. Check it and tap again.',
         pwHeadV1:'Get the dates your chart points to', pwHeadV1Sub:'Unlimited questions on marriage, career, money and more, read from your own birth chart.', pwHeadV2:'Ask as many questions as you like', pwHeadV2Sub:'Marriage, job, money, health: your own chart answers each one.',
         softTitle:"You've used your free question", softPrice:'Unlimited questions from {p}/month', softSeePlans:'See plans', softNotNow:'Not now',
         previewReady:'Your full answer is ready', previewUnlock:'See your full answer', previewUnlocking:'Opening your answer…', previewFailed:'We couldn’t open your answer. Please try again.', previewExpired:'This answer has expired. Ask again for a fresh one.',
-        secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
+        secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', subPass:'Premium until {date} · doesn’t renew', passEnds:'Your 30 days end on {date}. Nothing renews, so there’s nothing to cancel.', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
         notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for {pk}</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · {pk}', maybeLater:'Maybe later', upiBackTitle:'Back from your UPI app?', upiBackBody:'If you approved the payment, it will confirm here in a few seconds.',
@@ -1428,7 +1444,7 @@
         obFillBirth:'Please fill date, time and place of birth.', obValidDate:'Please enter a valid birth date in the past.', obYoungDob:'Born in {year}? That makes you {age} old. Is that right?', obCheckYear:'Check your birth year. The calendar opens on this year, so pick the year you were born.', ageOne:'1 year', ageYears:'{n} years', dobYesRight:"Yes, it's right", dobChange:'Change date', needBirthDetails:'Add your birth details below and your chart is ready in seconds.', obLookupPlace:'Looking up your birth place…', obSavingDetails:'Saving your birth details…', obComputingChart:'Computing your Vedic chart… (this can take a few seconds)',
         cpValidDate:'Enter a valid birth date in the past.', cpSavingDetails:'Saving details…', cpAnalyzing:'Analyzing compatibility…', errAdultsOnly:'Gun Milan is a marriage match, so both people must be at least 18. Check the birth year.', errPayload:"The birth details didn't come through, so check them and try again.", errRateLimited:'Too many requests at once. Wait a moment, then try again.', cpRescoring:'Updating your report to the latest scoring…', repDoshaMitigated:'{list} dosha classically mitigated in your charts. The score is unchanged.',
         cpAdultsOnly:'Gun Milan is for adults — both people must be 18 or older.', compatOneMatch:'The web shows one match — add more in the app.',
-        subStartingMvp:'Starting your subscription…', subActivatingMvp:'Activating your premium…', subCheckoutClosedMvp:'Checkout closed.',
+        subStartingMvp:'Starting your subscription…', passStarting:'Starting your purchase…', subActivatingMvp:'Activating your premium…', subCheckoutClosedMvp:'Checkout closed.',
         msgTooLong:'That message is too long ({n} characters). Please shorten it to {max} or less, or send it in a few parts.',
         genericErr:'Something went wrong. Please retry.', genericErrShort:'Something went wrong.', copyDone:'Copied', copyLabel:'Copy', shareLabel:'Share', copyAria:'Copy answer', shareAria:'Share answer', profUser:'User', profGuest:'Guest',
       },
@@ -1471,11 +1487,11 @@
         pwHero:'अपनी रीडिंग जारी रखें', pwHeroSub:'आपने अपना निःशुल्क प्रश्न उपयोग कर लिया है। अपनी कुंडली के बारे में असीमित प्रश्न अनलॉक करें।', pwHeroSubFresh:'आपका पहला प्रश्न निःशुल्क है। प्रीमियम असीमित प्रश्न अनलॉक करता है।', pwHeroPeriod:'आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroPeriodName:'{name}, आपकी {maha}–{antar} दशा {date} तक चलती है', pwHeroMeans:'जानिए इसका आपके लिए क्या अर्थ है', pwHeroUnlockName:'{name}, असीमित प्रश्न अनलॉक करें',
         pwFree:'निःशुल्क', pwPremium:'प्रीमियम', pwFeatQ:'अपनी कुंडली से प्रश्न', pwFeatCompat:'जन्म कुंडली व Gun Milan रिपोर्ट', pwFeatAreas:'सभी जीवन क्षेत्र व समय तिथियाँ', pwFeatMemory:'सत्रों के बीच स्मृति', pwUnlimited:'असीमित',
         omaiPremium:'Om.AI प्रीमियम', planYearly:'वार्षिक', planMonthly:'मासिक', orPayPerQ:'या प्रति प्रश्न भुगतान करें', pack5q:'5 प्रश्न',
-        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · Google Play और App Store पर 4.8★', pwBadge:'{pct}% बचत · {m} माह निःशुल्क', pwBadgeSave:'{pct}% बचत', pwBadgeV1:'सिर्फ़ {pm} प्रति माह', pwPriceChanged:'यह कीमत अभी बदली है। प्लान देखकर फिर से टैप करें।',
+        getUnlimited:'असीमित प्राप्त करें', getQuestions:'प्रश्न प्राप्त करें', autoRenewCancel:'स्वतः नवीनीकरण। कभी भी रद्द करें।', winbackBillMonthly:'UPI से पहले महीने ₹{p}, फिर ₹199 प्रति माह। कभी भी रद्द करें।', winbackBillYearly:'UPI से पहले वर्ष ₹{p}, फिर ₹1,499 प्रति वर्ष। कभी भी रद्द करें।', oneTimePurchase:'एकमुश्त खरीद • कोई स्वतः नवीनीकरण नहीं', securePaymentVia:'सुरक्षित भुगतान —', trustedSeekers:'50,000+ जिज्ञासुओं का भरोसा · Google Play और App Store पर 4.8★', pwBadge:'{pct}% बचत · {m} माह निःशुल्क', pwBadgeSave:'{pct}% बचत', pwBadgeV1:'सिर्फ़ {pm} प्रति माह', pwPriceChanged:'यह कीमत अभी बदली है। प्लान देखकर फिर से टैप करें।', plan30Days:'30 दिन', get30Days:'30 दिन पाएँ', passBilling:'30 दिनों के लिए ₹199 का एक भुगतान। कोई स्वतः नवीनीकरण नहीं, रद्द करने को कुछ नहीं।', pwPassGone:'यह प्लान अभी मासिक सदस्यता में बदल गया है। देखकर फिर से टैप करें।',
         pwHeadV1:'जानिए आपकी कुंडली किन तारीख़ों की ओर इशारा करती है', pwHeadV1Sub:'शादी, करियर, पैसा और बहुत कुछ पर असीमित प्रश्न, आपकी अपनी जन्म कुंडली से।', pwHeadV2:'जितने चाहें उतने सवाल पूछिए', pwHeadV2Sub:'शादी, नौकरी, पैसा, सेहत: हर जवाब आपकी अपनी कुंडली से।',
         softTitle:'आपका निःशुल्क प्रश्न इस्तेमाल हो चुका है', softPrice:'असीमित प्रश्न, {p}/माह से शुरू', softSeePlans:'प्लान देखें', softNotNow:'अभी नहीं',
         previewReady:'आपका पूरा जवाब तैयार है', previewUnlock:'अपना पूरा जवाब देखें', previewUnlocking:'आपका जवाब खुल रहा है…', previewFailed:'आपका जवाब नहीं खुल सका। कृपया फिर से कोशिश करें।', previewExpired:'यह जवाब अब उपलब्ध नहीं है। नया जवाब पाने के लिए फिर से पूछें।',
-        secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
+        secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', subPass:'प्रीमियम {date} तक · नवीनीकरण नहीं होगा', passEnds:'आपके 30 दिन {date} को पूरे होंगे। कुछ भी नवीनीकृत नहीं होता, इसलिए रद्द करने को कुछ नहीं है।', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
         notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>{pk} में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · {pk}', maybeLater:'शायद बाद में', upiBackTitle:'UPI ऐप से लौट आए?', upiBackBody:'अगर आपने भुगतान मंज़ूर कर दिया है, तो कुछ ही सेकंड में यहाँ पुष्टि हो जाएगी।',
@@ -1484,7 +1500,7 @@
         obFillBirth:'कृपया जन्म तिथि, समय और स्थान भरें।', obValidDate:'कृपया अतीत की एक मान्य जन्म तिथि दर्ज करें।', obYoungDob:'जन्म वर्ष {year}? इससे आपकी उम्र {age} होती है। क्या यह सही है?', obCheckYear:'अपना जन्म वर्ष जाँचें। कैलेंडर इसी साल पर खुलता है, इसलिए अपने जन्म का साल चुनें।', ageOne:'1 साल', ageYears:'{n} साल', dobYesRight:'हाँ, सही है', dobChange:'तारीख बदलें', needBirthDetails:'नीचे अपनी जन्म जानकारी भरें, आपकी कुंडली कुछ ही क्षणों में तैयार हो जाएगी।', obLookupPlace:'आपका जन्म स्थान खोजा जा रहा है…', obSavingDetails:'आपकी जन्म जानकारी सहेजी जा रही है…', obComputingChart:'आपकी वैदिक कुंडली बन रही है… (इसमें कुछ क्षण लग सकते हैं)',
         cpValidDate:'अतीत की एक मान्य जन्म तिथि दर्ज करें।', cpSavingDetails:'जानकारी सहेजी जा रही है…', cpAnalyzing:'अनुकूलता का विश्लेषण हो रहा है…', errAdultsOnly:'गुण मिलान विवाह मिलान है, इसलिए दोनों की आयु कम से कम 18 वर्ष होनी चाहिए। जन्म वर्ष जाँच लें।', errPayload:'जन्म विवरण नहीं पहुँचे, उन्हें जाँचकर फिर से कोशिश करें।', errRateLimited:'एक साथ बहुत सारे अनुरोध आ गए। थोड़ा रुककर फिर से कोशिश करें।', cpRescoring:'आपकी रिपोर्ट नवीनतम गणना से अपडेट हो रही है…', repDoshaMitigated:'आपकी कुंडलियों में {list} दोष शास्त्रीय नियमों से शांत होता है। अंक नहीं बदलते।',
         cpAdultsOnly:'गुण मिलान वयस्कों के लिए है — दोनों की आयु 18 वर्ष या अधिक होनी चाहिए।', compatOneMatch:'वेब पर एक ही मैच दिखता है — और जोड़ने के लिए ऐप खोलें।',
-        subStartingMvp:'आपकी सदस्यता शुरू हो रही है…', subActivatingMvp:'आपका प्रीमियम सक्रिय हो रहा है…', subCheckoutClosedMvp:'चेकआउट बंद किया गया।',
+        subStartingMvp:'आपकी सदस्यता शुरू हो रही है…', passStarting:'आपकी खरीद शुरू हो रही है…', subActivatingMvp:'आपका प्रीमियम सक्रिय हो रहा है…', subCheckoutClosedMvp:'चेकआउट बंद किया गया।',
         msgTooLong:'यह संदेश बहुत लंबा है ({n} अक्षर)। कृपया इसे {max} अक्षरों तक छोटा करें, या कुछ हिस्सों में भेजें।',
         genericErr:'कुछ गलत हुआ। कृपया पुनः प्रयास करें।', genericErrShort:'कुछ गलत हुआ।', copyDone:'कॉपी हो गया', copyLabel:'कॉपी', shareLabel:'शेयर', copyAria:'उत्तर कॉपी करें', shareAria:'उत्तर साझा करें', profUser:'उपयोगकर्ता', profGuest:'अतिथि',
       },
@@ -3466,7 +3482,7 @@
     function showPaywall() {
       pwPin = expGet('paywall');
       pwSlots = pwComputeSlots(pwPin);
-      pwTag = pwPin && !PW_PLANS.some((p) => pwPin.params[p + 'Price'] === 'test' && pwSlots[p] !== 'test' && (pwPin.params.order || PW_WEB_ORDER).includes(p)) ? pwPin : null;
+      pwTag = pwPin && !(pwPassArm(pwPin) && pwPassDead) && !PW_PLANS.some((p) => pwPin.params[p + 'Price'] === 'test' && pwSlots[p] !== 'test' && (pwPin.params.order || PW_WEB_ORDER).includes(p)) ? pwPin : null;
       try { closeModal('settingsView'); closeModal('profileView'); } catch (_) {}
       try { renderPlanOrder(); renderPaywallHero(); renderPlanPrices(); } catch (_) {}
       try { updateCtaLabel(); } catch (_) {} // sync CTA + billing line to the active plan
@@ -3980,6 +3996,7 @@
     });
     $('manageSub').addEventListener('click', async () => {
       if (!state.premium) { openPaywall('manage_subscription'); return; }
+      if (state.subPass) { alert(t('passEnds', { date: state.subExpiry ? new Date(state.subExpiry).toLocaleDateString() : '—' })); return; }
       // Already cancelled (autoRenewing false from /status, or cancelled this session):
       // re-tapping is informational, not another cancel round-trip. 2026-08-03 incident:
       // a cancelled user re-tapped 14 min later and was told their cancel failed.
@@ -4009,8 +4026,9 @@
       // can't distinguish it — autoRenewing === false is the cancelled signal
       // (null = unknown/not returned → treat as normal premium).
       const cancelled = state.premium && state.subAutoRenewing === false;
-      $('subSub').textContent = cancelled
-        ? t('subCancelled', { date: state.subExpiry ? new Date(state.subExpiry).toLocaleDateString() : '—' })
+      const date = state.subExpiry ? new Date(state.subExpiry).toLocaleDateString() : '—';
+      $('subSub').textContent = state.premium && state.subPass ? t('subPass', { date })
+        : cancelled ? t('subCancelled', { date })
         : (state.premium ? t('subPremium') : t('subFree'));
     }
 
@@ -4041,6 +4059,7 @@
           // Cancelled-but-active detection for the subscription row (see refreshSubUI).
           state.subAutoRenewing = s.autoRenewing ?? null;
           state.subExpiry = s.expirationDate || null;
+          state.subPass = s.pass === true;
           refreshHeaderQuota(); refreshSubUI(); return;
         }
         state.premium = false;
@@ -4118,6 +4137,8 @@
       if (m) m.innerHTML = wb.monthly ? '<s>' + inr(M) + '</s>' + inr(wb.monthly) : inr(M);
       if (y) y.innerHTML = wb.yearly ? '<s>' + inr(Y) + '</s>' + inr(wb.yearly) : (12 * M > Y ? '<s>' + inr(12 * M) + '</s>' : '') + inr(Y);
       if (pk) pk.textContent = inr(planPrice('pack'));
+      const mt = document.querySelector('.plan[data-plan="monthly"] .pl-title');
+      if (mt) { mt.dataset.i18n = pwPass() ? 'plan30Days' : 'planMonthly'; mt.textContent = t(mt.dataset.i18n); }
       const badge = $('pwBadge');
       if (badge) {
         const v = (pwPin && pwPin.params.badge) || 'default';
@@ -4158,16 +4179,25 @@
       return Object.assign(new Error(t('pwPriceChanged')), { priceChanged: true });
     }
     const isSlotRefusal = (r, j, plan) => r.status === 400 && pwSlots[plan] === 'test' && (j.code === 'slot_unavailable' || j.error === 'slot_unavailable');
+    // Backend said this user isn't in a pass arm: the card goes back to the subscription and the buyer taps again.
+    function pwPassRefused() {
+      pwPassDead = true;
+      expFallback(pwPin, 'monthly', 'pass_ineligible');
+      pwTag = null;
+      try { renderPlanPrices(); updateCtaLabel(); } catch (_) {}
+      return Object.assign(new Error(t('pwPassGone')), { priceChanged: true });
+    }
+    const passChosen = () => chosenKind === 'sub' && chosenPlan === 'monthly' && pwPass();
     function updateCtaLabel() {
       // CTA + contextual billing line match the app paywall exactly.
-      $('subscribeBtn').textContent = t(chosenKind === 'pack' ? 'getQuestions' : 'getUnlimited');
+      $('subscribeBtn').textContent = t(chosenKind === 'pack' ? 'getQuestions' : passChosen() ? 'get30Days' : 'getUnlimited');
       const bill = $('paywallBilling');
       if (!bill) return;
       // A discounted first cycle must say what the second one costs, on the same line.
       const wbPrice = chosenKind === 'sub' && state.winback ? state.winback[chosenPlan] : null;
       bill.textContent = wbPrice
         ? t(chosenPlan === 'yearly' ? 'winbackBillYearly' : 'winbackBillMonthly', { p: Number(wbPrice).toLocaleString('en-IN') })
-        : t(chosenKind === 'pack' ? 'oneTimePurchase' : 'autoRenewCancel');
+        : t(chosenKind === 'pack' ? 'oneTimePurchase' : passChosen() ? 'passBilling' : 'autoRenewCancel');
     }
     document.querySelectorAll('.plan').forEach((b) => b.addEventListener('click', () => {
       pwPlanTouched = true;
@@ -4306,6 +4336,48 @@
       return { t, attribution };
     }
 
+    // Where buyers leave a Razorpay sheet: when it shows, Back, or the page hiding, timed from the CTA tap.
+    let ctaAt = 0;
+    function watchCheckout(tag) {
+      const p = checkoutPrefill();
+      const base = { source: 'razorpay', ...tag, prefill_contact: !!p.contact, prefill_email: !!p.email, prefill_name: !!p.name };
+      let shownAt = 0, live = true, hidden = false;
+      const ev = (action) => trackPw({ action, ...base, ms_since_tap: ctaAt ? Date.now() - ctaAt : -1, ms_since_shown: shownAt ? Date.now() - shownAt : -1 });
+      const poll = setInterval(() => {
+        const c = document.querySelector('.razorpay-container');
+        if (c && getComputedStyle(c).display !== 'none') { shownAt = Date.now(); ev('checkout_shown'); clearInterval(poll); }
+      }, 200);
+      const pollEnd = setTimeout(() => clearInterval(poll), 20000);
+      const onBack = () => { if (live) ev('checkout_back'); };
+      const onHide = (e) => {
+        if (document.visibilityState === 'visible' && e.type !== 'pagehide') { hidden = false; return; }
+        if (live && !hidden) { hidden = true; ev('checkout_hidden'); }
+      };
+      addEventListener('popstate', onBack); addEventListener('pagehide', onHide); document.addEventListener('visibilitychange', onHide);
+      return () => {
+        live = false; clearInterval(poll); clearTimeout(pollEnd);
+        removeEventListener('popstate', onBack); removeEventListener('pagehide', onHide); document.removeEventListener('visibilitychange', onHide);
+      };
+    }
+    // Polls /status until the webhook's grant lands; past 20 s the buyer may ask anyway and the server decides.
+    async function settlePremium(status) {
+      status.textContent = t('subActivatingMvp');
+      for (let i = 0; i < 10; i++) {
+        await new Promise((res) => setTimeout(res, 2000));
+        const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json()).catch(() => ({}));
+        if (s.active) {
+          state.premium = true; state.freeUsed = false;
+          state.subAutoRenewing = s.autoRenewing ?? null; state.subExpiry = s.expirationDate || null; state.subPass = s.pass === true;
+          if (afterPurchaseRoute(t('buyPremiumNow'))) addMsg('ai', t('buyPremiumNow'));
+          if (lockedPreview) unlockPreview(true);
+          return;
+        }
+      }
+      state.premium = true; state.freeUsed = false;
+      if (afterPurchaseRoute(t('buyPremiumPending'))) addMsg('ai', t('buyPremiumPending'));
+      if (lockedPreview) unlockPreview(true);
+    }
+
     // ── one-time question pack (Razorpay Orders API). Reused by the paywall
     // pack option AND the subscription-dismissal downsell. `onDismiss` lets the
     // caller decide what happens when the user closes the pack sheet too. ──
@@ -4353,7 +4425,7 @@
       };
 
       await loadRazorpay();
-      let watch = null;
+      let watch = null, stopWatch = () => {};
       const rzp = new Razorpay({
         key: keyId,
         order_id: orderId,
@@ -4362,8 +4434,9 @@
         description: `${questions} questions`,
         prefill: checkoutPrefill(),
         theme: { color: '#D97757' },
-        handler: async (resp) => { if (watch) watch.stop(); await packPaid(resp && resp.razorpay_payment_id); },
+        handler: async (resp) => { stopWatch(); if (watch) watch.stop(); await packPaid(resp && resp.razorpay_payment_id); },
         modal: { ondismiss: () => { // pairs with the subscription dismissal event — see there for why
+          stopWatch();
           const ours = !!(watch && watch.closing()); if (watch) watch.stop();
           trackPw({ action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack', ...(ours ? { reason: 'upi_return' } : {}) });
           if (ours) return; // the UPI-return bar closed it and already chose what happens next
@@ -4383,6 +4456,71 @@
         onPaid: () => packPaid(null),
         onRetry: () => runPackCheckout({ status, onDismiss }).catch((e) => { setStatus(e.message || t('genericErr')); if (onDismiss) onDismiss(); }),
       });
+      stopWatch = watchCheckout({ paywall_type: 'question_pack' });
+      rzp.open();
+    }
+
+    // ── one-time 30-day pass (Razorpay Orders API): the monthly card in a monthlyKind 'pass' arm.
+    // Dismissal gets the same ₹99 downsell as the subscription, so the arms differ only in the monthly product. ──
+    async function runPassCheckout({ status, btn }) {
+      status.textContent = t('authSigningIn');
+      const { t: idToken, attribution } = await prepareAccountForCheckout();
+      status.textContent = t('passStarting');
+      const r = await fetch(`${API}/api/web/razorpay/create-pass-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` },
+        body: JSON.stringify(attribution),
+      });
+      if (!r.ok) {
+        const j = await r.json().catch(() => ({}));
+        if (j.code === 'pass_ineligible') throw pwPassRefused();
+        throw new Error(j.error || 'Could not start purchase');
+      }
+      const { orderId, keyId, amount, currency } = await r.json();
+      const value = (amount || 0) / 100;
+      const tag = { source: 'razorpay', paywall_type: 'premium_pass', plan: 'monthly' };
+      const passPaid = async (paymentId) => {
+        trackPw({ action: 'purchase_completed', ...tag });
+        track('purchase', { transaction_id: orderId, currency: currency || 'INR', item_category: 'premium_pass', plan: 'monthly' }); // GA4 monetization, valued like the subscription
+        await fbPurchase(paymentId, value, currency); // Meta, deduped vs CAPI
+        await settlePremium(status);
+      };
+
+      await loadRazorpay();
+      let watch = null, stopWatch = () => {};
+      const rzp = new Razorpay({
+        key: keyId,
+        order_id: orderId,
+        amount, currency,
+        name: 'Om.AI',
+        description: '30 days of Om.AI Premium',
+        prefill: checkoutPrefill(),
+        theme: { color: '#D97757' },
+        handler: async (resp) => { stopWatch(); if (watch) watch.stop(); await passPaid(resp && resp.razorpay_payment_id); },
+        modal: { ondismiss: () => {
+          stopWatch();
+          const ours = !!(watch && watch.closing()); if (watch) watch.stop();
+          trackPw({ action: 'checkout_dismissed', ...tag, ...(ours ? { reason: 'upi_return' } : {}) });
+          if (ours) return;
+          btn.disabled = false; status.textContent = t('subCheckoutClosedMvp');
+          if (!downsellShownThisSession) setTimeout(openDownsell, 250);
+        } },
+      });
+      trackPaymentFailed(rzp, 'premium_pass', 'monthly');
+      trackPw({ action: 'purchase_attempted', ...tag });
+      track('begin_checkout', { currency: currency || 'INR', item_category: 'premium_pass', plan: 'monthly' }); // GA4 standard
+      fbTrack('InitiateCheckout', { value, currency: currency || 'INR' });
+      watch = watchUpiReturn({
+        rzp, paywall_type: 'premium_pass', plan: 'monthly',
+        isPaid: async () => {
+          const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json());
+          return !!(s && s.active);
+        },
+        onPaid: () => passPaid(null),
+        onRetry: () => { btn.disabled = false; status.textContent = ''; btn.click(); },
+        onPack: () => { btn.disabled = false; status.textContent = ''; downsellShownThisSession = true; $('downsellPackBtn').click(); },
+      });
+      stopWatch = watchCheckout({ paywall_type: 'premium_pass', plan: 'monthly' });
       rzp.open();
     }
 
@@ -4398,6 +4536,8 @@
     $('downsellModal').addEventListener('click', (e) => { if (e.target === $('downsellModal')) closeDownsell(); });
     $('downsellPackBtn').addEventListener('click', async () => {
       const dbtn = $('downsellPackBtn'); dbtn.disabled = true;
+      ctaAt = Date.now();
+      trackPw({ action: 'cta_tapped', source: 'downsell', paywall_type: 'question_pack' });
       closeDownsell();
       // Reflect the choice in the paywall UI + run the SAME pack checkout path.
       const packPlan = document.querySelector('.plan[data-plan="pack"]');
@@ -4409,12 +4549,16 @@
 
     $('subscribeBtn').addEventListener('click', async () => {
       const status = $('paywallStatus'); const btn = $('subscribeBtn'); btn.disabled = true;
+      ctaAt = Date.now();
+      const pass = passChosen();
+      trackPw({ action: 'cta_tapped', source: 'paywall', paywall_type: chosenKind === 'pack' ? 'question_pack' : pass ? 'premium_pass' : 'subscription', ...(chosenKind === 'sub' && { plan: chosenPlan }) });
       try {
         // ── one-time question pack (Razorpay Orders API) ──────────────
         if (chosenKind === 'pack') {
           await runPackCheckout({ status, onDismiss: () => { btn.disabled = false; } });
           return;
         }
+        if (pass) { await runPassCheckout({ status, btn }); return; }
 
         status.textContent = t('authSigningIn');
         const { t: idToken, attribution } = await prepareAccountForCheckout();
@@ -4439,24 +4583,11 @@
           trackPw({ action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan });
           track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan }); // GA4 monetization
           await fbPurchase(paymentId, firstCyclePrice || value, 'INR'); // Meta, deduped vs CAPI
-          status.textContent = t('subActivatingMvp');
-          for (let i = 0; i < 10; i++) {
-            await new Promise((res) => setTimeout(res, 2000));
-            const s = await fetch(`${API}/api/web/razorpay/status`, { headers: { 'Authorization': `Bearer ${await token()}` } }).then((x) => x.json()).catch(() => ({}));
-            if (s.active) {
-              state.premium = true; state.freeUsed = false;
-              if (afterPurchaseRoute(t('buyPremiumNow'))) addMsg('ai', t('buyPremiumNow'));
-              if (lockedPreview) unlockPreview(true);
-              return;
-            }
-          }
-          state.premium = true; state.freeUsed = false;
-          if (afterPurchaseRoute(t('buyPremiumPending'))) addMsg('ai', t('buyPremiumPending'));
-          if (lockedPreview) unlockPreview(true);
+          await settlePremium(status);
         };
 
         await loadRazorpay();
-        let watch = null;
+        let watch = null, stopWatch = () => {};
         const rzp = new Razorpay({
           key: keyId,
           subscription_id: subscriptionId,
@@ -4464,9 +4595,10 @@
           description: `Om.AI Premium (${plan})`,
           prefill: checkoutPrefill(),
           theme: { color: '#D97757' },
-          handler: async (resp) => { if (watch) watch.stop(); await subPaid(resp && resp.razorpay_payment_id); },
+          handler: async (resp) => { stopWatch(); if (watch) watch.stop(); await subPaid(resp && resp.razorpay_payment_id); },
           // Subscription dismissed → exit-intent downsell to the ₹99 pack (once/session).
           modal: { ondismiss: () => {
+            stopWatch();
             const ours = !!(watch && watch.closing()); if (watch) watch.stop();
             // Closing the modal is the dominant loss on this surface and, until 2026-08-05, was
             // invisible: purchase_attempted fired and nothing followed, so an abandoned checkout
@@ -4492,6 +4624,7 @@
           onRetry: () => { btn.disabled = false; status.textContent = ''; btn.click(); },
           onPack: () => { btn.disabled = false; status.textContent = ''; downsellShownThisSession = true; $('downsellPackBtn').click(); },
         });
+        stopWatch = watchCheckout({ paywall_type: 'subscription', plan });
         rzp.open();
       } catch (e) {
         status.textContent = e.message || t('genericErr');
