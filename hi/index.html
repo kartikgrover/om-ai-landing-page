@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Om.AI — फ्री AI ज्योतिष चैट 24/7 हिंदी में | निःशुल्क कुंडली</title>
-    <meta name="description" content="निःशुल्क AI ज्योतिष चैट 24/7, हिंदी में। पहला सवाल मुफ़्त, फिर डेली स्ट्रीक से और सवाल पूछें।">
+    <meta name="description" content="जन्म तिथि, समय और स्थान से मुफ़्त कुंडली बनाएँ: लग्न, नक्षत्र और चल रही दशा। फिर अपनी कुंडली से हिंदी में कुछ भी पूछें। पहला सवाल मुफ़्त।">
     <meta name="keywords" content="AI ज्योतिष चैट, मुफ़्त AI ज्योतिष, AI ज्योतिषी, AI कुंडली, AI जन्म कुंडली, AI शादी कब होगी, AI विवाह भविष्यवाणी, मुफ्त ज्योतिष चैट, AI जन्म कुंडली विश्लेषण, ai jyotish hindi, ai jyotish free hindi, ai kundali hindi, ai shadi kab hogi, वैदिक ज्योतिष ऐप, कुंडली, राशिफल, कुंडली मिलान, भगवद्गीता, दशा कैलकुलेटर, मुफ्त ज्योतिष ऐप">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Om.AI — फ्री AI ज्योतिष चैट 24/7 हिंदी में | निःशुल्क कुंडली">
-    <meta property="og:description" content="निःशुल्क AI ज्योतिष चैट 24/7, हिंदी में। पहला सवाल मुफ़्त, फिर डेली स्ट्रीक से और सवाल पूछें।">
+    <meta property="og:description" content="जन्म तिथि, समय और स्थान से मुफ़्त कुंडली बनाएँ: लग्न, नक्षत्र और चल रही दशा। फिर अपनी कुंडली से हिंदी में कुछ भी पूछें। पहला सवाल मुफ़्त।">
     <meta property="og:url" content="https://omai.app/hi/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://omai.app/assets/favicon/favicon-512x512.png">
@@ -49,6 +49,7 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="/styles/styles.min.css?v=73">
+    <link rel="stylesheet" href="/styles/kundli-tool.css?v=1">
 
     <!-- Icons (non-blocking) -->
     <link rel="stylesheet" href="/styles/icons.min.css?v=1" media="print" onload="this.media='all'">
@@ -60,6 +61,9 @@
 
     <!-- Inline styles for content sections -->
     <style>
+        .hero-tool { margin-top: 2rem; text-align: left; scroll-margin-top: 84px; }
+        .hero-tool__title { font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; font-size: 1.6rem; color: #fff; margin: 0 0 0.35rem; }
+        .hero-tool__sub { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin: 0 0 1.1rem; }
         .cta-box {
             background: linear-gradient(135deg, rgba(217,119,87,0.15), rgba(217,119,87,0.05));
             border: 1px solid rgba(217,119,87,0.3);
@@ -169,7 +173,7 @@
                 "name": "Premium में क्या-क्या मिलता है?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "आपका पहला ज्योतिष सवाल मुफ़्त है, और रोज़ ऐप खोलने पर और सवाल मिलते हैं: 3, 7, 14, 21, 30, 45, 60, 75 और 90 दिन के माइलस्टोन पर कुल 19 मुफ़्त सवाल, दिन 30 पर 3 दिन Premium, दिन 60 पर महीने भर का पूर्वानुमान मुफ़्त और दिन 90 पर 7 दिन Premium। कोई दिन छूट जाए तो जमा किया हुआ स्ट्रीक फ़्रीज़ अपने-आप लग जाता है। Premium सदस्यों को हर महीने 500 तक ज्योतिष सवाल और 500 तक गीता सवाल मिलते हैं; कल का राशिफल और कल के शुभ समय एक दिन पहले; मुख्य गोचर तिथियों के साथ महीने भर का व्यक्तिगत पूर्वानुमान; और एक-एक की जगह 10 तक पार्टनर मिलान और 10 तक दोस्त मिलान। सब्सक्रिप्शन नहीं लेना चाहते तो सवाल पैक भी अलग से उपलब्ध हैं।"
+                    "text": "आपका पहला ज्योतिष सवाल मुफ़्त है, और रोज़ ऐप खोलने पर और सवाल मिलते हैं: 3, 7, 14, 21, 30, 45, 60, 75 और 90 दिन के माइलस्टोन पर कुल 19 सवाल, दिन 30 पर 3 दिन Premium, दिन 60 पर महीने भर का पूर्वानुमान मुफ़्त और दिन 90 पर 7 दिन Premium। कोई दिन छूट जाए तो जमा किया हुआ स्ट्रीक फ़्रीज़ अपने-आप लग जाता है। Premium सदस्यों को हर महीने 500 तक ज्योतिष सवाल और 500 तक गीता सवाल मिलते हैं; कल का राशिफल और कल के शुभ समय एक दिन पहले; मुख्य गोचर तिथियों के साथ महीने भर का व्यक्तिगत पूर्वानुमान; और एक-एक की जगह 10 तक पार्टनर मिलान और 10 तक दोस्त मिलान। सब्सक्रिप्शन नहीं लेना चाहते तो सवाल पैक भी अलग से उपलब्ध हैं।"
                 }
             },
             {
@@ -321,7 +325,7 @@
                             AI वैदिक ज्योतिष — अपनी कुंडली से तुरंत जवाब पाएँ
                         </h1>
                         <p class="hero-subtitle">
-                            प्रेम, करियर और जीवन के हर सवाल का जवाब — आपकी असली कुंडली के आधार पर, सामान्य राशिफल नहीं।
+                            शादी, नौकरी, पैसा, घर: कब? Om.AI आपकी अपनी कुंडली और चल रही दशा से महीने बताता है, बाद की बातचीत में उसी समय पर टिका रहता है, और वह समय आने पर आपको याद दिलाता है। सामान्य राशिफल नहीं।
                         </p>
                         <div class="hero-features">
                             <div class="feature-item">
@@ -349,7 +353,7 @@
                                 पहला सवाल मुफ़्त &bull; Premium योजनाएँ उपलब्ध
                             </p>
                             <div class="hero-trust">
-                                <span class="trust-item"><i aria-hidden="true" class="fas fa-star text-warning"></i> 4.8★ रेटिंग</span>
+                                <span class="trust-item"><i aria-hidden="true" class="fas fa-star text-warning"></i> Google Play और App Store पर 4.8</span>
                                 <span class="trust-divider">|</span>
                                 <span class="trust-item"><i aria-hidden="true" class="fas fa-download text-primary"></i> 50,000+ डाउनलोड</span>
                                 <span class="trust-divider">|</span>
@@ -357,14 +361,51 @@
                             </div>
                         </div>
 
-                        <div class="hero-media">
-                            <img src="/assets/om-ai-demo-poster.jpg" alt="Om.AI ऐप का पूर्वावलोकन — एआई ज्योतिष चैट" class="hero-image" loading="lazy" decoding="async">
+                        <div class="hero-tool" id="kundli-tool">
+                            <form id="kt-form" class="mw-card kt-form" data-src="hi_home_kundli_ask" novalidate>
+                                <h2 class="hero-tool__title">मुफ़्त कुंडली बनाएँ, फिर अपनी कुंडली से पूछें</h2>
+                                <p class="hero-tool__sub">आपका लग्न, चंद्र राशि, नक्षत्र और चल रही दशा। कुंडली के लिए साइन-अप नहीं चाहिए।</p>
+                                <div class="kt-grid">
+                                    <div>
+                                        <label class="mw-label" for="kt-date">जन्म तिथि</label>
+                                        <input type="date" id="kt-date" class="mw-input" min="1900-01-01" max="2099-12-31" required>
+                                    </div>
+                                    <div>
+                                        <label class="mw-label" for="kt-time">जन्म समय</label>
+                                        <input type="time" id="kt-time" class="mw-input" required>
+                                    </div>
+                                    <div class="kt-wide">
+                                        <label class="mw-label" for="kt-city">जन्म स्थान</label>
+                                        <input list="kt-cities" id="kt-city" class="mw-input" placeholder="शहर चुनें या लिखें" autocomplete="off" required>
+                                        <datalist id="kt-cities"></datalist>
+                                    </div>
+                                    <div class="kt-wide">
+                                        <label class="mw-label" for="kt-tz">समय क्षेत्र</label>
+                                        <select id="kt-tz" class="mw-input">
+                                            <option value="5.5" selected>भारत (IST, +5:30)</option>
+                                            <option value="5.75">नेपाल (+5:45)</option>
+                                            <option value="6">बांग्लादेश (+6:00)</option>
+                                            <option value="4">खाड़ी / UAE (+4:00)</option>
+                                            <option value="0">UK / UTC (+0:00)</option>
+                                            <option value="-5">US Eastern (-5:00)</option>
+                                            <option value="8">सिंगापुर (+8:00)</option>
+                                            <option value="10">सिडनी (+10:00)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="mw-note">लग्न लगभग हर दो घंटे में बदलता है, इसलिए जन्म समय ज़रूरी है। आपका शहर सूची में नहीं है? सबसे पास का शहर चुनें।</p>
+                                <button type="submit" id="kt-go" class="btn btn--primary btn-lg w-100 mt-3">मेरी कुंडली बनाएँ</button>
+                                <div id="kt-error" class="mw-error" role="alert" hidden></div>
+                                <noscript><p class="mw-note">इस पेज पर कुंडली बनाने के लिए JavaScript चालू करें।</p></noscript>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="kt-result" id="kt-result" hidden></section>
 
     <!-- Features Section -->
     <section id="features" class="py-5">
@@ -518,109 +559,6 @@
         </div>
     </section>
 
-    <!-- Streak Rewards Section -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row justify-content-center mb-4">
-                <div class="col-lg-8 text-center">
-                    <h2 class="section-title">रोज़ खोलें, इनाम पाएँ</h2>
-                    <p class="text-secondary">रोज़ ऐप खोलकर स्ट्रीक बनाएँ — बस इतना ही। दिन 3 से दिन 90 तक नौ माइलस्टोन: कुल 19 मुफ़्त सवाल, और दिन 30 व 90 पर मुफ़्त Premium।</p>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="row g-3 text-center justify-content-center mx-auto" style="max-width:760px;">
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">3</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+1 सवाल</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">7</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+2 सवाल</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">14</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+3 सवाल</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">21</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+2 सवाल</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(217,119,87,0.1); border:1px solid rgba(217,119,87,0.25); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">30</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+5 सवाल</div>
-                                <div style="font-size:0.82rem; color:#D97757; font-weight:600;">3 दिन Premium</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">45</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+3 सवाल</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(217,119,87,0.1); border:1px solid rgba(217,119,87,0.25); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">60</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:#D97757; margin-top:0.25rem; font-weight:600;">महीने का forecast मुफ़्त</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">75</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">+3 सवाल</div>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="h-100" style="background:rgba(217,119,87,0.1); border:1px solid rgba(217,119,87,0.25); border-radius:12px; padding:1.25rem 0.75rem;">
-                                <div style="font-family:'DM Serif Display','DM Serif Fallback','DM Serif Fallback Android',serif; font-size:1.5rem; color:#D97757;">90</div>
-                                <div style="font-size:0.78rem; color:rgba(255,255,255,0.5);">दिन स्ट्रीक</div>
-                                <div style="font-size:0.95rem; color:#D97757; margin-top:0.25rem; font-weight:600;">7 दिन Premium</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3 mt-3">
-                        <div class="col-md-6">
-                            <div class="h-100 d-flex align-items-start" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:1rem 1.1rem;">
-                                <i class="fas fa-snowflake me-3 mt-1" style="color:#D97757;" aria-hidden="true"></i>
-                                <div>
-                                    <div style="color:rgba(255,255,255,0.9); font-weight:600; font-size:0.95rem;">2 स्ट्रीक फ़्रीज़</div>
-                                    <div style="color:rgba(255,255,255,0.5); font-size:0.86rem;">एक दिन छूट जाए तो फ़्रीज़ अपने-आप लग जाता है — स्ट्रीक बची रहती है। दिन 7 और दिन 21 पर मिलते हैं।</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="h-100 d-flex align-items-start" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:1rem 1.1rem;">
-                                <i class="fas fa-rotate-left me-3 mt-1" style="color:#D97757;" aria-hidden="true"></i>
-                                <div>
-                                    <div style="color:rgba(255,255,255,0.9); font-weight:600; font-size:0.95rem;">टूट गई? वापस पाएँ — मुफ़्त</div>
-                                    <div style="color:rgba(255,255,255,0.5); font-size:0.86rem;">स्ट्रीक टूटने के बाद अगले 7 दिनों में 3 दिन ऐप खोलें, और पुरानी स्ट्रीक वापस मिल जाती है। शून्य से शुरू नहीं करना पड़ता।</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-center mt-3" style="color:rgba(255,255,255,0.45); font-size:0.88rem;">कोई पैसा नहीं लगता — बस रोज़ ऐप खोलें।</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FAQ Section -->
     <section id="faq" class="py-5">
         <div class="container">
@@ -647,7 +585,7 @@
                         </div>
                         <div class="faq-item" role="listitem">
                             <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-4">Premium में क्या-क्या मिलता है?</button>
-                            <div class="faq-answer" id="faq-4" role="region">आपका पहला ज्योतिष सवाल मुफ़्त है, और रोज़ ऐप खोलने पर और सवाल मिलते हैं: 3, 7, 14, 21, 30, 45, 60, 75 और 90 दिन के माइलस्टोन पर कुल 19 मुफ़्त सवाल, दिन 30 पर 3 दिन Premium, दिन 60 पर महीने भर का पूर्वानुमान मुफ़्त और दिन 90 पर 7 दिन Premium। कोई दिन छूट जाए तो जमा किया हुआ स्ट्रीक फ़्रीज़ अपने-आप लग जाता है। Premium सदस्यों को हर महीने 500 तक ज्योतिष सवाल और 500 तक गीता सवाल मिलते हैं; कल का राशिफल और कल के शुभ समय एक दिन पहले; मुख्य गोचर तिथियों के साथ महीने भर का व्यक्तिगत पूर्वानुमान; और एक-एक की जगह 10 तक पार्टनर मिलान और 10 तक दोस्त मिलान। सब्सक्रिप्शन नहीं लेना चाहते तो सवाल पैक भी अलग से उपलब्ध हैं।</div>
+                            <div class="faq-answer" id="faq-4" role="region">आपका पहला ज्योतिष सवाल मुफ़्त है, और रोज़ ऐप खोलने पर और सवाल मिलते हैं: 3, 7, 14, 21, 30, 45, 60, 75 और 90 दिन के माइलस्टोन पर कुल 19 सवाल, दिन 30 पर 3 दिन Premium, दिन 60 पर महीने भर का पूर्वानुमान मुफ़्त और दिन 90 पर 7 दिन Premium। कोई दिन छूट जाए तो जमा किया हुआ स्ट्रीक फ़्रीज़ अपने-आप लग जाता है। Premium सदस्यों को हर महीने 500 तक ज्योतिष सवाल और 500 तक गीता सवाल मिलते हैं; कल का राशिफल और कल के शुभ समय एक दिन पहले; मुख्य गोचर तिथियों के साथ महीने भर का व्यक्तिगत पूर्वानुमान; और एक-एक की जगह 10 तक पार्टनर मिलान और 10 तक दोस्त मिलान। सब्सक्रिप्शन नहीं लेना चाहते तो सवाल पैक भी अलग से उपलब्ध हैं।</div>
                         </div>
                         <div class="faq-item" role="listitem">
                             <button class="faq-question" data-toggle="faq" aria-expanded="false" aria-controls="faq-5">ऐप की कीमत क्या है? रिफ़ंड पॉलिसी क्या है?</button>
@@ -831,5 +769,7 @@
         });
     </script>
     <script src="/assets/js/android-web-first.js" defer></script>
+    <script src="/assets/js/hi-terms.js" defer></script>
+    <script src="/assets/js/kundli-tool.js?v=2" defer></script>
 </body>
 </html>

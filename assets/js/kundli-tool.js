@@ -15,6 +15,7 @@
     var signName = function (s) { return HT ? HT.sign(s) : s; };
     var nakName = function (s) { return HT ? HT.nakshatra(s) : s; };
     var planetName = function (s) { return HT ? HT.planet(s) : s; };
+    var SRC = form.getAttribute('data-src');
 
     var T = HI ? {
         needDate: 'जन्म तिथि भरें।',
@@ -52,7 +53,10 @@
         nextFrom: ' अगली साढ़ेसाती {a} से शुरू होगी।',
         nextH: 'इस कुंडली पर सवाल पूछें',
         nextP: 'Om.AI से पूछें कि यह कुंडली आपके करियर, शादी या पैसे के बारे में क्या कहती है, और कब। पहला सवाल मुफ़्त है।',
-        ask: 'इस कुंडली पर Om.AI से पूछें',
+        ask: 'पहला सवाल मुफ़्त पूछें',
+        qLabel: 'आपका सवाल', qPh: 'जैसे: मेरी शादी कब होगी?',
+        chips: ['मेरी शादी कब होगी?', 'मेरी नौकरी कब लगेगी?', 'पैसों की हालत कब सुधरेगी?'],
+        signin: 'पूछने से पहले Google, Apple, ईमेल या फ़ोन से साइन-इन करें, ताकि आपकी कुंडली और जवाब सेव रहें।',
         askHref: '/ask.html?lang=hi&utm_source=website&utm_medium=referral&utm_campaign=seo_page&utm_content=hi_free_kundli_online_result_ask',
         askLabel: 'hi_free_kundli_online_result_ask',
         appLine: 'या ऐप में पूछें:',
@@ -95,7 +99,10 @@
         nextFrom: ' Next Sade Sati begins {a}.',
         nextH: 'Ask about this chart',
         nextP: 'Ask Om.AI what this chart says about your career, marriage or money, and when. Your first question is free.',
-        ask: 'Ask Om.AI about this chart',
+        ask: 'Ask my first question free',
+        qLabel: 'Your question', qPh: 'e.g. When will I get married?',
+        chips: ['When will I get married?', 'When will my career move forward?', 'When will my money improve?'],
+        signin: 'You’ll sign in with Google, Apple, email or phone first, so your chart and answers are saved.',
         askHref: '/ask.html?utm_source=website&utm_medium=referral&utm_campaign=seo_page&utm_content=free_kundli_result_ask',
         askLabel: 'free_kundli_result_ask',
         appLine: 'Or ask in the app:',
@@ -103,6 +110,10 @@
         ios: 'https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_kundli&mt=8',
         abbr: { Sun: 'Su', Moon: 'Mo', Mars: 'Ma', Mercury: 'Me', Jupiter: 'Ju', Venus: 'Ve', Saturn: 'Sa', Rahu: 'Ra', Ketu: 'Ke' }
     };
+    if (SRC) {
+        T.askHref = T.askHref.replace(/utm_content=[^&]*/, 'utm_content=' + encodeURIComponent(SRC));
+        T.askLabel = SRC;
+    }
 
     // [English, Hindi, lat, lon, tzOffsetHours, ianaZone?]: the kab calculators' list. India has no DST,
     // so a fixed +5:30 is exact; foreign cities carry a zone because their offset depends on the date.
@@ -370,7 +381,13 @@
             + '</div>'
             + '<div class="kt-next">'
             + '<h3>' + esc(T.nextH) + '</h3><p>' + esc(T.nextP) + '</p>'
-            + '<a id="kt-ask" class="btn btn--primary btn-lg kt-ask" href="' + esc(T.askHref) + '">' + esc(T.ask) + '</a>'
+            + '<form id="kt-askform" class="kt-askform" action="' + esc(T.askHref) + '">'
+            + '<label class="mw-label" for="kt-q">' + esc(T.qLabel) + '</label>'
+            + '<textarea id="kt-q" class="mw-input" rows="2" maxlength="500" placeholder="' + esc(T.qPh) + '"></textarea>'
+            + '<div class="kt-chips">' + T.chips.map(function (c) { return '<button type="button" class="kt-chip">' + esc(c) + '</button>'; }).join('') + '</div>'
+            + '<button type="submit" id="kt-ask" class="btn btn--primary btn-lg kt-ask">' + esc(T.ask) + '</button>'
+            + '<p class="kt-signin">' + esc(T.signin) + '</p>'
+            + '</form>'
             + '<p class="kt-applabel">' + esc(T.appLine) + '</p>'
             + '<div class="d-flex justify-content-center gap-3 flex-wrap">'
             + '<a href="' + esc(T.play) + '" class="btn btn--outline px-4" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play</a>'
@@ -380,8 +397,19 @@
         outEl.innerHTML = html;
         outEl.hidden = false;
         errEl.hidden = true;
-        $('kt-ask').addEventListener('click', function () {
-            try { gtag('event', 'web_ask_click', { event_category: 'Web MVP', event_label: T.askLabel }); } catch (e) {}
+        var qEl = $('kt-q');
+        outEl.querySelectorAll('.kt-chip').forEach(function (b) {
+            b.addEventListener('click', function () { qEl.value = b.textContent; qEl.focus(); });
+        });
+        // ask.html reads this to prefill onboarding and the composer; it never sends on its own.
+        $('kt-askform').addEventListener('submit', function (e) {
+            e.preventDefault();
+            try {
+                sessionStorage.setItem('omai-handoff', JSON.stringify({ dob: birth.date, time: birth.time, place: birth.city,
+                    lat: birth.lat, lon: birth.lon, cc: birth.cc, q: qEl.value.trim(), ts: Date.now() }));
+            } catch (err) {}
+            try { gtag('event', 'web_ask_click', { event_category: 'Web MVP', event_label: T.askLabel, has_question: qEl.value.trim() ? 1 : 0 }); } catch (err) {}
+            location.href = T.askHref;
         });
         var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         outEl.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
@@ -418,7 +446,7 @@
         var tz = birthOffset(city, tzEl.value, +p[0], +p[1], +p[2], +q[0], +q[1]);
         var dob = new Date(Date.UTC(+p[0], +p[1] - 1, +p[2], +q[0], +q[1]) - tz * 3600000).toISOString();
         var url = API + '/api/public/kundli?dob=' + encodeURIComponent(dob) + '&lat=' + city.lat + '&lon=' + city.lon;
-        var birth = { date: d, time: t, city: city.name };
+        var birth = { date: d, time: t, city: city.name, lat: city.lat, lon: city.lon, cc: city.zone ? null : 'in' };
 
         var done = function (data) {
             cache[url] = data;

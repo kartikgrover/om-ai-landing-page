@@ -43,101 +43,13 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 
+    <link rel="stylesheet" href="/styles/kundli-tool.css?v=1">
     <style>
-        .mw-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.10);
-            border-radius: 14px;
-            padding: 1.75rem;
-        }
-        .mw-label {
-            display: block;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 0.4rem;
-        }
-        .mw-input {
-            width: 100%;
-            background: rgba(0,0,0,0.25);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 8px;
-            color: #fff;
-            padding: 0.7rem 0.85rem;
-            font-size: 1rem;
-        }
-        .mw-input:focus { outline: none; border-color: #D97757; }
-        /* Native pickers render black-on-black in dark themes without this. */
-        .mw-input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
-        .mw-input option { background: #1a1a1a; color: #fff; }
-        .mw-note {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.85rem;
-            margin: 1rem 0 0;
-            line-height: 1.6;
-        }
-        .mw-error {
-            color: #ff9b8a;
-            background: rgba(255,90,60,0.10);
-            border: 1px solid rgba(255,90,60,0.25);
-            border-radius: 8px;
-            padding: 0.7rem 0.9rem;
-            margin-top: 1rem;
-            font-size: 0.92rem;
-        }
         /* Free kundli tool: form under the H1, result card below it. */
         .kt-hero { padding: 2rem 0 1.5rem; }
         .kt-lead { max-width: 640px; margin: 0 auto 1.25rem; color: rgba(255,255,255,0.8); font-size: 1.15rem; }
-        .kt-form { text-align: left; }
-        .kt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.25rem; }
         .kt-alt { color: rgba(255,255,255,0.55) !important; margin: 1rem 0 0; font-size: 0.95rem; }
         .kt-alt a { color: #D97757; }
-        .kt-retry { background: none; border: 0; padding: 0; color: #ff9b8a; font-weight: 600; text-decoration: underline; cursor: pointer; }
-        .kt-result { padding: 0 0 3rem; scroll-margin-top: 84px; }
-        .kt-res { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; padding: 1.75rem; }
-        .kt-res-title { font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; color: #D97757 !important; font-size: 2rem; margin: 0 0 0.25rem; }
-        .kt-res-title:focus { outline: none; }
-        .kt-born { color: rgba(255,255,255,0.6) !important; margin: 0 0 1.25rem; }
-        .kt-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin: 0 0 1.5rem; }
-        .kt-fact { background: rgba(255,255,255,0.04); border-left: 3px solid #D97757; border-radius: 10px; padding: 0.75rem 1rem; }
-        .kt-fact dt { font-weight: 400; font-size: 0.85rem; color: rgba(255,255,255,0.6) !important; margin-bottom: 0.2rem; }
-        .kt-fact dd { margin: 0; font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; font-size: 1.35rem; line-height: 1.25; color: #fff !important; }
-        .kt-fact dd > span { display: block; font-family: 'Source Sans 3', 'Source Sans Fallback', 'Source Sans Fallback Android', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.6) !important; margin-top: 0.15rem; }
-        .kt-body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 1.75rem; align-items: start; }
-        .kt-chart { margin: 0; }
-        .kt-svg { display: block; width: 100%; max-width: 440px; height: auto; margin: 0 auto; }
-        .kt-frame { fill: rgba(217,119,87,0.05); stroke: rgba(255,255,255,0.35); stroke-width: 0.5; }
-        .kt-line { fill: none; stroke: rgba(255,255,255,0.22); stroke-width: 0.4; }
-        .kt-signno { fill: rgba(255,255,255,0.45); font-size: 3px; text-anchor: middle; }
-        .kt-ptext { fill: #fff; font-size: 3.8px; font-weight: 600; text-anchor: middle; }
-        .kt-lagna { fill: #D97757; }
-        .kt-rmark { fill: #D97757; font-size: 2.4px; }
-        .kt-hno { fill: rgba(255,255,255,0.8); font-size: 6px; text-anchor: middle; dominant-baseline: middle; }
-        .kt-chart figcaption { font-size: 0.85rem; color: rgba(255,255,255,0.55) !important; margin-top: 0.6rem; text-align: center; }
-        .kt-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .kt-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-        .kt-table th, .kt-table td { padding: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; white-space: nowrap; }
-        .kt-table thead th { color: rgba(255,255,255,0.55) !important; font-weight: 600; font-size: 0.8rem; border-bottom-color: rgba(255,255,255,0.18); }
-        .kt-table tbody th { color: #fff !important; font-weight: 600; }
-        .kt-table td { color: rgba(255,255,255,0.8) !important; }
-        .kt-table tbody tr:last-child th, .kt-table tbody tr:last-child td { border-bottom: 0; }
-        .kt-sec { color: inherit !important; }
-        .kt-nak-m { display: none; }
-        .kt-retro { color: #D97757 !important; text-decoration: none; font-weight: 700; cursor: help; }
-        .kt-legend { font-size: 0.85rem !important; color: rgba(255,255,255,0.55) !important; margin: 0.6rem 0 0; }
-        .kt-twin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.75rem; }
-        .kt-block { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-left: 3px solid #D97757; border-radius: 10px; padding: 1.1rem 1.25rem; }
-        .kt-block h3 { font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; color: #fff !important; font-size: 1.3rem; margin: 0 0 0.5rem; }
-        .kt-dasha-row { margin: 0 0 0.6rem; color: rgba(255,255,255,0.8) !important; }
-        .kt-dasha-row:last-child { margin-bottom: 0; }
-        .kt-dasha-row .kt-k { color: rgba(255,255,255,0.6) !important; }
-        .kt-dasha-row strong { color: #fff !important; }
-        .kt-dates { display: block; font-size: 0.92rem; color: rgba(255,255,255,0.6) !important; }
-        .kt-sade { margin: 0; color: rgba(255,255,255,0.8) !important; line-height: 1.6; }
-        .kt-next { text-align: center; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
-        .kt-next h3 { font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; color: #fff !important; font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .kt-next p { color: rgba(255,255,255,0.75) !important; max-width: 560px; margin: 0 auto 1rem; }
-        .kt-next .kt-applabel { font-size: 0.9rem; margin: 1rem auto 0.6rem; color: rgba(255,255,255,0.55) !important; }
-        .kt-ask { min-width: 280px; }
         /* Guide */
         .kt-houses { columns: 2; column-gap: 2rem; margin: 0.75rem 0 1rem; padding-left: 1.4rem; }
         .kt-houses li { break-inside: avoid; margin-bottom: 0.2rem; }
@@ -193,33 +105,12 @@
             margin-bottom: 0;
             font-size: 1rem;
         }
-        @media (max-width: 767px) {
-            .kt-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .kt-body, .kt-twin { grid-template-columns: minmax(0, 1fr); }
-        }
         @media (max-width: 575px) {
             .kt-hero { padding: 1.25rem 0 1rem; }
             .kt-lead { font-size: 1.02rem; margin-bottom: 1rem; }
-            .mw-card.kt-form { padding: 1.1rem; }
-            .kt-grid { gap: 0.75rem; }
-            .kt-wide { grid-column: 1 / -1; }
-            .kt-res { padding: 1.1rem; }
-            .kt-res-title { font-size: 1.7rem; }
-            .kt-fact { padding: 0.6rem 0.75rem; }
-            .kt-fact dd { font-size: 1.2rem; }
-            .kt-table { font-size: 0.85rem; }
-            .kt-table th, .kt-table td { padding: 0.45rem 0.25rem; }
-            .kt-table .kt-nak { display: none; }
-            .kt-table td.kt-sign { white-space: normal; }
-            .kt-table td .kt-nak-m { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.55) !important; }
-            .kt-table thead .kt-nak-m { display: inline; }
-            .kt-ask { width: 100%; min-width: 0; }
             .kt-houses { columns: 1; }
             .how-step { gap: 0.9rem; }
             .cta-box { padding: 2rem 1.25rem; }
-        }
-        @media (max-width: 400px) {
-            .kt-table .kt-sec { display: none; }
         }
     </style>
     <script type="application/ld+json">
@@ -719,7 +610,7 @@
     </div>
 
     <script src="/assets/js/nav.js?v=4" defer></script>
-    <script src="/assets/js/kundli-tool.js?v=1" defer></script>
+    <script src="/assets/js/kundli-tool.js?v=2" defer></script>
     <script src="/assets/js/ads-referrer.js"></script>
 </body>
 

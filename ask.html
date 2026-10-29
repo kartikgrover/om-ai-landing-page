@@ -1346,6 +1346,7 @@
       if (name !== 'chartScreen' && name !== 'report') { views.chartScreen.classList.remove('up'); views.report.classList.remove('up'); }
       closeModal('paywallView'); // navigating anywhere closes the paywall popup
       if (name === 'chat') { try { restoreDrawerOnChat(); } catch (_) {} try { refreshHeaderQuota(); } catch (_) {} }
+      if (name === 'onboarding') { try { applyHandoffBirth(); } catch (_) {} }
       // a11y: move focus into the newly shown view so keyboard/SR users aren't
       // stranded on a now-hidden control. Prefer the primary input, else heading.
       const el = views[name];
@@ -1929,6 +1930,27 @@
       return geocode(place);
     }
 
+    // Birth details and a question carried from a site calculator: sessionStorage, never the URL, so dates stay out of logs.
+    const HANDOFF_KEY = 'omai-handoff';
+    const readHandoff = () => {
+      try { const h = JSON.parse(sessionStorage.getItem(HANDOFF_KEY) || 'null'); return h && Date.now() - h.ts < 3600000 ? h : null; }
+      catch (_) { return null; }
+    };
+    function applyHandoffBirth() {
+      const h = readHandoff();
+      if (!h || !h.dob || $('f-dob').value) return;
+      $('f-dob').value = h.dob; $('f-time').value = h.time || '';
+      if (h.place && Number.isFinite(h.lat) && Number.isFinite(h.lon)) {
+        $('f-place').value = h.place;
+        cityPick['f-place'] = { label: h.place, coordinates: { latitude: h.lat, longitude: h.lon, countryCode: h.cc || null } };
+      }
+    }
+    function takeHandoffQuestion() {
+      const h = readHandoff();
+      try { sessionStorage.removeItem(HANDOFF_KEY); } catch (_) {}
+      if (h && h.q && !$('composerInput').value) $('composerInput').value = String(h.q).slice(0, 500);
+    }
+
     // ── geocode (OpenStreetMap Nominatim — MVP) ────────────────────
     async function geocode(place) {
       const url = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1&q=' + encodeURIComponent(place);
@@ -2149,6 +2171,7 @@
       }
       expMarkExposed('chat_starters', sa);
       renderArtifactBar();
+      takeHandoffQuestion();
     }
 
     function nearBottom() { const s = $('chatScroll'); return s.scrollHeight - s.scrollTop - s.clientHeight < 90; }
