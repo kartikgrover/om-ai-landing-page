@@ -691,20 +691,17 @@
     </div>
   </div>
 
-  <!-- ── Downsell modal (exit-intent on subscription dismissal) ─────────
-       Mirrors the app's SecondChanceModal `pack_downsell` variant: when a user
-       backs out of the recurring-subscription sheet, offer the one-time ₹99 /
-       5-question pack instead of letting them leave empty-handed. -->
+  <!-- ── Pay fallback (subscription checkout failed or dismissed): Try again first, the one-time ₹99 / 5-question pack under it. -->
   <div id="downsellModal" class="modal-overlay">
     <div class="modal-card" style="max-width:340px;text-align:center;position:relative;">
       <button class="iconbtn" id="downsellClose" aria-label="Close" style="position:absolute;top:.4rem;right:.4rem;">
         <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke-linecap="round"/></svg>
       </button>
       <picture><source srcset="/assets/logo-mark.webp" type="image/webp"><img src="/assets/logo-mark.png" alt="Om.AI" width="613" height="362" style="width:72px;height:auto;margin:0 auto;"></picture>
-      <h3 style="margin:.4rem 0 .5rem;font-size:var(--fs-xl);" data-i18n="notReady">Not ready to subscribe?</h3>
+      <h3 id="downsellTitle" style="margin:.4rem 0 .5rem;font-size:var(--fs-xl);" data-i18n="notReady">Not ready to subscribe?</h3>
       <p class="hint" style="margin:0 0 1.1rem;" id="downsellBody">Try <b>5 questions for ₹99</b> — one-time, no auto-renewal. Ask your chart anything.</p>
-      <button id="downsellPackBtn" class="btn-primary" data-i18n="tryPack">Try 5 questions · ₹99</button>
-      <button id="downsellLater" class="btn-ghost" style="margin-top:.55rem;" data-i18n="maybeLater">Maybe later</button>
+      <button id="downsellRetryBtn" class="btn-primary" data-i18n="tryAgain">Try again</button>
+      <button id="downsellPackBtn" class="btn-ghost" style="margin-top:.55rem;" data-i18n="tryPack">Try 5 questions · ₹99</button>
     </div>
   </div>
 
@@ -1438,7 +1435,7 @@
         secAccount:'Account', profile:'Profile', secSubscription:'Subscription', manageSub:'Manage Subscription', subLoading:'Loading…', subPremium:'Premium · tap to cancel', subFree:'Free plan · tap to upgrade', subCancels:'Cancels at period end', subCancelled:'Cancelled — active until {date}', subPass:'Premium until {date} · doesn’t renew', passEnds:'Your 30 days end on {date}. Nothing renews, so there’s nothing to cancel.', secApp:'App', theme:'Theme', light:'Light', dark:'Dark', system:'System', language:'Language', langSub:'Your chart readings come back in this language',
         secHelp:'Help & Legal', helpSupport:'Help & Support', privacy:'Privacy', aboutTerms:'About & Terms', deleteAccount:'Delete account', deleteAccountSub:'Remove your account & data', delConfirm:'Permanently delete your account and all your data? This cannot be undone.', delReauth:'Confirm it’s you to continue…', delPwPrompt:'Enter your password to confirm deletion:', delDeleting:'Deleting your account…', delCancelled:'Deletion cancelled.', delFailed:'Could not delete your account — please try again.', signOut:'Sign Out',
         astrologyProfile:'Astrology Profile', editBirthTitle:'Edit Birth Details', notSet:'Not set', bmDate:'Date of birth', bmPlace:'Birth place',
-        notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for {pk}</b> — one-time, no auto-renewal. Ask your chart anything.', tryPack:'Try 5 questions · {pk}', maybeLater:'Maybe later', upiBackTitle:'Back from your UPI app?', upiBackBody:'If you approved the payment, it will confirm here in a few seconds.',
+        notReady:'Not ready to subscribe?', downsellBody:'Try <b>5 questions for {pk}</b> — one-time, no auto-renewal. Ask your chart anything.', tryAgain:'Try again', payFailTitle:'Your payment didn’t go through', payFailBody:'This usually means the Autopay approval in your UPI app timed out. Try again, or get <b>5 questions for {pk}</b>: one payment, no auto-renewal.', tryPack:'Try 5 questions · {pk}', upiBackTitle:'Back from your UPI app?', upiBackBody:'If you approved the payment, it will confirm here in a few seconds.',
         buyQuestionsAdded:'{n} questions added — ask away.', buyQuestionsPending:'Payment received — your questions will be added in a moment. Go ahead and ask.', buyPremiumNow:'You are premium now — ask away.', buyPremiumPending:'Payment received — your premium will activate in a moment. Go ahead and ask.', cancelAlert:'Your subscription will not renew. You keep access until the end of your current period.',
         authOpeningGoogle:'Opening Google sign-in…', authOpeningApple:'Opening Apple sign-in…', authEnterEmail:'Enter your email.', authSendingReset:'Sending reset link…', authResetSent:'Check your email for a password reset link.', authEnterBoth:'Enter your email and password.', authPwShort:'Password must be at least 6 characters.', authCreating:'Creating your account…', authEmailRegistered:'That email is already registered — sign in instead.', authSigningIn:'Signing you in…', authTrouble:'Trouble signing in? Reset your password below.', authWrong:'Email or password is incorrect.',
         obFillBirth:'Please fill date, time and place of birth.', obValidDate:'Please enter a valid birth date in the past.', obYoungDob:'Born in {year}? That makes you {age} old. Is that right?', obCheckYear:'Check your birth year. The calendar opens on this year, so pick the year you were born.', ageOne:'1 year', ageYears:'{n} years', dobYesRight:"Yes, it's right", dobChange:'Change date', needBirthDetails:'Add your birth details below and your chart is ready in seconds.', obLookupPlace:'Looking up your birth place…', obSavingDetails:'Saving your birth details…', obComputingChart:'Computing your Vedic chart… (this can take a few seconds)',
@@ -1494,7 +1491,7 @@
         secAccount:'खाता', profile:'प्रोफ़ाइल', secSubscription:'सदस्यता', manageSub:'सदस्यता प्रबंधित करें', subLoading:'लोड हो रहा है…', subPremium:'प्रीमियम · रद्द करने हेतु टैप करें', subFree:'निःशुल्क योजना · अपग्रेड हेतु टैप करें', subCancels:'अवधि अंत पर रद्द', subCancelled:'रद्द — {date} तक सक्रिय', subPass:'प्रीमियम {date} तक · नवीनीकरण नहीं होगा', passEnds:'आपके 30 दिन {date} को पूरे होंगे। कुछ भी नवीनीकृत नहीं होता, इसलिए रद्द करने को कुछ नहीं है।', secApp:'ऐप', theme:'थीम', light:'लाइट', dark:'डार्क', system:'सिस्टम', language:'भाषा', langSub:'आपकी कुंडली रीडिंग इसी भाषा में आती है',
         secHelp:'सहायता व कानूनी', helpSupport:'सहायता', privacy:'गोपनीयता', aboutTerms:'परिचय व शर्तें', deleteAccount:'खाता हटाएं', deleteAccountSub:'अपना खाता व डेटा हटाएं', delConfirm:'अपना खाता और सारा डेटा स्थायी रूप से हटाएं? यह वापस नहीं किया जा सकता।', delReauth:'जारी रखने के लिए पुष्टि करें कि यह आप हैं…', delPwPrompt:'हटाने की पुष्टि के लिए अपना पासवर्ड दर्ज करें:', delDeleting:'आपका खाता हटाया जा रहा है…', delCancelled:'हटाना रद्द किया गया।', delFailed:'आपका खाता हटाया नहीं जा सका — कृपया पुनः प्रयास करें।', signOut:'साइन आउट',
         astrologyProfile:'ज्योतिष प्रोफ़ाइल', editBirthTitle:'जन्म जानकारी संपादित करें', notSet:'सेट नहीं', bmDate:'जन्म तिथि', bmPlace:'जन्म स्थान',
-        notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>{pk} में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryPack:'5 प्रश्न आज़माएं · {pk}', maybeLater:'शायद बाद में', upiBackTitle:'UPI ऐप से लौट आए?', upiBackBody:'अगर आपने भुगतान मंज़ूर कर दिया है, तो कुछ ही सेकंड में यहाँ पुष्टि हो जाएगी।',
+        notReady:'सदस्यता के लिए तैयार नहीं?', downsellBody:'<b>{pk} में 5 प्रश्न</b> आज़माएं — एकमुश्त, कोई स्वतः नवीनीकरण नहीं। अपनी कुंडली से कुछ भी पूछें।', tryAgain:'पुनः प्रयास करें', payFailTitle:'आपका भुगतान पूरा नहीं हुआ', payFailBody:'अक्सर इसका कारण होता है कि UPI ऐप में ऑटोपे की मंज़ूरी का समय निकल गया। पुनः प्रयास करें, या <b>{pk} में 5 प्रश्न</b> लें: एकमुश्त भुगतान, कोई स्वतः नवीनीकरण नहीं।', tryPack:'5 प्रश्न आज़माएं · {pk}', upiBackTitle:'UPI ऐप से लौट आए?', upiBackBody:'अगर आपने भुगतान मंज़ूर कर दिया है, तो कुछ ही सेकंड में यहाँ पुष्टि हो जाएगी।',
         buyQuestionsAdded:'{n} प्रश्न जोड़े गए — पूछिए।', buyQuestionsPending:'भुगतान प्राप्त — आपके प्रश्न कुछ ही क्षण में जुड़ जाएँगे। पूछना शुरू करें।', buyPremiumNow:'अब आप प्रीमियम हैं — पूछिए।', buyPremiumPending:'भुगतान प्राप्त — आपका प्रीमियम कुछ ही क्षण में सक्रिय होगा। पूछना शुरू करें।', cancelAlert:'आपकी सदस्यता नवीनीकृत नहीं होगी। आप अपनी वर्तमान अवधि के अंत तक पहुँच बनाए रखेंगे।',
         authOpeningGoogle:'Google साइन-इन खुल रहा है…', authOpeningApple:'Apple साइन-इन खुल रहा है…', authEnterEmail:'अपना ईमेल दर्ज करें।', authSendingReset:'रीसेट लिंक भेजा जा रहा है…', authResetSent:'पासवर्ड रीसेट लिंक के लिए अपना ईमेल देखें।', authEnterBoth:'अपना ईमेल और पासवर्ड दर्ज करें।', authPwShort:'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।', authCreating:'आपका खाता बन रहा है…', authEmailRegistered:'यह ईमेल पहले से पंजीकृत है — इसके बजाय साइन इन करें।', authSigningIn:'आपको साइन इन किया जा रहा है…', authTrouble:'साइन इन में परेशानी? नीचे अपना पासवर्ड रीसेट करें।', authWrong:'ईमेल या पासवर्ड गलत है।',
         obFillBirth:'कृपया जन्म तिथि, समय और स्थान भरें।', obValidDate:'कृपया अतीत की एक मान्य जन्म तिथि दर्ज करें।', obYoungDob:'जन्म वर्ष {year}? इससे आपकी उम्र {age} होती है। क्या यह सही है?', obCheckYear:'अपना जन्म वर्ष जाँचें। कैलेंडर इसी साल पर खुलता है, इसलिए अपने जन्म का साल चुनें।', ageOne:'1 साल', ageYears:'{n} साल', dobYesRight:'हाँ, सही है', dobChange:'तारीख बदलें', needBirthDetails:'नीचे अपनी जन्म जानकारी भरें, आपकी कुंडली कुछ ही क्षणों में तैयार हो जाएगी।', obLookupPlace:'आपका जन्म स्थान खोजा जा रहा है…', obSavingDetails:'आपकी जन्म जानकारी सहेजी जा रही है…', obComputingChart:'आपकी वैदिक कुंडली बन रही है… (इसमें कुछ क्षण लग सकते हैं)',
@@ -1511,7 +1508,7 @@
       const vars = { pk: inr(planPrice('pack')) };
       document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n, vars); });
       document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
-      const db = document.getElementById('downsellBody'); if (db) db.innerHTML = t('downsellBody', vars); // has <b>, needs innerHTML
+      const db = document.getElementById('downsellBody'); if (db) db.innerHTML = t(db.dataset.key || 'downsellBody', vars); // has <b>, needs innerHTML
     }
     function applyLangUI() {
       document.querySelectorAll('[data-lang-set]').forEach((b) => b.classList.toggle('active', b.dataset.langSet === state.lang));
@@ -1616,6 +1613,8 @@
           renderEmptyChat(); refreshProfileUI();
           show('chat'); // chart ready → reveal the chat in one go
           restorePendingPreview();
+          // The backend's payment-recovery email links here with paywall=1 (v781).
+          if (!state.premium && new URLSearchParams(location.search).get('paywall') === '1') openPaywall('pay_recovery_email');
         } else {
           show('onboarding');
         }
@@ -4149,7 +4148,7 @@
       }
       const vars = { pk: inr(planPrice('pack')) };
       document.querySelectorAll('[data-i18n="tryPack"]').forEach((el) => { el.textContent = t('tryPack', vars); });
-      { const d = $('downsellBody'); if (d) d.innerHTML = t('downsellBody', vars); }
+      { const d = $('downsellBody'); if (d) d.innerHTML = t(d.dataset.key || 'downsellBody', vars); }
     }
     // Subscription plans keep their order among themselves; the pack sits first or last.
     function renderPlanOrder() {
@@ -4261,11 +4260,14 @@
       return { name: u.displayName || '', email: u.email || '', ...(u.phoneNumber ? { contact: u.phoneNumber } : {}) };
     }
 
-    function trackPaymentFailed(rzp, paywall_type, plan) {
+    function trackPaymentFailed(rzp, paywall_type, plan, extra) {
+      const seen = { failed: false };
       rzp.on('payment.failed', (r) => {
+        seen.failed = true;
         const e = (r && r.error) || {};
-        trackPw({ action: 'payment_failed', source: 'razorpay', paywall_type, plan, reason: e.reason || e.code || 'unknown', step: e.step });
+        trackPw({ action: 'payment_failed', source: 'razorpay', paywall_type, plan, reason: e.reason || e.code || 'unknown', step: e.step, ...extra });
       });
+      return seen;
     }
 
     // After a hand-off to a UPI app, a buyer who comes back without paying sits on Razorpay's
@@ -4381,8 +4383,9 @@
     // ── one-time question pack (Razorpay Orders API). Reused by the paywall
     // pack option AND the subscription-dismissal downsell. `onDismiss` lets the
     // caller decide what happens when the user closes the pack sheet too. ──
-    async function runPackCheckout({ status, onDismiss } = {}) {
+    async function runPackCheckout({ status, onDismiss, via } = {}) {
       const setStatus = (s) => { if (status) status.textContent = s; };
+      const viaTag = via ? { via } : {};
       setStatus('Signing you in…');
       const { t: idToken, attribution } = await prepareAccountForCheckout();
       setStatus('Starting your purchase…');
@@ -4401,7 +4404,7 @@
 
       const packPaid = async (paymentId) => {
         $('subscribeBtn').disabled = false; // nothing else re-enables it after a pack bought from the paywall
-        trackPw({ action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack' });
+        trackPw({ action: 'purchase_completed', source: 'razorpay', paywall_type: 'question_pack', ...viaTag });
         track('purchase', { transaction_id: orderId, value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 monetization
         await fbPurchase(paymentId, (amount || 0) / 100, currency); // Meta, deduped vs CAPI
         setStatus('Adding your questions…');
@@ -4438,12 +4441,12 @@
         modal: { ondismiss: () => { // pairs with the subscription dismissal event — see there for why
           stopWatch();
           const ours = !!(watch && watch.closing()); if (watch) watch.stop();
-          trackPw({ action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack', ...(ours ? { reason: 'upi_return' } : {}) });
+          trackPw({ action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'question_pack', ...viaTag, ...(ours ? { reason: 'upi_return' } : {}) });
           if (ours) return; // the UPI-return bar closed it and already chose what happens next
           setStatus('Checkout closed.'); if (onDismiss) onDismiss(); } },
       });
-      trackPaymentFailed(rzp, 'question_pack');
-      trackPw({ action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack' });
+      trackPaymentFailed(rzp, 'question_pack', undefined, viaTag);
+      trackPw({ action: 'purchase_attempted', source: 'razorpay', paywall_type: 'question_pack', ...viaTag });
       track('begin_checkout', { value: (amount || 0) / 100, currency: currency || 'INR', item_category: 'question_pack' }); // GA4 standard
       fbTrack('InitiateCheckout', { value: (amount || 0) / 100, currency: currency || 'INR' });
       watch = watchUpiReturn({
@@ -4454,7 +4457,7 @@
           return Number.isFinite(rem) && rem > remainingBefore;
         },
         onPaid: () => packPaid(null),
-        onRetry: () => runPackCheckout({ status, onDismiss }).catch((e) => { setStatus(e.message || t('genericErr')); if (onDismiss) onDismiss(); }),
+        onRetry: () => runPackCheckout({ status, onDismiss, via }).catch((e) => { setStatus(e.message || t('genericErr')); if (onDismiss) onDismiss(); }),
       });
       stopWatch = watchCheckout({ paywall_type: 'question_pack' });
       rzp.open();
@@ -4524,34 +4527,52 @@
       rzp.open();
     }
 
-    // ── Downsell on subscription dismissal (revenue): show once per session. ──
+    // ── Pay fallback after a subscription checkout ends unpaid: every failed payment, once per session for a plain close. ──
     let downsellShownThisSession = false;
-    function openDownsell() {
+    let fallbackCtx = null;   // { reason: 'failed' | 'dismissed', plan } while the sheet is up
+    let subVia = null;        // tags the next subscription checkout when Try again started it
+    const fallbackEv = (action, extra) => trackPw({ action, source: 'razorpay', paywall_type: 'subscription', plan: fallbackCtx && fallbackCtx.plan, reason: fallbackCtx && fallbackCtx.reason, ...extra });
+    function openDownsell(reason, plan) {
       downsellShownThisSession = true;
+      fallbackCtx = { reason, plan };
+      const failed = reason === 'failed', title = $('downsellTitle'), body = $('downsellBody');
+      title.dataset.i18n = failed ? 'payFailTitle' : 'notReady';
+      title.textContent = t(title.dataset.i18n);
+      body.dataset.key = failed ? 'payFailBody' : 'downsellBody';
+      body.innerHTML = t(body.dataset.key, { pk: inr(planPrice('pack')) });
       $('downsellModal').classList.add('open');
+      fallbackEv('pay_fallback_shown');
     }
     function closeDownsell() { $('downsellModal').classList.remove('open'); }
-    $('downsellClose').addEventListener('click', closeDownsell);
-    $('downsellLater').addEventListener('click', closeDownsell);
-    $('downsellModal').addEventListener('click', (e) => { if (e.target === $('downsellModal')) closeDownsell(); });
-    $('downsellPackBtn').addEventListener('click', async () => {
+    const dismissFallback = () => { if (fallbackCtx) fallbackEv('pay_fallback_closed'); fallbackCtx = null; closeDownsell(); };
+    $('downsellClose').addEventListener('click', dismissFallback);
+    $('downsellModal').addEventListener('click', (e) => { if (e.target === $('downsellModal')) dismissFallback(); });
+    $('downsellRetryBtn').addEventListener('click', () => {
+      fallbackEv('pay_fallback_retry');
+      fallbackCtx = null; closeDownsell();
+      subVia = 'pay_fallback';
+      const sb = $('subscribeBtn'); sb.disabled = false; $('paywallStatus').textContent = ''; sb.click();
+    });
+    async function packFromFallback(via) {
       const dbtn = $('downsellPackBtn'); dbtn.disabled = true;
       ctaAt = Date.now();
       trackPw({ action: 'cta_tapped', source: 'downsell', paywall_type: 'question_pack' });
-      closeDownsell();
+      fallbackCtx = null; closeDownsell();
       // Reflect the choice in the paywall UI + run the SAME pack checkout path.
       const packPlan = document.querySelector('.plan[data-plan="pack"]');
       if (packPlan) packPlan.click();
-      try { await runPackCheckout({ status: $('paywallStatus') }); }
+      try { await runPackCheckout({ status: $('paywallStatus'), via }); }
       catch (e) { $('paywallStatus').textContent = e.message || t('genericErr'); if (e.priceChanged) $('paywallStatus').scrollIntoView({ block: 'nearest' }); }
       finally { dbtn.disabled = false; $('subscribeBtn').disabled = false; }
-    });
+    }
+    $('downsellPackBtn').addEventListener('click', () => { if (fallbackCtx) fallbackEv('pay_fallback_pack'); packFromFallback('pay_fallback'); });
 
     $('subscribeBtn').addEventListener('click', async () => {
       const status = $('paywallStatus'); const btn = $('subscribeBtn'); btn.disabled = true;
       ctaAt = Date.now();
       const pass = passChosen();
       trackPw({ action: 'cta_tapped', source: 'paywall', paywall_type: chosenKind === 'pack' ? 'question_pack' : pass ? 'premium_pass' : 'subscription', ...(chosenKind === 'sub' && { plan: chosenPlan }) });
+      const viaTag = subVia ? { via: subVia } : {}; subVia = null;
       try {
         // ── one-time question pack (Razorpay Orders API) ──────────────
         if (chosenKind === 'pack') {
@@ -4580,7 +4601,7 @@
         const value = Number(price) > 0 ? Number(price) : planPrice(plan);
 
         const subPaid = async (paymentId) => {
-          trackPw({ action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan });
+          trackPw({ action: 'purchase_completed', source: 'razorpay', paywall_type: 'subscription', plan, ...viaTag });
           track('purchase', { transaction_id: subscriptionId, currency: 'INR', item_category: 'subscription', plan }); // GA4 monetization
           await fbPurchase(paymentId, firstCyclePrice || value, 'INR'); // Meta, deduped vs CAPI
           await settlePremium(status);
@@ -4604,14 +4625,14 @@
             // invisible: purchase_attempted fired and nothing followed, so an abandoned checkout
             // and a declined card looked identical in GA4 (the yearly collapse had to be
             // diagnosed off the Razorpay ledger instead). Track it with the plan attached.
-            trackPw({ action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'subscription', plan, ...(ours ? { reason: 'upi_return' } : {}) });
+            trackPw({ action: 'checkout_dismissed', source: 'razorpay', paywall_type: 'subscription', plan, ...viaTag, ...(ours ? { reason: 'upi_return' } : {}) });
             if (ours) return; // the UPI-return bar closed it and already chose what happens next
             btn.disabled = false; status.textContent = t('subCheckoutClosedMvp');
-            if (!downsellShownThisSession) setTimeout(openDownsell, 250);
+            if (fail.failed || !downsellShownThisSession) setTimeout(() => openDownsell(fail.failed ? 'failed' : 'dismissed', plan), 250);
           } },
         });
-        trackPaymentFailed(rzp, 'subscription', plan);
-        trackPw({ action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan });
+        const fail = trackPaymentFailed(rzp, 'subscription', plan, viaTag);
+        trackPw({ action: 'purchase_attempted', source: 'razorpay', paywall_type: 'subscription', plan, ...viaTag });
         track('begin_checkout', { currency: 'INR', item_category: 'subscription', plan }); // GA4 standard
         fbTrack('InitiateCheckout', { value, currency: 'INR' });
         watch = watchUpiReturn({
@@ -4622,7 +4643,7 @@
           },
           onPaid: () => subPaid(null),
           onRetry: () => { btn.disabled = false; status.textContent = ''; btn.click(); },
-          onPack: () => { btn.disabled = false; status.textContent = ''; downsellShownThisSession = true; $('downsellPackBtn').click(); },
+          onPack: () => { btn.disabled = false; status.textContent = ''; downsellShownThisSession = true; packFromFallback('upi_return'); },
         });
         stopWatch = watchCheckout({ paywall_type: 'subscription', plan });
         rzp.open();
