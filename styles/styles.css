@@ -4450,23 +4450,39 @@ small {
     transition: transform 0.15s, filter 0.15s, background 0.15s;
     text-decoration: none;
 }
+/* Bootstrap .btn:hover/:active/:disabled read these vars; unset, the button paints transparent */
 .btn--primary {
     background: var(--brand-primary);
     color: #fff;
-}
-.btn--primary:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
-    color: #fff;
+    --bs-btn-hover-bg: var(--brand-primary);
+    --bs-btn-hover-border-color: var(--brand-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--brand-primary-dark);
+    --bs-btn-active-border-color: var(--brand-primary-dark);
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-bg: var(--brand-primary);
+    --bs-btn-disabled-border-color: var(--brand-primary);
+    --bs-btn-disabled-color: #fff;
 }
 .btn--outline {
     background: transparent;
     color: #fff;
+    --bs-btn-hover-bg: transparent;
+    --bs-btn-hover-border-color: var(--brand-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--brand-primary-transparent);
+    --bs-btn-active-border-color: var(--brand-primary);
+    --bs-btn-active-color: #fff;
 }
-.btn--outline:hover {
-    background: var(--brand-primary-transparent);
-    transform: translateY(-1px);
-    color: #fff;
+@media (hover: hover) {
+    .btn--primary:hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+    }
+    .btn--outline:hover {
+        background: var(--brand-primary-transparent);
+        transform: translateY(-1px);
+    }
 }
 .btn--primary:active,
 .btn--outline:active {
