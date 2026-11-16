@@ -6,9 +6,9 @@ import { execSync } from 'node:child_process';
 const FA = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0';
 const STYLE = { fa: 'solid', fas: 'solid', 'fa-solid': 'solid', far: 'regular', 'fa-regular': 'regular', fab: 'brands', 'fa-brands': 'brands' };
 const MODIFIERS = new Set(['fa-fw', 'fa-lg', 'fa-xs', 'fa-sm', 'fa-1x', 'fa-2x', 'fa-3x', 'fa-spin', 'fa-pulse']);
-// Class names assembled in page scripts (horoscope, panchang, rahu-kaal, dasha-calculator), which the scan can't see
+// Class names assembled in page scripts (horoscope, panchang, rahu-kaal, dasha-calculator, year-forecast), which the scan can't see
 const FROM_JS = {
-  solid: ['briefcase', 'wallet', 'heart', 'spa', 'sun', 'moon', 'clock', 'star', 'circle', 'check-circle', 'exclamation-triangle', 'info-circle'],
+  solid: ['briefcase', 'wallet', 'heart', 'spa', 'sun', 'moon', 'clock', 'star', 'circle', 'check-circle', 'exclamation-triangle', 'info-circle', 'ring', 'coins', 'home'],
   brands: ['google-play', 'apple'],
 };
 

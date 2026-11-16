@@ -1,0 +1,42 @@
+/* "Your 2027" cards; loaded after kundli-tool.css on /your-2027.html and /hi/your-2027.html, driven by assets/js/year-forecast.js. */
+.yf-hero { padding: 2rem 0 1.5rem; }
+.yf-lead { max-width: 640px; margin: 0 auto 1.25rem; color: rgba(255,255,255,0.8); font-size: 1.15rem; }
+.yf-alt-lang { color: rgba(255,255,255,0.55) !important; margin: 1rem 0 0; font-size: 0.95rem; }
+.yf-alt-lang a { color: #D97757; }
+.yf-intro { color: rgba(255,255,255,0.7) !important; margin: 0 0 1.25rem; max-width: 640px; }
+.yf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.yf-card { display: flex; flex-direction: column; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-left: 3px solid #D97757; border-radius: 10px; padding: 1.1rem 1.25rem; }
+.yf-card h3 { display: flex; align-items: center; gap: 0.6rem; font-family: 'DM Serif Display', 'DM Serif Fallback', 'DM Serif Fallback Android', serif; color: #fff !important; font-size: 1.35rem; margin: 0 0 0.75rem; }
+.yf-card h3 .fas { color: #D97757; font-size: 1.05rem; }
+.yf-card--off { border-left-color: rgba(255,255,255,0.2); }
+.yf-card--off h3 .fas { color: rgba(255,255,255,0.45); }
+.yf-wins { list-style: none; margin: 0 0 0.75rem; padding: 0; }
+.yf-wins li { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem; padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.yf-wins li:last-child { border-bottom: 0; }
+.yf-when { color: #fff !important; font-size: 1.05rem; font-weight: 600; }
+.yf-when--year { font-size: 1rem; line-height: 1.45; }
+.yf-fold { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.75) !important; font-size: 0.95rem; margin: 0 0 0.75rem; padding-top: 0.6rem; border-top: 1px solid rgba(255,255,255,0.08); }
+.yf-fold .fas { color: #D97757; font-size: 0.9rem; }
+.yf-pill { display: inline-block; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: #D97757 !important; border: 1px solid rgba(217,119,87,0.4); border-radius: 999px; padding: 0.12rem 0.6rem; line-height: 1.5; }
+.yf-empty { color: rgba(255,255,255,0.6) !important; margin: 0 0 0.75rem; font-size: 0.95rem; }
+.yf-why-btn { margin-top: auto; align-self: flex-start; background: none; border: 0; padding: 0.25rem 0; color: #D97757; font-weight: 600; cursor: pointer; }
+.yf-why-btn:hover { text-decoration: underline; }
+.yf-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem; color: rgba(255,255,255,0.6) !important; font-size: 0.9rem; margin: 1rem 0 0; }
+.yf-why { scroll-margin-top: 84px; }
+.yf-why:focus { outline: none; }
+.yf-ask { max-width: 560px; margin: 0 auto; text-align: left; }
+.yf-topic.is-on { background: #D97757; border-color: #D97757; color: #fff; }
+.yf-q { background: rgba(0,0,0,0.25); border: 1px solid rgba(217,119,87,0.35); border-radius: 10px; padding: 0.85rem 1rem; color: #fff !important; font-size: 1.1rem; font-weight: 600; margin: 0 0 1rem !important; max-width: none !important; }
+.yf-ask .kt-ask { display: block; width: 100%; text-align: center; }
+.yf-alt { text-align: center; margin: 0.75rem 0 0 !important; }
+.yf-link { background: none; border: 0; padding: 0; color: #D97757; font-weight: 600; text-decoration: underline; cursor: pointer; }
+.yf-steps { padding-left: 1.3rem; }
+.yf-steps li { margin-bottom: 0.6rem; }
+@media (max-width: 767px) {
+    .yf-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 575px) {
+    .yf-hero { padding: 1.25rem 0 1rem; }
+    .yf-lead { font-size: 1.02rem; margin-bottom: 1rem; }
+    .yf-card { padding: 0.95rem 1rem; }
+}
