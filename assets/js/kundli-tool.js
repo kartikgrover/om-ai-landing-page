@@ -16,6 +16,9 @@
     var nakName = function (s) { return HT ? HT.nakshatra(s) : s; };
     var planetName = function (s) { return HT ? HT.planet(s) : s; };
     var SRC = form.getAttribute('data-src');
+    // iPadOS reports itself as a Mac; touch points give it away.
+    var onPhone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var android = /Android/i.test(navigator.userAgent);
 
     var T = HI ? {
         needDate: 'जन्म तिथि भरें।',
@@ -60,8 +63,9 @@
         askHref: '/ask.html?lang=hi&utm_source=website&utm_medium=referral&utm_campaign=seo_page&utm_content=hi_free_kundli_online_result_ask',
         askLabel: 'hi_free_kundli_online_result_ask',
         appLine: 'या ऐप में पूछें:',
-        play: 'https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_kundli',
-        ios: 'https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_hindi_kundli&mt=8',
+        webLine: 'या वेब पर पूछें:', webAsk: 'वेब पर पूछें',
+        play: 'https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dhindi_kundli_result',
+        ios: 'https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_hindi_kundli_result&mt=8',
         abbr: { Sun: 'सू', Moon: 'चं', Mars: 'मं', Mercury: 'बु', Jupiter: 'गु', Venus: 'शु', Saturn: 'श', Rahu: 'रा', Ketu: 'के' }
     } : {
         needDate: 'Enter your date of birth.',
@@ -106,8 +110,9 @@
         askHref: '/ask.html?utm_source=website&utm_medium=referral&utm_campaign=seo_page&utm_content=free_kundli_result_ask',
         askLabel: 'free_kundli_result_ask',
         appLine: 'Or ask in the app:',
-        play: 'https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dkundli',
-        ios: 'https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_kundli&mt=8',
+        webLine: 'Or ask on the web:', webAsk: 'Ask on the web',
+        play: 'https://play.google.com/store/apps/details?id=com.omai.app&referrer=utm_source%3Dwebsite%26utm_medium%3Dreferral%26utm_campaign%3Dseo_page%26utm_content%3Dkundli_result',
+        ios: 'https://apps.apple.com/us/app/om-ai/id6630366988?pt=127919347&ct=website_kundli_result&mt=8',
         abbr: { Sun: 'Su', Moon: 'Mo', Mars: 'Ma', Mercury: 'Me', Jupiter: 'Ju', Venus: 'Ve', Saturn: 'Sa', Rahu: 'Ra', Ketu: 'Ke' }
     };
     if (SRC) {
@@ -381,23 +386,29 @@
             + '</div>'
             + '<div class="kt-next">'
             + '<h3>' + esc(T.nextH) + '</h3><p>' + esc(T.nextP) + '</p>'
+            + (onPhone ? '<a id="kt-app" href="' + esc(android ? T.play : T.ios) + '" class="btn btn--primary btn-lg kt-ask" rel="noopener noreferrer" target="_blank"><i class="fab ' + (android ? 'fa-google-play' : 'fa-apple') + ' me-2" aria-hidden="true"></i>' + esc(T.ask) + '</a>'
+                + '<p class="kt-applabel">' + esc(T.webLine) + '</p>' : '')
             + '<form id="kt-askform" class="kt-askform" action="' + esc(T.askHref) + '">'
             + '<label class="mw-label" for="kt-q">' + esc(T.qLabel) + '</label>'
             + '<textarea id="kt-q" class="mw-input" rows="2" maxlength="500" placeholder="' + esc(T.qPh) + '"></textarea>'
             + '<div class="kt-chips">' + T.chips.map(function (c) { return '<button type="button" class="kt-chip">' + esc(c) + '</button>'; }).join('') + '</div>'
-            + '<button type="submit" id="kt-ask" class="btn btn--primary btn-lg kt-ask">' + esc(T.ask) + '</button>'
+            + '<button type="submit" id="kt-ask" class="btn ' + (onPhone ? 'btn--outline' : 'btn--primary') + ' btn-lg kt-ask">' + esc(onPhone ? T.webAsk : T.ask) + '</button>'
             + '<p class="kt-signin">' + esc(T.signin) + '</p>'
             + '</form>'
-            + '<p class="kt-applabel">' + esc(T.appLine) + '</p>'
+            + (onPhone ? '' : '<p class="kt-applabel">' + esc(T.appLine) + '</p>'
             + '<div class="d-flex justify-content-center gap-3 flex-wrap">'
             + '<a href="' + esc(T.play) + '" class="btn btn--outline px-4" rel="noopener noreferrer" target="_blank"><i class="fab fa-google-play me-2" aria-hidden="true"></i>Google Play</a>'
             + '<a href="' + esc(T.ios) + '" class="btn btn--outline px-4" rel="noopener noreferrer" target="_blank"><i class="fab fa-apple me-2" aria-hidden="true"></i>App Store</a>'
-            + '</div></div>'
+            + '</div>')
+            + '</div>'
             + '</div></div>';
         outEl.innerHTML = html;
         outEl.hidden = false;
         errEl.hidden = true;
-        var qEl = $('kt-q');
+        var qEl = $('kt-q'), appEl = $('kt-app');
+        if (appEl) appEl.addEventListener('click', function () {
+            try { gtag('event', 'download_click', { event_category: 'App Downloads', event_label: android ? 'android' : 'ios', value: 1 }); } catch (err) {}
+        });
         outEl.querySelectorAll('.kt-chip').forEach(function (b) {
             b.addEventListener('click', function () { qEl.value = b.textContent; qEl.focus(); });
         });
