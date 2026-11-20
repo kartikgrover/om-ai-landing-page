@@ -578,6 +578,10 @@
     }
     .tool h3 { font-family: var(--serif); font-weight: 400; font-size: 19px; letter-spacing: -0.01em; margin: 0 0 8px; transition: color .2s; }
     .tool p { color: var(--fg2); font-size: 14px; line-height: 1.55; margin: 0; }
+    .tool--feature { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+    .tool--feature .tool__icon { margin-bottom: 0; }
+    .tool--feature .tool__body { flex: 1 1 220px; }
+    .tool__cta { color: var(--brand); font-size: 15px; white-space: nowrap; }
 
     /* ───── FAQ ───── */
     .faq { max-width: 1100px; margin: 0 auto; padding: clamp(64px, 9vw, 96px) clamp(20px, 5vw, 80px); border-top: 1px solid var(--hair); }
@@ -688,6 +692,7 @@
                         <li><a class="dropdown-item" href="/kundli-matching.html">Kundli Matching</a></li>
                         <li><a class="dropdown-item" href="/sade-sati.html">Sade Sati Check</a></li>
                         <li><a class="dropdown-item" href="/hi/naukri-kab-milegi.html">Naukri Kab Milegi</a></li>
+                        <li><a class="dropdown-item" href="/your-2027.html">Your 2027</a></li>
                         <li><a class="dropdown-item" href="/marriage-prediction.html">Marriage Prediction</a></li>
                         <li><a class="dropdown-item" href="/hi/shadi-kab-hogi.html">Shaadi Kab Hogi</a></li>
                         <li><a class="dropdown-item" href="/hi/ghar-kab-banega.html">Ghar Kab Banega</a></li>
@@ -929,6 +934,14 @@
             <p>Each one reads your date, time and place of birth. No sign-up.</p>
         </div>
         <div class="tools-grid">
+            <a class="tool tool--feature" href="/your-2027.html">
+                <div class="tool__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+                <div class="tool__body">
+                    <h3>Your 2027, month by month</h3>
+                    <p>Free forecast from your birth chart.</p>
+                </div>
+                <span class="tool__cta">See my 2027 &rarr;</span>
+            </a>
             <a class="tool" href="/shadi-kab-hogi.html">
                 <div class="tool__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg></div>
                 <h3>Shaadi Kab Hogi?</h3>
@@ -1167,6 +1180,7 @@
                     <li><a href="/free-kundli-online.html" class="text-white-50">Kundli & Birth Chart</a></li>
                     <li><a href="/kundli-matching.html" class="text-white-50">Kundli Matching</a></li>
                     <li><a href="/hi/naukri-kab-milegi.html" class="text-white-50">Naukri Kab Milegi</a></li>
+                    <li><a href="/your-2027.html" class="text-white-50">Your 2027</a></li>
                     <li><a href="/marriage-prediction.html" class="text-white-50">Marriage Prediction</a></li>
                     <li><a href="/hi/shadi-kab-hogi.html" class="text-white-50">Shaadi Kab Hogi</a></li>
                     <li><a href="/hi/ghar-kab-banega.html" class="text-white-50">Ghar Kab Banega</a></li>
