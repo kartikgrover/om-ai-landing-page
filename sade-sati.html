@@ -663,7 +663,7 @@
                     <div class="col-md-6">
                         <div class="feature-card">
                             <h3>Dhaiya: Kantaka and Ashtama Shani</h3>
-                            <p>Dhaiya, "two and a half", is Saturn's spell in the 4th or the 8th sign from the Moon. In the 4th it is called Kantaka Shani, after Kantaka, the classical name for the 1st, 4th, 7th and 10th houses (Brihat Jataka Ch.1 Sl.17); Brihat Samhita links it to distance from friends, money and spouse, and an unsettled mind (Ch.104 v.42). In the 8th it is Ashtama Shani, which the same chapter links to time apart from spouse and children, and hard journeys (v.44).</p>
+                            <p>Dhaiya, "two and a half", is Saturn's spell in the 4th or the 8th sign from the Moon. In the 4th it is called Kantaka Shani, after Kantaka, the classical name for the 1st, 4th, 7th and 10th houses (Brihat Jataka Ch.1 Sl.17); Brihat Samhita links it to distance from friends, money and spouse, and an unsettled mind (Ch.104 v.42). In the 8th it is Ashtama Shani, which the same chapter links to time apart from spouse and children, and hard journeys (v.44). Every sign's Dhaiya dates, and your own: <a href="/shani-dhaiya.html">Shani Dhaiya calculator</a>.</p>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -1153,6 +1153,7 @@ Object.keys(L.signMain).forEach(function (k) { L.sign[k] = L.signMain[k] + ' (' 
             noonSafe: function (s) { return ' The Moon was in ' + s + ' for the whole of that day, so the time does not change this answer.'; },
             noonEdge: function (s, early, other) { return ' On that date the Moon was near the ' + (early ? 'start' : 'end') + ' of ' + s + ', so if you were born ' + (early ? 'in the early hours' : 'late in the evening') + ' your Moon sign may be ' + other + '. Add your birth time to be sure.'; },
             seeRow: function (s) { return 'See ' + s + ' in the table'; },
+            dhaiyaPage: 'See all your Dhaiya dates',
             ask: 'Ask Om.AI about your Sade Sati',
             askNote: 'Your first question is free.',
             needDate: 'Enter your date of birth.',
@@ -1332,7 +1333,8 @@ Object.keys(L.signMain).forEach(function (k) { L.sign[k] = L.signMain[k] + ' (' 
                 html += '<p class="ss-caveat">' + note + '</p>';
             }
             html += '<div class="ss-result-actions"><a class="btn btn--primary" data-ask href="' + ASK + '">' + T.ask + '</a>'
-                + '<a class="ss-rowlink" href="#ss-row-' + moon + '">' + T.seeRow(L.sign[moon]) + '</a></div>'
+                + '<a class="ss-rowlink" href="#ss-row-' + moon + '">' + T.seeRow(L.sign[moon]) + '</a>'
+                + (v.cls === 'is-dhaiya' ? '<a class="ss-rowlink" href="/shani-dhaiya.html">' + T.dhaiyaPage + '</a>' : '') + '</div>'
                 + '<p class="ss-asknote">' + T.askNote + '</p></div>';
             outEl.innerHTML = html;
             outEl.hidden = false;

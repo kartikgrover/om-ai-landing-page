@@ -667,7 +667,7 @@
                     <div class="col-md-6">
                         <div class="feature-card">
                             <h3>ढैय्या: कंटक और अष्टम शनि</h3>
-                            <p>ढैय्या, यानी ढाई साल, वह समय है जब शनि चंद्र से चौथी या आठवीं राशि में होता है। चौथी राशि में इसे कंटक शनि कहते हैं; कंटक पहले, चौथे, सातवें और दसवें भाव का शास्त्रीय नाम है (बृहज्जातक, अध्याय 1, श्लोक 17)। बृहत् संहिता इसे मित्रों, धन और जीवनसाथी से दूरी और बेचैन मन से जोड़ती है (अध्याय 104, श्लोक 42)। आठवीं राशि में यह अष्टम शनि है, जिसे यही अध्याय जीवनसाथी और संतान से दूरी और कठिन यात्राओं से जोड़ता है (श्लोक 44)।</p>
+                            <p>ढैय्या, यानी ढाई साल, वह समय है जब शनि चंद्र से चौथी या आठवीं राशि में होता है। चौथी राशि में इसे कंटक शनि कहते हैं; कंटक पहले, चौथे, सातवें और दसवें भाव का शास्त्रीय नाम है (बृहज्जातक, अध्याय 1, श्लोक 17)। बृहत् संहिता इसे मित्रों, धन और जीवनसाथी से दूरी और बेचैन मन से जोड़ती है (अध्याय 104, श्लोक 42)। आठवीं राशि में यह अष्टम शनि है, जिसे यही अध्याय जीवनसाथी और संतान से दूरी और कठिन यात्राओं से जोड़ता है (श्लोक 44)। हर राशि की ढैया की पूरी तारीख़ें: <a href="/hi/shani-ki-dhaiya.html">शनि की ढैया कब से कब तक</a>।</p>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -1157,6 +1157,7 @@ Object.keys(L.signMain).forEach(function (k) { L.sign[k] = L.signMain[k]; L.sign
             noonSafe: function (s) { return ' उस पूरे दिन चंद्रमा ' + s + ' राशि में था, इसलिए समय से यह उत्तर नहीं बदलता।'; },
             noonEdge: function (s, early, other) { return ' उस दिन चंद्रमा ' + s + ' राशि ' + (early ? 'की शुरुआत' : 'के अंत') + ' के पास था, इसलिए अगर आपका जन्म ' + (early ? 'सुबह बहुत जल्दी' : 'देर शाम या रात में') + ' हुआ था तो आपकी चंद्र राशि ' + other + ' हो सकती है। पक्का जानने के लिए जन्म समय डालें।'; },
             seeRow: function (s) { return 'तालिका में ' + s + ' राशि देखें'; },
+            dhaiyaPage: 'अपनी ढैया की पूरी तारीख़ें देखें',
             ask: 'Om.AI से अपनी साढ़े साती के बारे में पूछें',
             askNote: 'पहला सवाल मुफ़्त।',
             needDate: 'जन्म तिथि भरें।',
@@ -1338,7 +1339,8 @@ Object.keys(L.signMain).forEach(function (k) { L.sign[k] = L.signMain[k]; L.sign
                 html += '<p class="ss-caveat">' + note + '</p>';
             }
             html += '<div class="ss-result-actions"><a class="btn btn--primary" data-ask href="' + ASK + '">' + T.ask + '</a>'
-                + '<a class="ss-rowlink" href="#ss-row-' + moon + '">' + T.seeRow(L.sign[moon]) + '</a></div>'
+                + '<a class="ss-rowlink" href="#ss-row-' + moon + '">' + T.seeRow(L.sign[moon]) + '</a>'
+                + (v.cls === 'is-dhaiya' ? '<a class="ss-rowlink" href="/hi/shani-ki-dhaiya.html">' + T.dhaiyaPage + '</a>' : '') + '</div>'
                 + '<p class="ss-asknote">' + T.askNote + '</p></div>';
             outEl.innerHTML = html;
             outEl.hidden = false;
